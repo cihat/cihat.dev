@@ -1,12 +1,18 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs"
 import cx from "@/lib/cx"
 
-export default function DarkModeButton({ className }: { className: string }) {
+export default function ToggleTheme({ className }: { className: string }) {
   const { systemTheme, theme, setTheme } = useTheme()
-  const currentTheme = theme === "system" ? systemTheme : theme
+  const [currentTheme, setCurrentTheme] = useState("") as any;
+
+  useEffect(() => {
+    setCurrentTheme(theme === "system" ? systemTheme : theme === "dark" ? "dark" : "light")
+  }, [theme])
+
 
   return (
     <div className={cx(className)}>
