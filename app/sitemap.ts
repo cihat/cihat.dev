@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import type { MetadataRoute } from 'next'
 
-import { websiteDomain } from '@/app/content'
+import { websiteDomain } from "@/lib/meta"
 
 // Force static rendering and static data fetching of a layout or page
 export const dynamic = 'force-static'

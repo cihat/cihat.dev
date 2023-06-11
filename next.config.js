@@ -13,13 +13,16 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  staticPageGenerationTimeout: 10,
+  experimental: {
+    appDir: true,
+  },
 }
 
 const domains = [
   'cdn.vercel-insights.com',
   'vercel.live',
   'va.vercel-scripts.com',
-  'static.cloudflareinsights.com',
 ]
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
