@@ -1,0 +1,159 @@
+/* this file will refactored soon */
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.container h1 {
+  font-size: 4.5em;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.container p#name_paragraph {
+  font-weight: 500 !important;
+  font-size: 2.2em;
+  line-height: 1.4;
+  max-width: 28em;
+}
+
+.container p {
+  display: block;
+  font-size: 1.6em;
+  font-weight: 300;
+  line-height: 1.4;
+  max-width: 28em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.container p b {
+  font-weight: 500;
+}
+
+.container p a {
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+
+
+.container .contact ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.6em;
+  max-width: 28em;
+  color: #000;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.container .contact ul li {
+  margin-right: 0.5em;
+}
+
+.container .contact ul li a {
+  color: #000;
+}
+
+.icon {
+  width: 3rem;
+}
+
+
+@media screen and (max-width: 600px) {
+  .contact ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    text-align: flex-start;
+    margin-left: 1rem;
+    align-items: fle;
+  }
+}
+
+/*Animassyon*/
+.left-animation {
+  animation: maveInLeft 1500ms;
+}
+
+.right-animation {
+  animation: maveInRight 1500ms;
+}
+
+.top-animation {
+  animation: maveInTop 1500ms;
+}
+
+.bottom-animation {
+  animation: maveInBottom 1200ms;
+}
+
+@keyframes maveInLeft {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  75% {
+    transform: translateX(20px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes maveInRight {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  75% {
+    transform: translateX(-20px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes maveInTop {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  75% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes maveInBottom {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  75% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
