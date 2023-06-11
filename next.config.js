@@ -13,10 +13,6 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  staticPageGenerationTimeout: 10,
-  experimental: {
-    appDir: true,
-  },
 }
 
 const domains = [

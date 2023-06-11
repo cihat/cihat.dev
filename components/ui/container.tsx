@@ -5,6 +5,7 @@ export interface IContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: string;
   size?: "default" | "large";
   children: React.ReactNode;
+  className?: string;
 }
 
 export default function Container({

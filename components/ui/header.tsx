@@ -4,10 +4,10 @@ import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowDown } from "react-icons/ai";
-import { DarkModeButton } from "@/components";
+import DarkModeButton from "@/components/ui/darkModeButton";
 
 import cx from "@/lib/cx";
-import { Container } from "@/components";
+import Container from "@/components/ui/container";
 
 const MENU = {
   "/": "About",

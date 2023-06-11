@@ -8,8 +8,6 @@ export default function DarkModeButton({ className }: { className: string }) {
   const { systemTheme, theme, setTheme } = useTheme()
   const currentTheme = theme === "system" ? systemTheme : theme
 
-  console.log('className: ', className)
-
   return (
     <div className={cx(className)}>
       {currentTheme === "dark" ? (

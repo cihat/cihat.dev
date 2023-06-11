@@ -6,7 +6,10 @@ import { Metadata } from 'next'
 import Head from 'next/head'
 import { META_DATA, githubImage } from "@/lib/meta"
 
-import { Header, Footer, Container } from "@/components"
+import Container from "@/components/ui/container"
+import Header from "@/components/ui/header"
+import Footer from "@/components/ui/footer"
+
 import Providers from "./Providers"
 
 
