@@ -7,15 +7,14 @@ export interface IContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-const Container: React.FC<IContainerProps> = ({
+export default function Container({
   as = "div",
   size = "default",
   children,
   className,
-  ...props
-}: IContainerProps) => {
+  ...props }: IContainerProps) {
   const sizes = {
-    default: "max-w-screen-sm mx-auto px-6",
+    default: "max-w-screen-md mx-auto px-6",
     large: "max-w-screen-xl mx-auto px-6",
   };
 
@@ -25,5 +24,3 @@ const Container: React.FC<IContainerProps> = ({
     children
   );
 };
-
-export default Container;
