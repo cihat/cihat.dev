@@ -16,7 +16,7 @@ export default function Home() {
   }, [theme])
 
   return (
-    <Container as="main" className="container">
+    <Container as="article" className="container px-0 select-none">
       <h1 id="title" className="right-animation font-bold" aria-label="">Hello 👋</h1>
       <p className="name left-animation font-bold" id="name_paragraph">My name is Cihat Salik.</p>
       <p className="right-animation">

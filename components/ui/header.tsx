@@ -4,7 +4,7 @@ import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowDown } from "react-icons/ai";
-import DarkModeButton from "@/components/ui/darkModeButton";
+import ToggleTheme from "@/components/ui/toggle-theme";
 
 import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
@@ -28,7 +28,7 @@ export default function Header() {
 
   return (
     <header className="">
-      <Container className="justify-between">
+      <Container className="flex justify-between px-0 select-none">
         <nav
           className={cx(
             isNavOpen ? "flex" : "hidden",
@@ -45,9 +45,7 @@ export default function Header() {
               </span>
             );
           })}
-          <DarkModeButton className="inline-block ml-auto" />
         </nav>
-
         {!isNavOpen && (
           <button
             type="button"
@@ -57,9 +55,10 @@ export default function Header() {
             }}
           >
             <span>{MENU[path]}</span>
-            <AiOutlineArrowDown />
+            <AiOutlineArrowDown size={24} className="ml-2"/>
           </button>
         )}
+        <ToggleTheme className="inline-block ml-auto" />
       </Container>
     </header>
   );

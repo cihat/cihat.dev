@@ -69,7 +69,7 @@ export default function RootLayout({
           <meta name="description" content="Cihat Salik's Personel website." />
         </Head>
         <Providers>
-          <Container className="flex min-h-screen flex-col pb-14 pt-10">
+          <Container className="flex min-h-screen flex-col pb-14 pt-10" as="main">
             <Header />
             <main className="mt-10 grow sm:mt-20">{children}</main>
             <Footer />
