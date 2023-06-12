@@ -55,7 +55,7 @@ export default function Header() {
             }}
           >
             <span>{MENU[path]}</span>
-            <AiOutlineArrowDown size={24} className="ml-2"/>
+            <AiOutlineArrowDown size={24} className="ml-2" />
           </button>
         )}
         <ToggleTheme className="inline-block ml-auto" />
