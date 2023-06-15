@@ -1,24 +1,52 @@
-'use client'
-
+import NextLink from "next/link";
 import Container from "@/components/ui/container";
 import "@/public/home-styles.css";
 import { BsLinkedin, BsGithub, BsMedium, BsInstagram, BsTwitter, BsMailbox, BsLink45Deg } from "react-icons/bs";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  //! this page will refactor
-  const { systemTheme, theme } = useTheme();
-  const [currentTheme, setCurrentTheme] = useState("") as any;
+  type Link = {
+    name: string;
+    url: string;
+    icon: JSX.Element;
+  }
 
-  useEffect(() => {
-    setCurrentTheme(theme === "system" ? systemTheme : theme === "dark" ? "dark" : "light")
-  }, [theme])
+  const links: Link[] = [
+    {
+      name: "Github",
+      url: "https://github.com/cihat",
+      icon: <BsGithub className="icon" fill="currentColor" />
+    },
+    {
+      name: "Linkedin",
+      url: "https://www.linkedin.com/in/cihatsalik/",
+      icon: <BsLinkedin fill="currentColor" />
+    },
+    {
+      name: "Mail",
+      url: "mailto:cihatsalik1@gmail.com",
+      icon: <BsMailbox fill="currentColor" />
+    },
+    {
+      name: "Medium",
+      url: "https://cihatsalik.medium.com/",
+      icon: <BsMedium fill="currentColor" />
+    },
+    {
+      name: "Twitter",
+      url: "https://twitter.com/chtslk",
+      icon: <BsTwitter fill="currentColor" />
+    },
+    {
+      name: "Instagram",
+      url: "https://www.instagram.com/cihat.png/",
+      icon: <BsInstagram fill="currentColor" />
+    },
+  ]
 
   return (
-    <Container as="article" className="container px-0 select-none">
-      <h1 id="title" className="right-animation font-bold" aria-label="">Hello 👋</h1>
-      <p className="name left-animation font-bold" id="name_paragraph">My name is Cihat Salik.</p>
+    <Container as="article" className="container flex flex-col items-start px-0 select-none">
+      <h1 id="title" className="right-animation font-bold text-6xl" aria-label="">Hello 👋</h1>
+      <p className="name left-animation" id="name_paragraph">My name is Cihat Salik.</p>
       <p className="right-animation">
         A curious <b>Software Engineer</b> living in <b>Istanbul/Turkey</b> who enjoys researching, learning and
         developing.&nbsp;
@@ -28,38 +56,18 @@ export default function Home() {
       </p>
       <div className="contact top-animatio">
         <ul className="container-contact bottom-animation ">
-          <li>
-            <a target="_blank" href="https://github.com/cihat" title="Github Profile" aria-label="Github Profile">
-              <BsGithub className="icon" color={currentTheme && currentTheme === "light" ? "black" : "white"} />
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://www.linkedin.com/in/cihatsalik/" title="Linkedin Profile" aria-label="Linkedin Profile" >
-              <BsLinkedin color={currentTheme && currentTheme === "light" ? "black" : "white"} />
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="mailto:cihatsalik1@gmail.com" title="e-mail" aria-label="e-mail">
-              <BsMailbox color={currentTheme && currentTheme === "light" ? "black" : "white"} />
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://cihatdev.medium.com/" title="Medium Profile" aria-label="Medium Profile">
-              <BsMedium color={currentTheme && currentTheme === "light" ? "black" : "white"} />
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://www.instagram.com/cihat.png" title="Instagram Profile" aria-label="Instagram Profile">
-              <BsInstagram color={currentTheme && currentTheme === "light" ? "black" : "white"} />
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://twitter.com/chtslk" title="Twitter Profile" aria-label="Twitter Profile">
-              <BsTwitter color={currentTheme && currentTheme === "light" ? "black" : "white"} />
-            </a>
-          </li>
+          {
+            links.map((link, index) => (
+              <li className="mr-2" key={link.url}>
+                <NextLink target="_blank" href={link.url} aria-label={link.name} >
+                  {link.icon}
+                </NextLink>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </Container>
   )
 }
+

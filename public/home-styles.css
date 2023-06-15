@@ -1,40 +1,23 @@
 /* this file will refactored soon */
 
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.container h1 {
-  font-size: 4.5em;
-  font-weight: 500;
-  margin-bottom: 0;
-}
-
-.container p#name_paragraph {
-  font-weight: 500;
-  font-size: 2.2em;
-  line-height: 1.4;
-  max-width: 28em;
+#name_paragraph {
+  font-weight: bold;
+  font-size: 2.2rem;
+  line-height: 1.6;
 }
 
 .container p {
   display: block;
-  font-size: 1.6em;
-  font-weight: 300;
+  font-size: 1.4rem;
+  font-weight: normal;
   line-height: 1.4;
-  max-width: 28em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+
 }
 
 .container p b {
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .container p a {
@@ -48,21 +31,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.6em;
-  max-width: 28em;
-  color: #000;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
+  font-size: 2.6rem;
+  max-width: 28rem;
+  /* color: #000; */
+  margin-block-start: 2rem;
+  margin-block-end: 2rem;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
 
 .container .contact ul li {
-  margin-right: 0.5em;
-}
-
-.container .contact ul li a {
-  color: #000;
+  margin-right: 1rem;
 }
 
 .icon {

@@ -1,5 +1,5 @@
 export const META_DATA = {
-  title: "Cihat Salik",
+  title: "Cihat Salik's Blog",
   description: "Art lover, developer, creator and photographer",
   url: "https://cihat.dev",
   email: "cihatsalik1@gmail.com",

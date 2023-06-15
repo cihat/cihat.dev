@@ -3,7 +3,6 @@
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { AiOutlineArrowDown } from "react-icons/ai";
 import ToggleTheme from "@/components/ui/toggle-theme";
 
 import cx from "@/lib/cx";
@@ -39,7 +38,7 @@ export default function Header() {
             const isActive = key === path;
             return (
               <span key={key}>
-                <NextLink href={key} className={cx(isActive ? "shine" : "")}>
+                <NextLink href={key} className={cx("w", isActive ? "font-black" : "")}>
                   {value as string}
                 </NextLink>
               </span>
@@ -55,10 +54,10 @@ export default function Header() {
             }}
           >
             <span>{MENU[path]}</span>
-            <AiOutlineArrowDown size={24} className="ml-2" />
+            &nbsp;↓
           </button>
         )}
-        <ToggleTheme className="inline-block ml-auto" />
+        <ToggleTheme />
       </Container>
     </header>
   );
