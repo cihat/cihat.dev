@@ -54,7 +54,7 @@ export default function Home() {
           development</b> and I am building something on my <a href="https://github.com/cihat" className="inline-flex flex-row items-center font-bold"
             title="Github Profile">Github<BsLink45Deg className="inline" /></a>.
       </p>
-      <div className="contact top-animatio">
+      <div className="contact top-animation">
         <ul className="container-contact bottom-animation ">
           {
             links.map((link, index) => (

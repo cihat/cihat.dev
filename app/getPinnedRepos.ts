@@ -1,21 +1,3 @@
-// export const getPinnedRepos = async () => {
-//   let data
-//   const userName = "cihat"
-//   try {
-//     const res = await fetch(`https://api.github.com/users/${userName}/pinnedItems`, {
-//       method: "GET",
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json'
-//       }
-//     })
-//     data = await res.json()
-//   } catch (error) {
-//     console.error(error)
-//   }
-//   return data
-// }
-
 // @ts-nocheck
 
 import cheerio from "cheerio"
