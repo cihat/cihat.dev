@@ -76,7 +76,7 @@ export default function RootLayout({
         </Head>
         <Container className="flex min-h-screen flex-col py-6" as="main">
           <Header />
-          <main className="mt-10 grow sm:mt-20">{children}</main>
+          <main className="mt-10 grow sm:mt-10">{children}</main>
           <Footer />
         </Container>
 

@@ -13,7 +13,7 @@ function Card(props: CardType) {
   const { link, description, forks, image, language, languageColor, owner, repo, stars, website } = props.project
 
   return (
-    <div className="project-card flex flex-col p-4 border radious rounded-md h-max" key={props.key}>
+    <div className="project-card flex flex-col p-4 border radious rounded-md h-full" key={props.key}>
       <div className="flex">
         <A href={link} target="_blank" className="font-bold hover:text-[#2f81f7] dark:hover:text-[#2f81f7]">
           {repo}
