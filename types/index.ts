@@ -19,6 +19,6 @@ export type IPinnedProjects = {
   website?: string;
   language: string;
   languageColor: string;
-  stars: number | string;
+  stars: number;
   forks: number;
 }
