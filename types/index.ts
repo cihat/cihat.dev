@@ -9,3 +9,16 @@ export type ILink = {
   tags: string[]; // [ 'history', 'frontend', 'figma', 'react' ],
   cover: string; // 'https://rdl.ink/render/https%3A%2F%2Ffigma-to-react.vercel.app%2F',
 }
+
+export type IPinnedProjects = {
+  owner: string;
+  repo: string;
+  link: string;
+  description: string;
+  image: string;
+  website?: string;
+  language: string;
+  languageColor: string;
+  stars: number | string;
+  forks: number;
+}
