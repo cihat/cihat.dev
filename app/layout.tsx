@@ -25,16 +25,25 @@ const { title, description, url, } = META_DATA
 export const metadata: Metadata = {
   title,
   description,
+  category: "technology",
+  creator: title,
+  publisher: title,
   openGraph: {
     title,
     description,
     url,
     siteName: title,
+    locale: 'en-US',
+    type: 'website',
   },
   twitter: {
     card: "summary_large_image",
     site: "@chtslk",
     creator: "@chtslk",
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
   },
   themeColor: "transparent",
   metadataBase: new URL(url),
