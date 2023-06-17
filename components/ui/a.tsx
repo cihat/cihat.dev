@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type AElementType = {
-  children:  React.ReactNode,
+  children?:  React.ReactNode,
   className?: string,
   href: string,
   target: string
