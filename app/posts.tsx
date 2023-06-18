@@ -23,8 +23,6 @@ export function Posts({ posts: initialPosts }) {
     ]);
   }
 
-  console.log('posts', posts)
-
   return (
     <Suspense fallback={null}>
       <main className="left-animation">
