@@ -9,7 +9,8 @@ import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
 
 const MENU = {
-  "/": "About",
+  "/": "Writing",
+  "/about": "About",
   "/projects": "Projects",
 } as any;
 

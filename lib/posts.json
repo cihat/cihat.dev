@@ -1,0 +1,9 @@
+{
+  "posts": [
+    {
+      "id": "this-is-a-test-post",
+      "date": "June 18, 2023",
+      "title": "This is a test post"
+    }
+  ]
+}
