@@ -1,8 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { themeEffect } from '@/lib/theme-effect'
-import { Analytics } from '@vercel/analytics/react'
-import clsx from 'clsx'
+import { Analytics } from "./analytics";
 import { Metadata } from 'next'
 import Head from 'next/head'
 import { META_DATA, githubImage } from "@/lib/meta"
