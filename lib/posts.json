@@ -4,6 +4,11 @@
       "id": "this-is-a-test-post",
       "date": "June 18, 2023",
       "title": "This is a test post"
+    },
+    {
+      "id": "this-is-a-test-post-2",
+      "date": "June 19, 2023",
+      "title": "This is a test post 2"
     }
   ]
 }

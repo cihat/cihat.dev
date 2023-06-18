@@ -7,11 +7,11 @@ import ToggleTheme from "@/components/ui/toggle-theme";
 
 import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
+import Link from "next/link";
 
 const MENU = {
-  "/": "Writing",
-  "/about": "About",
   "/projects": "Projects",
+  "/about": "About",
 } as any;
 
 export default function Header() {
@@ -27,19 +27,22 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="">
-      <Container className="flex justify-between px-0 select-none">
+    <header className="sm:items-start">
+      <Container className="flex justify-between px-0 select-none xs:items-start sm:items-center">
+        <Link href='/' className="font-bold drop-shadow-md">
+          Cihat Salik
+        </Link>
         <nav
           className={cx(
             isNavOpen ? "flex" : "hidden",
-            "flex-col gap-3 sm:!flex sm:flex-row"
+            "flex-col gap-3 sm:!flex sm:flex-row sm:items-start"
           )}
         >
           {Object.entries(MENU).map(([key, value]) => {
             const isActive = key === path;
             return (
               <span key={key}>
-                <NextLink href={key} className={cx("w", isActive ? "font-black" : "")}>
+                <NextLink href={key} className={cx("drop-shadow-xl text-zinc-900 dark:text-zinc-50", isActive ? "font-bold" : "")}>
                   {value as string}
                 </NextLink>
               </span>
@@ -49,7 +52,7 @@ export default function Header() {
         {!isNavOpen && (
           <button
             type="button"
-            className="flex select-none items-center sm:hidden"
+            className="flex select-none items-start sm:hidden"
             onClick={() => {
               setIsNavOpen(true);
             }}
