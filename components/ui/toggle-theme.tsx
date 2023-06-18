@@ -3,7 +3,6 @@
 // this component copy from https://github.com/rauchg/blog/blob/main/app/theme-toggle.tsx
 import { useEffect, useState, useCallback } from "react";
 import { themeEffect } from "@/lib/theme-effect";
-import va from "@vercel/analytics";
 import Container from "./container";
 
 export default function ThemeToggle() {
@@ -108,11 +107,6 @@ export default function ThemeToggle() {
           } else {
             localStorage.setItem("theme", newPreference);
           }
-
-          va.track("Theme toggle", {
-            Theme: newPreference === null ? "system" : newPreference,
-          });
-
           setPreference(newPreference);
         }}
         onMouseEnter={() => setIsHovering(true)}

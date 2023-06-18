@@ -1,7 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { themeEffect } from '@/lib/theme-effect'
-import { Analytics } from "./analytics";
 import { Metadata } from 'next'
 import Head from 'next/head'
 import { META_DATA, githubImage } from "@/lib/meta"
@@ -79,8 +78,6 @@ export default function RootLayout({
           <main className="mt-10 grow sm:mt-10">{children}</main>
           <Footer />
         </Container>
-
-        <Analytics />
       </body>
     </html>
   )

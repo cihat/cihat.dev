@@ -12,7 +12,6 @@
   "dependencies": {
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.4.6",
-    "@vercel/analytics": "^1.0.1",
     "autoprefixer": "10.4.14",
     "cheerio": "1.0.0-rc.12",
     "clsx": "^1.2.1",
