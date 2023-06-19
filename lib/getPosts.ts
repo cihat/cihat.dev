@@ -6,4 +6,4 @@ export type Post = {
   title: string;
 };
 
-export const getPosts = async () => postsData.posts.map((post): Post => post)
+export const getPosts = () => postsData.posts.map((post): Post => post)

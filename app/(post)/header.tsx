@@ -1,7 +1,6 @@
 "use client";
 
 import { useSelectedLayoutSegments } from "next/navigation";
-import { useEffect, useRef } from "react";
 import { ago } from "time-ago";
 import useSWR from "swr";
 import type { Post } from "@/lib/getPosts";
