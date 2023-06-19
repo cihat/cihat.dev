@@ -35,7 +35,7 @@ export default function Header() {
         <nav
           className={cx(
             isNavOpen ? "flex" : "hidden",
-            "flex-col gap-3 sm:!flex sm:flex-row sm:items-start"
+            "flex-col gap-3 sm:!flex sm:flex-row sm:items-start grow md:justify-center"
           )}
         >
           {Object.entries(MENU).map(([key, value]) => {
