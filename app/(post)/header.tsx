@@ -9,14 +9,11 @@ const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export function Header({ posts }: { posts: Post[] }) {
   const segments = useSelectedLayoutSegments();
-  // segments can be:
-  // date/post
-  // lang/date/post
   const initialPost = posts.find(
     post => post.id === segments[segments.length - 1]
   );
   const { data: post } = useSWR(
-    `/api/view?id=${initialPost?.id ?? ""}`,
+    `/api/post-detail?id=${initialPost?.id ?? ""}`,
     fetcher,
     {
       fallbackData: initialPost,
