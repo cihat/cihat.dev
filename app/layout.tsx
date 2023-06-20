@@ -1,4 +1,6 @@
 import './globals.css'
+import "@upstash/claps/style.css";
+
 import { Inter } from 'next/font/google'
 import { themeEffect } from '@/lib/theme-effect'
 import { Metadata } from 'next'

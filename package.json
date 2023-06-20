@@ -12,6 +12,7 @@
   "dependencies": {
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.4.6",
+    "@upstash/claps": "1.0.0-beta.4",
     "autoprefixer": "10.4.14",
     "cheerio": "1.0.0-rc.12",
     "clsx": "^1.2.1",
