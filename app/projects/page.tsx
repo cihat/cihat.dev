@@ -1,7 +1,7 @@
 
 import ProjectCards from "./projectCards";
 import { IPinnedProjects } from "@/types"
-import { getPinnedRepos } from "../api/getPinnedRepos";
+import { getPinnedRepos } from "@/lib/get-pinned-repos";
 
 const pinnedProjects: IPinnedProjects[] = [
   {
