@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPosts } from "@/lib/getPosts";
+import { getPosts } from "@/lib/get-posts";
 
 export const dynamic = "force-dynamic";
 

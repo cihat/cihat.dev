@@ -3,6 +3,8 @@ export const runtime = "edge";
 import postsData from "@/lib/posts.json";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import commaNumber from "comma-number"
+import redis from "@/lib/redis"
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -34,5 +36,19 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  return NextResponse.json(post);
+  if (url.searchParams.get("incr") != null) {
+    const views = await redis.hincrby("views", id, 1);
+    return NextResponse.json({
+      ...post,
+      views,
+      viewsFormatted: commaNumber(views),
+    });
+  } else {
+    const views = (await redis.hget("views", id)) ?? 0;
+    return NextResponse.json({
+      ...post,
+      views,
+      viewsFormatted: commaNumber(Number(views)),
+    });
+  }
 }
