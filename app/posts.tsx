@@ -32,7 +32,7 @@ export function Posts({ posts: initialPosts }) {
 
   return (
     <Suspense fallback={null}>
-      <main className="left-animation text-sm">
+      <main className="left-animation text-sm h-40v sm:h-70v">
         <header className="text-gray-500 dark:text-gray-600 flex items-center text-xs">
           <button
             onClick={sortDate}
