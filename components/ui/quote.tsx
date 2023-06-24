@@ -36,8 +36,7 @@ export function RandomQuote() {
 
   return (
     <Suspense fallback={null}>
-
-      <blockquote className={cx("relative text-md mt-10 transition-all ease-in-out duration-300", {
+      <blockquote className={cx("relative text-md md:mt-16 mt-8 transition-all ease-in-out duration-300", {
         "opacity-100": quote.text,
         "opacity-0": !quote.text
       })}>
