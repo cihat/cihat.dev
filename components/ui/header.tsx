@@ -42,7 +42,7 @@ export default function Header() {
             const isActive = key === path;
             return (
               <span key={key}>
-                <NextLink href={key} className={cx("drop-shadow-xl text-zinc-900 dark:text-zinc-50", isActive ? "font-bold" : "")}>
+                <NextLink href={key} className={cx("text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 rounded transition", isActive ? "bg-[#eceece] dark:bg-[#2a2a2a] p-2 rounded hover:" : "")}>
                   {value as string}
                 </NextLink>
               </span>
