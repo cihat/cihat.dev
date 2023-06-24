@@ -28,14 +28,14 @@ export default function Header() {
 
   return (
     <header className="sm:items-start">
-      <Container className="flex justify-between px-0 select-none xs:items-start sm:items-center">
+      <Container className="flex justify-between px-0 select-none sm:items-start sm:items-center">
         <Link href='/' className="font-bold drop-shadow-md">
           Cihat Salik
         </Link>
         <nav
           className={cx(
             isNavOpen ? "flex" : "hidden",
-            "flex-col gap-3 sm:!flex sm:flex-row sm:items-start grow sm:justify-center"
+            "flex-col gap-3 sm:!flex sm:flex-row items-center grow sm:justify-center"
           )}
         >
           {Object.entries(MENU).map(([key, value]) => {
@@ -52,7 +52,7 @@ export default function Header() {
         {!isNavOpen && (
           <button
             type="button"
-            className="flex select-none items-start sm:hidden"
+            className="flex items-start justify-center sm:hidden"
             onClick={() => {
               setIsNavOpen(true);
             }}

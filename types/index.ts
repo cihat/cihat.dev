@@ -22,3 +22,8 @@ export type IPinnedProjects = {
   stars: number;
   forks: number;
 }
+
+export type IQuote = {
+  text: string
+  author: string
+}
