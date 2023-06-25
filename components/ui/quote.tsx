@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode, useState, useCallback, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { IQuote } from "@/types"
 import cx from "@/lib/cx";
 
@@ -30,7 +30,10 @@ export function RandomQuote() {
   }
 
   useEffect(() => {
-    getQuote()
+    if (process.env.NODE_ENV === "development") {
+      setQuote(initalQuote)
+    }
+    else getQuote()
       .catch(console.error)
   }, [])
 
