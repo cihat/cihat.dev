@@ -22,7 +22,10 @@ const { title, description, url, } = META_DATA
 
 
 export const metadata: Metadata = {
-  title,
+  title: {
+    default: title,
+    template: `%s - ${title}`
+  },
   description,
   category: "technology",
   creator: title,

@@ -1,6 +1,6 @@
 export const META_DATA = {
-  title: "Cihat Salik's blog",
-  description: "Art lover, software engineer, creating things",
+  title: "Cihat Salik",
+  description: "Art enthusiast, software engineer, creating something.",
   url: "https://cihat.dev",
   email: "cihatsalik1@gmail.com",
   name: "Cihat Salik",
@@ -10,7 +10,6 @@ export const META_DATA = {
     twitter: "https://twitter.com/chtslk",
     github: "https://github.com/cihat",
   },
-  locale: "tr-TR",
 };
 
 export const githubImage = 'https://github.com/cihat.png'
