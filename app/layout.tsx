@@ -68,7 +68,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className={"no-scrollbar"}>
         <Container className="flex min-h-screen flex-col py-6" as="main">
           <Header />
           <main className="mt-10 grow sm:mt-10">{children}</main>
