@@ -24,8 +24,6 @@ export type IPinnedProjects = {
 }
 
 export type IQuote = {
-  quote: {
-    text: string
-    author: string
-  }
+  text: string
+  author: string
 }

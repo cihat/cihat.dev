@@ -1,10 +1,24 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { IQuote } from "@/types"
+import { useEffect } from "react";
+import getQuote from "@/lib/fetch-stoic-quote"
 import cx from "@/lib/cx";
 
-export function RandomQuote({ quote }: IQuote) {
+export function RandomQuote() {
+  const [quote, setQuote] = useState<IQuote>({
+    text: "",
+    author: ""
+  })
+
+  useEffect(() => {
+    (async () => {
+      const data = await getQuote()
+      setQuote(data)
+    })()
+  }, [])
+
   return (
     <Suspense fallback={null}>
       <blockquote className={cx("relative text-md md:mt-16 mt-8 transition-all ease-in-out duration-300", {

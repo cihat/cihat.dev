@@ -5,7 +5,7 @@ export default async function getQuote() {
 
   if (process.env.NODE_ENV === "development") return initalQuote
 
-  return await fetch(stoicApiPath, { method: "GET" })
+  return await fetch("https://stoic-quotes.com/api/quote", { method: "GET" })
     .then(res => res.json())
     .then(data => {
       if (!data) return initalQuote
