@@ -1,42 +1,10 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 import { IQuote } from "@/types"
 import cx from "@/lib/cx";
 
-const apiPath = "https://stoic-quotes.com/api/quote"
-
-const initalQuote = {
-  text: "Doing the biggest or the most of everything doesn't make you better. There is only one thing in the world. Thinking and questioning. If you think, question, and base your thoughts on scientific methodology, you will be the most successful in the world, somehow questioning.",
-  author: "Anonymous"
-}
-
-export function RandomQuote() {
-  const [quote, setQuote] = useState<IQuote>({
-    text: "",
-    author: ""
-  })
-
-  const getQuote = async () => {
-    return await fetch(apiPath, { method: "GET" })
-      .then(res => res.json())
-      .then(data => {
-        if (!data) setQuote(initalQuote)
-        else setQuote({
-          text: data.text,
-          author: data.author
-        })
-      })
-  }
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      setQuote(initalQuote)
-    }
-    else getQuote()
-      .catch(console.error)
-  }, [])
-
+export function RandomQuote({ quote }: IQuote) {
   return (
     <Suspense fallback={null}>
       <blockquote className={cx("relative text-md md:mt-16 mt-8 transition-all ease-in-out duration-300", {

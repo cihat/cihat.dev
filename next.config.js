@@ -18,11 +18,14 @@ const nextConfig = {
     ]
   },
   images: {
+    domains: [
+      "images.unsplash.com",
+    ],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'opengraph.githubassets.com',
-      },
+      }
     ],
   },
 }
