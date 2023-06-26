@@ -16,7 +16,7 @@ type Views = {
 
 export const getPosts = async () => {
   const allViews: null | Views = await redis.hgetall("views")
-  const posts = postsData.posts.map((post): Post => {
+  const posts = postsData.posts.map((post: Post) => {
     const views = Number(allViews?.[post.id] ?? 0)
     return {
       ...post,
