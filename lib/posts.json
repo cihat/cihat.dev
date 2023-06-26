@@ -1,14 +1,19 @@
 {
   "posts": [
     {
-      "id": "this-is-a-test-post",
-      "date": "June 18, 2023",
-      "title": "This is a test post"
+      "id": "artik-bisey-yapmali",
+      "date": "June 27, 2023",
+      "title": "Artık Bişey Yapmalı"
     },
     {
-      "id": "this-is-a-test-post-2",
-      "date": "June 19, 2023",
-      "title": "This is a test post 2"
+      "id": "fark-etmek",
+      "date": "June 28, 2023",
+      "title": "Fark Etmek"
+    },
+    {
+      "id": "bazen-bazi-seylerin-hicbir-onemi-yok",
+      "data": "June 29, 2023",
+      "title": "Bazen bazi seylerin hicbir bir onemi yok!"
     }
   ]
 }
