@@ -4,22 +4,15 @@ import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ToggleTheme from "@/components/ui/toggle-theme";
-
-import { useTranslation, Trans } from "react-i18next";
-
 import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
 import Link from "next/link";
-import { Oi } from "next/font/google";
-
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const { t } = useTranslation()
-
   const MENU = {
-    "/projects": t("projects"),
-    "/about": t("about"),
+    "/projects": "Projects",
+    "/about": "About",
   } as any;
 
   const pathname = usePathname();
@@ -37,9 +30,6 @@ export default function Header() {
         <Link href='/' className="font-bold drop-shadow-md">
           Cihat Salik
         </Link>
-        <Trans i18nKey={"description"}>
-          SElam naber nasinsin
-        </Trans>
         <nav
           className={cx(
             isNavOpen ? "flex" : "hidden",
