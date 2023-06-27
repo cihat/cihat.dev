@@ -1,4 +1,5 @@
 import './globals.css'
+import '@/i18n'
 
 import { Inter } from 'next/font/google'
 import { themeEffect } from '@/lib/theme-effect'
