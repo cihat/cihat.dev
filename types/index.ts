@@ -27,3 +27,12 @@ export type IQuote = {
   text: string
   author: string
 }
+
+export type Post = {
+  viewsFormatted: string;
+  views: number;
+  id: string;
+  date: string;
+  title: string;
+  language: string;
+}

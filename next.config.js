@@ -7,7 +7,7 @@ const nextConfig = {
     appDir: true,
     mdxRs: true,
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   poweredByHeader: false,
   headers() {
     return [

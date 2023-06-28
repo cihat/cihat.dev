@@ -1,16 +1,28 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Suspense } from "react";
 import useSWR from "swr";
+import type { Post } from "@/types";
 
 type SortSetting = ["date" | "views", "desc" | "asc"];
+enum LangEnum {
+  en = "en-US",
+  tr = "tr-TR",
+  all = "all"
+}
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export function Posts({ posts: initialPosts }) {
   const [sort, setSort] = useState<SortSetting>(["date", "desc"]);
+
+  // const userLang: LangEnum = navigator.language || navigator?.userLanguage as any;
+
+  const [lang, setLang] = useState<LangEnum>(LangEnum.all);
+  const [flag, setFlag] = useState("🇹🇷🇬🇧")
+
   const { data: posts } = useSWR("/api/posts", fetcher, {
     fallbackData: initialPosts,
     refreshInterval: 5000,
@@ -30,15 +42,35 @@ export function Posts({ posts: initialPosts }) {
     ]);
   }
 
+  function handleEmoji() {
+    switch (lang) {
+      case LangEnum.en: {
+        setFlag("🇹🇷🇬🇧")
+        setLang(LangEnum.all)
+        break;
+      }
+      case LangEnum.tr: {
+        setFlag("🇬🇧")
+        setLang(LangEnum.en)
+        break;
+      }
+      case LangEnum.all: {
+        setFlag("🇹🇷")
+        setLang(LangEnum.tr)
+        break;
+      }
+    }
+  }
+
   return (
     <Suspense fallback={null}>
       <main className="left-animation text-sm no-scrollbar sm:h-70v overflow-y-scroll">
-        <header className="text-gray-500 dark:text-gray-600 flex items-center text-xs">
+        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm">
           <button
             onClick={sortDate}
             className={`w-12 h-9 text-left  ${sort[0] === "date" && sort[1] !== "desc"
-                ? "text-gray-700 dark:text-gray-400"
-                : ""
+              ? "text-gray-700 dark:text-gray-400"
+              : ""
               }`}
           >
             date
@@ -59,15 +91,31 @@ export function Posts({ posts: initialPosts }) {
             views
             {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
           </button>
+
+          <button
+            onClick={handleEmoji}
+            className={`
+                  flex
+                  items-center
+                  justify-center
+                  h-9
+                  pl-4
+                  ${sort[0] === "views"
+                ? "text-gray-700 dark:text-gray-400"
+                : ""
+              }`}
+          >
+            Language: {flag}
+          </button>
         </header>
 
-        <List posts={posts} sort={sort} />
+        <List posts={posts} sort={sort} lang={lang} />
       </main>
     </Suspense>
   );
 }
 
-function List({ posts, sort }) {
+function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: LangEnum }) {
   // sort can be ["date", "desc"] or ["views", "desc"] for example
   const sortedPosts = useMemo(() => {
     const [sortKey, sortDirection] = sort;
@@ -79,8 +127,15 @@ function List({ posts, sort }) {
       } else {
         return sortDirection === "desc" ? b.views - a.views : a.views - b.views;
       }
-    });
-  }, [posts, sort]);
+    }).filter(post => {
+      if (lang === LangEnum.all) return post
+      if (post.language === lang) return post
+    })
+  }, [posts, sort, lang]);
+
+  if (!sortedPosts.length) return (
+    <p className="flex  justify-center items-center text-center  text-md mt-5">Coming soon</p>
+  )
 
 
   return (
