@@ -17,7 +17,8 @@ class Unsplash {
 
   async getRandomPhoto(): Promise<IRandomPhoto> {
     const url = `${this.base_url}/photos/random/${this.client_id}`
-    if (!this.photo?.urls || process.env.NODE_ENV !== "development") return await this.getData(url)
+    // if (!this.photo?.urls || process.env.NODE_ENV !== "development") return await this.getData(url)
+    if (process.env.NODE_ENV !== "development") return await this.getData(url)
     return dummyPhoto
   }
 }

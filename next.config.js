@@ -3,6 +3,10 @@ const withMDX = require("@next/mdx")();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  env: {
+    UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
+    STOIC_API_PATH: process.env.STOIC_API_PATH
+  },
   experimental: {
     appDir: true,
     mdxRs: true,

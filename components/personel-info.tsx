@@ -1,3 +1,5 @@
+"use client"
+
 import NextLink from "next/link";
 import Image from "next/image"
 import Container from "@/components/ui/container";
@@ -5,11 +7,8 @@ import "@/public/home-styles.css";
 import { BsLinkedin, BsGithub, BsMedium, BsInstagram, BsTwitter, BsMailbox, BsLink45Deg } from "react-icons/bs";
 
 import { IRandomPhoto } from "@/types/random-photo"
-
-
-type PersonelInfoProps = {
-  randomPhoto: IRandomPhoto
-}
+import unsplash from "@/lib/unsplash";
+import { useEffect, useState } from "react";
 
 type Link = {
   name: string;
@@ -49,8 +48,16 @@ const links: Link[] = [
   },
 ]
 
+export default function PersonelInfo() {
+  const [photo, setPhoto] = useState<IRandomPhoto | null>(null);
 
-export default function PersonelInfo({ randomPhoto: photo }: PersonelInfoProps) {
+  useEffect(() => {
+    (async () => {
+      const photo = await unsplash.getRandomPhoto() as IRandomPhoto
+      setPhoto(photo)
+    })()
+  }, [])
+
   return (
     <>
       <Container as="article" className="container flex flex-col items-start px-0 select-none">
@@ -77,18 +84,22 @@ export default function PersonelInfo({ randomPhoto: photo }: PersonelInfoProps) 
           </ul>
         </div>
       </Container>
-      <Container className="mt-20 p-0 flex flex-col items-center">
-        <Image priority
-          width={photo.width}
-          height={photo.height}
-          className="rounded-lg saturate-0 transition-all duration-700 hover:saturate-100"
-          alt={photo.alt_description}
-          layout="responsive"
-          src={photo.urls.regular} />
-        <figcaption className="mt-2 text-xs">
-          Photo by {photo.user.first_name} {photo.user.last_name} / Unsplash
-        </figcaption>
-      </Container>
+      {
+        photo && (
+          <Container className="mt-20 p-0 flex flex-col items-center">
+            <Image priority
+              width={photo?.width}
+              height={photo?.height}
+              className="rounded-lg saturate-0 transition-all duration-700 hover:saturate-100"
+              alt={photo?.alt_description}
+              layout="responsive"
+              src={photo?.urls?.regular} />
+            <figcaption className="mt-2 text-xs">
+              Photo by {photo?.user?.first_name} {photo?.user?.last_name} / Unsplash
+            </figcaption>
+          </Container>
+        )
+      }
     </>
   )
 
