@@ -96,7 +96,7 @@ export function Posts({ posts: initialPosts }) {
                   justify-center
                   h-9
                   text-md font-semibold
-                  w-32
+                  w-36
               }`}
           >
             Language: {flag}
