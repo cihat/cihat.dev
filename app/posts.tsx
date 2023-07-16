@@ -73,16 +73,6 @@ export function Posts({ posts: initialPosts }) {
           </button>
           <span className={`grow pl-2 mr-2 ${tabStyle}`}>Title</span>
           <button
-            onClick={sortViews}
-            className={`
-              ${tabStyle}
-              ${sort[0] === "views" && 'bg-[#FFD6A5] dark:bg-[#2a2a2a]'} h-9 text-md font-semibold mr-2
-            `}
-          >
-            Views
-            {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
-          </button>
-          <button
             onClick={handleEmoji}
             className={`
                   ${tabStyle}
@@ -94,9 +84,20 @@ export function Posts({ posts: initialPosts }) {
                   h-9
                   text-md font-semibold
                   w-36
+                  mr-2
               }`}
           >
             Language: {flag}
+          </button>
+          <button
+            onClick={sortViews}
+            className={`
+              ${tabStyle}
+              ${sort[0] === "views" && 'bg-[#FFD6A5] dark:bg-[#2a2a2a]'} h-9 text-md font-semibold
+            `}
+          >
+            Views
+            {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
           </button>
         </header>
 

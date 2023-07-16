@@ -11,7 +11,7 @@ export function Logo() {
       ) : (
         <Link
           href="/"
-          className="hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] p-2 rounded-sm -ml-2 transition-[background-color]"
+          className="hover:bg-[#eceece] dark:hover:bg-[#313131] active:bg-[#eceece] dark:active:bg-[#242424] p-2 rounded-sm -ml-2 transition-[background-color]"
         >
           Cihat Salik
         </Link>

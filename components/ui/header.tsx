@@ -11,7 +11,7 @@ import { Logo } from "../logo";
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const MENU = {
-    // "/reading": "Reading",
+    "/reading": "Reading",
     // "learning": "Learning",
     "/about": "About",
     "/projects": "Projects",

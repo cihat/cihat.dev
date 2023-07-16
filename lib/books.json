@@ -1,0 +1,44 @@
+{
+  "books": [
+    {
+      "title": "JavaScript Pro Design Patterns",
+      "alt": "JavaScript Pro Design Patterns",
+      "progress": 25,
+      "bookCover": "/books/javascript-pro-design-patterns.jpeg",
+      "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
+      "subtitle": "The Essentials of Object-Oriented JavaScript Programming",
+      "page": 308,
+      "author": "Ross Harmes, Dustin Diaz"
+    },
+    {
+      "title": "The Pragmatic Programmer",
+      "alt": "The Pragmatic Programmer",
+      "progress": 20,
+      "bookCover": "/books/the-pragratic-programmer.jpeg",
+      "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
+      "subtitle": "From Journeyman to Master",
+      "page": 321,
+      "author": "Andrew Hunt, David Thomas"
+    },
+    {
+      "title": "Clean Code",
+      "alt": "Clean Code",
+      "progress": 2,
+      "bookCover": "/books/clean-code.jpeg",
+      "link": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
+      "subtitle": "A Handbook of Agile Software Craftsmanship",
+      "page": 431,
+      "author": "Robert C. Martin"
+    },
+    {
+      "title": "Elooquent JavaScript",
+      "alt": "Elooquent JavaScript",
+      "progress": 5,
+      "bookCover": "/books/eloquent-javascript.jpeg",
+      "link": "https://www.amazon.com/Eloquent-JavaScript-2nd-Edition-Introduction/dp/1593275846",
+      "subtitle": "A Modern Introduction to Programming",
+      "page": 472,
+      "author": "Marijn Haverbeke"
+    }
+  ]
+}
