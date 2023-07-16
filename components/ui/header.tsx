@@ -6,13 +6,15 @@ import { usePathname } from "next/navigation";
 import ToggleTheme from "@/components/ui/toggle-theme";
 import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
-import Link from "next/link";
+import { Logo } from "../logo";
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const MENU = {
-    "/projects": "Projects",
     "/about": "About",
+    "/reading": "Reading",
+    "learning": "Learning",
+    "/projects": "Projects",
   } as any;
 
   const pathname = usePathname();
@@ -25,11 +27,9 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="sm:items-start">
-      <Container className="flex justify-between px-0 select-none sm:items-start sm:items-center">
-        <Link href='/' className="font-bold drop-shadow-md">
-          Cihat Salik
-        </Link>
+    <header className="sm:items-start p-4 pb-0">
+      <Container className="flex justify-between px-0 select-none sm:items-center">
+        <Logo />
         <nav
           className={cx(
             isNavOpen ? "flex" : "hidden",
