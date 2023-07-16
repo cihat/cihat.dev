@@ -1,25 +1,18 @@
 {
   "posts": [
     {
-      "id": "artik-bisey-yapmali",
-      "date": "June 27, 2023",
-      "title": "Artık Bişey Yapmalı",
+      "id": "initial-blog-post",
+      "date": "July 16, 2023",
+      "title": "Initial Blog Post",
+      "minuteToRead": 3,
+      "language": "en-US"
+    },
+    {
+      "id": "ilk-blog-yazisi",
+      "date": "July 16, 2023",
+      "title": "Ilk Blog Yazisi",
       "minuteToRead": 3,
       "language": "tr-TR"
-    },
-    {
-      "id": "fark-etmek",
-      "date": "June 28, 2023",
-      "title": "Article Title",
-      "minuteToRead": 6,
-      "language": "tr-TR"
-    },
-    {
-      "id": "english-article",
-      "date": "July 16, 2023",
-      "title": "English Article",
-      "minuteToRead": 7,
-      "language": "en-US"
     }
   ]
 }
