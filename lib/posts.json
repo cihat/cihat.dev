@@ -11,6 +11,12 @@
       "date": "June 28, 2023",
       "title": "Fark Etmek",
       "language": "tr-TR"
+    },
+    {
+      "id": "english-article",
+      "date": "July 16, 2023",
+      "title": "English Article",
+      "language": "en-US"
     }
   ]
 }

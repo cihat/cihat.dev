@@ -67,23 +67,25 @@ export function Posts({ posts: initialPosts }) {
       <main className="left-animation text-sm no-scrollbar sm:h-70v overflow-y-scroll">
         <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm py-1">
           <button
-            onClick={sortDate}
-            className={`${tabStyle} hover:bg-[#FF9B9B] w-12 h-9 text-left text-md font-semibold
-              }`}
-          >
-            Date
-            {sort[0] === "date" && sort[1] === "asc" && "↑"}
-          </button>
-          <span className={`grow pl-2 ${tabStyle}`}>Title</span>
-          <button
             onClick={sortViews}
             className={`
               ${tabStyle}
-              hover:bg-[#FFD6A5] h-9 text-md font-semibold
+              ${sort[0] === "views" && 'bg-[#FFD6A5]'} h-9 text-md font-semibold
             `}
           >
             Views
             {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
+          </button>
+          
+          <span className={`grow pl-2 ${tabStyle}`}>Title</span>
+
+          <button
+            onClick={sortDate}
+            className={`${tabStyle} 
+            ${sort[0] === "date" && 'bg-[#FF9B9B]'} w-13 h-9 text-left text-md font-semibold`}
+          >
+            Date
+            {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </button>
 
           <button
@@ -96,6 +98,7 @@ export function Posts({ posts: initialPosts }) {
                   justify-center
                   h-9
                   text-md font-semibold
+                  w-32
               }`}
           >
             Language: {flag}
