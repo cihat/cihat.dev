@@ -45,6 +45,8 @@ export function Header({ posts }: { posts: Post[] }) {
 
             <span className="mx-2">|</span>
           </span>
+          <span>{post.minuteToRead} mins</span>
+          &nbsp;|&nbsp;
 
           {/* since we will pre-render the relative time, over time it
            * will diverge with what the user relative time is, so we suppress the warning.

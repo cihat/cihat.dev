@@ -23,14 +23,14 @@ export default async function Projects() {
   const pinnedRepos = await getPinnedRepos() || pinnedProjects
 
   return (
-    <Container className="flex min-h-screen flex-col px-0" as="main" size="large">
+    <Container className="flex min-h-screen flex-col px-0" as="main">
       <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
         <h2 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
           Projects
         </h2>
       </div>
       <div className="py-1">
-        <h5 className="py-2">
+        <h5 className="pb-3">
           <span className="text-xl font-bold tracking-tight text-black dark:text-white">
             Open Source Projects
           </span>
@@ -38,7 +38,7 @@ export default async function Projects() {
         <OpenSourceProjectCards pinnedProjects={pinnedRepos} />
       </div>
 
-      <div className="py-1">
+      {/* <div className="py-1">
         <h5 className="py-2">
           <span className="text-xl font-bold tracking-tight text-black dark:text-white">
             Business Projects
@@ -51,7 +51,7 @@ export default async function Projects() {
             </h4>
           </div>
         </h5>
-      </div>
+      </div> */}
     </Container>
   )
 }
