@@ -65,44 +65,37 @@ export function Posts({ posts: initialPosts }) {
   return (
     <Suspense fallback={null}>
       <main className="left-animation text-sm no-scrollbar sm:h-70v overflow-y-scroll">
-        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm">
+        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm py-1">
           <button
             onClick={sortDate}
-            className={`w-12 h-9 text-left  ${sort[0] === "date" && sort[1] !== "desc"
-              ? "text-gray-700 dark:text-gray-400"
-              : ""
+            className={`${tabStyle} hover:bg-[#FF9B9B] w-12 h-9 text-left text-md font-semibold
               }`}
           >
-            date
+            Date
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </button>
-          <span className="grow pl-2">title</span>
+          <span className={`grow pl-2 ${tabStyle}`}>Title</span>
           <button
             onClick={sortViews}
             className={`
-                  h-9
-                  pl-4
-                  ${sort[0] === "views"
-                ? "text-gray-700 dark:text-gray-400"
-                : ""
-              }
-                `}
+              ${tabStyle}
+              hover:bg-[#FFD6A5] h-9 text-md font-semibold
+            `}
           >
-            views
+            Views
             {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
           </button>
 
           <button
             onClick={handleEmoji}
             className={`
+                  ${tabStyle}
+                  hover:bg-[#FFFEC4]
                   flex
                   items-center
                   justify-center
                   h-9
-                  pl-4
-                  ${sort[0] === "views"
-                ? "text-gray-700 dark:text-gray-400"
-                : ""
+                  text-md font-semibold
               }`}
           >
             Language: {flag}
@@ -134,7 +127,7 @@ function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: L
   }, [posts, sort, lang]);
 
   if (!sortedPosts.length) return (
-    <p className="flex  justify-center items-center text-center  text-md mt-5">Coming soon</p>
+    <p className="flex justify-center items-center text-center  text-md mt-5">Coming soon</p>
   )
 
 
@@ -151,15 +144,12 @@ function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: L
           <li key={post.id}>
             <Link href={`/${new Date(post.date).getFullYear()}/${post.id}`}>
               <span
-                className={`flex transition-[background-color] hover:bg-gray-100 dark:hover:bg-[#242424] active:bg-gray-200 dark:active:bg-[#222] border-y border-gray-200 dark:border-[#313131]
+                className={`flex px-2  transition-[background-color] hover:bg-gray-100 dark:hover:bg-[#242424] active:bg-gray-200 dark:active:bg-[#222] border-y border-gray-200 dark:border-[#313131]
                 ${!firstOfYear ? "border-t-0" : ""}
                 ${lastOfYear ? "border-b-0" : ""}
               `}
               >
-                <span
-                  className={`py-3 flex grow items-center ${!firstOfYear ? "ml-14" : ""
-                    }`}
-                >
+                <span className={`py-3 flex grow items-center ${!firstOfYear ? "ml-14" : ""}`}>
                   {firstOfYear && (
                     <span className="w-14 inline-block self-start shrink-0 text-gray-500 dark:text-gray-500">
                       {year}
@@ -183,4 +173,27 @@ function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: L
 
 function getYear(date: string) {
   return new Date(date).getFullYear();
+}
+
+const tabStyle = `p-2 rounded transition text-black dark:text-blue-500`
+
+const getRandomBGColor = () => {
+  const colorPalette = [
+    '#FF9B9B',
+    '#FFD6A5',
+    '#FFFEC4',
+    '#CBFFA9',
+    '#9BF6FF',
+    '#A0C4FF',
+    '#BDB2FF',
+    '#FFC6FF',
+    '#AAC8A7',
+    '#FFD8D8',
+    '#FFD8A8',
+    '#FFFFD8',
+    '#D8FFD8',
+    '#D8FFFF',
+    '#D8D8FF',
+  ]
+  return colorPalette[Math.floor(Math.random() * colorPalette.length)]
 }

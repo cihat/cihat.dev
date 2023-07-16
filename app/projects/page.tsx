@@ -2,6 +2,7 @@
 import ProjectCards from "./projectCards";
 import { IPinnedProjects } from "@/types"
 import { getPinnedRepos } from "@/lib/get-pinned-repos";
+import Container from "@/components/ui/container";
 
 const pinnedProjects: IPinnedProjects[] = [
   {
@@ -21,5 +22,9 @@ const pinnedProjects: IPinnedProjects[] = [
 export default async function Projects() {
   const pinnedRepos = await getPinnedRepos() || pinnedProjects
 
-  return <ProjectCards pinnedProjects={pinnedRepos} />
+  return (
+    <Container className="flex min-h-screen flex-col px-0" as="main">
+      <ProjectCards pinnedProjects={pinnedRepos} />
+    </Container>
+  )
 }

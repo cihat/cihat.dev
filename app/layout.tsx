@@ -6,7 +6,6 @@ import { Metadata } from 'next'
 import Head from 'next/head'
 import { META_DATA, githubImage } from "@/lib/meta"
 
-import Container from "@/components/ui/container"
 import Header from "@/components/ui/header"
 import Footer from "@/components/ui/footer"
 
@@ -72,11 +71,9 @@ export default function RootLayout({
         />
       </head>
       <body className={"no-scrollbar"}>
-        <Container className="flex min-h-screen flex-col py-6" as="main">
-          <Header />
-          <main className="mt-10 grow sm:mt-10">{children}</main>
-          <Footer />
-        </Container>
+        <Header />
+        <main className="mt-10 grow sm:mt-10">{children}</main>
+        <Footer />
       </body>
     </html>
   )
