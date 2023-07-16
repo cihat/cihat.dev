@@ -60,7 +60,7 @@ export default function PersonelInfo() {
 
   return (
     <>
-      <Container as="article" className="container flex flex-col items-start px-0 select-none">
+      <Container as="article" className="container flex flex-col items-start select-none">
         <h1 id="title" className="right-animation font-bold text-6xl" aria-label="">Hello 👋</h1>
         <p className="name left-animation" id="name_paragraph">My name is Cihat Salik.</p>
         <p className="right-animation">

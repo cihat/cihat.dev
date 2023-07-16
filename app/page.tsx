@@ -7,7 +7,7 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <Container className="flex min-h-screen flex-col py-6" as="main">
+    <Container className="flex flex-col h-[75vh] py-6" as="main">
       <Posts posts={posts}/>
       <RandomQuote />
     </Container>

@@ -11,9 +11,9 @@ import { Logo } from "../logo";
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const MENU = {
-    "/about": "About",
     // "/reading": "Reading",
     // "learning": "Learning",
+    "/about": "About",
     "/projects": "Projects",
   } as any;
 
@@ -50,13 +50,13 @@ export default function Header() {
         {!isNavOpen && (
           <button
             type="button"
-            className="flex items-start justify-center sm:hidden"
+            className="flex items-start justify-center sm:hidden p-2"
             onClick={() => {
               setIsNavOpen(true);
             }}
           >
             <span>{MENU[path]}</span>
-            &nbsp;↓
+            &nbsp;↓&nbsp;
           </button>
         )}
         <ToggleTheme />
