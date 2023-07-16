@@ -48,7 +48,7 @@ export default function ThemeToggle() {
   });
 
   return (
-    <div className="flex justify-end items-center w-24">
+    <div className="flex justify-end items-start md:items-center w-24">
       {isHovering && (
         <span
           className={`

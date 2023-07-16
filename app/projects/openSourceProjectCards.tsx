@@ -27,7 +27,7 @@ function Card(props: CardType) {
           <span className="w-3 h-3 rounded-full mr-1"
             style={{ backgroundColor: !languageColor ? "#f1e05a" : `${languageColor}` }}
           />
-          <p>{language}</p>
+          <span className="font-bold">{language}</span>
         </span>
         {
           stars > 0 ? <A href={`${link}/stargazers`} target="_blank" className="flex items-center mr-2  border-none hover:text-[#2f81f7] dark:hover:text-[#2f81f7]">
@@ -42,16 +42,16 @@ function Card(props: CardType) {
           </A> : null
         }
       </div>
-      <Image src={image} width={400} height={200} alt={repo} loading="lazy" />
+      <Image src={image} width={400} height={200} alt={repo} loading="lazy" className="w-full h-auto"/>
     </div>
   )
 }
 
-type ProjectCards = {
+type OpenSourceProjectCards = {
   pinnedProjects: IPinnedProjects[]
 }
 
-export default function ProjectCards(props: ProjectCards) {
+export default function OpenSourceProjectCards(props: OpenSourceProjectCards) {
   const { pinnedProjects } = props
 
   return (
