@@ -31,7 +31,7 @@ export default function Home() {
       </Head>
       <Container className="px-2 min-h-[80vh] md:px-4" size="large">
         <h1 className="py-8">
-          <span className="text-xl font-bold">I'm currently reading these books: </span>
+          <span className="text-xl font-bold">I&apos;m currently reading these books: </span>
         </h1>
         <section className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {
