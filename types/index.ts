@@ -35,4 +35,5 @@ export type Post = {
   date: string;
   title: string;
   language: string;
+  minuteToRead: number;
 }

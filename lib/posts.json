@@ -4,18 +4,21 @@
       "id": "artik-bisey-yapmali",
       "date": "June 27, 2023",
       "title": "Artık Bişey Yapmalı",
+      "minuteToRead": 3,
       "language": "tr-TR"
     },
     {
       "id": "fark-etmek",
       "date": "June 28, 2023",
-      "title": "Fark Etmek",
+      "title": "Article Title",
+      "minuteToRead": 6,
       "language": "tr-TR"
     },
     {
       "id": "english-article",
       "date": "July 16, 2023",
       "title": "English Article",
+      "minuteToRead": 7,
       "language": "en-US"
     }
   ]
