@@ -3,8 +3,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { themeEffect } from '@/lib/theme-effect'
 import { Metadata } from 'next'
-import Head from 'next/head'
-import { META_DATA, githubImage } from "@/lib/meta"
+import { META_DATA } from "@/lib/meta"
 
 import Header from "@/components/ui/header"
 import Footer from "@/components/ui/footer"
@@ -16,9 +15,7 @@ const inter = Inter({
   subsets: ["latin-ext"],
 });
 
-
 const { title, description, url, } = META_DATA
-
 
 export const metadata: Metadata = {
   title: {
@@ -47,7 +44,6 @@ export const metadata: Metadata = {
     width: 'device-width',
     initialScale: 1,
   },
-  themeColor: "transparent",
   metadataBase: new URL(url),
 };
 
@@ -64,6 +60,8 @@ export default function RootLayout({
       suppressHydrationWarning={true}
     >
       <head>
+        <meta name="theme-color" content="#eceece" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(${themeEffect.toString()})();`,

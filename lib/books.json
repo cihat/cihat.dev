@@ -1,44 +1,94 @@
 {
   "books": [
     {
-      "title": "JavaScript Pro Design Patterns",
-      "alt": "JavaScript Pro Design Patterns",
-      "progress": 25,
-      "bookCover": "/books/javascript-pro-design-patterns.jpeg",
-      "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
-      "subtitle": "The Essentials of Object-Oriented JavaScript Programming",
-      "page": 308,
-      "author": "Ross Harmes, Dustin Diaz"
-    },
-    {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "progress": 20,
+      "readedPage": 15,
+      "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
       "subtitle": "From Journeyman to Master",
-      "page": 321,
       "author": "Andrew Hunt, David Thomas"
     },
     {
-      "title": "Clean Code",
-      "alt": "Clean Code",
-      "progress": 2,
-      "bookCover": "/books/clean-code.jpeg",
-      "link": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
-      "subtitle": "A Handbook of Agile Software Craftsmanship",
-      "page": 431,
-      "author": "Robert C. Martin"
+      "title": "JavaScript Pro Design Patterns",
+      "alt": "JavaScript Pro Design Patterns",
+      "readedPage": 15,
+      "page": 308,
+      "bookCover": "/books/javascript-pro-design-patterns.jpeg",
+      "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
+      "subtitle": "The Essentials of Object-Oriented JavaScript Programming",
+      "author": "Ross Harmes, Dustin Diaz"
     },
     {
       "title": "Elooquent JavaScript",
       "alt": "Elooquent JavaScript",
-      "progress": 5,
+      "readedPage": 0,
+      "page": 472,
       "bookCover": "/books/eloquent-javascript.jpeg",
       "link": "https://www.amazon.com/Eloquent-JavaScript-2nd-Edition-Introduction/dp/1593275846",
       "subtitle": "A Modern Introduction to Programming",
-      "page": 472,
       "author": "Marijn Haverbeke"
+    },
+    {
+      "title": "The Creative Act: A Way of Being",
+      "alt": "The Creative Act: A Way of Being",
+      "readedPage": 0,
+      "page": 144,
+      "bookCover": "/books/the-creative-act-a-way-of-being.jpeg",
+      "link": "https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886",
+      "subtitle": "A Way of Being",
+      "author": "Burgert A. Senekal"
+    },
+    {
+      "title": "Clean Code",
+      "alt": "Clean Code",
+      "readedPage": 0,
+      "page": 431,
+      "bookCover": "/books/clean-code.jpeg",
+      "link": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
+      "subtitle": "A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin"
+    },
+    {
+      "title": "Funcional JavaScript",
+      "alt": "Funcional JavaScript",
+      "readedPage": 0,
+      "page": 260,
+      "bookCover": "/books/funcional-javascript.jpeg",
+      "link": "https://www.amazon.com/Functional-JavaScript-Introducing-Programming-Underscore-js/dp/1449360726",
+      "subtitle": "Introducing Functional Programming with Underscore.js",
+      "author": "Michael Fogus"
+    },
+    {
+      "title": "Effective JavaScript",
+      "alt": "Effective JavaScript",
+      "readedPage": 0,
+      "page": 240,
+      "bookCover": "/books/effective-javascript.jpeg",
+      "link": "https://www.amazon.com/Effective-JavaScript-Specific-Software-Development/dp/0321812182",
+      "subtitle": "68 Specific Ways to Harness the Power of JavaScript",
+      "author": "David Herman"
+    },
+    {
+      "title": "Körlük",
+      "alt": "Körlük",
+      "readedPage": 0,
+      "page": 360,
+      "bookCover": "/books/korluk.jpeg",
+      "link": "https://www.amazon.com/K%C3%B6rl%C3%BCk-Jose-Saramago/dp/9750706970",
+      "subtitle": "Jose Saramago",
+      "author": "Jose Saramago"
+    },
+    {
+      "title": "Karısını Şapka Sanan Adam",
+      "alt": "Karısını Şapka Sanan Adam",
+      "readedPage": 0,
+      "page": 144,
+      "bookCover": "/books/karisini-sapka-sanam-adam.jpeg",
+      "link": "https://www.amazon.com/Kar%C4%B1s%C4%B1n%C4%B1-%C5%9Eapka-Sanan-Adam/dp/9750706970",
+      "subtitle": "Oliver Sacks",
+      "author": "Oliver Sacks"
     }
   ]
 }

@@ -88,6 +88,9 @@ export default function PersonelInfo() {
         photo && (
           <Container className="mt-20 p-0 flex flex-col items-center">
             <Image priority
+              placeholder="blur"
+              quality={100}
+              blurDataURL={photo?.urls?.small}      
               width={photo?.width}
               height={photo?.height}
               className="rounded-lg saturate-0 transition-all duration-700 hover:saturate-100"

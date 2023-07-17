@@ -50,7 +50,7 @@ export default function Header() {
         {!isNavOpen && (
           <button
             type="button"
-            className="flex items-start justify-center sm:hidden p-2"
+            className="flex items-start justify-center sm:hidden p-2 pt-0"
             onClick={() => {
               setIsNavOpen(true);
             }}
