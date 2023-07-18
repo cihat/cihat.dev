@@ -9,6 +9,7 @@ import Header from "@/components/ui/header"
 import Footer from "@/components/ui/footer"
 import Head from 'next/head'
 import GoogleAnalytics from '@/components/google-analytics'
+import { VercelAnalytics } from "./vercel-analytics";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -76,6 +77,7 @@ export default function RootLayout({
         <main className="mt-10 grow sm:mt-10">{children}</main>
         <Footer />
         <GoogleAnalytics />
+        <VercelAnalytics />
       </body>
     </html>
   )
