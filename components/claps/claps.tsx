@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
 import cx from "classnames";
 import Icons from "./icons";
 import "./style.css"
+import { usePathname } from "next/navigation";
 
 const REACTION_DURATION = 600;
 
@@ -51,6 +52,7 @@ export default function Claps({
     totalUsers: 0,
     maxClaps: 0,
   });
+  const pathname = usePathname();
 
   const setReactionAnim = (reaction: ReactionClass) => {
     setReaction(reaction);
@@ -127,8 +129,19 @@ export default function Claps({
   };
 
   useEffect(() => {
+    if(!pathname) return;
     getData();
-  }, []);
+
+    return () => {
+      setReady(false);
+      setData({
+        totalScore: 0,
+        userScore: 0,
+        totalUsers: 0,
+        maxClaps: 0,
+      })
+    }
+  }, [pathname])
 
   return (
     <div

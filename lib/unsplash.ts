@@ -9,14 +9,13 @@ class Unsplash {
   async getData(url): Promise<IRandomPhoto> {
     const res = await fetch(url, {
       method: "GET",
-
     })
 
     return await res.json();
   }
 
   async getRandomPhoto(): Promise<IRandomPhoto> {
-    const url = `${this.base_url}/photos/random/${this.client_id}`
+    const url = `${this.base_url}/photos/random/${this.client_id}&query=natural,landscape,designer,design,art,artist,illustration,illustrator,graphic,graphic design,graphic designer,web,web design,web designer,ui,ux,ui/ux,ui design,ux design,ui/ux design,ui designer`;
     // if (!this.photo?.urls || process.env.NODE_ENV !== "development") return await this.getData(url)
     if (process.env.NODE_ENV !== "development") return await this.getData(url)
     return dummyPhoto
