@@ -51,7 +51,6 @@ export default function Claps({
     totalUsers: 0,
     maxClaps: 0,
   });
-  const [postId, setPostId] = useState<string>("");
 
   const setReactionAnim = (reaction: ReactionClass) => {
     setReaction(reaction);
@@ -62,17 +61,20 @@ export default function Claps({
 
   const onClapSaving = useCallback(
     debounce(async (score, data) => {
+      const url = window.location.pathname
+      const postId = url.substring(url.lastIndexOf('/') + 1);
+
       try {
-        if (data.userScore >= data.maxClaps) {
+        if (score >= data.maxClaps) {
           return setReactionAnim(ReactionClass.no);
         }
 
-        const response = await fetch(`/api/claps?id=${postId}`, {
-          method: "PATCH",
+        const url = `/api/claps?score=${score}&id=${encodeURIComponent(postId)}`
+        const response = await fetch(url, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ score, key,postId }),
+          }
         });
 
         if (!response.ok) {
@@ -100,10 +102,16 @@ export default function Claps({
   };
 
   const getData = async () => {
+    const url = window.location.pathname
+    const postId = url.substring(url.lastIndexOf('/') + 1);
+
     try {
-      const response = await fetch(`/api/claps`, {
-        method: "POST",
-        body: JSON.stringify({ postId })
+      const url = "/api/claps?id=" + encodeURIComponent(postId)
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       if (!response.ok) return;
@@ -119,10 +127,6 @@ export default function Claps({
   };
 
   useEffect(() => {
-    const url = window.location.pathname
-    const postId = url.substring(url.lastIndexOf('/') + 1);
-    setPostId(postId)
-
     getData();
   }, []);
 

@@ -15,7 +15,7 @@ export default async function Layout({ children }) {
         <Header posts={posts} />
         {children}
         <Pagination />
-        <ClapsButton url={"https://twitter.com/chtslk/status/1667095892762021888"} />
+        <ClapsButton url={"https://twitter.com/chtslk/status/1681445140261642240"} />
       </Container>
     </article>
   );
