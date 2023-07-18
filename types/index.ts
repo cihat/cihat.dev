@@ -37,3 +37,8 @@ export type Post = {
   language: string;
   minuteToRead: number;
 }
+
+export type Pagination = {
+  prev: Post | null;
+  next: Post | null;
+}

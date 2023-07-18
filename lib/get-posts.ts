@@ -7,7 +7,7 @@ type Views = {
   [key: string]: string
 }
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPostsWithViewData = async (): Promise<Post[]> => {
   const allViews: null | Views = await redis.hgetall("views")
   const posts = postsData.posts.map((post: Post) => {
     const views = Number(allViews?.[post.id] ?? 0)
@@ -19,4 +19,8 @@ export const getPosts = async (): Promise<Post[]> => {
   })
 
   return posts
+}
+
+export const getPosts = () => {
+  return postsData.posts
 }
