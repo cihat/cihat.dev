@@ -5,7 +5,12 @@ const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   env: {
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
-    STOIC_API_PATH: process.env.STOIC_API_PATH
+    UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,
+    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    STOIC_API_PATH: process.env.STOIC_API_PATH,
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
+    BASE_URL: process.env.BASE_URL,
   },
   experimental: {
     appDir: true,
