@@ -24,8 +24,6 @@ export async function POST(req: NextRequest & NextApiRequest & Request) {
 export async function PATCH(req: NextApiRequest & NextRequest, res: NextResponse) {
   const { score, key, postId } = await req.json();
 
-  console.log('key', key)
-
   const RAW_IP = getIP(req);
   const KEY = generateKey(req, postId);
   const HASH_IP = generateHash(RAW_IP);

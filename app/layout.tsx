@@ -56,7 +56,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  console.log('process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS)
   return (
     <html
       lang="en"
@@ -64,19 +63,17 @@ export default function RootLayout({
       suppressHydrationWarning={true}
     >
       <Head>
-        <meta name="theme-color" content="#eceece" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(${themeEffect.toString()})();`,
           }}
         />
+        <GoogleAnalytics />
       </Head>
       <body className={"no-scrollbar"}>
         <Header />
         <main className="mt-10 grow sm:mt-10">{children}</main>
         <Footer />
-        <GoogleAnalytics />
         <VercelAnalytics />
       </body>
     </html>

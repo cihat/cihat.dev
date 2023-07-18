@@ -11,6 +11,7 @@ const nextConfig = {
     STOIC_API_PATH: process.env.STOIC_API_PATH,
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     BASE_URL: process.env.BASE_URL,
+    VERCEL_URL: process.env.VERCEL_URL,
   },
   experimental: {
     appDir: true,
