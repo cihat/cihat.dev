@@ -7,6 +7,8 @@ import { META_DATA } from "@/lib/meta"
 
 import Header from "@/components/ui/header"
 import Footer from "@/components/ui/footer"
+import Head from 'next/head'
+import GoogleAnalytics from '@/components/google-analytics'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -53,13 +55,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  console.log('process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS)
   return (
     <html
       lang="en"
       className={`${inter.className} antialiased`}
       suppressHydrationWarning={true}
     >
-      <head>
+      <Head>
         <meta name="theme-color" content="#eceece" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         <script
@@ -67,11 +70,12 @@ export default function RootLayout({
             __html: `(${themeEffect.toString()})();`,
           }}
         />
-      </head>
+      </Head>
       <body className={"no-scrollbar"}>
         <Header />
         <main className="mt-10 grow sm:mt-10">{children}</main>
         <Footer />
+        <GoogleAnalytics />
       </body>
     </html>
   )
