@@ -8,7 +8,6 @@ import { META_DATA } from "@/lib/meta"
 import Header from "@/components/ui/header"
 import Footer from "@/components/ui/footer"
 import Head from 'next/head'
-import GoogleAnalytics from '@/components/google-analytics'
 import { VercelAnalytics } from "./vercel-analytics";
 
 const inter = Inter({
@@ -68,7 +67,6 @@ export default function RootLayout({
             __html: `(${themeEffect.toString()})();`,
           }}
         />
-        <GoogleAnalytics />
       </Head>
       <body className={"no-scrollbar"}>
         <Header />
