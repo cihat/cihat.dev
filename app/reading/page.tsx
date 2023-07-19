@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <Container className="px-2 min-h-[80vh] max-w-screen-2xl md:px-4">
+      <Container className="px-2 min-h-[80vh] max-w-screen-2xl md:px-4 left-animation">
         <h1 className="py-8">
           <span className="text-xl font-bold">I&apos;m currently reading these books: </span>
         </h1>

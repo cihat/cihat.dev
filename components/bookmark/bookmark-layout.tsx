@@ -17,7 +17,7 @@ export default function BookmarkLayout({
   );
 
   return (
-    <Container className="min-h-[80vh]">
+    <Container className="min-h-[80vh] left-animation">
       <Title>{title}</Title>
 
       {sortedData.map((date) => (

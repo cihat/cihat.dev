@@ -25,6 +25,17 @@ function BookmarkCard({ bookmark }: { bookmark: ILink }) {
             })}
           </span>
         </div>
+        {
+          bookmark.excerpt && (
+            <h4 className="cut_text">
+              {
+                bookmark.excerpt.length > 200
+                  ? `${bookmark.excerpt.slice(0, 200)}...`
+                  : bookmark.excerpt
+              }
+            </h4>
+          )
+        }
       </article>
     </Container>
   );

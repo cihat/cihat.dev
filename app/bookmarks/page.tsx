@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: ""
 };
 
-export const revalidate = 7200; // 60*60*2 2 hours
+export const revalidate = 10; // 60*60*2 2 hours
 
 async function fetchData() {
   const dateStartOfWeek = startOfWeek(new Date());
