@@ -6,7 +6,6 @@ import Image from "next/image";
 import Container from "../ui/container";
 
 function BookmarkCard({ bookmark }: { bookmark: ILink }) {
-  console.log(bookmark, 'bookmark')
   return (
     <Container className="flex justify-start mb-2 py-2">
       <Link href={bookmark.link} className="flex-shrink-0 project-card">

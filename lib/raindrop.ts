@@ -45,8 +45,6 @@ export default class Raindrop {
     });
     const data: Result = await response.json();
 
-    console.log('url.toString()', url.toString(), this.token, data)
-
     if (data?.items?.length === perPage) {
       return data?.items?.concat(
         await this.getBookmark({

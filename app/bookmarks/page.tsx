@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: ""
 };
 
-export const revalidate = 30; // 60*60*2
+export const revalidate = 7200; // 60*60*2 2 hours
 
 async function fetchData() {
   const dateStartOfWeek = startOfWeek(new Date());
@@ -20,13 +20,7 @@ async function fetchData() {
   const collections: ILink[] = await raindrop.getBookmark({
     search: `created:>${date}`,
   });
-
-
-  console.log(collections, 'collections');
-
   const data = bookmarkGroupByWeekNumber(collections);
-
-  console.log('data', data)
 
   return {
     data,
