@@ -7,7 +7,6 @@ import { META_DATA } from "@/lib/meta"
 
 import Header from "@/components/ui/header"
 import Footer from "@/components/ui/footer"
-import Head from 'next/head'
 import { VercelAnalytics } from "./vercel-analytics";
 
 const inter = Inter({
@@ -61,13 +60,13 @@ export default function RootLayout({
       className={`${inter.className} antialiased`}
       suppressHydrationWarning={true}
     >
-      <Head>
+      <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `(${themeEffect.toString()})();`,
           }}
         />
-      </Head>
+      </head>
       <body className={"no-scrollbar"}>
         <Header />
         <main className="mt-10 grow sm:mt-10">{children}</main>

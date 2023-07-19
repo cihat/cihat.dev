@@ -55,7 +55,7 @@ export default function OpenSourceProjectCards(props: OpenSourceProjectCards) {
   const { pinnedProjects } = props
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 top-animation">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {
         pinnedProjects.map((project: any) =>
           <Card project={project} key={project.repo} />)

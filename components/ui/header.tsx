@@ -12,6 +12,7 @@ export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const MENU = {
     "/reading": "Reading",
+    "/bookmarks": "Bookmarks",
     // "learning": "Learning",
     "/about": "About",
     "/projects": "Projects",

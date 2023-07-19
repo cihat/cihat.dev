@@ -9,9 +9,9 @@ const nextConfig = {
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     STOIC_API_PATH: process.env.STOIC_API_PATH,
-    NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     BASE_URL: process.env.BASE_URL,
     VERCEL_URL: process.env.VERCEL_URL,
+    RAINDROP_ACCESS_TOKEN: process.env.RAINDROP_ACCESS_TOKEN,
   },
   experimental: {
     appDir: true,
@@ -28,14 +28,11 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: [
-      "images.unsplash.com",
-    ],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'opengraph.githubassets.com',
-      }
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
 }

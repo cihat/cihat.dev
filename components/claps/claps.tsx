@@ -126,7 +126,7 @@ export default function Claps({
     } finally {
       setReady(true);
     }
-  };
+  };  
 
   useEffect(() => {
     if(!pathname) return;
