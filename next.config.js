@@ -41,6 +41,7 @@ const domains = [
   'cdn.vercel-insights.com',
   'vercel.live',
   'va.vercel-scripts.com',
+  'vitals.vercel-insights.com',
 ]
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
