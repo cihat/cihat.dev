@@ -7,11 +7,11 @@ import Container from "../ui/container";
 
 function BookmarkCard({ bookmark }: { bookmark: ILink }) {
   return (
-    <Container className="flex justify-start mb-2 py-2">
+    <Container className="flex flex-col md:flex-row justify-center items-start md:justify-start mb-2 py-2">
       <Link href={bookmark.link} className="flex-shrink-0 project-card">
         <Image src={bookmark.cover} alt={bookmark.title} width={300} height={300} className="rounded" />
       </Link>
-      <article className="ml-6">
+      <article className="ml-0 mt-2 md:mt-0 md:ml-6">
         <h3 className="shine font-semibold">
           <Link href={bookmark.link}>{bookmark.title}</Link>
         </h3>
