@@ -57,10 +57,8 @@ export default function ThemeToggle() {
             mr-4
             text-[9px]
             text-gray-400
-
             /* mobile */
             hidden
-
             md:inline
           `}
         >
@@ -118,10 +116,10 @@ export default function ThemeToggle() {
         }}
       >
         <span className="sun-icon">
-          <Image width={16} height={16} src="/icons/sun.png" alt="sun" />
+          <Image width={16} height={16} src="/icons/sun.png" alt="sun" priority />
         </span>
         <span className="moon-icon">
-          <Image width={16} height={16} src="/icons/moon.png" alt="sun" />
+          <Image width={16} height={16} src="/icons/moon.png" alt="sun" priority />
         </span>
       </button>
     </div>

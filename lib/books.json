@@ -3,7 +3,7 @@
     {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "readedPage": 25,
+      "readedPage": 30,
       "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
@@ -23,12 +23,62 @@
     {
       "title": "Elooquent JavaScript",
       "alt": "Elooquent JavaScript",
-      "readedPage": 0,
+      "readedPage": 25,
       "page": 472,
       "bookCover": "/books/eloquent-javascript.jpeg",
       "link": "https://www.amazon.com/Eloquent-JavaScript-2nd-Edition-Introduction/dp/1593275846",
       "subtitle": "A Modern Introduction to Programming",
       "author": "Marijn Haverbeke"
+    },
+    {
+      "title": "Atomic Habits",
+      "alt": "Atomic Habits",
+      "readedPage": 174,
+      "page": 320,
+      "bookCover": "/books/atomic-habits.jpg",
+      "link": "https://www.amazon.com/Atomic-Habits-Proven-Build-Break/dp/0735211299",
+      "subtitle": "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+      "author": "James Clear"
+    },
+    {
+      "title": "Deep Work",
+      "alt": "Deep Work",
+      "readedPage": 0,
+      "page": 304,
+      "bookCover": "/books/deep-work.jpg",
+      "link": "https://www.amazon.com/Deep-Work-Focused-Success-Distracted/dp/1455586692",
+      "subtitle": "Rules for Focused Success in a Distracted World",
+      "author": "Cal Newport"
+    },
+    {
+      "title": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
+      "alt": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
+      "readedPage": 0,
+      "page": 400,
+      "bookCover": "/books/nicin-uyuruz.jpg",
+      "link": "https://www.amazon.com.tr/gp/product/6052996307/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",
+      "subtitle": "Matthew Walker",
+      "author": "Matthew Walker"
+    },
+    {
+      "title": "Gece Yarısı Kütüphanesi",
+      "alt": "Gece Yarısı Kütüphanesi",
+      "readedPage": 0,
+      "page": 283,
+      "bookCover": "/books/gece-yarisi-kutuphanesi.jpg",
+      "link": "https://www.amazon.com.tr/gp/product/6051981837/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1",
+      "subtitle": "Matt Haig",
+      "author": "Matt Haig"
+    },
+    {
+      "title": "İnsanlığımı Yitirirken",
+      "alt": "İnsanlığımı Yitirirken",
+      "readedPage": 0,
+      "page": 128,
+      "bookCover": "/books/insanligimi-yitirirken.jpg",
+      "link": "https://www.amazon.com.tr/gp/product/6258401473/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",
+      "subtitle": "Osamu Dazai",
+      "author": "Osamu Dazai"
     },
     {
       "title": "The Creative Act: A Way of Being",
