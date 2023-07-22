@@ -26,7 +26,7 @@ export default function PrivacyPolicyLayout() {
             Güvenliğiniz bizim için önemli. Bu sebeple bizimle paylaşacağınız kişisel verileriz hassasiyetle korunmaktadır.
           </P>
           <P>
-            Biz, -, veri sorumlusu olarak, bu gizlilik ve kişisel verilerin korunması politikası ile,
+            Biz, Cedenes, veri sorumlusu olarak, bu gizlilik ve kişisel verilerin korunması politikası ile,
             hangi kişisel verilerinizin hangi amaçla işleneceği, işlenen verilerin kimlerle ve neden paylaşılabileceği,
             veri işleme yöntemimiz ve hukuki sebeplerimiz ile; işlenen verilerinize ilişkin haklarınızın neler olduğu
             hususunda sizleri aydınlatmayı amaçlıyoruz.
@@ -92,7 +92,7 @@ export default function PrivacyPolicyLayout() {
             lütfen unutmayınız.
           </P>
           <P>
-            cihat.dev web sitesi - tarafından yönetilmekte olup, bundan sonra SİTE olarak anılacaktır.
+            cihat.dev web sitesi Cedenes tarafından yönetilmekte olup, bundan sonra SİTE olarak anılacaktır.
             İşbu siteye ilişkin Kullanım Koşulları, yayınlanmakla yürürlüğe girer.
             Değişiklik yapma hakkı, tek taraflı olarak SİTE'ye aittir ve
             SİTE üzerinden güncel olarak paylaşılacak olan bu değişiklikleri,
@@ -107,17 +107,13 @@ export default function PrivacyPolicyLayout() {
           </P>
           <H2>Hizmet Kapsamı</H2>
           <P>
-            - olarak, sunacağımız hizmetlerin kapsamını ve niteliğini, yasalar
+            Cedenes olarak, sunacağımız hizmetlerin kapsamını ve niteliğini, yasalar
             çerçevesinde belirlemekte tamamen serbest olup; hizmetlere ilişkin yapacağımız
             değişiklikler, SİTE'de yayınlanmakla yürürlüğe girmiş sayılacaktır.
           </P>
           <H2>Telif Hakları</H2>
           <P>
-            SİTE'de yayınlanan tüm metin, kod, grafikler,
-            logolar, resimler, ses dosyaları ve kullanılan yazılımın sahibi
-            (bundan böyle ve daha sonra "içerik" olarak anılacaktır) - olup,
-            tüm hakları saklıdır. Yazılı izin olmaksızın site içeriğinin çoğaltılması veya kopyalanması
-            kesinlikle yasaktır.
+            SİTE'de yayınlanan tüm metin, kod, grafikler, logolar, resimler, ses dosyaları ve kullanılan yazılımın sahibi (bundan böyle ve daha sonra "içerik" olarak anılacaktır) Cedenes olup, tüm hakları saklıdır. Yazılı izin olmaksızın site içeriğinin çoğaltılması veya kopyalanması kesinlikle yasaktır.
           </P>
           <H2>Genel Hükümler</H2>
           <ul>
@@ -177,15 +173,10 @@ export default function PrivacyPolicyLayout() {
         <TabsContent value="cookie-policy"><H1>Çerez Politikası</H1>
           <P>Son güncellenme: 22/07/2023</P>
           <P>
-            Biz, -, olarak güvenliğinize önem veriyor ve bu Çerez Politikası ile siz
-            sevgili ziyaretçilerimizi, web sitemizde hangi çerezleri, hangi amaçla kullandığımız
-            ve çerez ayarlarınızı nasıl değiştireceğiniz konularında kısaca bilgilendirmeyi hedefliyoruz.
+            Biz, Cedenes, olarak güvenliğinize önem veriyor ve bu Çerez Politikası ile siz sevgili ziyaretçilerimizi, web sitemizde hangi çerezleri, hangi amaçla kullandığımız ve çerez ayarlarınızı nasıl değiştireceğiniz konularında kısaca bilgilendirmeyi hedefliyoruz.
           </P>
           <P>
-            Sizlere daha iyi hizmet verebilmek adına, çerezler vasıtasıyla, ne tür kişisel verilerinizin
-            hangi amaçla toplandığı ve nasıl işlendiği konularında, kısaca bilgi sahibi olmak için lütfen
-            bu Çerez Politikasını okuyunuz. Daha fazla bilgi için Gizlilik Politikamıza göz atabilir ya da
-            bizlerle çekinmeden iletişime geçebilirsiniz.
+            Sizlere daha iyi hizmet verebilmek adına, çerezler vasıtasıyla, ne tür kişisel verilerinizin hangi amaçla toplandığı ve nasıl işlendiği konularında, kısaca bilgi sahibi olmak için lütfen bu Çerez Politikasını okuyunuz. Daha fazla bilgi için Gizlilik Politikamıza göz atabilir ya da bizlerle çekinmeden iletişime geçebilirsiniz.
           </P>
           <H2>Çerez Nedir?</H2>
           <P>
