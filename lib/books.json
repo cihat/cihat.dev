@@ -3,7 +3,7 @@
     {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "readedPage": 30,
+      "readedPage": 35,
       "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
@@ -13,7 +13,7 @@
     {
       "title": "JavaScript Pro Design Patterns",
       "alt": "JavaScript Pro Design Patterns",
-      "readedPage": 15,
+      "readedPage": 30,
       "page": 308,
       "bookCover": "/books/javascript-pro-design-patterns.jpeg",
       "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
@@ -23,7 +23,7 @@
     {
       "title": "Elooquent JavaScript",
       "alt": "Elooquent JavaScript",
-      "readedPage": 25,
+      "readedPage": 100,
       "page": 472,
       "bookCover": "/books/eloquent-javascript.jpeg",
       "link": "https://www.amazon.com/Eloquent-JavaScript-2nd-Edition-Introduction/dp/1593275846",
@@ -93,7 +93,7 @@
     {
       "title": "Clean Code",
       "alt": "Clean Code",
-      "readedPage": 0,
+      "readedPage": 20,
       "page": 431,
       "bookCover": "/books/clean-code.jpeg",
       "link": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
