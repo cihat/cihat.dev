@@ -18,7 +18,7 @@ import { Caption } from "app/(post)/components/caption";
 import { Callout } from "app/(post)/components/callout";
 import { YouTube } from "app/(post)/components/youtube";
 import { Ref, FootNotes, FootNote } from "app/(post)/components/footnotes";
-import { Blockquote as blockquote } from "app/(post)/components/blockquote";
+import { Blockquote } from "app/(post)/components/blockquote";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -37,7 +37,7 @@ export function useMDXComponents(components: {
     code,
     pre: Snippet,
     img: Image,
-    blockquote,
+    Blockquote,
     Tweet,
     Image,
     Figure,
