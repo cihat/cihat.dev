@@ -17,8 +17,8 @@ const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export function Posts({ posts: initialPosts }) {
   const [sort, setSort] = useState<SortSetting>(["date", "desc"]);
-  const [lang, setLang] = useState<LangEnum>(LangEnum.en);
-  const [flag, setFlag] = useState("🇬🇧")
+  const [lang, setLang] = useState<LangEnum>(LangEnum.all);
+  const [flag, setFlag] = useState("🇹🇷🇬🇧")
 
   const { data: posts } = useSWR("/api/posts", fetcher, {
     fallbackData: initialPosts,
