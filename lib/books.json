@@ -3,7 +3,7 @@
     {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "readedPage": 35,
+      "readedPage": 47,
       "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
@@ -13,8 +13,8 @@
     {
       "title": "JavaScript Pro Design Patterns",
       "alt": "JavaScript Pro Design Patterns",
-      "readedPage": 30,
-      "page": 308,
+      "readedPage": 41,
+      "page": 270,
       "bookCover": "/books/javascript-pro-design-patterns.jpeg",
       "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
       "subtitle": "The Essentials of Object-Oriented JavaScript Programming",
@@ -33,7 +33,7 @@
     {
       "title": "Atomic Habits",
       "alt": "Atomic Habits",
-      "readedPage": 174,
+      "readedPage": 33,
       "page": 320,
       "bookCover": "/books/atomic-habits.jpg",
       "link": "https://www.amazon.com/Atomic-Habits-Proven-Build-Break/dp/0735211299",
@@ -73,7 +73,7 @@
     {
       "title": "İnsanlığımı Yitirirken",
       "alt": "İnsanlığımı Yitirirken",
-      "readedPage": 0,
+      "readedPage": 40,
       "page": 128,
       "bookCover": "/books/insanligimi-yitirirken.jpg",
       "link": "https://www.amazon.com.tr/gp/product/6258401473/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",
