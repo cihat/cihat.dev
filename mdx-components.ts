@@ -2,7 +2,7 @@
 
 import { A as a } from "app/(post)/components/a";
 import { P as p } from "app/(post)/components/p";
-import { H1 as h1 } from "app/(post)/components/h1";
+import { H1  } from "app/(post)/components/h1";
 import { H2 as h2 } from "app/(post)/components/h2";
 import { H3 as h3 } from "app/(post)/components/h3";
 import { OL as ol } from "app/(post)/components/ol";
@@ -19,6 +19,7 @@ import { Callout } from "app/(post)/components/callout";
 import { YouTube } from "app/(post)/components/youtube";
 import { Ref, FootNotes, FootNote } from "app/(post)/components/footnotes";
 import { Blockquote } from "app/(post)/components/blockquote";
+import { Reading } from "app/(post)/components/reading";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -26,7 +27,7 @@ export function useMDXComponents(components: {
   return {
     ...components,
     a,
-    h1,
+    H1,
     h2,
     h3,
     p,
@@ -48,5 +49,6 @@ export function useMDXComponents(components: {
     Ref,
     FootNotes,
     FootNote,
+    Reading
   };
 }

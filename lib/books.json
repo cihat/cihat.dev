@@ -3,7 +3,7 @@
     {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "readedPage": 47,
+      "readedPage": 74,
       "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
@@ -31,13 +31,13 @@
       "author": "Marijn Haverbeke"
     },
     {
-      "title": "Atomic Habits",
-      "alt": "Atomic Habits",
-      "readedPage": 33,
-      "page": 320,
-      "bookCover": "/books/atomic-habits.jpg",
-      "link": "https://www.amazon.com/Atomic-Habits-Proven-Build-Break/dp/0735211299",
-      "subtitle": "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+      "title": "Atomic Alışkanlıklar",
+      "alt": "Atomic Alışkanlıklar",
+      "readedPage": 50,
+      "page": 340,
+      "bookCover": "/books/atomik-aliskanliklar.jpg",
+      "link": "https://www.amazon.com.tr/Atomik-Alışkanlıklar-James-Clear/dp/6052998385/ref=sr_1_5?keywords=atomik+alışkanlıklar&qid=1690317794&sprefix=atomik%2Caps%2C144&sr=8-5",
+      "subtitle": "Küçük Değişikliklerle Muazzam Sonuçlar Elde Etme",
       "author": "James Clear"
     },
     {
@@ -73,7 +73,7 @@
     {
       "title": "İnsanlığımı Yitirirken",
       "alt": "İnsanlığımı Yitirirken",
-      "readedPage": 40,
+      "readedPage": 70,
       "page": 128,
       "bookCover": "/books/insanligimi-yitirirken.jpg",
       "link": "https://www.amazon.com.tr/gp/product/6258401473/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",

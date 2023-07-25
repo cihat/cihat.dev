@@ -20,6 +20,13 @@
       "title": "Ilk Blog Yazisi",
       "minuteToRead": 3,
       "language": "tr-TR"
+    },
+    {
+      "id": "atomik-aliskanliklar",
+      "date": "July 26, 2023",
+      "title": "Atomik Alışkanlıklar Kitabindan Notlar",
+      "minuteToRead": 5,
+      "language": "tr-TR"
     }
   ]
 }
