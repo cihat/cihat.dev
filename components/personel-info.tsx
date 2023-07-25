@@ -2,7 +2,6 @@
 
 import NextLink from "next/link";
 import Image from "next/image"
-import Container from "@/components/ui/container";
 import "@/public/home-styles.css";
 import { BsLinkedin, BsGithub, BsMedium, BsInstagram, BsTwitter, BsMailbox, BsLink45Deg } from "react-icons/bs";
 
@@ -60,14 +59,14 @@ export default function PersonelInfo() {
 
   return (
     <>
-      <Container as="article" className="container flex flex-col items-start select-none">
+      <article className="container flex flex-col items-start">
         <h1 id="title" className="right-animation font-bold text-6xl" aria-label="">Hello 👋</h1>
         <p className="name left-animation" id="name_paragraph">My name is Cihat Salik.</p>
         <p className="right-animation">
-          A curious <b>Software Engineer</b> living in <b>Istanbul/Turkey</b> who enjoys researching, learning and
+          A curious <b>Software Engineer</b> living in <b>Istanbul/Turkey</b> who enjoys<br/>researching, learning and
           developing.&nbsp;
           I love <b>open source
-            development</b> and I am building something on my <a href="https://github.com/cihat" className="inline-flex flex-row items-center font-bold"
+            development</b> and<br/> I am building something on my <a href="https://github.com/cihat" className="inline-flex flex-row items-center font-bold"
               title="Github Profile">Github<BsLink45Deg className="inline" /></a>.
         </p>
         <div className="contact top-animation">
@@ -83,24 +82,24 @@ export default function PersonelInfo() {
             }
           </ul>
         </div>
-      </Container>
+      </article>
       {
         photo && (
-          <Container className="mt-20 p-0 flex flex-col items-center">
+          <>
             <Image priority
               placeholder="blur"
               quality={100}
               blurDataURL={photo?.urls?.small}      
               width={photo?.width}
               height={photo?.height}
-              className="rounded-lg saturate-0 transition-all duration-700 hover:saturate-100"
+              className="mt-20 rounded-lg saturate-0 transition-all duration-700 hover:saturate-100"
               alt={photo?.alt_description}
               layout="responsive"
               src={photo?.urls?.regular} />
-            <figcaption className="mt-2 text-xs">
+            <figcaption className="mt-2 text-xs text-center">
               Photo by {photo?.user?.first_name} {photo?.user?.last_name} / Unsplash
             </figcaption>
-          </Container>
+          </>
         )
       }
     </>

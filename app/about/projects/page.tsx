@@ -8,7 +8,7 @@ export default async function Projects() {
   const pinnedRepos = await getPinnedRepos() || pinnedProjects
 
   return (
-    <Container className="flex min-h-screen flex-col left-animation" as="main">
+    <main>
       {/* <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
         <h2 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
           Projects
@@ -37,6 +37,6 @@ export default async function Projects() {
           </div>
         </h5>
       </div> */}
-    </Container>
+    </main>
   )
 }

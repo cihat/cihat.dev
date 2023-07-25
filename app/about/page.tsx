@@ -1,10 +1,7 @@
-import PersonaleInfo from "@/components/personel-info"
+import PersonaleInfo from "@/components/personel-info";
 
-export default async function Home() {
+export default function PersonelInfo() {
   return (
-    <div className="min-h-[75vh]">
-      <PersonaleInfo />
-    </div>
+    <PersonaleInfo />
   )
 }
-

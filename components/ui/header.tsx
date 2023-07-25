@@ -17,7 +17,7 @@ export default function Header() {
     "/bookmarks": "Bookmarks",
     // "learning": "Learning",
     "/about": "About",
-    "/projects": "Projects",
+    // "/projects": "Projects",
   } as any;
 
   const pathname = usePathname();
@@ -35,7 +35,7 @@ export default function Header() {
         <Logo />
         <nav
           className={cx(
-            isNavOpen ? "flex bg-[#fcffcf] dark:bg-[#353535]" : "hidden",
+            isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",
             "flex-col gap-3 sm:!flex sm:flex-row items-center grow sm:justify-center",
             isNavOpen ? "absolute top-0 left-0 right-0 w-full h-full z-10 flex items-center justify-center py-4" : ""
           )}
