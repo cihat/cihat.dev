@@ -1,4 +1,5 @@
 import { ILink } from "@/types";
+import { BookmarkType } from "@/store/types";
 
 type Result = {
   result: boolean;
@@ -24,13 +25,15 @@ export default class Raindrop {
     page = 0,
     sort = "-created",
     search = "",
+    collectionId = BookmarkType.Technical
   }: {
     perPage?: number;
     page?: number;
     sort?: "-created" | "created";
     search?: string;
+    collectionId: BookmarkType;
   }): Promise<ILink[]> {
-    let url = new URL(`/rest/v1/raindrops/36041921`, this.url);
+    let url = new URL(`/rest/v1/raindrops/${collectionId}`, this.url);
 
     url.searchParams.set("perpage", perPage.toString());
     url.searchParams.set("page", page.toString());
@@ -52,6 +55,7 @@ export default class Raindrop {
           perPage,
           sort,
           search,
+          collectionId
         })
       );
     } else {
@@ -59,3 +63,8 @@ export default class Raindrop {
     }
   }
 }
+
+// how to get last 2 week bookmark
+// https://api.raindrop.io/rest/v1/raindrops/254677638?perpage=50&page=0&sort=-created&search=&tag=&collection=&last=14
+
+// how to get all bookmark

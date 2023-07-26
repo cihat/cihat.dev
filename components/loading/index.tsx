@@ -1,8 +1,8 @@
-import "./reading-style.css";
+import "./loading-style.css";
 
-export function Reading({ text, children }) {
+export function Loading({ text }) {
   return (
-    <div className="reading__container">
+    <div className="loading__container">
       {text && <span>{text}</span>}
       <div className="col-3">
         <div className="snippet" data-title="dot-flashing">
