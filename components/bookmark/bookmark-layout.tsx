@@ -2,7 +2,6 @@
 
 import BookmarkCard from "./bookmark-card";
 import Container from "@/components/ui/container";
-import Title from "@/components/ui/title";
 import SubTitle from "@/components/ui/subtitle";
 import { ILink } from "@/types";
 import {

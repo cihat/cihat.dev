@@ -11,6 +11,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { usePathname } from 'next/navigation'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -51,11 +52,15 @@ const components: { title: string; href: string; description: string }[] = [
 ]
 
 export default function NavigationAbout() {
+  const pathname = usePathname()
+  // with this code, you can get the current path with vercel tools
+
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="font-bold text-lg">/about/?</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="font-bold text-lg">{pathname}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
@@ -78,7 +83,7 @@ export default function NavigationAbout() {
               <ListItem href="/about/projects" title="Open Source Projects">
                 A list of open source projects I've created or contributed to.
               </ListItem>
-              <ListItem href="/" title="Coming soon⌛️">
+              <ListItem href="/about" title="Coming soon⌛️">
               </ListItem>
             </ul>
           </NavigationMenuContent>

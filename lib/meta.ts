@@ -135,3 +135,42 @@ export const dummyPhoto: IRandomPhoto = {
   "downloads": 3510,
   "topics": []
 }
+
+type Link = {
+  name: string;
+  url: string;
+  icon: string;
+}
+
+export const personalLinks: Link[] = [
+  {
+    name: "Github",
+    url: "https://github.com/cihat",
+    icon: "Github"
+  },
+  {
+    name: "Linkedin",
+    url: "https://www.linkedin.com/in/cihatsalik/",
+    icon: "Linkedin"
+  },
+  {
+    name: "Mail",
+    url: "mailto:cihatsalik1@gmail.com",
+    icon: "Mail"
+  },
+  {
+    name: "Medium",
+    url: "https://cihatsalik.medium.com/",
+    icon: "Medium"
+  },
+  {
+    name: "Twitter",
+    url: "https://twitter.com/chtslk",
+    icon: "Twitter"
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/cihat.png/",
+    icon: "Instagram"
+  },
+]
