@@ -39,7 +39,6 @@ async function fetchData(collectionId: BookmarkType = BookmarkType.Technical) {
 export default function BookmarkLayout() {
   const [data, setData] = useState([]);
 
-  console.log('data', data)
   const sortedData = Object.keys(data).sort(
     (a, b) => parseInt(b) - parseInt(a)
   );
