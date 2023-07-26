@@ -69,7 +69,7 @@ export async function Image({
     const factor = dividedBy / 100;
 
     return (
-      <span className="my-5 flex flex-col items-center delay-500 xl:hover:scale-[1.3] 2xl:hover:scale-[1.5]  transition">
+      <span className="my-5 flex flex-col items-center delay-500 xl:hover:scale-[1.3] 2xl:hover:scale-[1.4] transition">
         <NextImage
           width={width * factor}
           height={height * factor}
