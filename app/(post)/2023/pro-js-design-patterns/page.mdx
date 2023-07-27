@@ -10,7 +10,13 @@ export const metadata = {
 
 <Image src="/books/javascript-pro-design-patterns.jpeg" width="400" height="400" />
 
+<p className="text-center mb-2">[All Example Codes on the Book](http://jsdesignpatterns.com/code.zip)</p>
+
 ## Chapter-1: Expressive JavaScript
+
+[The flexibility of JavaScript.js](/files/pro-js-design-patterns/source-code/Chapter01/1.01%20-%20The%20flexibility%20of%20JavaScript.js)<br />
+[Functions as first-class objects.js](/files/pro-js-design-patterns/source-code/Chapter01/1.02%20-%20Functions%20as%20first-class%20objects.js)<br />
+[The mutability of objects.js](/files/pro-js-design-patterns/source-code/Chapter01/1.03%20-%20The%20mutability%20of%20objects.js)<br />
 
     ```js
     Function.prototype.method = function(name, fn) { this.prototype[name] = fn; }
@@ -306,6 +312,8 @@ Interface.ensureImplements = function(object) {
 ```
 
 The Interface constructor is used to define an interface. It takes a name and an array of method names. The constructor checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The Interface.ensureImplements method is a static method that is used to check that an object implements the required interface. It takes an object as its first argument and one or more interfaces as subsequent arguments. The method checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The method then loops through each method in the interface and checks to make sure that the object implements that method. If the object does not implement the method, an error is thrown.
+
+It becomes most beneficial when you start implementing complex systems using design patterns. It might seem like interfaces reduce JavaScript's flexibility, but they actually improve it by allowing your objects to be more loosely coupled. Your functions can be more flexible because you can pass in arguments of any type and still ensure that only objects with the needed method will be used.
 
 ## Chapter-3: Encapsulation
 
