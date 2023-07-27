@@ -1,0 +1,313 @@
+export const metadata = {
+  title: "My Notes from Pro JavaScript Design Patterns",
+  description: "My Notes from Pro JavaScript Design Patterns by Ross Harmes and Dustin Diaz",
+  openGraph: {
+    title: "Initial Blog Post",
+    description: "My Notes from Pro JavaScript Design Patterns by Ross Harmes and Dustin Diaz",
+    images: [{ url: '/books/javascript-pro-design-patterns.jpeg' }],
+  }
+}
+
+<Image src="/books/javascript-pro-design-patterns.jpeg" width="400" height="400" />
+
+## Chapter-1: Expressive JavaScript
+
+    ```js
+    Function.prototype.method = function(name, fn) { this.prototype[name] = fn; }
+
+    var Anim = function() {}
+    Anim.method('start', function() {
+      ....
+    })
+
+    Anim.method('close', function() {
+      ....
+    })
+    ```
+
+This is very similar to the Extension feature in Swift.
+
+```js
+// This version allows the calls to be chained together
+
+Function.prototype.method = function(name, fn) {
+  this.prototype[name] = fn;
+  return this;
+}
+```
+
+JavaScript has function-level scope, this means that a variable defined within a function is not accessible outside of it.
+JavaScript is also lexically scoped, which means that functions run in the scope they are deinfed in, not the scope they are executed in.
+
+All objects are mutable. If you have a reference to an object, you can change its properties.
+
+```js
+var myObject = {
+  value: 0,
+  increment: function(inc) {
+    this.value += typeof inc === 'number' ? inc : 1;
+  }
+}
+
+myObject.increment();
+console.log(myObject.value); // 1
+```
+
+```js
+function displayError(message) {
+  displayError.numTimesExecuted++;
+  console.log(message);
+}
+
+displayError.numTimesExecuted = 0;
+```
+
+---
+
+```js
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.sayName = function() {
+  console.log(this.name);
+}
+
+Person.prototype = {
+  getName: function() {
+    return this.name;
+  },
+  getAge: function() {
+    return this.age;
+  }
+}
+
+var alice = new Person('John', 30);
+var bill = new Person('Bill', 40);
+person.sayName();
+
+bill.displayGreeting = function() {
+  console.log('Hello, I am ' + this.name);
+}
+
+bill.displayGreeting();
+
+// This example shows that you can add properties to an object after it has been created.
+// Also just bill has the displayGreeting method, alice does not.
+```
+
+## Chapter-2: Interfaces
+
+Object oriented language have interfaces keyword that easy allows you to define an interface that other objects must implement. JavaScript does not have this feature, but you can simulate it by defining a method that checks for the presence of certain methods and properties.
+
+Three ways to check for the presence of a method or property:
+
+1. Comments
+2. Duck Typing
+3. Attribute Checking
+
+### Comments
+
+```js
+
+/*
+interface Composite {
+  function add(child);
+  function remove(child);
+  function getChild(index);
+}
+
+interface FormItem {
+  function save();
+}
+
+*/
+
+var CompositeForm = function(id, method, action) { // implements Composite, FormItem
+  ....
+}
+
+// Implement the Composite interface
+
+CompositeForm.prototype.add = function(child) {
+  ....
+}
+
+CompositeForm.prototype.remove = function(child) {
+  ....
+}
+
+CompositeForm.prototype.getChild = function(index) {
+  ....
+}
+
+// Implement the FormItem interface
+
+CompositeForm.prototype.save = function() {
+  ....
+}
+
+// This doesn't emulate the interface functionality very well. There is no checking to ensure that CompositeForm implements the methods defined in the interface.
+// No error will be thrown if you forget to implement a method.
+```
+
+### Emulating Interfaces with Duck Typing
+
+```js
+
+/*
+interface Composite {
+  function add(child);
+  function remove(child);
+  function getChild(index);
+}
+
+interface FormItem {
+  function save();
+}
+*/
+
+var CompositeForm = function(id, method, action) {
+  this.implementsInterfaces = ['Composite', 'FormItem'];
+  ...
+}
+....
+
+function addForm(formInstance) {
+  if (!implements(formInstance, 'Composite', 'FormItem')) {
+    throw new Error('Object does not implement a required interface.');
+  }
+}
+
+
+
+// This is a better way to emulate interfaces. The addForm function checks to make sure that the object passed in implements the required interfaces.
+// The CompositeForm constructor also checks to make sure that the object implements the required interfaces.
+
+function implements(object) {
+  for(var i = 1; i < arguments.length; i++) {
+    var interfaceName = arguments[i];
+    var interfaceFound = false;
+
+    for(var j = 0; j < object.implementsInterfaces.length; j++) {
+      if(object.implementsInterfaces[j] == interfaceName) {
+        interfaceFound = true;
+        break;
+      }
+    }
+
+    if(!interfaceFound) {
+      return false; // An interface was not found.
+    }
+  }
+
+  return true; // All interface were found.
+}
+```
+
+This function checks to make sure that the object passed in implements all of the interfaces passed in. In this exmaple, CompositeForm implements both the Composite and FormItem interfaces. The main drawback to this approach is that you are not ensuring that the object implements the methods defined in the interface. You only know if it says it implements the interface.
+
+### Emulating Interfaces with Attribute Checking
+
+```js
+
+var Composite = new Interface('Composite', ['add', 'remove', 'getChild']);
+var FormItem = new Interface('FormItem', ['save']);
+
+// CompositeForm class
+
+var CompositeForm = function(id, method, action) {
+  ...
+}
+
+....
+
+fucntion addForm(formInstance) {
+  ensureImplements(formInstance, Composite, FormItem);
+  // This function will throw an error if the object passed in does not implement the required interfaces.
+  ...
+}
+```
+
+A class never declares which interface it implements, reducing the reusability of the class and not self-documenting like the other approaches. It requires a helper class, Interface, and a helper function, ensureImplemtns. It does not check the nomes or numbers of arguments used in the methods or their types, only that the method has the method has the correct name.
+
+### The Interface Inplements for This book
+
+Using a combination of the first(Comments) and third(Attribute Checking) approaches.
+
+```js
+
+// Interfaces - Defines interface as commands to check for their existence.
+
+var Composite = new Interface('Composite', ['add', 'remove', 'getChild']);
+var FormItem = new Interface('FormItem', ['save']);
+
+// CompositeForm class
+
+var CompositeForm = function(id, method, action) {
+  ...
+}
+
+....
+
+fucntion addForm(formInstance) {
+  Interface.ensureImplements(formInstance, Composite, FormItem);
+  // This function will throw an error if the object passed in does not implement the required interfaces.
+  // All code beneath this line will be executed only if the checks pass.
+  ...
+}
+// Interface.ensureImplements provides a strict check. If a problem is found, an error will be thrown, which can either be caught and handled or alllowed to halt execution.
+// Either way, the problem will be found and fixed.
+
+```
+
+```js
+
+// Interface.js - Defines Interface constructor.
+
+var Interface = function(name, methods) {
+  if(arguments.length != 2) {
+    throw new Error('Interface constructor called with ' + arguments.length + 'arguments, but expected exactly 2.');
+  }
+
+  this.name = name;
+  this.methods = methods;
+
+  for(var i = 0, len = methods.length; i < len; i++) {
+    if(tpeof methods[i] !== 'string') {
+      throw new Error('Interface constructor expects method names to be passed in as a string.');
+    }
+    this.methods.push(methods[i]);
+  }
+}
+
+// Static class method.
+
+Interface.ensureImplements = function(object) {
+  if(arguments.length < 2) {
+    throw new Error("Function Interface.ensureImplemtns called with" + arguments.length + "arguments, but expected at least 2.");
+  }
+
+  for(var i = 1, len = arguments.length; i < len; i++) {
+    var interface = arguments[i];
+    if(interface.constructor !== Interface) {
+      throw new Error("Function Interface.ensureImplements expects arguments" + "two and above to be instancs instaces of Interface.");;
+    }
+
+    for(var j = 0; methodsLen = interface.method.length; j < methodsLen; j++) {
+      var methods = interface.methods[j];
+      if(!object[methods] || typeof object[methods] !== 'function') {
+        throw new Error("Function Interface.ensureImplements: object" + "does not implement the " + interface.name + " interface. Method " + methods + " was not found.");
+      }
+    }
+  }
+}
+```
+
+The Interface constructor is used to define an interface. It takes a name and an array of method names. The constructor checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The Interface.ensureImplements method is a static method that is used to check that an object implements the required interface. It takes an object as its first argument and one or more interfaces as subsequent arguments. The method checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The method then loops through each method in the interface and checks to make sure that the object implements that method. If the object does not implement the method, an error is thrown.
+
+## Chapter-3: Encapsulation
+
+<br />
+<Reading text="Reading" />

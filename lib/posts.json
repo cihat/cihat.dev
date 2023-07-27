@@ -27,6 +27,13 @@
       "title": "Atomik Alışkanlıklar Kitabindan Notlar",
       "minuteToRead": 5,
       "language": "tr-TR"
+    },
+    {
+      "id": "pro-js-design-patterns",
+      "date": "July 27, 2023",
+      "title": "My Notes from Pro JavaScript Design Patterns",
+      "minuteToRead": 5,
+      "language": "en-US"
     }
   ]
 }
