@@ -14,6 +14,10 @@ type bookType = {
 
 export default function Home() {
   const getProgress = (readedPage: number, page: number) => +Number((readedPage / page) * 100).toFixed();
+  const getPageNumber = (readedPage: number, page: number) => `${readedPage}/${page}`;
+
+  // sorted books by progress
+  booksData.books.sort((a: bookType, b: bookType) => getProgress(b.readedPage, b.page) - getProgress(a.readedPage, a.page));
 
   return (
     <>
@@ -26,9 +30,9 @@ export default function Home() {
             booksData &&
             booksData.books?.map((book: bookType) => (
               <a key={book.title} target="_blank" href={book.link} className="col-span-1 flex flex-col justify-end !cursor-pointer mb-2">
-                <Image src={book?.bookCover} alt={book.alt} width={300} height={400} placeholder="blur" blurDataURL={book?.bookCover} className="min-w-full grow" priority/>
-                <ProgressBar completed={getProgress(book.readedPage, book.page)} borderRadius="0" bgColor="#00ce8b" labelAlignment="left" height="15px" labelColor="black" labelClassName="text-xs ml-2 text-black"/>
-                <h4 className="text-sm text-center my-2">{book.title}</h4>
+                <Image src={book?.bookCover} alt={book.alt} width={300} height={400} placeholder="blur" blurDataURL={book?.bookCover} className="min-w-full grow" priority />
+                <ProgressBar completed={getProgress(book.readedPage, book.page)} borderRadius="0" bgColor="#00ce8b" labelAlignment="left" height="15px" labelColor="black" labelClassName="text-xs ml-2 text-black" />
+                <h4 className="text-sm text-center my-2">{getPageNumber(book.readedPage, book.page)}</h4>
               </a>
             ))
           }
