@@ -33,7 +33,7 @@
     {
       "title": "Atomic Alışkanlıklar",
       "alt": "Atomic Alışkanlıklar",
-      "readedPage": 60,
+      "readedPage": 110,
       "page": 340,
       "bookCover": "/books/atomik-aliskanliklar.jpg",
       "link": "https://www.amazon.com.tr/Atomik-Alışkanlıklar-James-Clear/dp/6052998385/ref=sr_1_5?keywords=atomik+alışkanlıklar&qid=1690317794&sprefix=atomik%2Caps%2C144&sr=8-5",
@@ -41,13 +41,13 @@
       "author": "James Clear"
     },
     {
-      "title": "Deep Work",
-      "alt": "Deep Work",
+      "title": "Pür Dikkat",
+      "alt": "Pür Dikkat",
       "readedPage": 0,
-      "page": 304,
-      "bookCover": "/books/deep-work.jpg",
-      "link": "https://www.amazon.com/Deep-Work-Focused-Success-Distracted/dp/1455586692",
-      "subtitle": "Rules for Focused Success in a Distracted World",
+      "page": 288,
+      "bookCover": "/books/pur-dikkat.jpg",
+      "link": "https://www.amazon.com.tr/Pür-Dikkat-Cal-Newport/dp/6056669327",
+      "subtitle": "Odaklanmanın Gücü",
       "author": "Cal Newport"
     },
     {
@@ -73,7 +73,7 @@
     {
       "title": "İnsanlığımı Yitirirken",
       "alt": "İnsanlığımı Yitirirken",
-      "readedPage": 100,
+      "readedPage": 128,
       "page": 128,
       "bookCover": "/books/insanligimi-yitirirken.jpg",
       "link": "https://www.amazon.com.tr/gp/product/6258401473/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",

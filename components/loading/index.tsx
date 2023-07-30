@@ -1,8 +1,13 @@
 import "./loading-style.css";
 
-export function Loading({ text }) {
+type LoadingType = {
+  text?: string
+  className?: string
+}
+
+export function Loading({ text, className }: LoadingType) {
   return (
-    <div className="loading__container">
+    <div className={`flex items-center justify-center ${className}`}>
       {text && <span>{text}</span>}
       <div className="col-3">
         <div className="snippet" data-title="dot-flashing">

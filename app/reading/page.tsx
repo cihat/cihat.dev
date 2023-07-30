@@ -16,8 +16,12 @@ export default function Home() {
   const getProgress = (readedPage: number, page: number) => +Number((readedPage / page) * 100).toFixed();
   const getPageNumber = (readedPage: number, page: number) => `${readedPage}/${page}`;
 
-  // sorted books by progress
-  booksData.books.sort((a: bookType, b: bookType) => getProgress(b.readedPage, b.page) - getProgress(a.readedPage, a.page));
+  booksData.books.sort((a: bookType, b: bookType) => {
+    if (getProgress(a.readedPage, a.page) === 100) return 1;
+    if (getProgress(b.readedPage, b.page) === 100) return -1;
+
+    return getProgress(b.readedPage, b.page) - getProgress(a.readedPage, a.page);
+  });
 
   return (
     <>

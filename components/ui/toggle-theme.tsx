@@ -116,10 +116,10 @@ export default function ThemeToggle() {
         }}
       >
         <span className="sun-icon">
-          <Image width={16} height={16} src="/icons/sun.png" alt="sun" priority />
+          <Image width={18} height={18} src="/icons/sun.svg" alt="sun" priority />
         </span>
         <span className="moon-icon">
-          <Image width={16} height={16} src="/icons/moon.png" alt="sun" priority />
+          <Image width={18} height={18} src="/icons/moon.svg" alt="sun" priority />
         </span>
       </button>
     </div>

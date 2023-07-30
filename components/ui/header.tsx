@@ -15,8 +15,8 @@ export default function Header() {
   const MENU = {
     "/reading": "Reading",
     "/bookmarks": "Bookmarks",
+    "/learning": "Learning",
     "/about": "About",
-    // "learning": "Learning",
   } as any;
 
   const pathname = usePathname();

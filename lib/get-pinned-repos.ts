@@ -3,18 +3,28 @@
 import cheerio from "cheerio"
 import { IPinnedProjects } from "@/types"
 
+
 const aimer = async (url: string) => {
   const html = await fetch(url).then((res) => res.text());
   return cheerio.load(html);
 };
 
+const userName = 'cihat'
+const url = `https://github.com/${userName}`;
+
+export const getRepoInfo = async (repoName: string) => {
+  // call github api
+  const url = `https://api.github.com/repos/${userName}/${repoName}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data;
+}
 
 export const getPinnedRepos = async () => {
-  const userName = 'cihat'
-  let repos: IPinnedProjects[] = []
+  let repos: IPinnedProjects[] = [];
 
   try {
-    const url = `https://github.com/${userName}`;
     const $ = await aimer(url);
     const pinned = $(".pinned-item-list-item.public").toArray() as any;
 

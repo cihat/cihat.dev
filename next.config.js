@@ -35,6 +35,17 @@ const nextConfig = {
       },
     ],
   },
+  exclude: ["node_modules", "dist", "public/files"],
+  webpack(config) {
+    config.resolve.fallback = {
+      fs: false,
+    };
+
+    return config;
+  },
+  options: {
+    providerImportSource: '@mdx-js/react',
+  },
 }
 
 const domains = [
