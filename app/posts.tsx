@@ -83,12 +83,10 @@ export function Posts({ posts: initialPosts }) {
                   justify-center
                   h-9
                   text-md font-semibold
-                  w-36
+                  w-16
                   mr-2
               }`}
-          >
-            Language: {flag}
-          </button>
+          >{flag}</button>
           <button
             onClick={sortViews}
             className={`
