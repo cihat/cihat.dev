@@ -33,10 +33,10 @@
     {
       "title": "Atomic Alışkanlıklar",
       "alt": "Atomic Alışkanlıklar",
-      "readedPage": 110,
+      "readedPage": 125,
       "page": 340,
       "bookCover": "/books/atomik-aliskanliklar.jpg",
-      "link": "https://www.amazon.com.tr/Atomik-Alışkanlıklar-James-Clear/dp/6052998385/ref=sr_1_5?keywords=atomik+alışkanlıklar&qid=1690317794&sprefix=atomik%2Caps%2C144&sr=8-5",
+      "link": "https://www.amazon.com.tr/Atomik-Alışkanlıklar-James-Clear/dp/6052998385",
       "subtitle": "Küçük Değişikliklerle Muazzam Sonuçlar Elde Etme",
       "author": "James Clear"
     },
@@ -53,20 +53,20 @@
     {
       "title": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
       "alt": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
-      "readedPage": 25,
+      "readedPage": 51,
       "page": 400,
       "bookCover": "/books/nicin-uyuruz.jpg",
-      "link": "https://www.amazon.com.tr/gp/product/6052996307/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",
+      "link": "https://www.amazon.com.tr/gp/product/6052996307",
       "subtitle": "Matthew Walker",
       "author": "Matthew Walker"
     },
     {
       "title": "Gece Yarısı Kütüphanesi",
       "alt": "Gece Yarısı Kütüphanesi",
-      "readedPage": 0,
+      "readedPage": 100,
       "page": 283,
       "bookCover": "/books/gece-yarisi-kutuphanesi.jpg",
-      "link": "https://www.amazon.com.tr/gp/product/6051981837/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1",
+      "link": "https://www.amazon.com.tr/gp/product/6051981837",
       "subtitle": "Matt Haig",
       "author": "Matt Haig"
     },
@@ -75,8 +75,8 @@
       "alt": "İnsanlığımı Yitirirken",
       "readedPage": 128,
       "page": 128,
-      "bookCover": "/books/insanligimi-yitirirken.jpg",
-      "link": "https://www.amazon.com.tr/gp/product/6258401473/ref=ppx_yo_dt_b_asin_image_o02_s00?ie=UTF8&psc=1",
+      "bookCover": "/books/insanligimi-yitirirken.jpeg",
+      "link": "https://www.amazon.com.tr/gp/product/6258401473",
       "subtitle": "Osamu Dazai",
       "author": "Osamu Dazai"
     },
@@ -93,7 +93,7 @@
     {
       "title": "Clean Code",
       "alt": "Clean Code",
-      "readedPage": 20,
+      "readedPage": 0,
       "page": 431,
       "bookCover": "/books/clean-code.jpeg",
       "link": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
@@ -121,14 +121,54 @@
       "author": "David Herman"
     },
     {
+      "title": "Vaktinden Önce Mutsuz Olma",
+      "alt": "Stoaci Filozoflardan Mutlu Bir Yasam İcin Tavsiyeler ve Pratikler",
+      "readedPage": 50,
+      "page": 224,
+      "bookCover": "/books/vaktinden-once-mutsuz-olma.jpeg",
+      "link": "https://www.amazon.com.tr/dp/6057906896",
+      "subtitle": "Hayatınızı Değiştirecek 100 Öğüt",
+      "author": "Umut Dinçşahin"
+    },
+    {
       "title": "Gladyatör Kararını Arenada Verir",
       "alt": "Gladyatör Kararını Arenada Verir",
       "readedPage": 92,
       "page": 92,
       "bookCover": "/books/gladyator-kararini-arenada-verir.jpg",
-      "link": "https://www.amazon.com.tr/dp/605311720X?psc=1&ref=ppx_yo2ov_dt_b_product_details",
+      "link": "https://www.amazon.com.tr/dp/605311720X",
       "subtitle": "2000 bilgelik rehberi",
       "author": "Ozlem Kusku"
+    },
+    {
+      "title": "Stoacının Günlüğü",
+      "alt": "Stoacının Günlüğü: Kendine Hakim Olma Sabır ve Bilgelik Üzerine 366 Düşünce",
+      "readedPage": 0,
+      "page": 432,
+      "bookCover": "/books/stoacinin-gunlugu.jpeg",
+      "link": "https://www.amazon.com.tr/dp/625410007X",
+      "subtitle": "Kendine Hakim Olma Sabır ve Bilgelik Üzerine 366 Düşünce",
+      "author": "Ryan Holiday & Stephen Hanselman"
+    },
+    {
+      "title": "Kendisinin efendisi olmayan hic kimse ozgur degildir",
+      "alt": "Kendisinin Efendisi Olmayan Hiç Kimse Özgür Değildir: 2000 Yıllık Huzurlu Yaşama Rehberi",
+      "readedPage": 83,
+      "page": 83,
+      "bookCover": "/books/kendisinin-efendisi-olmayan-hic-kimse-ozgur-degildir.jpg",
+      "link": "https://www.amazon.com.tr/dp/6053115878",
+      "subtitle": "2000 Yıllık Huzurlu Yaşama Rehberi",
+      "author": "Asli Perker"
+    },
+    {
+      "title": "Letter to My Father",
+      "alt": "Letter to My Father",
+      "readedPage": 20,
+      "page": 96,
+      "bookCover": "/books/letter-to-my-father.jpg",
+      "link": "https://www.amazon.com.tr/Letter-My-Father-Franz-Kafka/dp/6059919294/",
+      "subtitle": "Franz Kafka",
+      "author": "Franz Kafka"
     },
     {
       "title": "Körlük",
