@@ -3,17 +3,20 @@ import { join } from "path";
 import { readFile } from "fs/promises";
 import { Caption } from "./caption";
 import NextImage from "next/image";
+import cx from "@/lib/cx";
 
 export async function Image({
   src,
   alt: originalAlt,
   width = null,
   height = null,
+  inline = false,
 }: {
   src: string;
   alt?: string;
   width: number | null;
   height: number | null;
+  inline?: boolean;
 }) {
   const isDataImage = src.startsWith("data:");
   if (isDataImage) {
@@ -69,7 +72,7 @@ export async function Image({
     const factor = dividedBy / 100;
 
     return (
-      <span className="my-5 flex flex-col items-center">
+      <span className={cx("my-5 flex flex-col items-center", inline && "inline mr-2")}>
         <NextImage
           width={width * factor}
           height={height * factor}

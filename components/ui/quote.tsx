@@ -6,14 +6,20 @@ import { useEffect } from "react";
 import getQuote from "@/lib/fetch-stoic-quote"
 import cx from "@/lib/cx";
 
-export function RandomQuote() {
+export function RandomQuote({ quoteProp, authorProp }: { quoteProp?: string, authorProp?: string }) {
   const [quote, setQuote] = useState<IQuote>({
     text: "",
     author: ""
   })
 
   useEffect(() => {
-    (async () => {
+    if (quoteProp && authorProp && quoteProp?.length > 0) {
+      setQuote({
+        text: quoteProp,
+        author: authorProp
+      })
+    }
+    else (async () => {
       const data = await getQuote()
       setQuote(data)
     })()
@@ -33,7 +39,7 @@ export function RandomQuote() {
           <p className="text-gray-800 dark:text-white"><em>
             “{quote.text}”
           </em></p>
-          <p className="text-right">{quote.author}</p>
+          <p className="text-right font-bold">{quote.author}</p>
         </div>
       </blockquote>
     </Suspense>

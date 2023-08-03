@@ -62,7 +62,7 @@ export function Posts({ posts: initialPosts }) {
   return (
     <Suspense fallback={null}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll">
-        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm py-1">
+        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm py-1 sticky top-0">
           <button
             onClick={sortDate}
             className={`${tabStyle} 
@@ -71,10 +71,11 @@ export function Posts({ posts: initialPosts }) {
             Date
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </button>
-          <span className={`grow pl-2 mr-2 ${tabStyle}`}>Title</span>
+          <span className={`grow pl-2 mr-2 bg-[#f2f2f2] dark:bg-[#1C1C1C] ${tabStyle}`}>Title</span>
           <button
             onClick={handleEmoji}
             className={`
+                bg-[#f2f2f2] dark:bg-[#1C1C1C]
                   ${tabStyle}
                   hover:bg-[#FFFEC4]
                   hover:dark:bg-[#2a2a2a]
@@ -90,6 +91,7 @@ export function Posts({ posts: initialPosts }) {
           <button
             onClick={sortViews}
             className={`
+              bg-[#f2f2f2] dark:bg-[#1C1C1C]
               ${tabStyle}
               ${sort[0] === "views" && 'bg-[#FFD6A5] dark:bg-[#2a2a2a]'} h-9 text-md font-semibold
             `}

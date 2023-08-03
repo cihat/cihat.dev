@@ -135,7 +135,7 @@
       "alt": "Gladyatör Kararını Arenada Verir",
       "readedPage": 92,
       "page": 92,
-      "bookCover": "/books/gladyator-kararini-arenada-verir.jpg",
+      "bookCover": "/books/gladyator-kararini-arenada-verir.jpeg",
       "link": "https://www.amazon.com.tr/dp/605311720X",
       "subtitle": "2000 bilgelik rehberi",
       "author": "Ozlem Kusku"
@@ -151,6 +151,66 @@
       "author": "Ryan Holiday & Stephen Hanselman"
     },
     {
+      "title": "Seneca Ile Kahvalti",
+      "alt": "Seneca İle Kahvaltı: Yasam Sanati icin Stoaci bir rehber",
+      "readedPage": 0,
+      "page": 278,
+      "bookCover": "/books/seneca-ile-kahvalti.jpeg",
+      "link": "https://www.amazon.com.tr/dp/6052995185",
+      "subtitle": "Yasam Sanati icin Stoaci bir rehber",
+      "author": "David Fideler"
+    },
+    {
+      "title": "Roma Imparatoru Gibi Dusunmek",
+      "alt": "Roma İmparatoru Gibi Düşünmek: Stoacı Felsefe ve Modern Yaşam",
+      "readedPage": 0,
+      "page": 279,
+      "bookCover": "/books/roma-imparatoru-gibi-dusunmek.jpg",
+      "link": "https://www.amazon.com.tr/dp/6254410893",
+      "subtitle": "Stoacı Felsefe ve Modern Yaşam",
+      "author": "Donald Robertson"
+    },
+    {
+      "title": "Kendime Dusunceler",
+      "alt": "Kendime Düşünceler: Marcus Aurelius'un Özel Notları",
+      "readedPage": 0,
+      "page": 160,
+      "bookCover": "/books/kendime-dusunceler.jpeg",
+      "link": "https://www.amazon.com.tr/dp/6052954027",
+      "subtitle": "Marcus Aurelius'un Özel Notları",
+      "author": "Marcus Aurelius"
+    },
+    {
+      "title": "Enkheiridion",
+      "alt": "Enkheiridion",
+      "readedPage": 0,
+      "page": 96,
+      "bookCover": "/books/enkheiridion.jpg",
+      "link": "https://www.amazon.com.tr/dp/6052958464",
+      "subtitle": "Epiktetos'un El Kitabı",
+      "author": "Epiktetos"
+    },
+    {
+      "title": "Bilgenin Sarsilmazligi Uzerine ~ Inziva Uzerine",
+      "alt": "Bilgenin Sarsılmazlığı Üzerine ~ İnziva Üzerine",
+      "readedPage": 0,
+      "page": 96,
+      "bookCover": "/books/bilgenin-sarsilmazligi-uzerine.jpg",
+      "link": "https://www.amazon.com.tr/dp/6052995193",
+      "subtitle": "Seneca",
+      "author": "Seneca"
+    },
+    {
+      "title": "Mutlu Yasam Uzerine ~ Yasamin Kisaligi Uzerine",
+      "alt": "Mutlu Yaşam Üzerine ~ Yaşamın Kısalığı Üzerine",
+      "readedPage": 0,
+      "page": 77,
+      "bookCover": "/books/mutlu-yasam-uzerine.jpg",
+      "link": "https://www.amazon.com.tr/dp/6052995207",
+      "subtitle": "Seneca",
+      "author": "Seneca"
+    },
+    {
       "title": "Kendisinin efendisi olmayan hic kimse ozgur degildir",
       "alt": "Kendisinin Efendisi Olmayan Hiç Kimse Özgür Değildir: 2000 Yıllık Huzurlu Yaşama Rehberi",
       "readedPage": 83,
@@ -159,6 +219,16 @@
       "link": "https://www.amazon.com.tr/dp/6053115878",
       "subtitle": "2000 Yıllık Huzurlu Yaşama Rehberi",
       "author": "Asli Perker"
+    },
+    {
+      "title": "Unutma, mutlu bir hayat cok az şeye bağlıdır",
+      "alt": "Unutma, Mutlu Bir Hayat Çok Az Şeye Bağlıdır: 2000 Yıllık Huzurlu Yaşama Rehberi",
+      "readedPage": 87,
+      "page": 87,
+      "bookCover": "/books/unutma-mutlu-bir-hayat-cok-az-seye-bagli.jpg",
+      "link": "https://www.amazon.com.tr/dp/6053117064",
+      "subtitle": "2000 Yıllık Huzurlu Yaşama Rehberi",
+      "author": "Özlem Esmergül"
     },
     {
       "title": "Letter to My Father",

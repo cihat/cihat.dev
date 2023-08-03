@@ -20,6 +20,7 @@ import { YouTube } from "app/(post)/components/youtube";
 import { Ref, FootNotes, FootNote } from "app/(post)/components/footnotes";
 import { Blockquote } from "app/(post)/components/blockquote";
 import { Reading } from "app/(post)/components/reading";
+import { RandomQuote } from "./components/ui/quote";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -49,6 +50,7 @@ export function useMDXComponents(components: {
     Ref,
     FootNotes,
     FootNote,
-    Reading
+    Reading,
+    Quote: RandomQuote,
   };
 }

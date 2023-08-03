@@ -1,18 +1,32 @@
 {
   "posts": [
     {
-      "id": "kariyerimde-mentorlugun-onemi",
-      "date": "March 9, 2021",
-      "title": "Kariyerimde Mentörlüğün Önemi",
-      "minuteToRead": 6,
-      "language": "tr-TR"
-    },
-    {
       "id": "initial-blog-post",
       "date": "July 16, 2023",
       "title": "Initial Blog Post",
       "minuteToRead": 3,
       "language": "en-US"
+    },
+    {
+      "id": "pro-js-design-patterns",
+      "date": "July 27, 2023",
+      "title": "My Notes from Pro JavaScript Design Patterns",
+      "minuteToRead": 5,
+      "language": "en-US"
+    },
+    {
+      "id": "stoic-felsefe",
+      "date": "August 3, 2023",
+      "title": "2023 Türkiye'sinde Stoik Felsefeyle Yaşamak",
+      "minuteToRead": 5,
+      "language": "tr-TR"
+    },
+    {
+      "id": "kariyerimde-mentorlugun-onemi",
+      "date": "March 9, 2021",
+      "title": "Kariyerimde Mentörlüğün Önemi",
+      "minuteToRead": 6,
+      "language": "tr-TR"
     },
     {
       "id": "ilk-blog-yazisi",
@@ -27,13 +41,6 @@
       "title": "Atomik Alışkanlıklar Kitabindan Notlar",
       "minuteToRead": 5,
       "language": "tr-TR"
-    },
-    {
-      "id": "pro-js-design-patterns",
-      "date": "July 27, 2023",
-      "title": "My Notes from Pro JavaScript Design Patterns",
-      "minuteToRead": 5,
-      "language": "en-US"
     }
   ]
 }

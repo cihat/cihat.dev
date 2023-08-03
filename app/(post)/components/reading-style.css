@@ -1,7 +1,9 @@
 .reading__container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  margin: 5rem 0;
+  background-color: var(--foreground);
 }
 
 .reading__container span {
