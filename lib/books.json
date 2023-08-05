@@ -1,6 +1,16 @@
 {
   "books": [
     {
+      "title": "Suç ve Ceza",
+      "alt": "Suç ve Ceza",
+      "readedPage": 50,
+      "page": 672,
+      "bookCover": "/books/suc-ve-ceza.jpg",
+      "link": "https://www.amazon.com.tr/dp/975458902X",
+      "subtitle": "Fyodor Dostoyevski",
+      "author": "Fyodor Dostoyevski"
+    },
+    {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
       "readedPage": 74,
@@ -33,7 +43,7 @@
     {
       "title": "Atomic Alışkanlıklar",
       "alt": "Atomic Alışkanlıklar",
-      "readedPage": 125,
+      "readedPage": 200,
       "page": 340,
       "bookCover": "/books/atomik-aliskanliklar.jpg",
       "link": "https://www.amazon.com.tr/Atomik-Alışkanlıklar-James-Clear/dp/6052998385",
@@ -63,7 +73,7 @@
     {
       "title": "Gece Yarısı Kütüphanesi",
       "alt": "Gece Yarısı Kütüphanesi",
-      "readedPage": 100,
+      "readedPage": 283,
       "page": 283,
       "bookCover": "/books/gece-yarisi-kutuphanesi.jpg",
       "link": "https://www.amazon.com.tr/gp/product/6051981837",
@@ -123,7 +133,7 @@
     {
       "title": "Vaktinden Önce Mutsuz Olma",
       "alt": "Stoaci Filozoflardan Mutlu Bir Yasam İcin Tavsiyeler ve Pratikler",
-      "readedPage": 50,
+      "readedPage": 100,
       "page": 224,
       "bookCover": "/books/vaktinden-once-mutsuz-olma.jpeg",
       "link": "https://www.amazon.com.tr/dp/6057906896",
@@ -173,8 +183,8 @@
     {
       "title": "Kendime Dusunceler",
       "alt": "Kendime Düşünceler: Marcus Aurelius'un Özel Notları",
-      "readedPage": 0,
-      "page": 160,
+      "readedPage": 20,
+      "page": 130,
       "bookCover": "/books/kendime-dusunceler.jpeg",
       "link": "https://www.amazon.com.tr/dp/6052954027",
       "subtitle": "Marcus Aurelius'un Özel Notları",
