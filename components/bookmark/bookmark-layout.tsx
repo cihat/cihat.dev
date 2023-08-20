@@ -19,7 +19,7 @@ import bookmarkGroupByWeekNumber from "@/lib/helper";
 import { Loading } from "../loading";
 
 async function fetchData(collectionId: BookmarkType = BookmarkType.Technical) {
-  const dateStartOfWeek = startOfWeek(subWeeks(new Date(), 1));
+  const dateStartOfWeek = startOfWeek(subWeeks(new Date(), 6));
   const date = format(dateStartOfWeek, "yyyy-MM-dd");
 
   const raindrop = new Raindrop();
