@@ -55,7 +55,8 @@ export default function PersonelInfo() {
       {
         photo && (
           <>
-            <Image priority
+            <Image
+              loading="lazy"
               placeholder="blur"
               quality={100}
               blurDataURL={photo?.urls?.small}

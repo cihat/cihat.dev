@@ -46,7 +46,7 @@ function BooksGrid({ books, title }) {
             books &&
             books?.map((book: bookType) => (
               <a key={book.title} target="_blank" href={book.link} className="col-span-1 flex flex-col justify-end !cursor-pointer mb-2">
-                <Image src={book?.bookCover} alt={book.alt} width={400} height={400} placeholder="blur" blurDataURL={book?.bookCover} className="min-w-full grow object-fill" priority />
+                <Image src={book?.bookCover} alt={book.alt} width={400} height={400} placeholder="blur" blurDataURL={book?.bookCover} className="min-w-full grow object-fill" loading="lazy" />
                 <ProgressBar completed={getProgress(book.readedPage, book.page)} borderRadius="0" bgColor="#00ce8b" labelAlignment="left" height="15px" labelColor="black" labelClassName="text-xs ml-2 text-black" />
                 <h4 className="text-sm text-center my-2">{getPageNumber(book.readedPage, book.page)}</h4>
               </a>

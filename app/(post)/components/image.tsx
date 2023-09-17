@@ -79,6 +79,7 @@ export async function Image({
           alt={alt ?? ""}
           src={src}
           className="delay-500 z-[999] xl:hover:scale-[1.2] 2xl:hover:scale-[1.3] transition"
+          loading="lazy"
         />
 
         {alt && <Caption>{alt}</Caption>}
