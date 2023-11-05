@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: title,
     locale: 'en-US',
     type: 'website',
-    images: "https://cihat.dev/img/me.jpeg"
+    images: "https://cihat.dev/img/og-image.png"
   },
   twitter: {
     card: "summary_large_image",
