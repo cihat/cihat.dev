@@ -21,21 +21,21 @@ import { VList } from "virtua";
 
 async function fetchData(collectionId: BookmarkType = BookmarkType.Technical) {
   const dateStartOfWeek = startOfWeek(subWeeks(new Date(), 6));
-  const date = format(dateStartOfWeek, "yyyy-MM-dd");
+  // const date = format(dateStartOfWeek, "yyyy-MM-dd");
 
   const raindrop = new Raindrop();
   let collections: ILink[] = await raindrop.getBookmark({
-    perPage: 50,
-    search: `created:>${date}`,
+    perPage: 100,
+    // search: `created:>${date}`,
     collectionId,
   });
 
-  if (collections.length === 0) {
-    collections = await raindrop.getBookmark({
-      perPage: 50,
-      collectionId,
-    });
-  }
+  // if (collections.length === 0) {
+  //   collections = await raindrop.getBookmark({
+  //     perPage: 50,
+  //     collectionId,
+  //   });
+  // }
 
   const bookmarks = bookmarkGroupByWeekNumber(collections);
 
