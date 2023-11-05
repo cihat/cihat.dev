@@ -14,7 +14,6 @@ const nextConfig = {
     RAINDROP_ACCESS_TOKEN: process.env.RAINDROP_ACCESS_TOKEN,
   },
   experimental: {
-    appDir: true,
     mdxRs: true,
   },
   reactStrictMode: false,
@@ -42,7 +41,6 @@ const nextConfig = {
       }
     ],
   },
-  exclude: ["node_modules", "dist", "public/files"],
   webpack(config) {
     config.resolve.fallback = {
       fs: false,

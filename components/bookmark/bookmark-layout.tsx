@@ -88,9 +88,9 @@ export default function BookmarkLayout() {
         </TabsList>
       </Tabs>
 
-      <VList style={{ height: "85vh", marginTop: 16 }}>
+      <VList style={{ height: 'calc(100vh - 212px)', marginTop: 16 }}>
         {sortedData.map((date) => (
-          <div key={date} className="mt-20 left-animation">
+          <div key={date} className="mt-8 left-animation">
             <SubTitle className="">{date}</SubTitle>
             <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800">
               {data[date].map((item: ILink) => {
