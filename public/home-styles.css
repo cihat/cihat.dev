@@ -1,5 +1,15 @@
 /* this file will refactored soon */
 
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
 #name_paragraph {
   font-weight: bold;
   font-size: 2.2rem;

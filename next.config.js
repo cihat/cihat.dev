@@ -28,11 +28,18 @@ const nextConfig = {
     ]
   },
   images: {
+    domains: [
+      'static1.squarespace.com'
+    ],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**",
       },
+      {
+        hostname: "static1.squarespace.com",
+        
+      }
     ],
   },
   exclude: ["node_modules", "dist", "public/files"],

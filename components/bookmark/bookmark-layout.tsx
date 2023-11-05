@@ -17,21 +17,30 @@ import { format, startOfWeek, subWeeks } from "date-fns";
 import Raindrop from "@/lib/raindrop";
 import bookmarkGroupByWeekNumber from "@/lib/helper";
 import { Loading } from "../loading";
+import { VList } from "virtua";
 
 async function fetchData(collectionId: BookmarkType = BookmarkType.Technical) {
   const dateStartOfWeek = startOfWeek(subWeeks(new Date(), 6));
   const date = format(dateStartOfWeek, "yyyy-MM-dd");
 
   const raindrop = new Raindrop();
-  const collections: ILink[] = await raindrop.getBookmark({
-    perPage: 100,
+  let collections: ILink[] = await raindrop.getBookmark({
+    perPage: 50,
     search: `created:>${date}`,
     collectionId,
   });
-  const data = bookmarkGroupByWeekNumber(collections);
+
+  if (collections.length === 0) {
+    collections = await raindrop.getBookmark({
+      perPage: 50,
+      collectionId,
+    });
+  }
+
+  const bookmarks = bookmarkGroupByWeekNumber(collections);
 
   return {
-    data,
+    data: bookmarks,
     year: format(dateStartOfWeek, "yyyy"),
   };
 }
@@ -79,16 +88,18 @@ export default function BookmarkLayout() {
         </TabsList>
       </Tabs>
 
-      {sortedData.map((date) => (
-        <div key={date} className="mt-20 left-animation">
-          <SubTitle className="">{date}</SubTitle>
-          <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800">
-            {data[date].map((item: ILink) => {
-              return <BookmarkCard key={item._id} bookmark={item} />;
-            })}
+      <VList style={{ height: "85vh", marginTop: 16 }}>
+        {sortedData.map((date) => (
+          <div key={date} className="mt-20 left-animation">
+            <SubTitle className="">{date}</SubTitle>
+            <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800">
+              {data[date].map((item: ILink) => {
+                return <BookmarkCard key={item._id} bookmark={item} />;
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </VList>
 
       {sortedData.length === 0 && (
         <div className="flex flex-col justify-center items-center mt-6">

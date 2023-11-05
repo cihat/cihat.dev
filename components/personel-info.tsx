@@ -2,7 +2,6 @@
 
 import NextLink from "next/link";
 import Image from "next/image"
-import "@/public/home-styles.css";
 import { BsLinkedin, BsGithub, BsMedium, BsInstagram, BsTwitter, BsMailbox, BsLink45Deg } from "react-icons/bs";
 
 import { IRandomPhoto } from "@/types/random-photo"

@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@mdx-js/react':
     specifier: ^2.3.0
@@ -104,6 +100,9 @@ dependencies:
   typescript:
     specifier: 5.1.3
     version: 5.1.3
+  virtua:
+    specifier: 0.16.1
+    version: 0.16.1(react-dom@18.2.0)(react@18.2.0)
   zustand:
     specifier: ^4.3.9
     version: 4.3.9(react@18.2.0)
@@ -4161,6 +4160,16 @@ packages:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
+  /virtua@0.16.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-PiJWO++uDo7efG+gSgedm8sC4aoPL0C7tLxM4bHs62SAPlF8n9NdvpRzgsRhhMj0HA319BXPPKPRvimg4n+2Yw==}
+    peerDependencies:
+      react: '>=16.14.0'
+      react-dom: '>=16.14.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: false
@@ -4270,3 +4279,7 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

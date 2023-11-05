@@ -45,7 +45,12 @@ export default class Raindrop {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.token}`,
       },
-    });
+    })
+
+    if(!response.ok) {
+      throw new Error("Something went wrong when loading bookmarks")
+    }
+
     const data: Result = await response.json();
 
     if (data?.items?.length === perPage) {
