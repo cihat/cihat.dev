@@ -11,7 +11,8 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
     color-scheme: light;
-    @apply bg-[#f2f2f2] bg-gradient-to-l from-[#fff] to-[#e5e5e5];
+    /* @apply bg-[#f2f2f2] bg-gradient-to-l from-[#fff] to-[#e5e5e5]; */
+    background-image: url('../public/light-noise.png');
 
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
@@ -40,7 +41,8 @@
 
   :root.dark {
     color-scheme: dark;
-    @apply bg-[#1C1C1C] bg-gradient-to-r from-[#1C1C1C] to-[#2B2B2B];
+    /* @apply bg-[#1C1C1C] bg-gradient-to-r from-[#1C1C1C] to-[#2B2B2B]; */
+    background-image: url('../public/dark-noise.png');
 
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;

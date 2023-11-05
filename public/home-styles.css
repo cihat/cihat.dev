@@ -5,9 +5,9 @@ html {
   overflow-x: hidden;
 }
 ::-webkit-scrollbar {
-  width: 0;  /* Remove scrollbar space */
+  width: 0; /* Remove scrollbar space */
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 #name_paragraph {
@@ -23,7 +23,6 @@ html {
   line-height: 1.4;
   margin-block-start: 1rem;
   margin-block-end: 1rem;
-
 }
 
 .container p b {
@@ -35,7 +34,6 @@ html {
   position: relative;
   cursor: pointer;
 }
-
 
 .container .contact ul {
   display: flex;
@@ -57,7 +55,6 @@ html {
 .icon {
   width: 3rem;
 }
-
 
 @media screen and (max-width: 600px) {
   .contact ul {
