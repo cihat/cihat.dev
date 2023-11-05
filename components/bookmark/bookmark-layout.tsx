@@ -49,7 +49,7 @@ export default function BookmarkLayout() {
   const [data, setData] = useState([]);
 
   const sortedData = Object.keys(data).sort(
-    (a, b) => parseInt(b) - parseInt(a)
+    (a, b) =>  parseInt(a) - parseInt(b)
   );
   const [activeTab, setActiveTab] = useState<BookmarkType>(BookmarkType.Technical);
 
