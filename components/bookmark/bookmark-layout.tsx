@@ -11,31 +11,25 @@ import {
 } from "@/components/ui/tabs"
 import { useEffect, useState } from "react";
 import { useStore } from "@/store";
-import { BookmarkType } from "@/store/types";
+import { BookmarkType, DatePeriodType } from "@/store/types";
 
-import { format, startOfWeek, subWeeks } from "date-fns";
+import { format, startOfWeek, subMonths, subWeeks, subYears } from "date-fns";
 import Raindrop from "@/lib/raindrop";
 import bookmarkGroupByWeekNumber from "@/lib/helper";
 import { Loading } from "../loading";
 import { VList } from "virtua";
 
-async function fetchData(collectionId: BookmarkType = BookmarkType.Technical) {
-  const dateStartOfWeek = startOfWeek(subWeeks(new Date(), 6));
-  // const date = format(dateStartOfWeek, "yyyy-MM-dd");
+async function fetchData(collectionId: BookmarkType = BookmarkType.Technical, subDateConfig) {
+  const { type, dateStartOfWeek, subDate } = subDateConfig;
+
+  console.log('subDateConfig', subDateConfig)
 
   const raindrop = new Raindrop();
   let collections: ILink[] = await raindrop.getBookmark({
-    perPage: 100,
-    // search: `created:>${date}`,
+    perPage: 50,
+    search: type !== DatePeriodType.ALL_TIME ? `created:>${subDate}` : '-created',
     collectionId,
-  });
-
-  // if (collections.length === 0) {
-  //   collections = await raindrop.getBookmark({
-  //     perPage: 50,
-  //     collectionId,
-  //   });
-  // }
+  })
 
   const bookmarks = bookmarkGroupByWeekNumber(collections);
 
@@ -45,13 +39,23 @@ async function fetchData(collectionId: BookmarkType = BookmarkType.Technical) {
   };
 }
 
+type DatePeriod = {
+  type: DatePeriodType,
+  dateStartOfWeek: any,
+  subDate: any
+}
+
+
 export default function BookmarkLayout() {
   const [data, setData] = useState([]);
 
-  const sortedData = Object.keys(data).sort(
-    (a, b) =>  parseInt(a) - parseInt(b)
-  );
+  const sortedData = Object.keys(data);
   const [activeTab, setActiveTab] = useState<BookmarkType>(BookmarkType.Technical);
+  const [subDateState, setSubDateState] = useState<DatePeriod>({
+    type: DatePeriodType.ALL_TIME,
+    dateStartOfWeek: startOfWeek(new Date()),
+    subDate: null
+  });
 
   const handleTabChange = (value) => {
     switch (value) {
@@ -67,20 +71,67 @@ export default function BookmarkLayout() {
     }
   }
 
+  const handleSubDateChange = (dateType) => {
+    let dateStartOfWeek;
+    let subDate
+
+    switch (dateType) {
+      case DatePeriodType.LAST_ONE_WEEK:
+        dateStartOfWeek = startOfWeek(subWeeks(new Date(), 1));
+        subDate = format(dateStartOfWeek, 'yyyy-MM-dd')
+
+        setSubDateState({
+          type: DatePeriodType.LAST_ONE_WEEK,
+          dateStartOfWeek,
+          subDate
+        })
+        break;
+      case DatePeriodType.LAST_TWO_WEEKS:
+        dateStartOfWeek = startOfWeek(subWeeks(new Date(), 2));
+        subDate = format(dateStartOfWeek, 'yyyy-MM-dd')
+
+        setSubDateState({
+          type: DatePeriodType.LAST_TWO_WEEKS,
+          dateStartOfWeek,
+          subDate
+        })
+        break;
+      case DatePeriodType.LAST_ONE_MONTH:
+        dateStartOfWeek = startOfWeek(subMonths(new Date(), 1));
+        subDate = format(dateStartOfWeek, 'yyyy-MM-dd')
+
+        setSubDateState({
+          type: DatePeriodType.LAST_ONE_MONTH,
+          dateStartOfWeek,
+          subDate
+        })
+        break;
+      default:
+        console.log('sadfl;aksdjf;alksdjf;alksdfj;alksjdf;laksdj')
+        setSubDateState({
+          type: DatePeriodType.ALL_TIME,
+          dateStartOfWeek: startOfWeek(new Date()),
+          subDate: null
+        })
+        break;
+    }
+  }
+
   useEffect(() => {
     (async () => {
-      setData((await fetchData(activeTab)).data as any);
+      setData((await fetchData(activeTab, subDateState)).data as any);
     })();
     useStore.setState({ activeBookmarkType: activeTab });
 
     return () => {
       setData([]);
     }
-  }, [activeTab])
+
+  }, [activeTab, subDateState])
 
   return (
     <Container className="min-h-[80vh] left-animation">
-      <Tabs defaultValue={BookmarkType.Technical} onValueChange={handleTabChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap">
+      <Tabs defaultValue={BookmarkType.Technical} onValueChange={handleTabChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap mb-2">
         <TabsList className="bg-[var(--primary-color)]">
           <TabsTrigger value={BookmarkType.Technical}>Technical</TabsTrigger>
           <TabsTrigger value={BookmarkType.DesignArtMusic}>Design & Art & Music</TabsTrigger>
@@ -88,7 +139,22 @@ export default function BookmarkLayout() {
         </TabsList>
       </Tabs>
 
-      <VList style={{ height: 'calc(100vh - 212px)', marginTop: 16 }}>
+      <Tabs defaultValue={DatePeriodType.ALL_TIME} onValueChange={handleSubDateChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap text-sm">
+        <TabsList className="bg-[var(--primary-color)]">
+          <TabsTrigger value={DatePeriodType.LAST_ONE_WEEK}>Last 1 week</TabsTrigger>
+          <TabsTrigger value={DatePeriodType.LAST_TWO_WEEKS}>Last 2 weeks</TabsTrigger>
+          <TabsTrigger value={DatePeriodType.LAST_ONE_MONTH}>Last 1 month</TabsTrigger>
+          <TabsTrigger value={DatePeriodType.ALL_TIME}>All</TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      {sortedData.length === 0 && (
+        <div className="flex flex-col justify-center items-center mt-6">
+          <Loading text="" />
+        </div>
+      )}
+
+      <VList style={{ height: 'calc(100vh - 260px)', marginTop: 16 }}>
         {sortedData.map((date) => (
           <div key={date} className="mt-8 left-animation">
             <SubTitle className="">{date}</SubTitle>
@@ -100,12 +166,6 @@ export default function BookmarkLayout() {
           </div>
         ))}
       </VList>
-
-      {sortedData.length === 0 && (
-        <div className="flex flex-col justify-center items-center mt-6">
-          <Loading text="" />
-        </div>
-      )}
     </Container>
   );
 }
