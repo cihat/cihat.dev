@@ -130,7 +130,7 @@ export default function BookmarkLayout() {
   }, [activeTab, subDateState])
 
   return (
-    <Container className="min-h-[80vh] left-animation">
+    <Container className="min-h-[80vh] left-animation text-sm">
       <Tabs defaultValue={BookmarkType.Technical} onValueChange={handleTabChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap mb-2">
         <TabsList className="bg-[var(--primary-color)]">
           <TabsTrigger value={BookmarkType.Technical}>Technical</TabsTrigger>
