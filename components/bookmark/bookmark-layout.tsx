@@ -22,8 +22,6 @@ import { VList } from "virtua";
 async function fetchData(collectionId: BookmarkType = BookmarkType.Technical, subDateConfig) {
   const { type, dateStartOfWeek, subDate } = subDateConfig;
 
-  console.log('subDateConfig', subDateConfig)
-
   const raindrop = new Raindrop();
   let collections: ILink[] = await raindrop.getBookmark({
     perPage: 50,
@@ -52,9 +50,9 @@ export default function BookmarkLayout() {
   const sortedData = Object.keys(data);
   const [activeTab, setActiveTab] = useState<BookmarkType>(BookmarkType.Technical);
   const [subDateState, setSubDateState] = useState<DatePeriod>({
-    type: DatePeriodType.ALL_TIME,
-    dateStartOfWeek: startOfWeek(new Date()),
-    subDate: null
+    type: DatePeriodType.LAST_ONE_WEEK,
+    dateStartOfWeek: startOfWeek(subWeeks(new Date(), 1)),
+    subDate: format(startOfWeek(subWeeks(new Date(), 1)), 'yyyy-MM-dd')
   });
 
   const handleTabChange = (value) => {
@@ -107,7 +105,6 @@ export default function BookmarkLayout() {
         })
         break;
       default:
-        console.log('sadfl;aksdjf;alksdjf;alksdfj;alksjdf;laksdj')
         setSubDateState({
           type: DatePeriodType.ALL_TIME,
           dateStartOfWeek: startOfWeek(new Date()),
@@ -139,7 +136,7 @@ export default function BookmarkLayout() {
         </TabsList>
       </Tabs>
 
-      <Tabs defaultValue={DatePeriodType.ALL_TIME} onValueChange={handleSubDateChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap text-sm">
+      <Tabs defaultValue={DatePeriodType.LAST_ONE_WEEK} onValueChange={handleSubDateChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap text-sm">
         <TabsList className="bg-[var(--primary-color)]">
           <TabsTrigger value={DatePeriodType.LAST_ONE_WEEK}>Last 1 week</TabsTrigger>
           <TabsTrigger value={DatePeriodType.LAST_TWO_WEEKS}>Last 2 weeks</TabsTrigger>

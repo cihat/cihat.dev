@@ -27,18 +27,11 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: [
-      'static1.squarespace.com'
-    ],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**",
       },
-      {
-        hostname: "static1.squarespace.com",
-        
-      }
     ],
   },
   webpack(config) {
@@ -47,10 +40,7 @@ const nextConfig = {
     };
 
     return config;
-  },
-  options: {
-    providerImportSource: '@mdx-js/react',
-  },
+  }
 }
 
 const domains = [
