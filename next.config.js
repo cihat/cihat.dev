@@ -14,7 +14,7 @@ const nextConfig = {
     RAINDROP_ACCESS_TOKEN: process.env.RAINDROP_ACCESS_TOKEN,
   },
   experimental: {
-    mdxRs: true,
+    mdxRs: true
   },
   reactStrictMode: false,
   poweredByHeader: false,
@@ -32,6 +32,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**",
       },
+      {
+        protocol: "http",
+        hostname: "**",
+      }
     ],
   },
   webpack(config) {
