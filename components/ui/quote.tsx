@@ -6,7 +6,12 @@ import { useEffect } from "react";
 import getQuote from "@/lib/fetch-stoic-quote"
 import cx from "@/lib/cx";
 
-export function RandomQuote({ quoteProp, authorProp }: { quoteProp?: string, authorProp?: string }) {
+type Props = {
+  quoteProp?: string
+  authorProp?: string
+}
+
+export function RandomQuote({ quoteProp, authorProp }: Props) {
   const [quote, setQuote] = useState<IQuote>({
     text: "",
     author: ""
@@ -23,7 +28,7 @@ export function RandomQuote({ quoteProp, authorProp }: { quoteProp?: string, aut
       const data = await getQuote()
       setQuote(data)
     })()
-  }, [])
+  }, [authorProp, quoteProp])
 
   return (
     <Suspense fallback={null}>

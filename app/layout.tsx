@@ -41,10 +41,6 @@ export const metadata: Metadata = {
     site: "@chtslk",
     creator: "@chtslk",
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
   metadataBase: new URL(url),
 };
 

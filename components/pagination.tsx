@@ -11,29 +11,28 @@ export default function Pagination() {
   const [pagination, setPagination] = useState<Pagination>({ prev: null, next: null });
   const path = usePathname();
 
-  function init() {
-    const posts = getPosts();
-    const currentBlog = path.split("/")[2];
-    const currentBlogIndex = posts.findIndex((post) => post.id === currentBlog);
-    let prevBlog;
-    let nextBlog;
+  useEffect(() => {
+    function init() {
+      const posts = getPosts();
+      const currentBlog = path.split("/")[2];
+      const currentBlogIndex = posts.findIndex((post) => post.id === currentBlog);
+      let prevBlog;
+      let nextBlog;
 
-    if (currentBlogIndex === 0) {
-      prevBlog = null;
-      nextBlog = posts[currentBlogIndex + 1];
-    } else if (currentBlogIndex === posts.length - 1) {
-      prevBlog = posts[currentBlogIndex - 1];
-      nextBlog = null;
-    } else {
-      prevBlog = posts[currentBlogIndex - 1];
-      nextBlog = posts[currentBlogIndex + 1];
+      if (currentBlogIndex === 0) {
+        prevBlog = null;
+        nextBlog = posts[currentBlogIndex + 1];
+      } else if (currentBlogIndex === posts.length - 1) {
+        prevBlog = posts[currentBlogIndex - 1];
+        nextBlog = null;
+      } else {
+        prevBlog = posts[currentBlogIndex - 1];
+        nextBlog = posts[currentBlogIndex + 1];
+      }
+
+      setPagination({ prev: prevBlog, next: nextBlog })
     }
 
-    setPagination({ prev: prevBlog, next: nextBlog })
-  }
-
-
-  useEffect(() => {
     init();
 
     return () => {
