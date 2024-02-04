@@ -5,19 +5,19 @@ import Link from "next/link";
 import { Suspense } from "react";
 import useSWR from "swr";
 import type { Post } from "@/types";
+import Category from "./category";
+import { CategoryEnum, LangEnum } from "@/types";
+import { Badge } from "@/components/ui/badge";
 
 type SortSetting = ["date" | "views", "desc" | "asc"];
-enum LangEnum {
-  en = "en-US",
-  tr = "tr-TR",
-  all = "all"
-}
+
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export function Posts({ posts: initialPosts }) {
   const [sort, setSort] = useState<SortSetting>(["date", "desc"]);
   const [lang, setLang] = useState<LangEnum>(LangEnum.all);
+  const [category, setCategory] = useState<CategoryEnum>(CategoryEnum.all);
   const [flag, setFlag] = useState("🇹🇷🇬🇧")
 
   const { data: posts } = useSWR("/api/posts", fetcher, {
@@ -71,7 +71,8 @@ export function Posts({ posts: initialPosts }) {
             Date
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </button>
-          <span className={`grow pl-2 mr-2 bg-[#f2f2f2] dark:bg-[#1C1C1C] ${tabStyle}`}>Title</span>
+          <span className={`grow pl-2 bg-[#f2f2f2] dark:bg-[#1C1C1C] ${tabStyle}`}>Title</span>
+          <Category category={category} setCategory={setCategory} />
           <button
             onClick={handleEmoji}
             className={`
@@ -101,13 +102,13 @@ export function Posts({ posts: initialPosts }) {
           </button>
         </header>
 
-        <List posts={posts} sort={sort} lang={lang} />
+        <List posts={posts} sort={sort} lang={lang} category={category} />
       </div>
     </Suspense>
   );
 }
 
-function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: LangEnum }) {
+function List({ posts, sort, lang, category }: { posts: Post[], sort: SortSetting, lang: LangEnum, category: CategoryEnum }) {
   // sort can be ["date", "desc"] or ["views", "desc"] for example
   const sortedPosts = useMemo(() => {
     const [sortKey, sortDirection] = sort;
@@ -122,8 +123,12 @@ function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: L
     }).filter(post => {
       if (lang === LangEnum.all) return post
       if (post.language === lang) return post
-    })
-  }, [posts, sort, lang]);
+    }).filter(post => {
+      if (category === CategoryEnum.all) return post
+      if (post.category.toLocaleLowerCase() === category.toLocaleLowerCase()) return post
+    });
+
+  }, [posts, sort, lang, category]);
 
   if (!sortedPosts.length) return (
     <p className="flex justify-center items-center text-center  text-md mt-5">Coming soon</p>
@@ -153,7 +158,6 @@ function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: L
                       {year}
                     </span>
                   )}
-
                   <div className="flex flex-col grow">
                     <div>
                       <span className="grow dark:text-gray-100 font-semibold">
@@ -163,6 +167,9 @@ function List({ posts, sort, lang }: { posts: Post[], sort: SortSetting, lang: L
                       <span className="text-xs text-gray-500 dark:text-gray-500">{post.minuteToRead} mins</span>
                     </div>
                     <div>
+                      <Badge className="mr-2">
+                        {post.category}
+                      </Badge>
                       <span className="text-xs">
                         {post.date}
                       </span>

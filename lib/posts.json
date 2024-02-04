@@ -5,49 +5,56 @@
       "date": "July 16, 2023",
       "title": "Initial Blog Post",
       "minuteToRead": 3,
-      "language": "en-US"
+      "language": "en-US",
+      "category": "Etc"
     },
     {
       "id": "pro-js-design-patterns",
       "date": "July 27, 2023",
       "title": "My Notes from Pro JavaScript Design Patterns",
       "minuteToRead": 5,
-      "language": "en-US"
+      "language": "en-US",
+      "category": "Learning"
     },
     {
       "id": "stoik-felsefe",
       "date": "August 3, 2023",
       "title": "Stoik Felsefeyle Tanışma",
       "minuteToRead": 5,
-      "language": "tr-TR"
+      "language": "tr-TR",
+      "category": "Philosophy"
     },
     {
       "id": "kariyerimde-mentorlugun-onemi",
       "date": "March 9, 2021",
       "title": "Kariyerimde Mentörlüğün Önemi",
       "minuteToRead": 6,
-      "language": "tr-TR"
+      "language": "tr-TR",
+      "category": "Etc"
     },
     {
       "id": "ilk-blog-yazisi",
       "date": "July 16, 2023",
       "title": "Ilk Blog Yazisi",
       "minuteToRead": 3,
-      "language": "tr-TR"
+      "language": "tr-TR",
+      "category": "Etc"
     },
     {
       "id": "atomik-aliskanliklar",
       "date": "July 26, 2023",
       "title": "Atomik Alışkanlıklar Kitabindan Notlar",
       "minuteToRead": 5,
-      "language": "tr-TR"
+      "language": "tr-TR",
+      "category": "Productivity"
     },
     {
       "id": "uretkenlik-uzerine",
       "date": "August 20, 2023",
       "title": "Üretkenlik Üzerine",
       "minuteToRead": 6,
-      "language": "tr-TR"
+      "language": "tr-TR",
+      "category": "Productivity"
     }
   ]
 }

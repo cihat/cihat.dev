@@ -1,4 +1,4 @@
-import { Posts } from "./posts";
+import { Posts } from "./posts/posts";
 import { getPostsWithViewData } from "@/lib/get-posts";
 import { RandomQuote } from '@/components/ui/quote'
 import Container from "@/components/ui/container";

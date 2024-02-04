@@ -5,6 +5,7 @@ import { useRef, useEffect } from 'react'
 import { ago } from "time-ago";
 import useSWR from "swr";
 import type { Post } from "@/types";
+import { Badge } from "@/components/ui/badge";
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -55,6 +56,10 @@ export function Header({ posts }: { posts: Post[] }) {
           <span suppressHydrationWarning={true}>
             {post.date} ({ago(post.date, true)} ago)
           </span>
+          &nbsp;|&nbsp;
+          <Badge className="mr-2">
+            {post.category}
+          </Badge>
         </span>
         <span className="pr-1.5">
           <Views

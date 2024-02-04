@@ -36,9 +36,24 @@ export type Post = {
   title: string;
   language: string;
   minuteToRead: number;
+  category: string;
 }
 
 export type Pagination = {
   prev: Post | null;
   next: Post | null;
+}
+
+export enum CategoryEnum {
+  learning = "Learning",
+  philosophy = "Philosophy",
+  productivity = "Productivity",
+  etc = "Etc",
+  all = "All"
+}
+
+export enum LangEnum {
+  en = "en-US",
+  tr = "tr-TR",
+  all = "all"
 }
