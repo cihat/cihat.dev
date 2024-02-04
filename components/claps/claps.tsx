@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { debounce, set } from "lodash";
 import cx from "classnames";
 import Icons from "./icons";
@@ -61,8 +61,8 @@ export default function Claps({
     }, REACTION_DURATION);
   };
 
-  const onClapSaving = useCallback(
-    debounce(async (score, data) => {
+  const onClapSaving = useMemo(
+    () => debounce(async (score, data) => {
       const url = window.location.pathname
       const postId = url.substring(url.lastIndexOf('/') + 1);
 
