@@ -55,6 +55,14 @@
       "minuteToRead": 6,
       "language": "tr-TR",
       "category": "Productivity"
+    },
+    {
+      "id": "cs-basics-series",
+      "date": "February 04, 2024",
+      "title": "CS Basics Series - #0",
+      "minuteToRead": 5,
+      "language": "en-US",
+      "category": "Learning"
     }
   ]
 }
