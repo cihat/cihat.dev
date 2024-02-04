@@ -46,6 +46,7 @@ type DatePeriod = {
 
 export default function BookmarkLayout() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const sortedData = Object.keys(data);
   const [activeTab, setActiveTab] = useState<BookmarkType>(BookmarkType.Technical);
@@ -115,19 +116,27 @@ export default function BookmarkLayout() {
   }
 
   useEffect(() => {
-    (async () => {
-      setData((await fetchData(activeTab, subDateState)).data as any);
-    })();
+    const fetchDataAsync = async () => {
+      setLoading(true); // Set loading to true before fetching data
+      try {
+        const result = await fetchData(activeTab, subDateState);
+        setData(result.data as unknown as never[]);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched (or an error occurs)
+      }
+    };
+
+    fetchDataAsync();
+
     useStore.setState({ activeBookmarkType: activeTab });
 
     return () => {
       setData([]);
-    }
-
-  }, [activeTab, subDateState])
+    };
+  }, [activeTab, subDateState]);
 
   return (
-    <Container className="min-h-[80vh] left-animation text-sm">
+    <Container className="left-animation text-sm overflow-hidden">
       <Tabs defaultValue={BookmarkType.Technical} onValueChange={handleTabChange} className="w-[100%] flex flex-col justify-center items-center flex-wrap mb-2">
         <TabsList className="bg-[var(--primary-color)]">
           <TabsTrigger value={BookmarkType.Technical}>Technical</TabsTrigger>
@@ -145,15 +154,12 @@ export default function BookmarkLayout() {
         </TabsList>
       </Tabs>
 
-      {sortedData.length === 0 && (
-        <div className="flex flex-col justify-center items-center mt-6">
-          <Loading text="" />
-        </div>
-      )}
+      {loading && <Loading className="m-4" />}
+      {!loading && sortedData.length === 0 && <div className="text-center m-4">No bookmarks found</div>}
 
-      <VList style={{ height: 'calc(100vh - 260px)', marginTop: 16 }}>
+      <VList style={{ height: 'calc(100vh - 210px)', marginTop: 8 }}>
         {sortedData.map((date) => (
-          <div key={date} className="mt-8 left-animation">
+          <div key={date} className="mt-4 left-animation">
             <SubTitle className="">{date}</SubTitle>
             <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800">
               {data[date].map((item: ILink) => {

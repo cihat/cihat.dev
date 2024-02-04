@@ -11,7 +11,7 @@ function BookmarkCard({ bookmark }: { bookmark: ILink }) {
   const [imgSrc, setImgSrc] = useState(bookmark.cover);
 
   return (
-    <Container className="flex flex-col md:flex-row justify-center items-start md:justify-start mb-2 py-2">
+    <Container className="flex flex-col md:flex-row justify-center items-start md:justify-start mb-2 py-2 min-h-64">
       <Link href={bookmark.link} className="flex-shrink-0 project-card">
         <Image
           onError={() => setImgSrc(defaultImage.src)}
@@ -20,7 +20,7 @@ function BookmarkCard({ bookmark }: { bookmark: ILink }) {
           placeholder="blur"
           blurDataURL="/"
           width={300}
-          height={300}
+          height={0}
           className="rounded h-auto"
         />
       </Link>
@@ -40,7 +40,7 @@ function BookmarkCard({ bookmark }: { bookmark: ILink }) {
         </div>
         {
           bookmark.excerpt && (
-            <h4 className="cut_text">
+            <h4 className="cut_text italic">
               {
                 bookmark.excerpt.length > 200
                   ? `${bookmark.excerpt.slice(0, 200)}...`
