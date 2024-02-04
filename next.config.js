@@ -3,6 +3,11 @@ const withMDX = require("@next/mdx")();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  swcMinify: true,
+  reactStrictMode: true,
+  experimental: {
+    mdxRs: true
+  },
   env: {
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
     UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,
@@ -13,10 +18,6 @@ const nextConfig = {
     VERCEL_URL: process.env.VERCEL_URL,
     RAINDROP_ACCESS_TOKEN: process.env.RAINDROP_ACCESS_TOKEN,
   },
-  experimental: {
-    mdxRs: true
-  },
-  reactStrictMode: false,
   poweredByHeader: false,
   headers() {
     return [
