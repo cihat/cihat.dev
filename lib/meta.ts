@@ -8,7 +8,7 @@ export const META_DATA = {
   name: "Cihat Salik",
   social: {
     vsco: "https://vsco.co/cihqt/gallery",
-    instagram: "https://instagram.com/cihat.png",
+    instagram: "https://instagram.com/cihatsalikk",
     twitter: "https://twitter.com/chtslk",
     github: "https://github.com/cihat",
   },
