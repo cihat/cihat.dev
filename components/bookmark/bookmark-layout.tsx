@@ -17,7 +17,6 @@ import { format, startOfWeek, subMonths, subWeeks, subYears } from "date-fns";
 import Raindrop from "@/lib/raindrop";
 import bookmarkGroupByWeekNumber from "@/lib/helper";
 import { Loading } from "../loading";
-import { VList } from "virtua";
 
 async function fetchData(collectionId: BookmarkType = BookmarkType.Technical, subDateConfig) {
   const { type, dateStartOfWeek, subDate } = subDateConfig;
@@ -157,7 +156,7 @@ export default function BookmarkLayout() {
       {loading && <Loading className="m-4" />}
       {!loading && sortedData.length === 0 && <div className="text-center m-4">No bookmarks found</div>}
 
-      <VList style={{ height: 'calc(100vh - 210px)', marginTop: 8 }}>
+      <div style={{ height: 'calc(100vh - 210px)', marginTop: 8, overflow: "scroll" }}>
         {sortedData.map((date) => (
           <div key={date} className="mt-4 left-animation">
             <SubTitle className="">{date}</SubTitle>
@@ -168,7 +167,7 @@ export default function BookmarkLayout() {
             </div>
           </div>
         ))}
-      </VList>
+      </div>
     </Container>
   );
 }

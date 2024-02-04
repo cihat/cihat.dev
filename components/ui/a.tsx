@@ -8,7 +8,6 @@ type AElementType = {
 }
 
 export default function A({ children, className = "", href, ...props }: AElementType) {
-  console.log('href', href)
   if (!href) {
     return (
       <a
