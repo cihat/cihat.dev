@@ -19,7 +19,7 @@ export default function LearningRepo() {
           forks: repo.forks,
           image: 'https://opengraph.githubassets.com/1/cihat/learning',
           language: repo.language,
-          languageColor: "green",
+          languageColor: "yellow",
           owner: repo.owner,
           repo: repo.name,
           stars: repo.stargazers_count,

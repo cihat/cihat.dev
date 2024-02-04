@@ -15,7 +15,7 @@ export default function Header() {
   const MENU = {
     "/reading": "Reading",
     "/bookmarks": "Bookmarks",
-    "/learning": "Learning",
+    // "/learning": "Learning",
     "/about": "About",
   } as any;
 
