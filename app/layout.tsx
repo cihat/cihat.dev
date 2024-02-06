@@ -65,7 +65,7 @@ export default function RootLayout({
       </head>
       <body className={"no-scrollbar"}>
         <Header />
-        <main className="mt-4 grow">{children}</main>
+        <main className="mt-4 grow min-h-[calc(100vh-110px)]">{children}</main>
         <Footer />
         <VercelAnalytics />
       </body>

@@ -10,7 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { CategoryEnum } from "@/types"
@@ -49,7 +48,7 @@ export default function Category({ category, setCategory }) {
     <div className="mx-2 bg-[#f2f2f2] dark:bg-[#1C1C1C]">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="destructive" className="min-w-20">{category}</Button>
+          <Button variant="default" className="min-w-20">{category}</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Category</DropdownMenuLabel>

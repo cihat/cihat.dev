@@ -31,9 +31,9 @@ export function Header({ posts }: { posts: Post[] }) {
         {post.title}
       </h1>
 
-      <p className="flex text-xs text-gray-500 dark:text-gray-500">
-        <span className="flex-grow">
-          <span className="hidden md:inline">
+      <div className="flex text-xs text-gray-500 dark:text-gray-500">
+        <div className="flex-grow">
+          <div className="hidden md:inline">
             <span>
               <a
                 href="https://twitter.com/chtslk"
@@ -45,7 +45,7 @@ export function Header({ posts }: { posts: Post[] }) {
             </span>
 
             <span className="mx-2">|</span>
-          </span>
+          </div>
           <span>{post.minuteToRead} mins</span>
           &nbsp;|&nbsp;
 
@@ -60,7 +60,7 @@ export function Header({ posts }: { posts: Post[] }) {
           <Badge className="mr-2">
             {post.category}
           </Badge>
-        </span>
+        </div>
         <span className="pr-1.5">
           <Views
             id={post.id}
@@ -68,7 +68,7 @@ export function Header({ posts }: { posts: Post[] }) {
             defaultValue={post.viewsFormatted}
           />
         </span>
-      </p>
+      </div>
     </>
   );
 }
