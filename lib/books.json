@@ -1,6 +1,26 @@
 {
   "books": [
     {
+      "title": "Cracking The Coding Interview",
+      "alt": "Cracking The Coding Interview",
+      "readedPage": 50,
+      "page": 696,
+      "bookCover": "/img/cs-basics-series/cracking-the-coding-interview.jpg",
+      "link": "#",
+      "subtitle": "189 Programming Questions and Solutions",
+      "author": "Gayle Laakmann McDowell"
+    },
+    {
+      "title": "Data Structures & Algorithms in C++`",
+      "alt": "Data Structures & Algorithms in C++`",
+      "readedPage": 40,
+      "page": 714,
+      "bookCover": "/img/cs-basics-series/data-structures-and-algorithms-in-cpp.jpg",
+      "link": "#",
+      "subtitle": "Michael T. Goodrich, Roberto Tamassia, David M. Mount",
+      "author": "Michael T. Goodrich, Roberto Tamassia, David M. Mount"
+    },
+    {
       "title": "Suç ve Ceza",
       "alt": "Suç ve Ceza",
       "readedPage": 672,
