@@ -63,6 +63,38 @@
       "minuteToRead": 5,
       "language": "en-US",
       "category": "Learning"
+    },
+    {
+      "id": "cs-basics-series/1-introduction",
+      "date": "February 10, 2024",
+      "title": "CS Basics Series - #1 - Introduction and Big O",
+      "minuteToRead": 5,
+      "language": "en-US",
+      "category": "Learning"
+    },
+    {
+      "id": "cs-basics-series/2-data-structures",
+      "date": "February 10, 2024",
+      "title": "CS Basics Series - #2 - Data Structures",
+      "minuteToRead": 5,
+      "language": "en-US",
+      "category": "Learning"
+    },
+    {
+      "id": "cs-basics-series/3-concepts-and-algorithms",
+      "date": "February 10, 2024",
+      "title": "CS Basics Series - #3 - Concepts and Algorithms",
+      "minuteToRead": 5,
+      "language": "en-US",
+      "category": "Learning"
+    },
+    {
+      "id": "cs-basics-series/4-knowledge-based",
+      "date": "February 10, 2024",
+      "title": "CS Basics Series - #4 - Knowledge Based",
+      "minuteToRead": 5,
+      "language": "en-US",
+      "category": "Learning"
     }
   ]
 }
