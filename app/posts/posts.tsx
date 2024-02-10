@@ -145,7 +145,7 @@ function List({ posts, sort, lang, category }: { posts: Post[], sort: SortSettin
 
         return (
           <li key={post.id}>
-            <Link href={`/${new Date(post.date).getFullYear()}/${post.id}`}>
+            <Link href={`/${new Date(post.date).getFullYear()}/${post.path}`}>
               <span
                 className={`flex px-2  transition-[background-color] hover:bg-gray-100 dark:hover:bg-[#242424] active:bg-gray-200 dark:active:bg-[#222] border-y border-gray-200 dark:border-[#313131]
                 ${!firstOfYear ? "border-t-0" : ""}

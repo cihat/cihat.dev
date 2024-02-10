@@ -32,6 +32,7 @@ export type Post = {
   viewsFormatted: string;
   views: number;
   id: string;
+  path: string;
   date: string;
   title: string;
   language: string;
