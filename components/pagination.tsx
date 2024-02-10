@@ -9,13 +9,13 @@ import { getPosts } from "@/lib/get-posts";
 
 export default function Pagination() {
   const [pagination, setPagination] = useState<Pagination>({ prev: null, next: null });
-  const path = usePathname();
+  const path= usePathname();
 
   useEffect(() => {
     function init() {
-      const posts = getPosts();
-      const currentBlog = path.split("/")[2];
-      const currentBlogIndex = posts.findIndex((post) => post.id === currentBlog);
+      const posts: Post[] = getPosts() as Post[];
+      const currentBlog = path.split("/").slice(2).join("/");
+      const currentBlogIndex = posts.findIndex((post) => post.path === currentBlog);
       let prevBlog;
       let nextBlog;
 
@@ -43,14 +43,14 @@ export default function Pagination() {
   return (
     <Container className="flex justify-between flex-wrap items-center mt-6 mx-0 min-h-[28px] top-animation">
       {pagination?.prev && (
-        <Link href={`/${pagination?.prev?.date.split(" ")[2]}/${pagination.prev.id}`} legacyBehavior>
+        <Link href={`/${pagination?.prev?.date.split(" ")[2]}/${pagination.prev.path}`} legacyBehavior>
           <a className="text-gray-800 dark:text-gray-300 hover:underline mr-auto cursor-pointer text-lg font-bold">
             ← {pagination.prev.title}
           </a>
         </Link>
       )}
       {pagination?.next && (
-        <Link href={`/${pagination?.next?.date.split(" ")[2]}/${pagination.next.id}`} legacyBehavior>
+        <Link href={`/${pagination?.next?.date.split(" ")[2]}/${pagination.next.path}`} legacyBehavior>
           <a className="text-gray-800 dark:text-gray-300 hover:underline ml-auto cursor-pointer text-lg mt-6 sm:mt-0 font-bold">
             {pagination.next.title} →
           </a>
