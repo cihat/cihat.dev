@@ -41,9 +41,10 @@ export function RandomQuote({ quoteProp, authorProp }: Props) {
         </svg>
 
         <div className="relative z-10">
-          <p className="text-gray-800 dark:text-white"><em>
-            “{quote.text}”
-          </em></p>
+          <p className="text-gray-800 dark:text-white">
+            <em className="text-sm sm:text-lg">
+              “{quote.text}”
+            </em></p>
           <p className="text-right font-bold">{quote.author}</p>
         </div>
       </blockquote>

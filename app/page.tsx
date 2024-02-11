@@ -7,7 +7,7 @@ export default async function Home() {
   const posts = await getPostsWithViewData();
 
   return (
-    <Container className="flex flex-col h-[75vh] py-6" as="main">
+    <Container className="flex flex-col h-[calc(100vh-108px)] sm:h-[75vh] sm:py-6 py-3" as="main">
       <Posts posts={posts}/>
       <RandomQuote />
     </Container>
