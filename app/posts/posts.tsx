@@ -62,7 +62,7 @@ export function Posts({ posts: initialPosts }) {
   return (
     <Suspense fallback={null}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll">
-        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm py-1 sticky top-0">
+        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm sticky top-0 p-1 bg-gray-200 dark:bg-[#313131] rounded-md">
           <button
             onClick={sortDate}
             className={`${tabStyle} 

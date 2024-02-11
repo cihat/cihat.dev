@@ -45,10 +45,10 @@ export default function Category({ category, setCategory }) {
   }
 
   return (
-    <div className="mx-2 bg-[#f2f2f2] dark:bg-[#1C1C1C]">
+    <div className="mx-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="default" className="min-w-20">{category}</Button>
+          <Button variant="default" className="w-13 h-9 rounded-sm text-left text-md font-semibold">{category}</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Category</DropdownMenuLabel>
