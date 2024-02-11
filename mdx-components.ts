@@ -2,7 +2,7 @@
 
 import { A as a } from "app/(post)/components/a";
 import { P as p } from "app/(post)/components/p";
-import { H1  } from "app/(post)/components/h1";
+import { H1 } from "app/(post)/components/h1";
 import { H2 as h2 } from "app/(post)/components/h2";
 import { H3 as h3 } from "app/(post)/components/h3";
 import { OL as ol } from "app/(post)/components/ol";
@@ -21,6 +21,7 @@ import { Ref, FootNotes, FootNote } from "app/(post)/components/footnotes";
 import { Blockquote } from "app/(post)/components/blockquote";
 import { Reading } from "app/(post)/components/reading";
 import { RandomQuote } from "./components/ui/quote";
+import { CodeSnippet } from "./app/(post)/components/code-snippet";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -52,5 +53,6 @@ export function useMDXComponents(components: {
     FootNote,
     Reading,
     Quote: RandomQuote,
+    CodeSnippet
   };
 }
