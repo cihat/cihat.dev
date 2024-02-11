@@ -57,11 +57,6 @@ export default function RootLayout({
       suppressHydrationWarning={true}
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(${themeEffect.toString()})();`,
-          }}
-        />
       </head>
       <body className={"no-scrollbar"}>
         <Header />

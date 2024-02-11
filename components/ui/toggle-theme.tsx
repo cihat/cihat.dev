@@ -3,8 +3,6 @@
 // this component copy from https://github.com/rauchg/blog/blob/main/app/theme-toggle.tsx
 import { useEffect, useState, useCallback } from "react";
 import { themeEffect } from "@/lib/theme-effect";
-import Container from "./container";
-import SunIcon from "@/public/icons/sun.svg";
 import Image from "next/image";
 
 export default function ThemeToggle() {
