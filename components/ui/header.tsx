@@ -31,7 +31,7 @@ function useOutsideAlerter(ref, setIsNavOpen) {
       document.removeEventListener("touchstart", handleClickOutside);
       document.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [ref]);
+  }, [ref, setIsNavOpen]);
 }
 
 
