@@ -41,6 +41,7 @@ export default function Header() {
   useOutsideAlerter(wrapperRef, setIsNavOpen);
 
   const MENU = {
+    "/": "Home",
     "/reading": "Reading",
     "/bookmarks": "Bookmarks",
     "/about": "About",
