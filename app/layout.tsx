@@ -1,11 +1,11 @@
 import './globals.css'
 
 import { Inter } from 'next/font/google'
-import { themeEffect } from '@/lib/theme-effect'
 import { Metadata } from 'next'
 import { META_DATA } from "@/lib/meta"
 
 import Header from "@/components/ui/header"
+import { themeEffect } from "@/lib/theme-effect";
 import Footer from "@/components/ui/footer"
 import { VercelAnalytics } from "./vercel-analytics";
 
@@ -57,8 +57,13 @@ export default function RootLayout({
       suppressHydrationWarning={true}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(${themeEffect.toString()})();`,
+          }}
+        />
       </head>
-      <body className={"no-scrollbar"}>
+      <body className="no-scrollbar min-h-full">
         <Header />
         <main className="sm:mt-4 mt-2 grow min-h-[calc(100vh-110px)]">{children}</main>
         <Footer />

@@ -3,7 +3,7 @@
 import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import ToggleTheme from "@/components/ui/toggle-theme";
+import { ThemeToggle } from "@/components/ui/toggle-theme";
 import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
 import { Logo } from "../logo";
@@ -97,7 +97,7 @@ export default function Header() {
             <span className="px-2">↓</span>
           </button>
         )}
-        <ToggleTheme />
+        <ThemeToggle />
       </Container>
     </header>
   );

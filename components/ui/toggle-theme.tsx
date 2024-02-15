@@ -1,12 +1,10 @@
 "use client";
 
-// this component copy from https://github.com/rauchg/blog/blob/main/app/theme-toggle.tsx
 import { useEffect, useState, useCallback } from "react";
 import { themeEffect } from "@/lib/theme-effect";
 import Image from "next/image";
 
-export default function ThemeToggle() {
-  // a `null` preference implies auto
+export function ThemeToggle() {
   const [preference, setPreference] = useState<undefined | null | string>(
     undefined
   );
@@ -36,8 +34,6 @@ export default function ThemeToggle() {
     [setPreference]
   );
 
-  // when the preference changes, whether from this tab or another,
-  // we want to recompute the current theme
   useEffect(() => {
     setCurrentTheme(themeEffect());
   }, [preference]);
@@ -67,11 +63,6 @@ export default function ThemeToggle() {
               : "Light"}
         </span>
       )}
-
-      {/*
-        the `theme-auto:` plugin is registered in `tailwind.config.js` and
-        works similarly to the `dark:` prefix, which depends on the `theme-effect.ts` behavior
-      */}
       <button
         aria-label="Toggle theme"
         className={`inline-flex ${isHovering && !isHoveringOverride
@@ -97,8 +88,6 @@ export default function ThemeToggle() {
             ? "dark"
             : "light";
 
-          // if the user has their current OS theme as a preference (instead of auto)
-          // and they click the toggle, we want to switch to reset the preference
           if (preference !== null && systemTheme === currentTheme) {
             newPreference = null;
             localStorage.removeItem("theme");
@@ -114,10 +103,10 @@ export default function ThemeToggle() {
         }}
       >
         <span className="sun-icon">
-          <Image width={18} height={18} src="/icons/sun.svg" alt="sun" priority />
+          <Image width={18} height={18} src="/icons/sun.svg" alt="sun" />
         </span>
         <span className="moon-icon">
-          <Image width={18} height={18} src="/icons/moon.svg" alt="sun" priority />
+          <Image width={18} height={18} src="/icons/moon.svg" alt="sun" />
         </span>
       </button>
     </div>

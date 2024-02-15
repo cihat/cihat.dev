@@ -1,15 +1,10 @@
-"use client";
-
 export const themeEffect = function () {
+  const pref = localStorage.getItem("theme");
 
-  const pref = typeof window !== 'undefined' ? window.localStorage.getItem("theme") : null;
-
-  if (typeof window !== 'undefined') {
-    if (null === pref) {
-      document.documentElement.classList.add("theme-system");
-    } else {
-      document.documentElement.classList.remove("theme-system");
-    }
+  if (null === pref) {
+    document.documentElement.classList.add("theme-system");
+  } else {
+    document.documentElement.classList.remove("theme-system");
   }
 
   if (
