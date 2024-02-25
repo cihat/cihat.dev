@@ -2,7 +2,6 @@ import Container from "@/components/ui/container";
 import Image from "next/image";
 import ProgressBar from "@/components/progress-bar";
 import booksData from "@/lib/books.json";
-import { get } from "lodash";
 
 type bookType = {
   title: string;
@@ -14,7 +13,6 @@ type bookType = {
 }
 
 const getProgress = (readedPage: number, page: number) => +Number((readedPage / page) * 100).toFixed();
-const getPageNumber = (readedPage: number, page: number) => `${readedPage}/${page}`;
 
 export default function Home() {
   const books = booksData.books;
@@ -41,14 +39,13 @@ function BooksGrid({ books, title }) {
         <h1 className="py-8">
           <span className="text-xl font-bold">{title}</span>
         </h1>
-        <section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+        <section className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-5">
           {
             books &&
             books?.map((book: bookType) => (
               <a key={book.title} target="_blank" href={book.link} className="col-span-1 flex flex-col justify-end !cursor-pointer mb-2">
-                <Image src={book?.bookCover} alt={book.alt} width={400} height={400} placeholder="blur" blurDataURL={book?.bookCover} className="min-w-full grow object-fill" loading="lazy" />
-                <ProgressBar completed={getProgress(book.readedPage, book.page)} borderRadius="0" bgColor="#00ce8b" labelAlignment="left" height="15px" labelColor="black" labelClassName="text-xs ml-2 text-black" />
-                <h4 className="text-sm text-center my-2">{getPageNumber(book.readedPage, book.page)}</h4>
+                <Image src={book?.bookCover} alt={book.alt} width={300} height={300} placeholder="blur" blurDataURL={book?.bookCover} className="min-w-full grow object-fill" loading="lazy" />
+                <ProgressBar completed={getProgress(book.readedPage, book.page)} bgColor="#00ce8b" borderRadius="8" isLabelVisible={false} className="mt-1" />
               </a>
             ))
           }
