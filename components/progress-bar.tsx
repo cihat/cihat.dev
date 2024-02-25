@@ -106,12 +106,12 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   );
 
   const containerStyles: React.CSSProperties = {
-    height: height,
+    height,
     background: baseBgColor,
-    borderRadius: borderRadius,
-    padding: padding,
-    width: width,
-    margin: margin,
+    borderRadius,
+    padding,
+    width,
+    margin,
     overflow: "hidden",
   };
 
@@ -227,7 +227,7 @@ ProgressBar.defaultProps = {
   bgColor: "#6a1b9a",
   height: "20px",
   width: "100%",
-  borderRadius: "50px",
+  borderRadius: "20px",
   labelAlignment: "right",
   baseBgColor: "#e0e0de",
   labelColor: "#fff",
