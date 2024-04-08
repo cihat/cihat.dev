@@ -57,7 +57,7 @@ export function Header({ posts }: { posts: Post[] }) {
             {post.date} ({ago(post.date, true)} ago)
           </span>
           &nbsp;|&nbsp;
-          <Badge className="mr-2">
+          <Badge className="ml-2">
             {post.category}
           </Badge>
         </div>

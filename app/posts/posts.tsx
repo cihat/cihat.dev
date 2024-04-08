@@ -61,11 +61,11 @@ export function Posts({ posts: initialPosts }) {
 
   return (
     <Suspense fallback={null}>
-      <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll">
+      <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
         <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm sticky top-0 p-1 bg-gray-200 dark:bg-[#313131] rounded-md">
           <button
             onClick={sortDate}
-            className={`${tabStyle} 
+            className={`${tabStyle}
             ${sort[0] === "date" && 'bg-[#eceece] dark:bg-[#2a2a2a]'} w-13 h-9 text-left text-md font-semibold mr-2`}
           >
             Date
