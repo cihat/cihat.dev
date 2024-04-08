@@ -8,9 +8,13 @@ import type { Post } from "@/types";
 import Category from "./category";
 import { CategoryEnum, LangEnum } from "@/types";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Fuse from 'fuse.js'
+import { debounce } from "lodash";
+import { getYear } from "@/lib/utils";
 
 type SortSetting = ["date" | "views", "desc" | "asc"];
-
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -19,6 +23,8 @@ export function Posts({ posts: initialPosts }) {
   const [lang, setLang] = useState<LangEnum>(LangEnum.all);
   const [category, setCategory] = useState<CategoryEnum>(CategoryEnum.all);
   const [flag, setFlag] = useState("🇹🇷🇬🇧")
+  const [input, setInput] = useState("")
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
 
   const { data: posts } = useSWR("/api/posts", fetcher, {
     fallbackData: initialPosts,
@@ -59,6 +65,18 @@ export function Posts({ posts: initialPosts }) {
     }
   }
 
+  const fuse = useMemo(() => new Fuse(posts, { keys: ['title', 'category'], threshold: 0.4 }), [posts]);
+
+  const debouncedSearch = useRef(debounce((query: string) => {
+    if (query.trim() === '') {
+      setFilteredPosts(posts);
+    } else {
+      const results = fuse.search(query.trim()).map(result => result.item as Post);
+      setFilteredPosts(results);
+    }
+  }, 300)).current;
+
+  useEffect(() => debouncedSearch(input), [input]);
   return (
     <Suspense fallback={null}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
@@ -72,6 +90,15 @@ export function Posts({ posts: initialPosts }) {
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </button>
           <span className={`grow pl-2 bg-[#f2f2f2] dark:bg-[#1C1C1C] ${tabStyle}`}>Title</span>
+          <div className={`grow pl-2`}>
+            <Input
+              type="text"
+              placeholder="Search posts..."
+              className="w-full"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+          </div>
           <Category category={category} setCategory={setCategory} />
           <button
             onClick={handleEmoji}
@@ -102,7 +129,7 @@ export function Posts({ posts: initialPosts }) {
           </button>
         </header>
 
-        <List posts={posts} sort={sort} lang={lang} category={category} />
+        <List posts={filteredPosts} sort={sort} lang={lang} category={category} />
       </div>
     </Suspense>
   );
