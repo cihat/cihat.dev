@@ -84,7 +84,7 @@ export function Posts({ posts: initialPosts }) {
         <header className="flex items-center text-sm sticky top-0 p-1 rounded-md">
           <Button
             onClick={sortDate}
-            className='w-13 h-9 text-left text-md font-semibold mr-2' >
+            className='w-13 h-9 text-left text-md font-semibold'>
             Date
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </Button>
@@ -100,15 +100,7 @@ export function Posts({ posts: initialPosts }) {
           <Category category={category} setCategory={setCategory} />
           <Button
             onClick={handleEmoji}
-            className={`
-                  flex
-                  items-center
-                  justify-center
-                  h-9
-                  text-md font-semibold
-                  w-16
-                  mr-2
-              }`}
+            className='flex items-center justify-center h-9 text-md font-semibold w-16 mr-2'
           >{flag}</Button>
           <Button
             onClick={sortViews}
@@ -121,7 +113,7 @@ export function Posts({ posts: initialPosts }) {
 
         <List posts={filteredPosts} sort={sort} lang={lang} category={category} />
       </div>
-    </Suspense>
+    </Suspense >
   );
 }
 
