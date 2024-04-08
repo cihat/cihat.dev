@@ -18,7 +18,7 @@ export const metadata = {
 [Functions as first-class objects.js](/files/pro-js-design-patterns/source-code/Chapter01/1.02%20-%20Functions%20as%20first-class%20objects.js)<br />
 [The mutability of objects.js](/files/pro-js-design-patterns/source-code/Chapter01/1.03%20-%20The%20mutability%20of%20objects.js)<br />
 
-    ```js
+<CodeSnippet content={`
     Function.prototype.method = function(name, fn) { this.prototype[name] = fn; }
 
     var Anim = function() {}
@@ -29,25 +29,25 @@ export const metadata = {
     Anim.method('close', function() {
       ....
     })
-    ```
+  `} lang="js"/>
 
 This is very similar to the Extension feature in Swift.
 
-```js
+<CodeSnippet content={`
 // This version allows the calls to be chained together
 
 Function.prototype.method = function(name, fn) {
   this.prototype[name] = fn;
   return this;
 }
-```
+`} lang="js"/>
 
 JavaScript has function-level scope, this means that a variable defined within a function is not accessible outside of it.
 JavaScript is also lexically scoped, which means that functions run in the scope they are deinfed in, not the scope they are executed in.
 
 All objects are mutable. If you have a reference to an object, you can change its properties.
 
-```js
+<CodeSnippet content={`
 var myObject = {
   value: 0,
   increment: function(inc) {
@@ -57,20 +57,20 @@ var myObject = {
 
 myObject.increment();
 console.log(myObject.value); // 1
-```
+`} lang="js"/>
 
-```js
+<CodeSnippet content={`
 function displayError(message) {
   displayError.numTimesExecuted++;
   console.log(message);
 }
 
 displayError.numTimesExecuted = 0;
-```
+`} lang="js"/>
 
 ---
 
-```js
+<CodeSnippet content={`
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -101,7 +101,7 @@ bill.displayGreeting();
 
 // This example shows that you can add properties to an object after it has been created.
 // Also just bill has the displayGreeting method, alice does not.
-```
+`} lang="js"/>
 
 ## Chapter-2: Interfaces
 
@@ -115,7 +115,7 @@ Three ways to check for the presence of a method or property:
 
 ### Comments
 
-```js
+<CodeSnippet content={`
 
 /*
 interface Composite {
@@ -156,11 +156,11 @@ CompositeForm.prototype.save = function() {
 
 // This doesn't emulate the interface functionality very well. There is no checking to ensure that CompositeForm implements the methods defined in the interface.
 // No error will be thrown if you forget to implement a method.
-```
+`} lang="js"/>
 
 ### Emulating Interfaces with Duck Typing
 
-```js
+<CodeSnippet content={`
 
 /*
 interface Composite {
@@ -210,13 +210,13 @@ function implements(object) {
 
   return true; // All interface were found.
 }
-```
+`} lang="js"/>
 
 This function checks to make sure that the object passed in implements all of the interfaces passed in. In this exmaple, CompositeForm implements both the Composite and FormItem interfaces. The main drawback to this approach is that you are not ensuring that the object implements the methods defined in the interface. You only know if it says it implements the interface.
 
 ### Emulating Interfaces with Attribute Checking
 
-```js
+<CodeSnippet content={`
 
 var Composite = new Interface('Composite', ['add', 'remove', 'getChild']);
 var FormItem = new Interface('FormItem', ['save']);
@@ -234,7 +234,7 @@ fucntion addForm(formInstance) {
   // This function will throw an error if the object passed in does not implement the required interfaces.
   ...
 }
-```
+`} lang="js"/>
 
 A class never declares which interface it implements, reducing the reusability of the class and not self-documenting like the other approaches. It requires a helper class, Interface, and a helper function, ensureImplemtns. It does not check the nomes or numbers of arguments used in the methods or their types, only that the method has the method has the correct name.
 
@@ -242,7 +242,7 @@ A class never declares which interface it implements, reducing the reusability o
 
 Using a combination of the first(Comments) and third(Attribute Checking) approaches.
 
-```js
+<CodeSnippet content={`
 
 // Interfaces - Defines interface as commands to check for their existence.
 
@@ -266,9 +266,9 @@ fucntion addForm(formInstance) {
 // Interface.ensureImplements provides a strict check. If a problem is found, an error will be thrown, which can either be caught and handled or alllowed to halt execution.
 // Either way, the problem will be found and fixed.
 
-```
+`} lang="js"/>
 
-```js
+<CodeSnippet content={`
 
 // Interface.js - Defines Interface constructor.
 
@@ -309,7 +309,8 @@ Interface.ensureImplements = function(object) {
     }
   }
 }
-```
+
+  `} lang="js"/>
 
 The Interface constructor is used to define an interface. It takes a name and an array of method names. The constructor checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The Interface.ensureImplements method is a static method that is used to check that an object implements the required interface. It takes an object as its first argument and one or more interfaces as subsequent arguments. The method checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The method then loops through each method in the interface and checks to make sure that the object implements that method. If the object does not implement the method, an error is thrown.
 
