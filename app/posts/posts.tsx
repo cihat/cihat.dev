@@ -77,19 +77,17 @@ export function Posts({ posts: initialPosts }) {
   }, 300)).current;
 
   useEffect(() => debouncedSearch(input), [input]);
+
   return (
     <Suspense fallback={null}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
-        <header className="text-gray-500 dark:text-gray-600 flex items-center text-sm sticky top-0 p-1 bg-gray-200 dark:bg-[#313131] rounded-md">
-          <button
+        <header className="flex items-center text-sm sticky top-0 p-1 rounded-md">
+          <Button
             onClick={sortDate}
-            className={`${tabStyle}
-            ${sort[0] === "date" && 'bg-[#eceece] dark:bg-[#2a2a2a]'} w-13 h-9 text-left text-md font-semibold mr-2`}
-          >
+            className='w-13 h-9 text-left text-md font-semibold mr-2' >
             Date
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
-          </button>
-          <span className={`grow pl-2 bg-[#f2f2f2] dark:bg-[#1C1C1C] ${tabStyle}`}>Title</span>
+          </Button>
           <div className={`grow pl-2`}>
             <Input
               type="text"
@@ -100,13 +98,9 @@ export function Posts({ posts: initialPosts }) {
             />
           </div>
           <Category category={category} setCategory={setCategory} />
-          <button
+          <Button
             onClick={handleEmoji}
             className={`
-                bg-[#f2f2f2] dark:bg-[#1C1C1C]
-                  ${tabStyle}
-                  hover:bg-[#FFFEC4]
-                  hover:dark:bg-[#2a2a2a]
                   flex
                   items-center
                   justify-center
@@ -115,18 +109,14 @@ export function Posts({ posts: initialPosts }) {
                   w-16
                   mr-2
               }`}
-          >{flag}</button>
-          <button
+          >{flag}</Button>
+          <Button
             onClick={sortViews}
-            className={`
-              bg-[#f2f2f2] dark:bg-[#1C1C1C]
-              ${tabStyle}
-              ${sort[0] === "views" && 'bg-[#FFD6A5] dark:bg-[#2a2a2a]'} h-9 text-md font-semibold
-            `}
+            className='h-9 text-md font-semibold'
           >
             Views
             {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
-          </button>
+          </Button>
         </header>
 
         <List posts={filteredPosts} sort={sort} lang={lang} category={category} />
@@ -215,9 +205,3 @@ function List({ posts, sort, lang, category }: { posts: Post[], sort: SortSettin
     </ul>
   );
 }
-
-function getYear(date: string) {
-  return new Date(date).getFullYear();
-}
-
-const tabStyle = `p-2 rounded transition text-black dark:text-gray-100 border-[1px] border-gray-200 dark:border-[#313131] border-gray-300 dark:border-[#4a4a4a]`
