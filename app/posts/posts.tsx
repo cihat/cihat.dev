@@ -81,7 +81,7 @@ export function Posts({ posts: initialPosts }) {
   return (
     <Suspense fallback={null}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
-        <header className="flex items-center text-sm sticky top-0 p-1 rounded-md">
+        <header className="flex items-center text-sm sticky top-0 p-1 rounded-md bg-white dark:bg-black">
           <Button
             onClick={sortDate}
             className='w-13 h-9 text-left text-md font-semibold'>
