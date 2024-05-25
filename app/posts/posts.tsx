@@ -76,10 +76,10 @@ export function Posts({ posts: initialPosts }) {
     }
   }, 300)).current;
 
-  useEffect(() => debouncedSearch(input), [input]);
+  useEffect(() => debouncedSearch(input), [input, debouncedSearch]);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<div>Loading</div>}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
         <header className="flex items-center text-sm sticky top-0 p-1 rounded-md bg-white dark:bg-black">
           <Button
@@ -134,7 +134,7 @@ function List({ posts, sort, lang, category }: { posts: Post[], sort: SortSettin
       if (post.language === lang) return post
     }).filter(post => {
       if (category === CategoryEnum.all) return post
-      if (post.category.toLocaleLowerCase() === category.toLocaleLowerCase()) return post
+      if (post.category.toLowerCase() === category.toLowerCase()) return post
     });
 
   }, [posts, sort, lang, category]);
