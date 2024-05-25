@@ -46,11 +46,12 @@ export type Pagination = {
 }
 
 export enum CategoryEnum {
+  all = "All",
   learning = "Learning",
   philosophy = "Philosophy",
   productivity = "Productivity",
+  sport = "Sport",
   etc = "Etc",
-  all = "All"
 }
 
 export enum LangEnum {

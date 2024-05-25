@@ -1,8 +1,5 @@
-"use client"
-
-import * as React from "react"
-
-import { Button } from "@/components/ui/button"
+import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,67 +8,57 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { CategoryEnum } from "@/types"
+} from "@/components/ui/dropdown-menu";
+import { CategoryEnum } from "@/types";
+import { useSearchParams } from 'next/navigation';
 
-export default function Category({ category, setCategory }) {
-  function handleCategory(category: CategoryEnum) {
-    switch (category) {
-      case CategoryEnum.learning: {
-        setCategory(CategoryEnum.learning)
-        break;
-      }
-      case CategoryEnum.philosophy: {
-        setCategory(CategoryEnum.philosophy)
-        break;
-      }
-      case CategoryEnum.productivity: {
-        setCategory(CategoryEnum.productivity)
-        break;
-      }
-      case CategoryEnum.etc: {
-        setCategory(CategoryEnum.etc)
-        break;
-      }
-      case CategoryEnum.all: {
-        setCategory(CategoryEnum.all)
-        break;
-      }
-      default: {
-        setCategory(CategoryEnum.all)
-        break;
-      }
+interface CategoryProps {
+  category: CategoryEnum;
+  setCategory: (category: CategoryEnum) => void;
+}
+
+export default function Category({ category, setCategory }: CategoryProps) {
+  const searchParams = useSearchParams();
+  const categories = Object.keys(CategoryEnum);
+  const categoryFromUrl = searchParams.get('category');
+
+  const handleCategory = (category: CategoryEnum) => {
+    console.log('categories key veli sadf ', categories, category)
+    setCategory(category);
+    if (categoryFromUrl) {
+      const params = new URLSearchParams();
+      params.set('category', categoryFromUrl);
     }
   }
+
+  // useEffect(() => {
+  //   if (categoryFromUrl && categories.includes(categoryFromUrl as CategoryEnum)) {
+  //     setCategory(CategoryEnum[categoryFromUrl] as CategoryEnum);
+  //     return
+  //   }
+
+  //   setCategory(CategoryEnum.all);
+  // }, [categoryFromUrl, categories, setCategory]);
+
 
   return (
     <div className="mx-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="default" className="w-13 h-9 rounded-sm text-left text-md font-semibold">{category}</Button>
+          <Button variant="default" className="w-13 h-9 rounded-sm text-left text-md font-semibold">
+            {category}
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>Category</DropdownMenuLabel>
+          <DropdownMenuLabel>Categories</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem onClick={() => handleCategory(CategoryEnum.all)}>
-              All
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleCategory(CategoryEnum.learning)}>
-              Learning Series
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleCategory(CategoryEnum.philosophy)}>
-              Philosophy
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleCategory(CategoryEnum.productivity)}>
-              Productivity
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleCategory(CategoryEnum.etc)}>
-              Etc
-            </DropdownMenuItem>
+          <DropdownMenuGroup><a href=""></a>
+            {categories.map((c) => (
+              <DropdownMenuItem key={c} onClick={() => handleCategory(c as CategoryEnum)}>{c}</DropdownMenuItem>
+            ))}
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
-  )
+    </div >
+  );
 }
