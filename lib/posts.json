@@ -107,6 +107,15 @@
       "minuteToRead": 5,
       "language": "en-US",
       "category": "Learning"
+    },
+    {
+      "id": "starting-my-fitness-journey",
+      "path": "sport/starting-my-fitness-journey",
+      "date": "May 25, 2024",
+      "title": "Starting My Fitness Journey",
+      "minuteToRead": 5,
+      "language": "en-US",
+      "category": "Sport"
     }
   ]
 }
