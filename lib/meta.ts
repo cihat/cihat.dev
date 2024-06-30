@@ -173,4 +173,9 @@ export const personalLinks: Link[] = [
     url: "https://www.instagram.com/cihat.png/",
     icon: "Instagram"
   },
+  {
+    name: "CV",
+    url: "https://cihat.dev/cv.pdf",
+    icon: "FileText"
+  }
 ]

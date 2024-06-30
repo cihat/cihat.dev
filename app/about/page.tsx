@@ -1,7 +1,3 @@
-import PersonaleInfo from "@/components/personel-info";
+import ProfileSection from "@/components/personal-info";
 
-export default function PersonelInfo() {
-  return (
-    <PersonaleInfo />
-  )
-}
+export default function PersonalInfo() { return <ProfileSection /> }
