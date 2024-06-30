@@ -9,7 +9,7 @@ import unsplash from "@/lib/unsplash";
 import { useEffect, useState } from "react";
 import { personalLinks } from "@/lib/meta";
 
-export default function PersonalInfo() {
+export default function ProfileSection() {
   const [photo, setPhoto] = useState<IRandomPhoto | null>(null);
 
   useEffect(() => {
@@ -37,7 +37,6 @@ export default function PersonalInfo() {
               personalLinks.map((link, index) => (
                 <li className="mr-2" key={link.url}>
                   <NextLink target="_blank" href={link.url} aria-label={link.name} >
-                    {/* create icon width name */}
                     {link?.name === "Linkedin" && <BsLinkedin className="icon" fill="currentColor" />}
                     {link?.name === "Github" && <BsGithub fill="currentColor" />}
                     {link?.name === "Medium" && <BsMedium fill="currentColor" />}
