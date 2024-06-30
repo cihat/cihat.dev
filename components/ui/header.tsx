@@ -7,6 +7,8 @@ import { ThemeToggle } from "@/components/ui/toggle-theme";
 import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
 import { Logo } from "../logo";
+import Link from "next/link";
+import { BsLink45Deg } from "react-icons/bs";
 
 function useOutsideAlerter(ref, setIsNavOpen) {
   useEffect(() => {
@@ -83,6 +85,11 @@ export default function Header() {
               </span>
             );
           })}
+
+          <Link href="https://cv.cihat.dev/" target={"_blank"} className={"flex justify-center items-center font-bold text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 m-2 md:m-0 rounded transition"}>
+            <BsLink45Deg /> &nbsp; CV
+          </Link>
+
           <span onClick={() => setIsNavOpen(false)} className={cx("absolute right-2 top-2 bg-gray-200 dark:bg-[#313131] font-bold p-2 text-lg rounded-md", isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",)}>❎</span>
         </nav>
         {!isNavOpen && (
