@@ -82,7 +82,7 @@ export async function Image({
           loading="lazy"
         />
 
-        {alt && <Caption>{alt}</Caption>}
+        {originalAlt && <Caption>{originalAlt}</Caption>}
       </span>
     );
   }
