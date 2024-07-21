@@ -3,7 +3,7 @@ export function LI({ children }) {
   return (
     <li
       className={`
-    my-2
+    my-1
     [ul_&]:relative
     [ul_&]:pl-4
     [ul_&]:before:text-gray-400
