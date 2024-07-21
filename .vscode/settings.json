@@ -1,5 +1,8 @@
 {
   "search.exclude": {
     "public/files": true,
+  },
+  "cSpell.enabledFileTypes": {
+    "mdx": false
   }
 }
