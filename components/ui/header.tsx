@@ -9,47 +9,21 @@ import Container from "@/components/ui/container";
 import { Logo } from "../logo";
 import Link from "next/link";
 import { BsLink45Deg } from "react-icons/bs";
+import useOutsideAlerter from "@/hooks/useComponentVisible"
 
-function useOutsideAlerter(ref, setIsNavOpen) {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsNavOpen(false);
-      }
-    }
-
-    function handleTouchMove(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsNavOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
-    document.addEventListener("touchmove", handleTouchMove);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
-      document.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [ref, setIsNavOpen]);
-}
-
+const MENU = {
+  "/": "Home",
+  "/reading": "Reading",
+  "/bookmarks": "Bookmarks",
+  "/about": "About",
+} as any;
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setIsNavOpen);
-
-  const MENU = {
-    "/": "Home",
-    "/reading": "Reading",
-    "/bookmarks": "Bookmarks",
-    "/about": "About",
-  } as any;
-
   const pathname = usePathname();
+
+  useOutsideAlerter(wrapperRef);
 
   const clearSlash = pathname?.split("/")[1];
   const path = clearSlash ? `/${clearSlash}` : "/";
