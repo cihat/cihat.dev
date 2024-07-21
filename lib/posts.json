@@ -73,45 +73,9 @@
       "category": "Learning"
     },
     {
-      "id": "1-introduction",
-      "path": "cs-basics-series/1-introduction",
-      "date": "February 10, 2024",
-      "title": "CS Basics Series - #1 - Introduction",
-      "minuteToRead": 5,
-      "language": "en-US",
-      "category": "Learning"
-    },
-    {
-      "id": "2-data-structures",
-      "path": "cs-basics-series/2-data-structures",
-      "date": "February 10, 2024",
-      "title": "CS Basics Series - #2 - Data Structures",
-      "minuteToRead": 5,
-      "language": "en-US",
-      "category": "Learning"
-    },
-    {
-      "id": "3-concepts-and-algorithms",
-      "path": "cs-basics-series/3-concepts-and-algorithms",
-      "date": "February 10, 2024",
-      "title": "CS Basics Series - #3 - Concepts and Algorithms",
-      "minuteToRead": 5,
-      "language": "en-US",
-      "category": "Learning"
-    },
-    {
-      "id": "4-knowledge-based",
-      "path": "cs-basics-series/4-knowledge-based",
-      "date": "February 10, 2024",
-      "title": "CS Basics Series - #4 - Knowledge Based",
-      "minuteToRead": 5,
-      "language": "en-US",
-      "category": "Learning"
-    },
-    {
       "id": "agirlik-antrenmanlarina-baslangic",
       "path": "sport/agirlik-antrenmanlarina-baslangic",
-      "date": "Jul 21, 2024",
+      "date": "July 21, 2024",
       "title": "Ağırlık Antrenmanlarına Başlangıç",
       "minuteToRead": 5,
       "language": "tr-TR",
