@@ -111,16 +111,6 @@
       "author": "Osamu Dazai"
     },
     {
-      "title": "The Creative Act: A Way of Being",
-      "alt": "The Creative Act: A Way of Being",
-      "readedPage": 0,
-      "page": 144,
-      "bookCover": "/books/the-creative-act-a-way-of-being.jpeg",
-      "link": "https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886",
-      "subtitle": "A Way of Being",
-      "author": "Burgert A. Senekal"
-    },
-    {
       "title": "Clean Code",
       "alt": "Clean Code",
       "readedPage": 0,
@@ -289,6 +279,26 @@
       "link": "https://www.amazon.com/Kar%C4%B1s%C4%B1n%C4%B1-%C5%9Eapka-Sanan-Adam/dp/9750706970",
       "subtitle": "Oliver Sacks",
       "author": "Oliver Sacks"
+    },
+    {
+      "title": "Sokak Kodçusu",
+      "alt": "Sokak Kodçusu",
+      "readedPage": 20,
+      "page": 312,
+      "bookCover": "https://m.media-amazon.com/images/I/41kpnhBltWL.jpg",
+      "link": "https://www.amazon.com.tr/dp/6256377982",
+      "subtitle": "Yıkılması Gereken Kurallar ve Yıkmanın Yolları",
+      "author": "Sedat Kapanoğlu"
+    },
+    {
+      "title": "Yaratıcı Eylem - Bir Var Olma Biçimi",
+      "alt": "Yaratıcı Eylem - Bir Var Olma Biçimi",
+      "readedPage": 76,
+      "page": 344,
+      "bookCover": "https://m.media-amazon.com/images/I/515i4hvWTzL._SL1500_.jpg",
+      "link": "https://www.amazon.com.tr/dp/6051983198",
+      "subtitle": "Bir Var Olma Bicimi",
+      "author": "Rick Rubin"
     }
   ]
 }
