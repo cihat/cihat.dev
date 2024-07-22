@@ -41,7 +41,7 @@ export default function Header() {
           className={cx(
             isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",
             "flex-col gap-3 sm:!flex sm:flex-row items-center grow sm:justify-center relative",
-            isNavOpen ? "absolute top-0 left-0 right-0 w-full flex items-center justify-center py-4 z-[999] h-1/4 mb-4" : ""
+            isNavOpen ? "absolute top-0 left-0 right-0 w-full flex items-center justify-center py-4 z-[999] h-2/4 mb-4" : ""
           )}
         >
           {Object.entries(MENU).map(([key, value]) => {
@@ -61,10 +61,10 @@ export default function Header() {
           })}
 
           <Link href="https://cv.cihat.dev/" target={"_blank"} className={"flex justify-center items-center font-bold text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 m-2 md:m-0 rounded transition"}>
-            <BsLink45Deg /> &nbsp; CV
+            CV&nbsp;<BsLink45Deg />
           </Link>
 
-          <span onClick={() => setIsNavOpen(false)} className={cx("absolute right-2 top-2 bg-gray-200 dark:bg-[#313131] font-bold p-2 text-lg rounded-md", isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",)}>❎</span>
+          <span onClick={() => setIsNavOpen(false)} className={cx("absolute right-2 top-2 bg-gray-200 dark:bg-[#313131] font-bold p-2 text-lg rounded-md cursor-pointer", isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",)}>❎</span>
         </nav>
         {!isNavOpen && (
           <button
