@@ -2,6 +2,7 @@
 
 import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
+//@ts-ignore
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/toggle-theme";
 import cx from "@/lib/cx";
@@ -47,24 +48,20 @@ export default function Header() {
           {Object.entries(MENU).map(([key, value]) => {
             const isActive = key === path;
             return (
-              <span key={key} className="mb-2 md:mb-0 font-semibold text-lg">
-                <NextLink href={key} onClick={() => setIsNavOpen(false)}
-                  className={cx(
-                    "text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 m-2 md:m-0 rounded transition",
-                    isActive ? "bg-[#eceece] dark:bg-[#2a2a2a] rounded hover:" : ""
-                  )}
-                >
-                  {value as string}
-                </NextLink>
-              </span>
+              <NextLink href={key} onClick={() => setIsNavOpen(false)} key={key}
+                className={cx(
+                  "font-semibold text-lg text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 mx-2 md:m-0 rounded transition",
+                  isActive ? "bg-[#eceece] dark:bg-[#2a2a2a] rounded hover:" : ""
+                )}
+              >
+                {value as string}
+              </NextLink>
             );
           })}
-
-          <Link href="https://cv.cihat.dev/" target={"_blank"} className={"flex justify-center items-center font-bold text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 m-2 md:m-0 rounded transition"}>
-            CV&nbsp;<BsLink45Deg />
+          <Link href="https://cv.cihat.dev/" target={"_blank"} className={"flex justify-center items-center font-bold text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a]  rounded transition p-2 mx-2 md:m-0"}>
+            <BsLink45Deg />&nbsp;CV
           </Link>
-
-          <span onClick={() => setIsNavOpen(false)} className={cx("absolute right-2 top-2 bg-gray-200 dark:bg-[#313131] font-bold p-2 text-lg rounded-md cursor-pointer", isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",)}>❎</span>
+          <span onClick={() => setIsNavOpen(false)} className={cx("absolute right-2 top-2 bg-gray-200 dark:bg-[#313131] font-bold p-2 text-lg rounded-md cursor-pointer", isNavOpen ? "flex bg-[var(--button-bg)]" : "hidden",)}>❌</span>
         </nav>
         {!isNavOpen && (
           <button
