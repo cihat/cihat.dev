@@ -177,5 +177,10 @@ export const personalLinks: Link[] = [
     name: "CV",
     url: "https://cihat.dev/cv.pdf",
     icon: "FileText"
+  },
+  {
+    name: "RSS",
+    url: "https://cihat.dev/rss",
+    icon: "Rss"
   }
 ]

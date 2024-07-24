@@ -2,7 +2,7 @@
 
 import NextLink from "next/link";
 import Image from "next/image"
-import { BsLinkedin, BsGithub, BsMedium, BsInstagram, BsTwitter, BsMailbox, BsLink45Deg, BsFileText } from "react-icons/bs";
+import { BsLinkedin, BsGithub, BsMedium, BsInstagram, BsTwitter, BsMailbox, BsLink45Deg, BsFileText, BsRss } from "react-icons/bs";
 
 import { IRandomPhoto } from "@/types/random-photo"
 import unsplash from "@/lib/unsplash";
@@ -44,6 +44,7 @@ export default function ProfileSection() {
                     {link?.name === "Twitter" && <BsTwitter fill="currentColor" />}
                     {link?.name === "Mail" && <BsMailbox fill="currentColor" />}
                     {link?.name === "CV" && <BsFileText fill="currentColor" />}
+                    {link?.name === "RSS" && <BsRss fill="currentColor" />}
                   </NextLink>
                 </li>
               ))
