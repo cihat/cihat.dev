@@ -38,6 +38,8 @@ export type Post = {
   language: string;
   minuteToRead: number;
   category: string;
+  description: string;
+  link: string;
 }
 
 export type Pagination = {
