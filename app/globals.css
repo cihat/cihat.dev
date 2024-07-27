@@ -101,3 +101,9 @@
     /* Firefox */
   }
 }
+
+html,
+body {
+  overscroll-behavior: none;
+  overflow: scroll
+}

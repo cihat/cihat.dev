@@ -109,7 +109,7 @@ export default function BookmarkLayout() {
       {loading && <Loading className="m-4" />}
       {!loading && sortedData.length === 0 && <div className="text-center m-10 font-bold">No bookmarks found</div>}
 
-      <div style={{ height: 'calc(100vh - 210px)', marginTop: 8, overflow: "scroll" }}>
+      <div style={{ height: 'calc(100vh - 230px)', marginTop: 8, overflow: "scroll" }}>
         {sortedData.map((date) => (
           <div key={date} className="mt-4 left-animation">
             <SubTitle>{date}</SubTitle>
