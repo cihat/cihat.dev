@@ -103,10 +103,18 @@ const securityHeaders = [
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
   },
+  // {
+  //   key: 'Cache-Control',
+  //   value: 'public, max-age=9999999999, must-revalidate',
+  // },
   {
     key: 'Cache-Control',
-    value: 'public, max-age=9999999999, must-revalidate',
-  }
+    value: 'public, max-age=31536000, immutable',
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block',
+  },
 ]
 
 module.exports = withMDX(nextConfig)
