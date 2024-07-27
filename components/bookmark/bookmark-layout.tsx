@@ -1,138 +1,91 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { format, startOfWeek, subMonths, subWeeks } from "date-fns";
+
 import BookmarkCard from "./bookmark-card";
 import Container from "@/components/ui/container";
 import SubTitle from "@/components/ui/subtitle";
 import { ILink } from "@/types";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { useEffect, useState } from "react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useStore } from "@/store";
 import { BookmarkType, DatePeriodType } from "@/store/types";
-
-import { format, startOfWeek, subMonths, subWeeks, subYears } from "date-fns";
 import Raindrop from "@/lib/raindrop";
 import bookmarkGroupByWeekNumber from "@/lib/helper";
 import { Loading } from "../loading";
 
-async function fetchData(collectionId: BookmarkType = BookmarkType.Technical, subDateConfig) {
+const DatePeriodConfig = {
+  [DatePeriodType.LAST_ONE_WEEK]: subWeeks(new Date(), 1),
+  [DatePeriodType.LAST_TWO_WEEKS]: subWeeks(new Date(), 2),
+  [DatePeriodType.LAST_ONE_MONTH]: subMonths(new Date(), 1),
+};
+
+async function fetchData(collectionId, subDateConfig) {
   const { type, dateStartOfWeek, subDate } = subDateConfig;
 
   const raindrop = new Raindrop();
-  let collections: ILink[] = await raindrop.getBookmark({
+  const searchQuery = type !== DatePeriodType.ALL_TIME ? `created:>${subDate}` : '-created';
+  const collections = await raindrop.getBookmark({
     perPage: 50,
-    search: type !== DatePeriodType.ALL_TIME ? `created:>${subDate}` : '-created',
+    search: searchQuery,
     collectionId,
-  })
-
-  const bookmarks = bookmarkGroupByWeekNumber(collections);
+  });
 
   return {
-    data: bookmarks,
+    data: bookmarkGroupByWeekNumber(collections),
     year: format(dateStartOfWeek, "yyyy"),
   };
 }
 
-type DatePeriod = {
-  type: DatePeriodType,
-  dateStartOfWeek: any,
-  subDate: any
-}
-
-
-export default function BookmarkLayout() {
+function useBookmarks(initialTab, initialDateConfig) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const sortedData = Object.keys(data);
-  const [activeTab, setActiveTab] = useState<BookmarkType>(BookmarkType.Technical);
-  const [subDateState, setSubDateState] = useState<DatePeriod>({
-    type: DatePeriodType.LAST_ONE_WEEK,
-    dateStartOfWeek: startOfWeek(subWeeks(new Date(), 1)),
-    subDate: format(startOfWeek(subWeeks(new Date(), 1)), 'yyyy-MM-dd')
-  });
-
-  const handleTabChange = (value) => {
-    switch (value) {
-      case BookmarkType.Technical:
-        setActiveTab(BookmarkType.Technical);
-        break;
-      case BookmarkType.DesignArtMusic:
-        setActiveTab(BookmarkType.DesignArtMusic);
-        break;
-      case BookmarkType.Other:
-        setActiveTab(BookmarkType.Other);
-        break;
-    }
-  }
-
-  const handleSubDateChange = (dateType) => {
-    let dateStartOfWeek;
-    let subDate
-
-    switch (dateType) {
-      case DatePeriodType.LAST_ONE_WEEK:
-        dateStartOfWeek = startOfWeek(subWeeks(new Date(), 1));
-        subDate = format(dateStartOfWeek, 'yyyy-MM-dd')
-
-        setSubDateState({
-          type: DatePeriodType.LAST_ONE_WEEK,
-          dateStartOfWeek,
-          subDate
-        })
-        break;
-      case DatePeriodType.LAST_TWO_WEEKS:
-        dateStartOfWeek = startOfWeek(subWeeks(new Date(), 2));
-        subDate = format(dateStartOfWeek, 'yyyy-MM-dd')
-
-        setSubDateState({
-          type: DatePeriodType.LAST_TWO_WEEKS,
-          dateStartOfWeek,
-          subDate
-        })
-        break;
-      case DatePeriodType.LAST_ONE_MONTH:
-        dateStartOfWeek = startOfWeek(subMonths(new Date(), 1));
-        subDate = format(dateStartOfWeek, 'yyyy-MM-dd')
-
-        setSubDateState({
-          type: DatePeriodType.LAST_ONE_MONTH,
-          dateStartOfWeek,
-          subDate
-        })
-        break;
-      default:
-        setSubDateState({
-          type: DatePeriodType.ALL_TIME,
-          dateStartOfWeek: startOfWeek(new Date()),
-          subDate: null
-        })
-        break;
-    }
-  }
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const [subDateState, setSubDateState] = useState(initialDateConfig);
 
   useEffect(() => {
     const fetchDataAsync = async () => {
-      setLoading(true); // Set loading to true before fetching data
+      setLoading(true);
       try {
         const result = await fetchData(activeTab, subDateState);
-        setData(result.data as unknown as never[]);
+        setData(result.data as unknown as never[])
       } finally {
-        setLoading(false); // Set loading to false after data is fetched (or an error occurs)
+        setLoading(false);
       }
     };
 
     fetchDataAsync();
-
     useStore.setState({ activeBookmarkType: activeTab });
 
     return () => {
       setData([]);
     };
   }, [activeTab, subDateState]);
+
+  return { data, loading, activeTab, setActiveTab, subDateState, setSubDateState };
+}
+
+export default function BookmarkLayout() {
+  const initialTab = BookmarkType.Technical;
+  const initialDateConfig = {
+    type: DatePeriodType.LAST_ONE_WEEK,
+    dateStartOfWeek: startOfWeek(subWeeks(new Date(), 1)),
+    subDate: format(startOfWeek(subWeeks(new Date(), 1)), 'yyyy-MM-dd'),
+  };
+
+  const { data, loading, activeTab, setActiveTab, subDateState, setSubDateState } = useBookmarks(initialTab, initialDateConfig);
+  const sortedData = Object.keys(data);
+
+  const handleTabChange = (value) => {
+    setActiveTab(value);
+  };
+
+  const handleSubDateChange = (dateType) => {
+    const dateStartOfWeek = startOfWeek(DatePeriodConfig[dateType] || new Date());
+    const subDate = dateType !== DatePeriodType.ALL_TIME ? format(dateStartOfWeek, 'yyyy-MM-dd') : null;
+
+    setSubDateState({ type: dateType, dateStartOfWeek, subDate });
+  };
 
   return (
     <Container className="left-animation text-sm overflow-hidden">
@@ -154,16 +107,16 @@ export default function BookmarkLayout() {
       </Tabs>
 
       {loading && <Loading className="m-4" />}
-      {!loading && sortedData.length === 0 && <div className="text-center m-4">No bookmarks found</div>}
+      {!loading && sortedData.length === 0 && <div className="text-center m-10 font-bold">No bookmarks found</div>}
 
       <div style={{ height: 'calc(100vh - 210px)', marginTop: 8, overflow: "scroll" }}>
         {sortedData.map((date) => (
           <div key={date} className="mt-4 left-animation">
-            <SubTitle className="">{date}</SubTitle>
+            <SubTitle>{date}</SubTitle>
             <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800">
-              {data[date].map((item: ILink) => {
-                return <BookmarkCard key={item._id} bookmark={item} />;
-              })}
+              {data[date].map((item) => (
+                <BookmarkCard key={item._id} bookmark={item} />
+              ))}
             </div>
           </div>
         ))}
