@@ -47,7 +47,7 @@ export default class Raindrop {
       },
     })
 
-    if(!response.ok) {
+    if (!response.ok) {
       throw new Error("Something went wrong when loading bookmarks")
     }
 
@@ -68,8 +68,3 @@ export default class Raindrop {
     }
   }
 }
-
-// how to get last 2 week bookmark
-// https://api.raindrop.io/rest/v1/raindrops/254677638?perpage=50&page=0&sort=-created&search=&tag=&collection=&last=14
-
-// how to get all bookmark
