@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-/**
- * Hook that alerts clicks outside of the passed ref
- */
-export default function useComponentVisible(initialIsVisible) {
+export default function useClickOutside(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
   const ref = useRef<HTMLDivElement>(null);
 
