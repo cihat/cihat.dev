@@ -54,7 +54,8 @@ const domains = [
   'vercel.live',
   'va.vercel-scripts.com',
   'vitals.vercel-insights.com',
-  'www.youtube.com'
+  'www.youtube.com',
+  'utteranc.es',
 ]
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
@@ -69,10 +70,11 @@ const ContentSecurityPolicy = `
 
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
-  },
+  //TODO: fix it
+  // {
+    // key: 'Content-Security-Policy',
+    // value: ContentSecurityPolicy.replace(/\n/g, ''),
+  // },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
     key: 'Referrer-Policy',

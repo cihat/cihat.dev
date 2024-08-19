@@ -9,7 +9,8 @@
       "language": "en-US",
       "category": "Etc",
       "link": "https://cihat.dev/2023/initial-blog-post",
-      "description": "Hello, in this first post, I briefly talked about my plans for implementing and working towards my goals, as well as introduced myself."
+      "description": "Hello, in this first post, I briefly talked about my plans for implementing and working towards my goals, as well as introduced myself.",
+      "issueNumber": 3
     },
     {
       "id": "pro-js-design-patterns",
@@ -20,7 +21,8 @@
       "language": "en-US",
       "category": "Learning",
       "link": "https://cihat.dev/2023/pro-js-design-patterns",
-      "description": "My Notes from Pro JavaScript Design Patterns by Ross Harmes and Dustin Diaz."
+      "description": "My Notes from Pro JavaScript Design Patterns by Ross Harmes and Dustin Diaz.",
+      "issueNumber": 3
     },
     {
       "id": "stoik-felsefe",
@@ -31,7 +33,8 @@
       "language": "tr-TR",
       "category": "Philosophy",
       "link": "https://cihat.dev/2023/stoik-felsefe",
-      "description": "Şu sıralar yeni okumaya, arastirmaya basladigim buyuk ilgi duydugum felsefe olan Stoik Felse hakkinda simdiye kadar ogrendigim konulari okudugum kitaplardan bahsedecegim."
+      "description": "Şu sıralar yeni okumaya, arastirmaya basladigim buyuk ilgi duydugum felsefe olan Stoik Felse hakkinda simdiye kadar ogrendigim konulari okudugum kitaplardan bahsedecegim.",
+      "issueNumber": 2
     },
     {
       "id": "kariyerimde-mentorlugun-onemi",
@@ -42,7 +45,8 @@
       "language": "tr-TR",
       "category": "Etc",
       "link": "https://cihat.dev/2021/kariyerimde-mentorlugun-onemi",
-      "description": "Kariyerimde mentorluk önemli bir yere sahip. Bu yazıda mentorluk kavramını ve kariyerimdeki önemini anlatıyorum."
+      "description": "Kariyerimde mentorluk önemli bir yere sahip. Bu yazıda mentorluk kavramını ve kariyerimdeki önemini anlatıyorum.",
+      "issueNumber": 2
     },
     {
       "id": "ilk-blog-yazisi",
@@ -53,7 +57,8 @@
       "language": "tr-TR",
       "category": "Etc",
       "link": "https://cihat.dev/2023/ilk-blog-yazisi",
-      "description": "Ilk blog yazimda kendimden ve blogumda yapmayi dusundugum seylerden bahsettim."
+      "description": "Ilk blog yazimda kendimden ve blogumda yapmayi dusundugum seylerden bahsettim.",
+      "issueNumber": 2
     },
     {
       "id": "atomik-aliskanliklar",
@@ -64,7 +69,8 @@
       "language": "tr-TR",
       "category": "Productivity",
       "link": "https://cihat.dev/2023/atomik-aliskanliklar",
-      "description": "James Clear'in Atomic Habits kitabindan notlar."
+      "description": "James Clear'in Atomic Habits kitabindan notlar.",
+      "issueNumber": 2
     },
     {
       "id": "uretkenlik-uzerine",
@@ -75,7 +81,8 @@
       "language": "tr-TR",
       "category": "Productivity",
       "link": "https://cihat.dev/2023/uretkenlik-uzerine",
-      "description": "Üretkenlik üzerine düşüncelerimi ve uygulamalarımı paylaştığım yazı."
+      "description": "Üretkenlik üzerine düşüncelerimi ve uygulamalarımı paylaştığım yazı.",
+      "issueNumber": 2
     },
     {
       "id": "cs-basics-series",
@@ -86,7 +93,8 @@
       "language": "en-US",
       "category": "Learning",
       "link": "https://cihat.dev/2024/cs-basics-series",
-      "description": "In this series, I will share my notes and thoughts on computer science basics."
+      "description": "In this series, I will share my notes and thoughts on computer science basics.",
+      "issueNumber": 2
     },
     {
       "id": "agirlik-antrenmanlarina-baslangic",
@@ -97,7 +105,8 @@
       "language": "tr-TR",
       "category": "Sport",
       "link": "https://cihat.dev/2024/sport/agirlik-antrenmanlarina-baslangic",
-      "description": "Ağırlık antrenmanlarına başlamak isteyenler için temel bilgiler ve öneriler."
+      "description": "Ağırlık antrenmanlarına başlamak isteyenler için temel bilgiler ve öneriler.",
+      "issueNumber": 2
     }
   ]
 }

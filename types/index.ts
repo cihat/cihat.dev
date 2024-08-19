@@ -40,6 +40,7 @@ export type Post = {
   category: string;
   description: string;
   link: string;
+  issueNumber: number;
 }
 
 export type Pagination = {
