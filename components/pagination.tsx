@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Container from "./ui/container";
@@ -9,7 +8,7 @@ import { getPosts } from "@/lib/get-posts";
 
 export default function Pagination() {
   const [pagination, setPagination] = useState<Pagination>({ prev: null, next: null });
-  const path= usePathname();
+  const path = usePathname();
 
   useEffect(() => {
     function init() {
@@ -30,31 +29,27 @@ export default function Pagination() {
         nextBlog = posts[currentBlogIndex + 1];
       }
 
-      setPagination({ prev: prevBlog, next: nextBlog })
+      setPagination({ prev: prevBlog, next: nextBlog });
     }
 
     init();
 
     return () => {
       setPagination({ prev: null, next: null });
-    }
-  }, [path])
+    };
+  }, [path]);
 
   return (
     <Container className="flex justify-between flex-wrap items-center mt-6 mx-0 min-h-[28px] top-animation">
       {pagination?.prev && (
-        <Link href={`/${pagination?.prev?.date.split(" ")[2]}/${pagination.prev.path}`} legacyBehavior>
-          <a className="text-gray-800 dark:text-gray-300 hover:underline mr-auto cursor-pointer text-lg font-bold">
-            ← {pagination.prev.title}
-          </a>
-        </Link>
+        <a href={`/${pagination.prev.date.split(" ")[2]}/${pagination.prev.path}`} className="text-gray-800 dark:text-gray-300 hover:underline mr-auto cursor-pointer text-lg font-bold">
+          ← {pagination.prev.title}
+        </a>
       )}
       {pagination?.next && (
-        <Link href={`/${pagination?.next?.date.split(" ")[2]}/${pagination.next.path}`} legacyBehavior>
-          <a className="text-gray-800 dark:text-gray-300 hover:underline ml-auto cursor-pointer text-lg mt-6 sm:mt-0 font-bold">
-            {pagination.next.title} →
-          </a>
-        </Link>
+        <a href={`/${pagination.next.date.split(" ")[2]}/${pagination.next.path}`} className="text-gray-800 dark:text-gray-300 hover:underline ml-auto cursor-pointer text-lg mt-6 sm:mt-0 font-bold">
+          {pagination.next.title} →
+        </a>
       )}
     </Container>
   );

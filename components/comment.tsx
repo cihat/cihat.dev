@@ -13,12 +13,12 @@ const CommentSection = () => {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://utteranc.es/client.js";
-    script.setAttribute("repo", "cihat/cihat.dev"); // GitHub repo URL'si
-    script.setAttribute("issue-term", "pathname"); // Yorumları URL'ye göre gruplamak için
-    script.setAttribute("theme", "preferred-color-scheme"); // Tema seçimi
+    script.setAttribute("repo", "cihat/cihat.dev"); 
+    script.setAttribute("issue-term", "pathname"); 
+    script.setAttribute("theme", "preferred-color-scheme");
     script.setAttribute("crossOrigin", "anonymous");
     script.setAttribute("async", "true");
-    script.setAttribute("issue-number", `${issueNumber}`);
+    // script.setAttribute("issue-number", `${issueNumber}`);
 
     // @ts-ignore
     document.getElementById("utterances").appendChild(script);
@@ -27,10 +27,10 @@ const CommentSection = () => {
       // Temizlik işlemi
       const utterances = document.getElementById("utterances");
       if (utterances) {
-        utterances.innerHTML = ""; // Daha önce yüklenen script'i kaldır
+        utterances.innerHTML = ""; 
       }
     };
-  }, []);
+  }, [pathname, issueNumber]);
 
   return (
     <div id="utterances">
