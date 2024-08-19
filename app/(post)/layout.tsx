@@ -17,9 +17,7 @@ export default async function Layout({ children }) {
         {children}
         {<Comment />}
         <Pagination />
-        <ClapsButton
-          url={"https://twitter.com/chtslk/status/1681445140261642240"}
-        />
+        <ClapsButton />
       </Container>
     </article>
   );
