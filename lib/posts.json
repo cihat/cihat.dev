@@ -10,7 +10,7 @@
       "category": "Etc",
       "link": "https://cihat.dev/2023/initial-blog-post",
       "description": "Hello, in this first post, I briefly talked about my plans for implementing and working towards my goals, as well as introduced myself.",
-      "issueNumber": 3
+      "issueNumber": 2
     },
     {
       "id": "pro-js-design-patterns",
@@ -34,7 +34,7 @@
       "category": "Philosophy",
       "link": "https://cihat.dev/2023/stoik-felsefe",
       "description": "Şu sıralar yeni okumaya, arastirmaya basladigim buyuk ilgi duydugum felsefe olan Stoik Felse hakkinda simdiye kadar ogrendigim konulari okudugum kitaplardan bahsedecegim.",
-      "issueNumber": 2
+      "issueNumber": 4
     },
     {
       "id": "kariyerimde-mentorlugun-onemi",
@@ -46,7 +46,7 @@
       "category": "Etc",
       "link": "https://cihat.dev/2021/kariyerimde-mentorlugun-onemi",
       "description": "Kariyerimde mentorluk önemli bir yere sahip. Bu yazıda mentorluk kavramını ve kariyerimdeki önemini anlatıyorum.",
-      "issueNumber": 2
+      "issueNumber": 5
     },
     {
       "id": "ilk-blog-yazisi",
@@ -58,7 +58,7 @@
       "category": "Etc",
       "link": "https://cihat.dev/2023/ilk-blog-yazisi",
       "description": "Ilk blog yazimda kendimden ve blogumda yapmayi dusundugum seylerden bahsettim.",
-      "issueNumber": 2
+      "issueNumber": 6
     },
     {
       "id": "atomik-aliskanliklar",
@@ -70,7 +70,7 @@
       "category": "Productivity",
       "link": "https://cihat.dev/2023/atomik-aliskanliklar",
       "description": "James Clear'in Atomic Habits kitabindan notlar.",
-      "issueNumber": 2
+      "issueNumber": 7
     },
     {
       "id": "uretkenlik-uzerine",
@@ -82,7 +82,7 @@
       "category": "Productivity",
       "link": "https://cihat.dev/2023/uretkenlik-uzerine",
       "description": "Üretkenlik üzerine düşüncelerimi ve uygulamalarımı paylaştığım yazı.",
-      "issueNumber": 2
+      "issueNumber": 8
     },
     {
       "id": "cs-basics-series",
@@ -94,7 +94,7 @@
       "category": "Learning",
       "link": "https://cihat.dev/2024/cs-basics-series",
       "description": "In this series, I will share my notes and thoughts on computer science basics.",
-      "issueNumber": 2
+      "issueNumber": 9
     },
     {
       "id": "agirlik-antrenmanlarina-baslangic",
@@ -106,7 +106,7 @@
       "category": "Sport",
       "link": "https://cihat.dev/2024/sport/agirlik-antrenmanlarina-baslangic",
       "description": "Ağırlık antrenmanlarına başlamak isteyenler için temel bilgiler ve öneriler.",
-      "issueNumber": 2
+      "issueNumber": 10
     }
   ]
 }
