@@ -59,7 +59,7 @@ const domains = [
 ]
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
-  default-src 'self' vercel.live www.youtube.com;
+  default-src 'self' vercel.live www.youtube.com utteranc.es;
   script-src 'self' 'unsafe-eval' 'unsafe-inline' ${domains.join(' ')};
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
@@ -70,11 +70,10 @@ const ContentSecurityPolicy = `
 
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-  //TODO: fix it
-  // {
-    // key: 'Content-Security-Policy',
-    // value: ContentSecurityPolicy.replace(/\n/g, ''),
-  // },
+  {
+    key: 'Content-Security-Policy',
+    value: ContentSecurityPolicy.replace(/\n/g, ''),
+  },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
     key: 'Referrer-Policy',
@@ -105,10 +104,6 @@ const securityHeaders = [
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
   },
-  // {
-  //   key: 'Cache-Control',
-  //   value: 'public, max-age=9999999999, must-revalidate',
-  // },
   {
     key: 'Cache-Control',
     value: 'public, max-age=31536000, immutable',
