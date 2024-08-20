@@ -107,6 +107,18 @@
       "link": "https://cihat.dev/2024/sport/agirlik-antrenmanlarina-baslangic",
       "description": "Ağırlık antrenmanlarına başlamak isteyenler için temel bilgiler ve öneriler.",
       "issueNumber": 10
+    },
+    {
+      "id": "oylesine",
+      "path": "oylesine",
+      "date": "August 20, 2024",
+      "title": "Öylesine",
+      "minuteToRead": 6,
+      "language": "tr-TR",
+      "category": "Etc",
+      "link": "https://cihat.dev/2024/oylesine",
+      "description": "Öylesine yazılar, düşünceler.",
+      "issueNumber": 11
     }
   ]
 }
