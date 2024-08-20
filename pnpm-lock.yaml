@@ -90,8 +90,8 @@ importers:
         specifier: 15.5.0
         version: 15.5.0(react@18.2.0)
       react-tweet:
-        specifier: ^2.0.2
-        version: 2.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: 3.2.1
+        version: 3.2.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-wrap-balancer:
         specifier: ^1.1.1
         version: 1.1.1(react@18.2.0)
@@ -896,11 +896,8 @@ packages:
   '@rushstack/eslint-patch@1.10.3':
     resolution: {integrity: sha512-qC/xYId4NMebE6w/V33Fh9gWxLgURiNYgVNObbJl2LZv0GUUItCcCqC5axQSwRaAgaxl2mELq1rMzlswaQ0Zxg==}
 
-  '@swc/helpers@0.4.14':
-    resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
-
-  '@swc/helpers@0.4.36':
-    resolution: {integrity: sha512-5lxnyLEYFskErRPenYItLRSge5DjrJngYKdVjRSrWfza9G6KkgHEXi0vUZiyUeMU5JfXH1YnvXZzSp8ul88o2Q==}
+  '@swc/helpers@0.5.12':
+    resolution: {integrity: sha512-KMZNXiGibsW9kvZAO1Pam2JPTDBm+KSHMMHWdsyI/1DbIZjT2A6Gy3hblVXUMEDvUAKq+e0vL0X0o54owWji7g==}
 
   '@swc/helpers@0.5.2':
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
@@ -2425,8 +2422,8 @@ packages:
     peerDependencies:
       react: '>= 0.14.0'
 
-  react-tweet@2.0.2:
-    resolution: {integrity: sha512-cTyExNUHyWHiUZ2Uuted2/b4ePClOe6q3cyQklP5qZrpiAldnQhXzA7dYBO5pPtg09uoriG+LZxqauZ2Yd/Rqw==}
+  react-tweet@3.2.1:
+    resolution: {integrity: sha512-dktP3RMuwRB4pnSDocKpSsW5Hq1IXRW6fONkHhxT5EBIXsKZzdQuI70qtub1XN2dtZdkJWWxfBm/Q+kN+vRYFA==}
     peerDependencies:
       react: '>= 18.0.0'
       react-dom: '>= 18.0.0'
@@ -3604,13 +3601,8 @@ snapshots:
 
   '@rushstack/eslint-patch@1.10.3': {}
 
-  '@swc/helpers@0.4.14':
+  '@swc/helpers@0.5.12':
     dependencies:
-      tslib: 2.6.3
-
-  '@swc/helpers@0.4.36':
-    dependencies:
-      legacy-swc-helpers: '@swc/helpers@0.4.14'
       tslib: 2.6.3
 
   '@swc/helpers@0.5.2':
@@ -5529,11 +5521,10 @@ snapshots:
       react: 18.2.0
       refractor: 3.6.0
 
-  react-tweet@2.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-tweet@3.2.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@swc/helpers': 0.4.36
-      clsx: 1.2.1
-      date-fns: 2.30.0
+      '@swc/helpers': 0.5.12
+      clsx: 2.0.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       swr: 2.2.5(react@18.2.0)
