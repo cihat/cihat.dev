@@ -143,7 +143,7 @@ function List({ posts, sort, lang, category }: { posts: Post[], sort: SortSettin
   }, [posts, sort, lang, category]);
 
   if (!sortedPosts.length) return (
-    <p className="flex justify-center items-center text-center  text-md mt-5">Coming soon</p>
+    <p className="flex justify-center items-center text-center text-xl mt-12 font-semibold">Not found</p>
   )
 
   return (
