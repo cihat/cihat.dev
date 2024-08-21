@@ -6,6 +6,7 @@ import { ago } from "time-ago";
 import useSWR from "swr";
 import type { Post } from "@/types";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -57,9 +58,11 @@ export function Header({ posts }: { posts: Post[] }) {
             {post.date} ({ago(post.date, true)} ago)
           </span>
           &nbsp;|&nbsp;
-          <Badge className="ml-2">
-            {post.category}
-          </Badge>
+          <Link href={`/?category=${post.category}`}>
+            <Badge className="ml-2">
+              {post.category}
+            </Badge>
+          </Link>
         </div>
         <span className="pr-1.5">
           <Views

@@ -13,15 +13,18 @@ import { Button } from "@/components/ui/button"
 import Fuse from 'fuse.js'
 import { debounce } from "lodash";
 import { getYear } from "@/lib/utils";
+import { useSearchParams } from 'next/navigation';
 
 type SortSetting = ["date" | "views", "desc" | "asc"];
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export function Posts({ posts: initialPosts }) {
+  const searchParams = useSearchParams();
+
   const [sort, setSort] = useState<SortSetting>(["date", "desc"]);
   const [lang, setLang] = useState<LangEnum>(LangEnum.all);
-  const [category, setCategory] = useState<CategoryEnum>(CategoryEnum.all);
+  const [category, setCategory] = useState<CategoryEnum>(searchParams.get('category') as CategoryEnum || CategoryEnum.all);
   const [flag, setFlag] = useState("🇹🇷🇬🇧")
   const [input, setInput] = useState("")
   const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);

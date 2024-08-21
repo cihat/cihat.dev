@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CategoryEnum } from "@/types";
-// import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface CategoryProps {
   category: CategoryEnum;
@@ -18,28 +18,13 @@ interface CategoryProps {
 }
 
 export default function Category({ category, setCategory }: CategoryProps) {
-  // const searchParams = useSearchParams();
+  const router = useRouter();
+
   const categories = Object.values(CategoryEnum);
-
-  //WIP: Get category from URL and handle category change with URL params
-  // const categoryFromUrl = searchParams.get('category');
-
   const handleCategory = (category: CategoryEnum) => {
     setCategory(category);
-    // if (categoryFromUrl) {
-    //   const params = new URLSearchParams();
-    //   params.set('category', categoryFromUrl);
-    // }
+    router.push(`/?category=${category}`)
   }
-
-  // useEffect(() => {
-  //   if (categoryFromUrl && categories.includes(categoryFromUrl as CategoryEnum)) {
-  //     setCategory(CategoryEnum[categoryFromUrl] as CategoryEnum);
-  //     return
-  //   }
-
-  //   setCategory(CategoryEnum.all);
-  // }, [categoryFromUrl, categories, setCategory]);
 
 
   return (
