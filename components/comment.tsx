@@ -1,42 +1,36 @@
-// components/CommentSection.js
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import postsData from "@/lib/posts.json";
 
-const CommentSection = () => {
+const COMMENT_ID = "utterances";
+const Comment = () => {
   const pathname = usePathname();
-
-  const postPath = pathname.split("/").pop();
-  const issueNumber = postsData.posts?.find((post) => post.path === postPath)?.issueNumber;
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://utteranc.es/client.js";
-    script.setAttribute("repo", "cihat/cihat.dev"); 
-    script.setAttribute("issue-term", "pathname"); 
+    script.setAttribute("repo", "cihat/cihat.dev");
+    script.setAttribute("issue-term", "pathname");
     script.setAttribute("theme", "preferred-color-scheme");
     script.setAttribute("crossOrigin", "anonymous");
     script.setAttribute("async", "true");
-    // script.setAttribute("issue-number", `${issueNumber}`);
 
-    // @ts-ignore
-    document.getElementById("utterances").appendChild(script);
+    ref.current?.appendChild(script);
 
     return () => {
-      // Temizlik işlemi
-      const utterances = document.getElementById("utterances");
-      if (utterances) {
-        utterances.innerHTML = ""; 
+      if (ref.current) {
+        // @ts-ignore
+        ref.current = null;
       }
     };
-  }, [pathname, issueNumber]);
+  }, [pathname]);
 
   return (
-    <div id="utterances">
+    <div id={COMMENT_ID} ref={ref}>
       <noscript>Please enable JavaScript to view the comments.</noscript>
     </div>
   );
 };
 
-export default CommentSection;
+export default Comment;
