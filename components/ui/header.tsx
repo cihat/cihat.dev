@@ -52,7 +52,7 @@ const NavigationDropdown = ({ MENU, path, children }) => {
 
 export default function Header() {
   const pathname = usePathname();
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile() ?? true;
 
   const clearSlash = pathname?.split("/")[1];
   const path = clearSlash ? `/${clearSlash}` : "/";
@@ -67,7 +67,7 @@ export default function Header() {
             {pages}
           </NavigationDropdown>
         ) : (
-          pages
+          <div className="flex left-animation">{pages}</div>
         )}
       </nav>
       <ThemeToggle />
