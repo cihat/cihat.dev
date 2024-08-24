@@ -1,79 +1,75 @@
 "use client";
 
 import NextLink from "next/link";
-import { useEffect, useRef, useState } from "react";
-//@ts-ignore
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/toggle-theme";
-import cx from "@/lib/cx";
 import Container from "@/components/ui/container";
 import { Logo } from "../logo";
-import Link from "next/link";
-import { BsLink45Deg } from "react-icons/bs";
-import useClickOutside from "@/hooks/useClickOutside"
+import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs";
+import { Button } from "./button";
+import useIsMobile from "@/hooks/useIsMobile";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import cx from "@/lib/cx";
 
 const MENU = {
   "/": "Home",
   "/reading": "Reading",
   "/bookmarks": "Bookmarks",
   "/about": "About",
-} as any;
+  "https://cv.cihat.dev/": "CV",
+};
+
+const MenuItem = ({ value, href, isActive }) => {
+  const isExternal = String(href).startsWith("http");
+
+  return (
+    <NextLink target={isExternal ? "_blank" : "_self"} href={href} className={cx()}>
+      <Button variant={isActive ? "default" : "ghost"} size="sm" className="w-full justify-start ">
+        {isExternal && <ExternalLinkIcon size={18} />}
+        {value}
+      </Button>
+    </NextLink>
+  );
+};
+
+const NavigationDropdown = ({ MENU, path, children }) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="default" className="w-13 h-9 rounded-sm text-left text-md font-semibold">
+          {MENU[path]}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56 mr-4" align="start" side="bottom">
+        <DropdownMenuLabel>Pages</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup className="flex flex-col">{children}</DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 export default function Header() {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
+
   const clearSlash = pathname?.split("/")[1];
   const path = clearSlash ? `/${clearSlash}` : "/";
-
-  const { ref, isComponentVisible, setIsComponentVisible } = useClickOutside(false);
-
-  useEffect(() => {
-    setIsComponentVisible(false);
-  }, [pathname]);
+  const pages = Object.entries(MENU).map(([key, value]) => <MenuItem key={value} value={value} href={key} isActive={key === path} />);
 
   return (
-    <header className="sm:items-start p-4 pb-2 sm:pb-0">
-      <Container className="flex justify-between px-0 select-none items-center">
-        <Logo />
-        <nav
-          ref={ref}
-          className={cx(
-            isComponentVisible ? "flex bg-[var(--button-bg)]" : "hidden",
-            "flex-col gap-3 sm:!flex sm:flex-row items-center grow sm:justify-center relative",
-            isComponentVisible ? "absolute top-0 left-0 right-0 w-full flex items-center justify-center py-4 z-[999] h-2/4 mb-4" : ""
-          )}
-        >
-          {Object.entries(MENU).map(([key, value]) => {
-            const isActive = key === path;
-            return (
-              <NextLink href={key} onClick={() => setIsComponentVisible(false)} key={key}
-                className={cx(
-                  "font-semibold text-lg text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a] p-2 mx-2 md:m-0 rounded transition",
-                  isActive ? "bg-[#eceece] dark:bg-[#2a2a2a] rounded hover:" : ""
-                )}
-              >
-                {value as string}
-              </NextLink>
-            );
-          })}
-          <Link href="https://cv.cihat.dev/" target={"_blank"} className={"flex justify-center items-center font-bold text-zinc-900 dark:text-zinc-50 hover:bg-[#eceece] hover:dark:bg-[#2a2a2a]  rounded transition p-2 mx-2 md:m-0"}>
-            <BsLink45Deg />&nbsp;CV
-          </Link>
-          <span onClick={() => setIsComponentVisible(false)} className={cx("absolute right-2 top-2 bg-gray-200 dark:bg-[#313131] font-bold p-2 text-lg rounded-md cursor-pointer", isComponentVisible ? "flex bg-[var(--button-bg)]" : "hidden",)}>❌</span>
-        </nav>
-        {!isComponentVisible && (
-          <button
-            type="button"
-            className="flex items-start justify-center sm:hidden p-2 bg-gray-200 dark:bg-[#313131] rounded-md"
-            onClick={() => {
-              setIsComponentVisible(true);
-            }}
-          >
-            <span>{MENU[path]}</span>
-            <span className="px-2">↓</span>
-          </button>
+    <Container className="flex justify-between px-0 select-none items-center p-4 pb-2 sm:pb-0" as="header">
+      <Logo />
+      <nav className="flex-col gap-3 sm:!flex sm:flex-row items-center sm:justify-center relative ml-auto mr-4">
+        {isMobile ? (
+          <NavigationDropdown MENU={MENU} path={path}>
+            {pages}
+          </NavigationDropdown>
+        ) : (
+          pages
         )}
-        <ThemeToggle />
-      </Container>
-    </header>
+      </nav>
+      <ThemeToggle />
+    </Container>
   );
 }

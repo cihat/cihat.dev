@@ -5,9 +5,7 @@ import { themeEffect } from "@/lib/theme-effect";
 import Image from "next/image";
 
 export function ThemeToggle() {
-  const [preference, setPreference] = useState<undefined | null | string>(
-    undefined
-  );
+  const [preference, setPreference] = useState<undefined | null | string>(undefined);
   const [currentTheme, setCurrentTheme] = useState<null | string>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [isHoveringOverride, setIsHoveringOverride] = useState(false);
@@ -56,19 +54,12 @@ export function ThemeToggle() {
             md:inline
           `}
         >
-          {preference === null
-            ? "System"
-            : preference === "dark"
-              ? "Dark"
-              : "Light"}
+          {preference === null ? "System" : preference === "dark" ? "Dark" : "Light"}
         </span>
       )}
       <button
         aria-label="Toggle theme"
-        className={`inline-flex ${isHovering && !isHoveringOverride
-          ? "bg-gray-200 dark:bg-[#313131]"
-          : ""
-          } active:bg-gray-300 transition-[background-color] dark:active:bg-[#242424] rounded-sm p-2 
+        className={`inline-flex ${isHovering && !isHoveringOverride ? "bg-gray-200 dark:bg-[#313131]" : ""} active:bg-gray-300 transition-[background-color] dark:active:bg-[#242424] rounded-sm p-2 
           bg-gray-200
           dark:bg-[#313131]
           theme-system:!bg-inherit
@@ -76,17 +67,13 @@ export function ThemeToggle() {
           dark:[&_.moon-icon]:hidden
           dark:[&_.sun-icon]:inline
         }`}
-        onClick={ev => {
+        onClick={(ev) => {
           ev.preventDefault();
           // prevent the hover state from rendering
           setIsHoveringOverride(true);
 
-          let newPreference: string | null =
-            currentTheme === "dark" ? "light" : "dark";
-          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-            .matches
-            ? "dark"
-            : "light";
+          let newPreference: string | null = currentTheme === "dark" ? "light" : "dark";
+          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
           if (preference !== null && systemTheme === currentTheme) {
             newPreference = null;
@@ -103,10 +90,10 @@ export function ThemeToggle() {
         }}
       >
         <span className="sun-icon">
-          <Image width={18} height={18} src="/icons/sun.svg" alt="sun" />
+          <Image width={20} height={20} src="/icons/sun.svg" alt="sun" />
         </span>
         <span className="moon-icon">
-          <Image width={18} height={18} src="/icons/moon.svg" alt="sun" />
+          <Image width={20} height={20} src="/icons/moon.svg" alt="sun" />
         </span>
       </button>
     </div>
