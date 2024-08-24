@@ -6,6 +6,7 @@ import cx from "classnames";
 import Icons from "./icons";
 import "./style.css"
 import { usePathname } from "next/navigation";
+import useIsMobile from "@/hooks/useIsMobile";
 
 const REACTION_DURATION = 600;
 
@@ -29,7 +30,7 @@ export type IClapsProps = {
 
 export default function Claps({
   key,
-  fixed,
+  fixed=useIsMobile() ? "right" : "center",
   replyUrl,
   replyCount,
   apiPath = `/api/claps`,
