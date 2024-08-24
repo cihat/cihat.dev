@@ -6,7 +6,6 @@ import { format, startOfWeek, subMonths, subWeeks } from "date-fns";
 import BookmarkCard from "./bookmark-card";
 import Container from "@/components/ui/container";
 import SubTitle from "@/components/ui/subtitle";
-import { ILink } from "@/types";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useStore } from "@/store";
 import { BookmarkType, DatePeriodType } from "@/store/types";
@@ -24,7 +23,7 @@ async function fetchData(collectionId, subDateConfig) {
   const { type, dateStartOfWeek, subDate } = subDateConfig;
 
   const raindrop = new Raindrop();
-  const searchQuery = type !== DatePeriodType.ALL_TIME ? `created:>${subDate}` : '-created';
+  const searchQuery = type !== DatePeriodType.ALL_TIME ? `created:>${subDate}` : "-created";
   const collections = await raindrop.getBookmark({
     perPage: 50,
     search: searchQuery,
@@ -48,7 +47,7 @@ function useBookmarks(initialTab, initialDateConfig) {
       setLoading(true);
       try {
         const result = await fetchData(activeTab, subDateState);
-        setData(result.data as unknown as never[])
+        setData(result.data as unknown as never[]);
       } finally {
         setLoading(false);
       }
@@ -70,7 +69,7 @@ export default function BookmarkLayout() {
   const initialDateConfig = {
     type: DatePeriodType.LAST_ONE_WEEK,
     dateStartOfWeek: startOfWeek(subWeeks(new Date(), 1)),
-    subDate: format(startOfWeek(subWeeks(new Date(), 1)), 'yyyy-MM-dd'),
+    subDate: format(startOfWeek(subWeeks(new Date(), 1)), "yyyy-MM-dd"),
   };
 
   const { data, loading, activeTab, setActiveTab, subDateState, setSubDateState } = useBookmarks(initialTab, initialDateConfig);
@@ -82,7 +81,7 @@ export default function BookmarkLayout() {
 
   const handleSubDateChange = (dateType) => {
     const dateStartOfWeek = startOfWeek(DatePeriodConfig[dateType] || new Date());
-    const subDate = dateType !== DatePeriodType.ALL_TIME ? format(dateStartOfWeek, 'yyyy-MM-dd') : null;
+    const subDate = dateType !== DatePeriodType.ALL_TIME ? format(dateStartOfWeek, "yyyy-MM-dd") : null;
 
     setSubDateState({ type: dateType, dateStartOfWeek, subDate });
   };
@@ -109,7 +108,7 @@ export default function BookmarkLayout() {
       {loading && <Loading className="m-4" />}
       {!loading && sortedData.length === 0 && <div className="text-center m-10 font-bold">No bookmarks found</div>}
 
-      <div style={{ height: 'calc(100vh - 230px)', marginTop: 8, overflow: "scroll" }}>
+      <div style={{ height: "calc(100vh - 230px)", marginTop: 8, overflow: "scroll" }}>
         {sortedData.map((date) => (
           <div key={date} className="mt-4 left-animation">
             <SubTitle>{date}</SubTitle>
