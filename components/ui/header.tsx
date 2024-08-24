@@ -4,12 +4,13 @@ import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/toggle-theme";
 import Container from "@/components/ui/container";
-import { Logo } from "../logo";
+import Logo from "../logo";
 import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs";
 import { Button } from "./button";
 import useIsMobile from "@/hooks/useIsMobile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import cx from "@/lib/cx";
+import { GiHamburger } from "react-icons/gi";
 
 const MENU = {
   "/": "Home",
@@ -36,8 +37,8 @@ const NavigationDropdown = ({ MENU, path, children }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default" className="w-13 h-9 rounded-sm text-left text-md font-semibold">
-          {MENU[path]}
+        <Button variant="default" className="text-md font-semibold h-9 p-2">
+          {MENU[path] || <GiHamburger size={20} />}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-4" align="start" side="bottom">

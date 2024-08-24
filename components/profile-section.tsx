@@ -22,7 +22,7 @@ export default function ProfileSection() {
   return (
     <>
       <article className="container flex flex-col items-start mt-10">
-        <h1 id="title" className="right-animation font-bold text-6xl" aria-label="">Hello 👋</h1>
+        <h1 id="title" className="right-animation font-bold text-4xl" aria-label="">Hello 👋</h1>
         <p className="name left-animation" id="name_paragraph">My name is Cihat Salik.</p>
         <p className="right-animation">
           A curious <b>Software Engineer</b> living in <b>Istanbul/Turkey</b> who enjoys<br />researching, learning and
