@@ -38,7 +38,7 @@ export default function Category({ category, setCategory }: CategoryProps) {
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Categories</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup><a href=""></a>
+          <DropdownMenuGroup>
             {categories.map((c) => (
               <DropdownMenuItem key={c} onClick={() => handleCategory(c as CategoryEnum)}>{c}</DropdownMenuItem>
             ))}
