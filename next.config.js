@@ -114,4 +114,10 @@ const securityHeaders = [
   },
 ]
 
-module.exports = withMDX(nextConfig)
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+})
+
+module.exports = withMDX(withPWA(nextConfig))

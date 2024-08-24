@@ -1,27 +1,27 @@
-import './globals.css'
+import "./globals.css"
 
-import { Inter } from 'next/font/google'
-import { Metadata } from 'next'
+import { Inter } from "next/font/google"
+import { Metadata } from "next"
 import { META_DATA } from "@/lib/meta"
 
 import Header from "@/components/ui/header"
-import { themeEffect } from "@/lib/theme-effect";
+import { themeEffect } from "@/lib/theme-effect"
 import Footer from "@/components/ui/footer"
-import { VercelAnalytics } from "./vercel-analytics";
+import { VercelAnalytics } from "./vercel-analytics"
 
 const inter = Inter({
   variable: "--font-inter",
   display: "swap",
   style: "normal",
   subsets: ["latin-ext"],
-});
+})
 
-const { title, description, url, } = META_DATA
+const { title, description, url } = META_DATA
 
 export const metadata: Metadata = {
   title: {
     default: title,
-    template: `%s - ${title}`
+    template: `%s - ${title}`,
   },
   description,
   category: "technology",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
     description,
     url,
     siteName: title,
-    locale: 'en-US',
-    type: 'website',
-    images: "https://cihat.dev/img/og-image.png"
+    locale: "en-US",
+    type: "website",
+    images: "https://cihat.dev/img/og-image.png",
   },
   twitter: {
     card: "summary_large_image",
@@ -42,20 +42,12 @@ export const metadata: Metadata = {
     creator: "@chtslk",
   },
   metadataBase: new URL(url),
-};
+  manifest: "/manifest.json",
+}
 
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.className} antialiased`}
-      suppressHydrationWarning={true}
-    >
+    <html lang="en" className={`${inter.className} antialiased`} suppressHydrationWarning={true}>
       <head>
         <script
           dangerouslySetInnerHTML={{
