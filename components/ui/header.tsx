@@ -24,7 +24,7 @@ const MenuItem = ({ value, href, isActive }) => {
   const isExternal = String(href).startsWith("http");
 
   return (
-    <NextLink target={isExternal ? "_blank" : "_self"} href={href} className={cx()}>
+    <NextLink target={isExternal ? "_blank" : "_self"} href={href} className="mr-2">
       <Button variant={isActive ? "default" : "ghost"} size="sm" className="w-full justify-start ">
         {isExternal && <ExternalLinkIcon size={18} />}
         {value}
