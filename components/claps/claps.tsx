@@ -30,7 +30,7 @@ export type IClapsProps = {
 
 export default function Claps({
   key,
-  fixed=useIsMobile() ? "right" : "center",
+  fixed,
   replyUrl,
   replyCount,
   apiPath = `/api/claps`,
@@ -54,6 +54,7 @@ export default function Claps({
     maxClaps: 0,
   });
   const pathname = usePathname();
+  fixed = useIsMobile() ? "right" : "center"
 
   const setReactionAnim = (reaction: ReactionClass) => {
     setReaction(reaction);
