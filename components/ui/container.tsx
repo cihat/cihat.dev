@@ -16,7 +16,7 @@ export default function Container({
   ...props }: IContainerProps) {
   const sizes = {
     default: "max-w-screen-md mx-auto px-4 md:px-0",
-    large: "max-w-screen-xl mx-auto px-4 md:px-6  lg:px-8",
+    large: "max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8",
   };
 
   return React.createElement(
