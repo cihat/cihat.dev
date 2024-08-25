@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     creator: "@chtslk",
   },
   metadataBase: new URL(url),
-  manifest: "/manifest.json",
+  manifest: "manifest.json",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,4 +1,5 @@
 const withMDX = require("@next/mdx")();
+const withPlugins = require('next-compose-plugins')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -114,10 +115,13 @@ const securityHeaders = [
   },
 ]
 
+const isProd = process.env.NODE_ENV === 'production'
+
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
-})
+  disable: !isProd
+});
 
-module.exports = withMDX(withPWA(nextConfig))
+module.exports = withPlugins([[withMDX],[withPWA]], nextConfig)
