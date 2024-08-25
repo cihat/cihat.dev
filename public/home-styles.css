@@ -16,6 +16,16 @@ html {
   line-height: 1.6;
 }
 
+.container {
+  height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));
+}
+
+@supports (-webkit-touch-callout: none) {
+  .container {
+    height: -webkit-fill-available;
+  }
+}
+
 .container p {
   display: block;
   font-size: 1.4rem;

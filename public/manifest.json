@@ -1,16 +1,75 @@
 {
   "name": "cihat.dev",
+  "prefer_related_applications": true,
+  "orientation": "landscape",
   "short_name": "cihat.dev",
   "description": "Cihat Salik's personal website",
+  "screenshots": [
+    {
+      "src": "The src to your screenshot, such as /screenshots/1.png",
+      "sizes": "The size of your screenshot, such as 2880x1800",
+      "type": "The type of your image, such as image/png",
+      "description": "The type of your image, such as image/png"
+    }
+  ],
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64",
-      "type": "image/png"
+      "src": "public/icons/pwa/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/icons/pwa/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "public/icons/pwa/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/icons/pwa/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "shortcuts": [
+    {
+      "name": "The name you would like to be displayed for your shortcut",
+      "url": "The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut",
+      "description": "A description of the functionality of this shortcut",
+      "icons": [
+        {
+          "src": "icon-96x96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "The protocol you would like to handle. For example: web+myapp",
+      "url": "The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "The url you would like to open when the user chooses to share content to your app. This URL must have code to do something with the returned file.",
+      "accept": {
+        "text/*": [
+          ".txt"
+        ]
+      }
+    }
+  ]
 }

@@ -54,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(${themeEffect.toString()})();`,
           }}
         />
+        <meta name="viewport" content="initial-scale=1, viewport-fit=cover, width=device-width"></meta>
       </head>
       <body className="no-scrollbar min-h-screen">
         <Header />
