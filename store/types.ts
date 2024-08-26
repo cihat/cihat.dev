@@ -18,3 +18,5 @@ export enum DatePeriodType {
   LAST_ONE_MONTH = 'LAST_ONE_MONTH',
   ALL_TIME = 'ALL_TIME'
 }
+
+export const mobileWidth = 768; 

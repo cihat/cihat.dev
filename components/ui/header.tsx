@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import NextLink from "next/link";
-import { usePathname } from "next/navigation";
-import { ThemeToggle } from "@/components/ui/toggle-theme";
-import Container from "@/components/ui/container";
-import Logo from "../logo";
-import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs";
-import { Button } from "./button";
-import useIsMobile from "@/hooks/useIsMobile";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import cx from "@/lib/cx";
-import { GiHamburger } from "react-icons/gi";
+import NextLink from "next/link"
+import { usePathname } from "next/navigation"
+import { ThemeToggle } from "@/components/ui/toggle-theme"
+import Container from "@/components/ui/container"
+import Logo from "../logo"
+import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs"
+import { Button } from "./button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { GiHamburger } from "react-icons/gi"
+import useWindowDimensions from "@/hooks/useWindowDimensions"
+import { mobileWidth } from "@/store/types"
 
 const MENU = {
   "/": "Home",
@@ -18,10 +18,10 @@ const MENU = {
   "/bookmarks": "Bookmarks",
   "/about": "About",
   "https://cv.cihat.dev/": "CV",
-};
+}
 
 const MenuItem = ({ value, href, isActive }) => {
-  const isExternal = String(href).startsWith("http");
+  const isExternal = String(href).startsWith("http")
 
   return (
     <NextLink target={isExternal ? "_blank" : "_self"} href={href} className="mr-2">
@@ -30,8 +30,8 @@ const MenuItem = ({ value, href, isActive }) => {
         {value}
       </Button>
     </NextLink>
-  );
-};
+  )
+}
 
 const NavigationDropdown = ({ MENU, path, children }) => {
   return (
@@ -47,16 +47,18 @@ const NavigationDropdown = ({ MENU, path, children }) => {
         <DropdownMenuGroup className="flex flex-col">{children}</DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
 export default function Header() {
-  const pathname = usePathname();
-  const isMobile = useIsMobile() ?? true;
+  const pathname = usePathname()
 
-  const clearSlash = pathname?.split("/")[1];
-  const path = clearSlash ? `/${clearSlash}` : "/";
-  const pages = Object.entries(MENU).map(([key, value]) => <MenuItem key={value} value={value} href={key} isActive={key === path} />);
+  const { width } = useWindowDimensions()
+  const isMobile = width <= mobileWidth
+
+  const clearSlash = pathname?.split("/")[1]
+  const path = clearSlash ? `/${clearSlash}` : "/"
+  const pages = Object.entries(MENU).map(([key, value]) => <MenuItem key={value} value={value} href={key} isActive={key === path} />)
 
   return (
     <Container className="flex justify-between px-0 select-none items-center p-4 pb-2 sm:pb-0" as="header">
@@ -72,5 +74,5 @@ export default function Header() {
       </nav>
       <ThemeToggle />
     </Container>
-  );
+  )
 }
