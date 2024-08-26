@@ -1,4 +1,3 @@
-import NavigationAbout from "@/components/sub-header"
 import Container from "@/components/ui/container"
 
 export default async function Layout({ children }) {
