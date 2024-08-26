@@ -53,7 +53,7 @@ const NavigationDropdown = ({ MENU, path, children }) => {
 export default function Header() {
   const pathname = usePathname()
 
-  const { width } = useWindowDimensions()
+  const { width = 0 } = useWindowDimensions()
   const isMobile = width <= mobileWidth
 
   const clearSlash = pathname?.split("/")[1]
