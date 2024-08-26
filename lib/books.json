@@ -3,7 +3,7 @@
     {
       "title": "Cracking The Coding Interview",
       "alt": "Cracking The Coding Interview",
-      "readedPage": 60,
+      "currentPage": 60,
       "page": 696,
       "bookCover": "/img/cs-basics-series/cracking-the-coding-interview.jpg",
       "link": "#",
@@ -13,7 +13,7 @@
     {
       "title": "Data Structures & Algorithms in C++`",
       "alt": "Data Structures & Algorithms in C++`",
-      "readedPage": 90,
+      "currentPage": 90,
       "page": 714,
       "bookCover": "/img/cs-basics-series/data-structures-and-algorithms-in-cpp.jpg",
       "link": "#",
@@ -23,7 +23,7 @@
     {
       "title": "Suç ve Ceza",
       "alt": "Suç ve Ceza",
-      "readedPage": 672,
+      "currentPage": 672,
       "page": 672,
       "bookCover": "/books/suc-ve-ceza.jpg",
       "link": "https://www.amazon.com.tr/dp/975458902X",
@@ -33,7 +33,7 @@
     {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "readedPage": 74,
+      "currentPage": 74,
       "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
@@ -43,7 +43,7 @@
     {
       "title": "JavaScript Pro Design Patterns",
       "alt": "JavaScript Pro Design Patterns",
-      "readedPage": 40,
+      "currentPage": 40,
       "page": 270,
       "bookCover": "/books/javascript-pro-design-patterns.jpeg",
       "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
@@ -53,7 +53,7 @@
     {
       "title": "Elooquent JavaScript",
       "alt": "Elooquent JavaScript",
-      "readedPage": 100,
+      "currentPage": 100,
       "page": 472,
       "bookCover": "/books/eloquent-javascript.jpeg",
       "link": "https://www.amazon.com/Eloquent-JavaScript-2nd-Edition-Introduction/dp/1593275846",
@@ -63,7 +63,7 @@
     {
       "title": "Atomic Alışkanlıklar",
       "alt": "Atomic Alışkanlıklar",
-      "readedPage": 340,
+      "currentPage": 340,
       "page": 340,
       "bookCover": "/books/atomik-aliskanliklar.jpg",
       "link": "https://www.amazon.com.tr/Atomik-Alışkanlıklar-James-Clear/dp/6052998385",
@@ -73,7 +73,7 @@
     {
       "title": "Pür Dikkat",
       "alt": "Pür Dikkat",
-      "readedPage": 288,
+      "currentPage": 288,
       "page": 288,
       "bookCover": "/books/pur-dikkat.jpg",
       "link": "https://www.amazon.com.tr/Pür-Dikkat-Cal-Newport/dp/6056669327",
@@ -83,7 +83,7 @@
     {
       "title": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
       "alt": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
-      "readedPage": 400,
+      "currentPage": 400,
       "page": 400,
       "bookCover": "/books/nicin-uyuruz.jpg",
       "link": "https://www.amazon.com.tr/gp/product/6052996307",
@@ -93,7 +93,7 @@
     {
       "title": "Gece Yarısı Kütüphanesi",
       "alt": "Gece Yarısı Kütüphanesi",
-      "readedPage": 283,
+      "currentPage": 283,
       "page": 283,
       "bookCover": "/books/gece-yarisi-kutuphanesi.jpg",
       "link": "https://www.amazon.com.tr/gp/product/6051981837",
@@ -103,7 +103,7 @@
     {
       "title": "İnsanlığımı Yitirirken",
       "alt": "İnsanlığımı Yitirirken",
-      "readedPage": 128,
+      "currentPage": 128,
       "page": 128,
       "bookCover": "/books/insanligimi-yitirirken.jpeg",
       "link": "https://www.amazon.com.tr/gp/product/6258401473",
@@ -113,7 +113,7 @@
     {
       "title": "Clean Code",
       "alt": "Clean Code",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 431,
       "bookCover": "/books/clean-code.jpeg",
       "link": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
@@ -123,7 +123,7 @@
     {
       "title": "Funcional JavaScript",
       "alt": "Funcional JavaScript",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 260,
       "bookCover": "/books/funcional-javascript.jpeg",
       "link": "https://www.amazon.com/Functional-JavaScript-Introducing-Programming-Underscore-js/dp/1449360726",
@@ -133,7 +133,7 @@
     {
       "title": "Effective JavaScript",
       "alt": "Effective JavaScript",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 240,
       "bookCover": "/books/effective-javascript.jpeg",
       "link": "https://www.amazon.com/Effective-JavaScript-Specific-Software-Development/dp/0321812182",
@@ -143,7 +143,7 @@
     {
       "title": "Vaktinden Önce Mutsuz Olma",
       "alt": "Stoaci Filozoflardan Mutlu Bir Yasam İcin Tavsiyeler ve Pratikler",
-      "readedPage": 224,
+      "currentPage": 224,
       "page": 224,
       "bookCover": "/books/vaktinden-once-mutsuz-olma.jpeg",
       "link": "https://www.amazon.com.tr/dp/6057906896",
@@ -153,7 +153,7 @@
     {
       "title": "Gladyatör Kararını Arenada Verir",
       "alt": "Gladyatör Kararını Arenada Verir",
-      "readedPage": 92,
+      "currentPage": 92,
       "page": 92,
       "bookCover": "/books/gladyator-kararini-arenada-verir.jpeg",
       "link": "https://www.amazon.com.tr/dp/605311720X",
@@ -163,7 +163,7 @@
     {
       "title": "Stoacının Günlüğü",
       "alt": "Stoacının Günlüğü: Kendine Hakim Olma Sabır ve Bilgelik Üzerine 366 Düşünce",
-      "readedPage": 432,
+      "currentPage": 432,
       "page": 432,
       "bookCover": "/books/stoacinin-gunlugu.jpeg",
       "link": "https://www.amazon.com.tr/dp/625410007X",
@@ -173,7 +173,7 @@
     {
       "title": "Seneca Ile Kahvalti",
       "alt": "Seneca İle Kahvaltı: Yasam Sanati icin Stoaci bir rehber",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 278,
       "bookCover": "/books/seneca-ile-kahvalti.jpeg",
       "link": "https://www.amazon.com.tr/dp/6052995185",
@@ -183,7 +183,7 @@
     {
       "title": "Roma Imparatoru Gibi Dusunmek",
       "alt": "Roma İmparatoru Gibi Düşünmek: Stoacı Felsefe ve Modern Yaşam",
-      "readedPage": 279,
+      "currentPage": 279,
       "page": 279,
       "bookCover": "/books/roma-imparatoru-gibi-dusunmek.jpg",
       "link": "https://www.amazon.com.tr/dp/6254410893",
@@ -193,7 +193,7 @@
     {
       "title": "Kendime Dusunceler",
       "alt": "Kendime Düşünceler: Marcus Aurelius'un Özel Notları",
-      "readedPage": 130,
+      "currentPage": 130,
       "page": 130,
       "bookCover": "/books/kendime-dusunceler.jpeg",
       "link": "https://www.amazon.com.tr/dp/6052954027",
@@ -203,7 +203,7 @@
     {
       "title": "Enkheiridion",
       "alt": "Enkheiridion",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 96,
       "bookCover": "/books/enkheiridion.jpg",
       "link": "https://www.amazon.com.tr/dp/6052958464",
@@ -213,7 +213,7 @@
     {
       "title": "Bilgenin Sarsilmazligi Uzerine ~ Inziva Uzerine",
       "alt": "Bilgenin Sarsılmazlığı Üzerine ~ İnziva Üzerine",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 96,
       "bookCover": "/books/bilgenin-sarsilmazligi-uzerine.jpg",
       "link": "https://www.amazon.com.tr/dp/6052995193",
@@ -223,7 +223,7 @@
     {
       "title": "Mutlu Yasam Uzerine ~ Yasamin Kisaligi Uzerine",
       "alt": "Mutlu Yaşam Üzerine ~ Yaşamın Kısalığı Üzerine",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 77,
       "bookCover": "/books/mutlu-yasam-uzerine.jpg",
       "link": "https://www.amazon.com.tr/dp/6052995207",
@@ -233,7 +233,7 @@
     {
       "title": "Kendisinin efendisi olmayan hic kimse ozgur degildir",
       "alt": "Kendisinin Efendisi Olmayan Hiç Kimse Özgür Değildir: 2000 Yıllık Huzurlu Yaşama Rehberi",
-      "readedPage": 83,
+      "currentPage": 83,
       "page": 83,
       "bookCover": "/books/kendisinin-efendisi-olmayan-hic-kimse-ozgur-degildir.jpg",
       "link": "https://www.amazon.com.tr/dp/6053115878",
@@ -243,7 +243,7 @@
     {
       "title": "Unutma, mutlu bir hayat cok az şeye bağlıdır",
       "alt": "Unutma, Mutlu Bir Hayat Çok Az Şeye Bağlıdır: 2000 Yıllık Huzurlu Yaşama Rehberi",
-      "readedPage": 87,
+      "currentPage": 87,
       "page": 87,
       "bookCover": "/books/unutma-mutlu-bir-hayat-cok-az-seye-bagli.jpg",
       "link": "https://www.amazon.com.tr/dp/6053117064",
@@ -253,7 +253,7 @@
     {
       "title": "Letter to My Father",
       "alt": "Letter to My Father",
-      "readedPage": 96,
+      "currentPage": 96,
       "page": 96,
       "bookCover": "/books/letter-to-my-father.jpg",
       "link": "https://www.amazon.com.tr/Letter-My-Father-Franz-Kafka/dp/6059919294/",
@@ -263,7 +263,7 @@
     {
       "title": "Körlük",
       "alt": "Körlük",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 360,
       "bookCover": "/books/korluk.jpeg",
       "link": "https://www.amazon.com/K%C3%B6rl%C3%BCk-Jose-Saramago/dp/9750706970",
@@ -273,7 +273,7 @@
     {
       "title": "Karısını Şapka Sanan Adam",
       "alt": "Karısını Şapka Sanan Adam",
-      "readedPage": 0,
+      "currentPage": 0,
       "page": 144,
       "bookCover": "/books/karisini-sapka-sanam-adam.jpeg",
       "link": "https://www.amazon.com/Kar%C4%B1s%C4%B1n%C4%B1-%C5%9Eapka-Sanan-Adam/dp/9750706970",
@@ -283,7 +283,7 @@
     {
       "title": "Sokak Kodçusu",
       "alt": "Sokak Kodçusu",
-      "readedPage": 20,
+      "currentPage": 20,
       "page": 312,
       "bookCover": "https://m.media-amazon.com/images/I/41kpnhBltWL.jpg",
       "link": "https://www.amazon.com.tr/dp/6256377982",
@@ -293,7 +293,7 @@
     {
       "title": "Yaratıcı Eylem - Bir Var Olma Biçimi",
       "alt": "Yaratıcı Eylem - Bir Var Olma Biçimi",
-      "readedPage": 76,
+      "currentPage": 76,
       "page": 344,
       "bookCover": "https://m.media-amazon.com/images/I/515i4hvWTzL._SL1500_.jpg",
       "link": "https://www.amazon.com.tr/dp/6051983198",
