@@ -57,7 +57,6 @@
   },
   "devDependencies": {
     "@mdx-js/loader": "^2.3.0",
-    "@types/cheerio": "^0.22.35",
     "@types/lodash": "^4.17.6",
     "@types/node": "20.2.5",
     "@types/react": "18.2.9",
