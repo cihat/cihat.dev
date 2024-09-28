@@ -33,7 +33,7 @@ export const links = {
   }
 }
 
-export const initalQuote = {
+export const initialQuote = {
   text: "Doing the biggest or the most of everything doesn't make you better. There is only one thing in the world. Thinking and questioning. If you think, question, and base your thoughts on scientific methodology, you will be the most successful in the world, somehow questioning.",
   author: "Anonymous"
 }
