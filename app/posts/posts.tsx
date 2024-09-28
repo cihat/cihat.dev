@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Fuse from "fuse.js";
-import { debounce } from "lodash";
+import { debounce } from "@/lib/utils";
 import { getYear } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 
