@@ -1,8 +1,11 @@
 const withMDX = require("@next/mdx")();
 const withPlugins = require('next-compose-plugins')
 
+const isProd = process.env.NODE_ENV === 'production'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  removeConsole: !isProd,
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   swcMinify: true,
   reactStrictMode: true,
@@ -114,8 +117,6 @@ const securityHeaders = [
     value: '1; mode=block',
   },
 ]
-
-const isProd = process.env.NODE_ENV === 'production'
 
 const withPWA = require('next-pwa')({
   dest: 'public',
