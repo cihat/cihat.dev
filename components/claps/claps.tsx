@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { debounce }  from "@/lib/utils";
-import cx from "classnames";
+import cx from "@/lib/cx";
 import Icons from "./icons";
 import "./style.css"
 import { usePathname } from "next/navigation";

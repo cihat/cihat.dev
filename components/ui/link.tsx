@@ -1,4 +1,4 @@
-import cn from "classnames";
+import cx from "@/lib/cx";
 import { ReactNode } from "react";
 
 export type BaseLinkProps = {
@@ -23,7 +23,7 @@ export default function BaseLink({
     : {};
 
   return (
-    <a href={href} className={cn(className)} {...isBlank} {...props}>
+    <a href={href} className={cx(className)} {...isBlank} {...props}>
       {children}
     </a>
   );
@@ -32,7 +32,7 @@ export default function BaseLink({
 export function StyleLink({ className, ...props }: BaseLinkProps) {
   return (
     <BaseLink
-      className={cn(
+      className={cx(
         "decoration-2 underline-offset-2",
         "dark:hover:text-zinc-50 dark:hover:decoration-indigo-600",
         "underline decoration-zinc-500 hover:text-zinc-900 dark:decoration-zinc-600",
