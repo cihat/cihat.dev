@@ -4,22 +4,29 @@ import { links } from "@/lib/meta";
 import { headers } from "next/headers";
 import { redirect, notFound } from "next/navigation";
 
-export default function Link({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { bot?: string };
-}) {
-  const link = links[params.id];
+interface LinkPageProps {
+  params: Promise<{ id?: string }>;
+  searchParams: Promise<{ bot?: string }>;
+}
 
-  if (link == null) {
-    return notFound();
+export default async function Link({ params, searchParams }: LinkPageProps) {
+  const { id } = await params;
+  const { bot } = await searchParams;
+  const link = links[id as string];
+
+  if (!link) {
+    notFound();
+    return null;
   }
 
-  if (searchParams.bot || /bot/i.test(headers().get("user-agent") as string)) {
-    return <></>;
+  const headerData = await headers();
+  const userAgent = headerData.get("user-agent") || "";
+  const isBot = bot || /bot/i.test(userAgent);
+
+  if (isBot) {
+    return null;
   } else {
     redirect(link.link);
+    return null;
   }
 }
