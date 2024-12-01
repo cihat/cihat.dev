@@ -9,8 +9,9 @@ import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs"
 import { Button } from "./button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { GiHamburger } from "react-icons/gi"
-import useWindowDimensions from "@/hooks/useWindowDimensions"
-import { mobileWidth } from "@/store/types"
+import useIsMobile from "@/hooks/useIsMobile"
+// import { mobileWidth } from "@/store/types"
+// import { useEffect, useRef, useState } from "react"
 
 const MENU = {
   "/": "Home",
@@ -51,10 +52,8 @@ const NavigationDropdown = ({ MENU, path, children }) => {
 }
 
 export default function Header() {
+  const isMobile = useIsMobile()
   const pathname = usePathname()
-
-  const { width = 0 } = useWindowDimensions()
-  const isMobile = width <= mobileWidth
 
   const clearSlash = pathname?.split("/")[1]
   const path = clearSlash ? `/${clearSlash}` : "/"

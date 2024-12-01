@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { mobileWidth } from "@/store/types";
+import { useLayoutEffect, useState } from "react";
 
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
+    setIsMobile(window.innerWidth <= mobileWidth);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleResize();
     window.addEventListener("resize", handleResize);
 
