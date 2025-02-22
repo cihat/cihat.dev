@@ -19,6 +19,7 @@ const MENU = {
   "/bookmarks": "Bookmarks",
   "/about": "About",
   "https://cv.cihat.dev/": "CV",
+  "https://sketchbook.cihat.dev/": "Sketchbook",
 }
 
 const MenuItem = ({ value, href, isActive }) => {
