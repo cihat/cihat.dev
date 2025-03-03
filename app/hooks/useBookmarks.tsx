@@ -1,6 +1,6 @@
 import Raindrop from "@/lib/raindrop";
 import { ILink } from "@/types";
-import { format, subWeeks } from "date-fns";
+import { addDays, format, subWeeks } from "date-fns";
 import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 import { DatePeriodType } from "@/store/types";
@@ -47,7 +47,8 @@ export function useBookmarks(initialTab, initialTimeRange) {
   const [searchInput, setSearchInput] = useState("");
   const [dateRange, setDateRange] = useState({
     from: subWeeks(new Date(), 1),
-    to: new Date()
+    //! Fix better this bug, i add one day for hot fix but it's not the best solution
+    to: addDays(new Date(), 1),
   });
 
   // Use debounced search query to avoid excessive API calls

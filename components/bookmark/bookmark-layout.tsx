@@ -1,6 +1,6 @@
 "use client";
 
-import { format, startOfWeek, subMonths, subWeeks } from "date-fns";
+import { addDays, format, startOfWeek, subMonths, subWeeks } from "date-fns";
 import { Search, Calendar } from "lucide-react";
 
 import BookmarkCard from "./bookmark-card";
@@ -28,7 +28,8 @@ export default function BookmarkLayout() {
     dateStartOfWeek: startOfWeek(subWeeks(new Date(), 1)),
     subDate: format(startOfWeek(subWeeks(new Date(), 1)), "yyyy-MM-dd"),
     start: subWeeks(new Date(), 1),
-    end: new Date()
+    //! Fix better this bug, i add one day for hot fix but it's not the best solution
+    end: addDays(new Date(), 1)
   };
 
   const {
