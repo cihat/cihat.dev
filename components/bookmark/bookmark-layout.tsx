@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { format, startOfWeek, endOfWeek, subMonths, subWeeks, isBefore } from "date-fns";
+import { format, startOfWeek, subMonths, subWeeks } from "date-fns";
 import { Search, Calendar } from "lucide-react";
 
 import BookmarkCard from "./bookmark-card";
@@ -12,99 +11,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { useStore } from "@/store";
 import { BookmarkType, DatePeriodType } from "@/store/types";
-import Raindrop from "@/lib/raindrop";
-import bookmarkGroupByWeekNumber from "@/lib/helper";
 import { Loading } from "../loading";
-import { ILink } from "@/types";
+import { useBookmarks } from "@/app/hooks/useBookmarks";
 
 const DatePeriodConfig = {
   [DatePeriodType.LAST_ONE_WEEK]: subWeeks(new Date(), 1),
   [DatePeriodType.LAST_TWO_WEEKS]: subWeeks(new Date(), 2),
   [DatePeriodType.LAST_ONE_MONTH]: subMonths(new Date(), 1),
 };
-
-async function fetchData(collectionId, config) {
-  const { timeRange, searchQuery } = config;
-
-  const raindrop = new Raindrop();
-  let searchParam = searchQuery ? searchQuery : "";
-
-  // Add date filter to search if a time range is specified
-  if (timeRange.start && timeRange.end) {
-    const startDate = format(timeRange.start, "yyyy-MM-dd");
-    const endDate = format(timeRange.end, "yyyy-MM-dd");
-    searchParam += searchParam ? ` created:>${startDate} created:<${endDate}` : `created:>${startDate} created:<${endDate}`;
-  } else if (timeRange.type && timeRange.type !== DatePeriodType.ALL_TIME) {
-    searchParam += searchParam ? ` created:>${timeRange.subDate}` : `created:>${timeRange.subDate}`;
-  }
-
-  // If no search or time range, use default
-  if (!searchParam) {
-    searchParam = "-created";
-  }
-
-  const collections = await raindrop.getBookmark({
-    perPage: 50,
-    search: searchParam,
-    collectionId,
-  });
-
-  return {
-    data: bookmarkGroupByWeekNumber(collections),
-    year: timeRange.start ? format(timeRange.start, "yyyy") : format(new Date(), "yyyy"),
-  };
-}
-
-function useBookmarks(initialTab, initialTimeRange) {
-  const [data, setData] = useState<{ [key: string]: ILink[] }>({});
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(initialTab);
-  const [timeRange, setTimeRange] = useState(initialTimeRange);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [dateRange, setDateRange] = useState({
-    from: subWeeks(new Date(), 1),
-    to: new Date()
-  });
-
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      setLoading(true);
-      try {
-        const result = await fetchData(activeTab, {
-          timeRange,
-          searchQuery
-        });
-        setData(result.data);
-      } catch (error) {
-        console.error("Error fetching bookmarks:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDataAsync();
-    useStore.setState({ activeBookmarkType: activeTab });
-
-    return () => {
-      setData({});
-    };
-  }, [activeTab, timeRange, searchQuery]);
-
-  return {
-    data,
-    loading,
-    activeTab,
-    setActiveTab,
-    timeRange,
-    setTimeRange,
-    searchQuery,
-    setSearchQuery,
-    dateRange,
-    setDateRange
-  };
-}
 
 export default function BookmarkLayout() {
   const initialTab = BookmarkType.Technical;
@@ -158,7 +73,6 @@ export default function BookmarkLayout() {
   const handleDateRangeChange = (range) => {
     setDateRange(range);
 
-    // Only update if we have both dates
     if (range.from && range.to) {
       const startDate = startOfWeek(range.from);
 
@@ -174,7 +88,6 @@ export default function BookmarkLayout() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Search is already handled by the effect hook monitoring searchQuery
   };
 
   const formatDateRange = () => {
@@ -196,7 +109,6 @@ export default function BookmarkLayout() {
   return (
     <Container className="left-animation text-sm overflow-hidden">
       <div className="flex flex-col space-y-3 w-full mb-4">
-        {/* Category Tabs */}
         <Tabs
           defaultValue={BookmarkType.Technical}
           onValueChange={handleTabChange}
@@ -209,9 +121,7 @@ export default function BookmarkLayout() {
           </TabsList>
         </Tabs>
 
-        {/* Search & Date Range UI */}
         <div className="flex flex-col sm:flex-row w-full gap-2">
-          {/* Search Input */}
           <form onSubmit={handleSearch} className="flex-1">
             <div className="relative">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
@@ -222,10 +132,14 @@ export default function BookmarkLayout() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-8 w-full"
               />
+              {loading && searchQuery && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <div className="h-4 w-4 rounded-full border-2 border-t-transparent border-primary animate-spin"></div>
+                </div>
+              )}
             </div>
           </form>
 
-          {/* Date Range Selector */}
           <div className="flex gap-2">
             <Popover>
               <PopoverTrigger asChild>
