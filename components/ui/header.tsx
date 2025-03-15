@@ -45,7 +45,7 @@ const MenuItem = memo(({ value, href, isActive, onClick }: MenuItemProps) => {
     <NextLink
       target={isExternal ? "_blank" : "_self"}
       href={href}
-      className="mr-2"
+      className="mr-2 cursor-pointer"
       onClick={onClick}
     >
       <Button
