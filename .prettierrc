@@ -2,5 +2,9 @@
   "printWidth": 200,
   "tabWidth": 2,
   "semi": false,
-  "singleQuote": false
+  "singleQuote": false,
+  "plugins": [
+    "prettier-plugin-svelte",
+    "prettier-plugin-tailwindcss"
+  ]
 }
