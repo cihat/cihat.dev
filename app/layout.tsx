@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <meta name="viewport" content="initial-scale=1, viewport-fit=cover, width=device-width"></meta>
       </head>
-      <body className="no-scrollbar min-h-screen">
+      <body className="no-scrollbar min-h-screen vsc-initialized">
         <Header />
         <main className="sm:mt-4 mt-2 grow">{children}</main>
         <Footer />
