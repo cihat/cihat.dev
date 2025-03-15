@@ -81,7 +81,7 @@ export function Posts({ posts: initialPosts }) {
     <Suspense fallback={<div>Loading</div>}>
       <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
         <header className="flex items-center text-sm sticky top-0 p-1 rounded-md bg-white dark:bg-black">
-          <Button variant="outline" size="xs" onClick={sortDate} className="w-13 h-9 text-left text-md font-semibold">
+          <Button variant="outline" size="sm" onClick={sortDate} className="w-13 h-9 text-left text-md font-semibold">
             Date
             {sort[0] === "date" && sort[1] === "asc" && "↑"}
           </Button>
@@ -89,10 +89,10 @@ export function Posts({ posts: initialPosts }) {
             <Input type="text" placeholder="Search posts..." className="w-full" value={input} onChange={(e) => setInput(e.target.value)} />
           </div>
           <Category category={category} setCategory={setCategory} />
-          <Button variant="outline" size="xs" onClick={handleEmoji} className="flex items-center justify-center h-9 text-md font-semibold w-16 mr-2">
+          <Button variant="outline" size="sm" onClick={handleEmoji} className="flex items-center justify-center h-9 text-md font-semibold w-16 mr-2">
             {flag}
           </Button>
-          <Button variant="outline" size="xs" onClick={sortViews} className="h-9 text-md font-semibold">
+          <Button variant="outline" size="sm" onClick={sortViews} className="h-9 text-md font-semibold">
             Views
             {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
           </Button>

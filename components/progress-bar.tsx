@@ -19,11 +19,11 @@ export type ProgressBarProps = {
   isLabelVisible?: boolean;
   transitionDuration?: string;
   transitionTimingFunction?:
-    | "ease"
-    | "linear"
-    | "ease-in"
-    | "ease-out"
-    | "ease-in-out";
+  | "ease"
+  | "linear"
+  | "ease-in"
+  | "ease-out"
+  | "ease-in-out";
   className?: string;
   dir?: "ltr" | "rtl" | "auto";
   ariaValuemin?: number;
@@ -39,29 +39,29 @@ export type ProgressBarProps = {
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
-  bgColor,
+  bgColor = "#6a1b9a",
   completed,
-  baseBgColor,
-  height,
-  width,
+  baseBgColor = "#e0e0de",
+  height = "20px",
+  width = "100%",
   margin,
   padding,
-  borderRadius,
-  labelAlignment,
-  labelColor,
-  labelSize,
-  isLabelVisible,
+  borderRadius = "12px",
+  labelAlignment = "right",
+  labelColor = "#fff",
+  labelSize = "15px",
+  isLabelVisible = true,
   customLabelStyles,
   transitionDuration,
   transitionTimingFunction,
   className,
-  dir,
-  ariaValuemin,
-  ariaValuemax,
-  ariaValuetext,
-  maxCompleted,
+  dir = "ltr",
+  ariaValuemin = 0,
+  ariaValuemax = 100,
+  ariaValuetext = null,
+  maxCompleted = 100,
   customLabel,
-  animateOnRender,
+  animateOnRender = false,
   barContainerClassName,
   completedClassName,
   labelClassName,
@@ -119,9 +119,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     height: height,
     width: animateOnRender ? initWidth : fillerWidth,
     background: bgColor,
-    transition: `width ${transitionDuration || "1s"} ${
-      transitionTimingFunction || "ease-in-out"
-    }`,
+    transition: `width ${transitionDuration || "1s"} ${transitionTimingFunction || "ease-in-out"
+      }`,
     borderRadius: "inherit",
     display: "flex",
     alignItems: "center",
@@ -195,6 +194,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   );
 };
 
+// PropTypes are still useful for development and documentation purposes
 ProgressBar.propTypes = {
   completed: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
@@ -221,25 +221,6 @@ ProgressBar.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-};
-
-ProgressBar.defaultProps = {
-  bgColor: "#6a1b9a",
-  height: "20px",
-  width: "100%",
-  borderRadius: "12px",
-  labelAlignment: "right",
-  baseBgColor: "#e0e0de",
-  labelColor: "#fff",
-  labelSize: "15px",
-  isLabelVisible: true,
-  dir: "ltr",
-  ariaValuemin: 0,
-  ariaValuemax: 100,
-  ariaValuetext: null,
-  maxCompleted: 100,
-  animateOnRender: false,
-  initCompletedOnAnimation: 0,
 };
 
 export default ProgressBar;

@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "prep-build": "rm -rf .next && pnpm i && pnpm run build",
-    "cleanup": "rip .next node_modules && pnpm i && pnpm dev"
+    "prep-dev": "rip .next node_modules && pnpm i && pnpm dev"
   },
   "engines": {
     "node": ">=20.11.0"

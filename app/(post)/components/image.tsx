@@ -4,7 +4,6 @@ import { readFile } from "fs/promises";
 import { Caption } from "./caption";
 import NextImage from "next/image";
 import cx from "@/lib/cx";
-
 export async function Image({
   src,
   alt: originalAlt,
@@ -25,18 +24,17 @@ export async function Image({
   } else {
     if (width === null || height === null) {
       let imageBuffer: Buffer | null = null;
-
       if (src.startsWith("http")) {
-        imageBuffer = Buffer.from(
-          await fetch(src).then(res => res.arrayBuffer())
-        );
+        // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer
+        const response = await fetch(src);
+        const arrayBuffer = await response.arrayBuffer();
+        imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
       } else {
         if (!process.env.CI && process.env.NODE_ENV === "production") {
-          imageBuffer = Buffer.from(
-            await fetch("https://" + process.env.VERCEL_URL + src).then(res =>
-              res.arrayBuffer()
-            )
-          );
+          // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer
+          const response = await fetch("https://" + process.env.VERCEL_URL + src);
+          const arrayBuffer = await response.arrayBuffer();
+          imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
         } else {
           imageBuffer = await readFile(
             new URL(
@@ -55,10 +53,8 @@ export async function Image({
       width = computedSize.width;
       height = computedSize.height;
     }
-
     let alt: string | null = null;
     let dividedBy = 100;
-
     if ("string" === typeof originalAlt) {
       const match = originalAlt.match(/(.*) (\[(\d+)%\])?$/);
       if (match != null) {
@@ -68,9 +64,7 @@ export async function Image({
     } else {
       alt = originalAlt ?? null;
     }
-
     const factor = dividedBy / 100;
-
     return (
       <span className={cx("my-5 flex flex-col items-center", inline && "inline mr-2")}>
         <NextImage
@@ -81,7 +75,6 @@ export async function Image({
           className="delay-500 z-[10] xl:hover:scale-[1.2] 2xl:hover:scale-[1.3] transition"
           loading="lazy"
         />
-
         {originalAlt && <Caption>{originalAlt}</Caption>}
       </span>
     );
