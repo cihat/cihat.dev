@@ -27,7 +27,7 @@ const MenuItem = ({ value, href, isActive }) => {
 
   return (
     <NextLink target={isExternal ? "_blank" : "_self"} href={href} className="mr-2">
-      <Button variant={isActive ? "default" : "ghost"} size="sm" className="w-full justify-start ">
+      <Button variant={isActive ? "default" : "ghost"} size="sm" className="w-full justify-start cursor-pointer">
         {isExternal && <ExternalLinkIcon size={18} />}
         {value}
       </Button>

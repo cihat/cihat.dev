@@ -1,7 +1,7 @@
 import { Tweet as ReactTweet } from "react-tweet";
 import { Caption } from "./caption";
 import type { ReactNode } from "react";
-import "./tweet.css";
+// import "./tweet.css";
 
 // we import this globally in the top-most layout.tsx file
 // until Next.js lands suspense-y CSS support
