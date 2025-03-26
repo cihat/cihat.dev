@@ -142,7 +142,7 @@ export default function Header() {
 
   return (
     <Container
-      className="flex justify-between px-0 select-none items-center p-4 pb-2 sm:pb-0"
+      className="flex justify-between px-0 select-none items-center p-4 pb-2 sm:pb-0 relative z-40"
       as="header"
     >
       <Logo />

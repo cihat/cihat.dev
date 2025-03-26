@@ -24,7 +24,7 @@
 .claps-fixed {
   position: fixed;
   bottom: 1rem;
-  z-index: 10;
+  z-index: 100;
 }
 
 .claps-fixed-left {
