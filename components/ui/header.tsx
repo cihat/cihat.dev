@@ -22,7 +22,6 @@ import useIsMobile from "@/hooks/useIsMobile"
 
 // Navigation menu items - moved outside component to prevent recreation
 const NAVIGATION_ITEMS = {
-  "/": "Home",
   "/reading": "Reading",
   "/bookmarks": "Bookmarks",
   "/about": "About",
