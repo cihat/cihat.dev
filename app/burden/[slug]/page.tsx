@@ -26,7 +26,7 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
     return notFound();
   }
 
-  const PageComponent = dynamic(() => import(`@/app/ai/components/${pageConfig.componentPath}`), {
+  const PageComponent = dynamic(() => import(`@/app/burden/components/${pageConfig.componentPath}`), {
     loading: () => <div>Loading...</div>,
   });
 

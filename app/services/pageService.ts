@@ -1,4 +1,4 @@
-import pagesConfig from '@/lib/ai.json';
+import pagesConfig from '@/lib/burden.json';
 import { cache } from 'react';
 
 export type PageConfig = {

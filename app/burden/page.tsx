@@ -20,7 +20,7 @@ export default function AIIndexPage() {
           return (
             <li key={slug}>
               <Link
-                href={`/ai/${slug}`}
+                href={`/burden/${slug}`}
                 className="flex items-center justify-between p-3 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <div className="flex items-center">

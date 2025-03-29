@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { philosophical } from '@/lib/ai.json';
+import { philosophical } from '@/lib/burden.json';
 
 const PhilosophicalThemes = () => {
   const [language, setLanguage] = useState('en');
