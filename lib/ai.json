@@ -1,0 +1,82 @@
+{
+  "philosophical": {
+    "componentPath": "philosophical",
+    "title": "Fate",
+    "description": "The inevitability of fate and the indifference of modern humans.",
+    "keywords": "fate, existentialism, philosophical concepts, modern human, alienation, nihilism",
+    "content": {
+      "en": {
+        "title": "Philosophical Concepts",
+        "subtitle": "Key themes in existentialist thought",
+        "themes": [
+          {
+            "title": "1. Inevitable Fate",
+            "content": "The idea that certain events in human life are inevitable and that no matter what one does, they cannot escape certain endings. Characters seem to have given up trying to change events. This determinism emphasizes the limitations of humans in shaping their own future. It suggests that certain events in life are predetermined and that humans can only progress along this predetermined path."
+          },
+          {
+            "title": "2. Existential Indifference",
+            "content": "A kind of emotional distance and disinterest towards life and events. Characters often show minimal emotional response even to tragic events. This attitude is a way of surviving in a world that appears absurd and meaningless. It can also be thought of as a defense mechanism developed in the face of the broad meaninglessness of life."
+          },
+          {
+            "title": "3. Passive Resistance",
+            "content": "A silent stance developed against the expectations and impositions of society. Rather than openly opposing social norms, characters prefer not to comply with them. This is a silent rejection rather than an active struggle. It is a form of existence that avoids open conflict with the system while also refusing to join it."
+          },
+          {
+            "title": "4. The Cycle of Guilt and Punishment",
+            "content": "The crimes committed by characters, their moral reckonings, and the subsequent internal or external punishment processes. The concept of crime is addressed here in both its legal and moral dimensions. The weight of conscience, self-punishment, and the relationship between these and societal punishments are questioned."
+          },
+          {
+            "title": "5. Alienation of Modern Humans",
+            "content": "The feeling of disconnect and distance that modern humans feel towards themselves, society, and nature. This alienation is a result of the pace of modern life, technological developments, and the competitive environment created by the capitalist system. Humans have become estranged from their essence and have come to live in a kind of autopilot mode."
+          },
+          {
+            "title": "6. Nihilism and the Search for Meaning",
+            "content": "The state of accepting that there is no inherent meaning in life and evolution. Characters are often people who have ended their search for meaning or have accepted meaninglessness. This nihilistic perspective, paradoxically, also offers a kind of freedom; because where there is no meaning, humans are free to create their own meaning."
+          },
+          {
+            "title": "7. Fatalism and Social Structure",
+            "content": "The fatalistic understanding prevalent in society shapes individuals' thought and behavior patterns. Concepts such as 'kismet' and 'fortune' affect people's outlook on life. This fatalism sometimes creates a state of surrender, and sometimes opens up a paradoxical space of freedom. The fatalism imposed by the social structure is seen as the individual accepting their own destiny and achieving a kind of inner peace with this acceptance."
+          }
+        ],
+        "footer": "Meaning emerges from within meaninglessness.",
+        "toggleText": "Türkçe'ye Geç"
+      },
+      "tr": {
+        "title": "Felsefi Kavramlar",
+        "subtitle": "Varoluşçu düşüncedeki temel temalar",
+        "themes": [
+          {
+            "title": "1. Kaçınılmaz Kader",
+            "content": "İnsanın hayatında bazı olayların kaçınılmaz olduğu ve ne yaparsa yapsın belirli sonlardan kaçamayacağı fikridir. Karakterler olayları değiştirme çabasından vazgeçmiş gibidirler. Bu determinizm, insanın kendi geleceğini şekillendirme konusundaki sınırlılığını vurgular. Hayattaki belirli olayların önceden belirlenmiş olduğunu ve insanın sadece bu belirlenmiş yolda ilerleyebildiğini öne sürer."
+          },
+          {
+            "title": "2. Varoluşsal Kayıtsızlık",
+            "content": "Hayata ve olaylara karşı sergilenen bir tür duygusal mesafe ve ilgisizliktir. Karakterler çoğu zaman trajik olaylara bile minimum duygusal tepki verirler. Bu tavır, absürt ve anlamsız görünen bir dünyada ayakta kalmanın bir yoludur. Hayatın geniş çaplı anlamsızlığı karşısında geliştirilen bir savunma mekanizması olarak da düşünülebilir."
+          },
+          {
+            "title": "3. Pasif Direniş",
+            "content": "Toplumun beklentilerine ve dayatmalarına karşı geliştirilen sessiz bir karşı duruştur. Karakterler, toplumsal normlara açıkça karşı çıkmak yerine, onlara uymamayı tercih ederler. Bu, aktif bir mücadeleden ziyade sessiz bir reddediştir. Sistemle açık çatışmadan kaçınırken, ona katılmayı da reddeden bir varoluş biçimidir."
+          },
+          {
+            "title": "4. Suçluluk ve Cezalandırma Döngüsü",
+            "content": "Karakterlerin işlediği suçlar, vicdani hesaplaşmaları ve sonrasında gelen içsel veya dışsal cezalandırma süreçleridir. Suç kavramı burada hem yasal hem de ahlaki boyutlarıyla ele alınır. Vicdanın ağırlığı, kişinin kendi kendini cezalandırması ve toplumun verdiği cezalar arasındaki ilişki sorgulanır."
+          },
+          {
+            "title": "5. Modern İnsanın Yabancılaşması",
+            "content": "Modern dünyada insanın kendine, topluma ve doğaya karşı hissettiği kopukluk ve uzaklık hissidir. Bu yabancılaşma, modern yaşamın hızı, teknolojik gelişmeler ve kapitalist sistemin yarattığı rekabet ortamının bir sonucudur. İnsan, kendi özünden uzaklaşmış ve bir tür otomatik pilotta yaşar hale gelmiştir."
+          },
+          {
+            "title": "6. Nihilizm ve Anlam Arayışı",
+            "content": "Hayatın ve evrimin özünde herhangi bir anlam olmadığını kabul etme durumudur. Karakterler çoğu zaman anlam arayışını sonlandırmış veya anlamsızlığı kabul etmiş kişilerdir. Bu nihilist bakış açısı, paradoksal olarak bir tür özgürlük de sunar; çünkü anlamın olmadığı yerde, insan kendi anlamını yaratmakta özgürdür."
+          },
+          {
+            "title": "7. Kadercilik ve Toplumsal Yapı",
+            "content": "Toplumda yaygın olan kaderci anlayış, bireylerin düşünce ve davranış biçimlerini şekillendirir. \"Kısmet\", \"nasip\" gibi kavramlar, insanların hayata bakışını etkiler. Bu kadercilik, bazen bir teslimiyet hali yaratırken, bazen de paradoksal bir özgürlük alanı açar. Toplumsal yapının dayattığı kadercilik, bireyin kendi yazgısını kabullenmesi ve bu kabullenişle bir tür iç huzura ulaşması şeklinde görülür."
+          }
+        ],
+        "footer": "Anlam, anlamsızlığın içinden doğar.",
+        "toggleText": "Switch to English"
+      }
+    }
+  }
+}
