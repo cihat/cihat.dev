@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { getPageConfig, getAllPageSlugs } from '@/app/services/pageService';
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata({ params }) {
   const pageConfig = getPageConfig(params.slug);
 
   if (!pageConfig) {
@@ -17,7 +17,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function SlugPage({ params }: { params: { slug: string } }) {
+export default function SlugPage({ params }) {
   const { slug } = params;
 
   const pageConfig = getPageConfig(slug);
