@@ -57,17 +57,20 @@ const domains = [
   'va.vercel-scripts.com',
   'vitals.vercel-insights.com',
   'www.youtube.com',
+  'www.spotify.com',
   'utteranc.es',
 ]
+
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
-  default-src 'self' vercel.live www.youtube.com utteranc.es;
+  default-src 'self' vercel.live www.youtube.com utteranc.es *.spotify.com;
   script-src 'self' 'unsafe-eval' 'unsafe-inline' ${domains.join(' ')};
-  style-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline' *.spotify.com;
   img-src * blob: data:;
-  media-src 'none';
+  media-src 'self' *.spotify.com;
   connect-src *;
-  font-src 'self';
+  font-src 'self' *.spotify.com;
+  frame-src 'self' www.youtube.com *.spotify.com open.spotify.com player.spotify.com;
 `
 
 const securityHeaders = [
@@ -84,7 +87,7 @@ const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
   {
     key: 'X-Frame-Options',
-    value: 'DENY',
+    value: 'SAMEORIGIN',
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
   {
@@ -123,4 +126,4 @@ const withPWA = require('next-pwa')({
   disable: !isProd
 });
 
-module.exports = withPlugins([[withMDX],[withPWA]], nextConfig)
+module.exports = withPlugins([[withMDX], [withPWA]], nextConfig)
