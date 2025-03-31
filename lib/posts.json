@@ -131,6 +131,18 @@
       "link": "https://cihat.dev/2025/askerlik",
       "description": "Askerlik",
       "issueNumber": 12
+    },
+    {
+      "id": "music",
+      "path": "music",
+      "date": "April 1, 2025",
+      "title": "Music",
+      "minuteToRead": 2,
+      "language": "en-US",
+      "category": "Etc",
+      "link": "https://cihat.dev/2025/music",
+      "description": "Music",
+      "issueNumber": 13
     }
   ]
 }
