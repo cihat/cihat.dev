@@ -22,6 +22,8 @@ import { Blockquote } from "app/(post)/components/blockquote";
 import { Reading } from "app/(post)/components/reading";
 import { RandomQuote } from "./components/ui/quote";
 import { CodeSnippet } from "./app/(post)/components/code-snippet";
+import { Box } from "./app/(post)/components/box";
+import { Spotify } from "./app/(post)/components/spotify";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -53,6 +55,8 @@ export function useMDXComponents(components: {
     FootNote,
     Reading,
     Quote: RandomQuote,
-    CodeSnippet
+    CodeSnippet,
+    Box,
+    Spotify
   };
 }

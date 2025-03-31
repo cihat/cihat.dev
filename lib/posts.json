@@ -119,6 +119,18 @@
       "link": "https://cihat.dev/2024/oylesine",
       "description": "Öylesine yazılar, düşünceler.",
       "issueNumber": 11
+    },
+    {
+      "id": "askerlik",
+      "path": "askerlik",
+      "date": "March 31, 2025",
+      "title": "Askerlik",
+      "minuteToRead": 6,
+      "language": "tr-TR",
+      "category": "Etc",
+      "link": "https://cihat.dev/2025/askerlik",
+      "description": "Askerlik",
+      "issueNumber": 12
     }
   ]
 }

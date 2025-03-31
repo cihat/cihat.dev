@@ -1,4 +1,4 @@
-export function SpotifyEmbed({ trackId, width = '100%', height = '352' }) {
+export function Spotify({ trackId, width = '100%', height = '352' }) {
   return (
     <div className="spotify-embed-container">
       <iframe
