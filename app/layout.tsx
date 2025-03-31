@@ -16,7 +16,7 @@ const inter = Inter({
   subsets: ["latin-ext"],
 })
 
-const { title, description, url } = META_DATA
+const { title, description, url, keywords } = META_DATA
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   category: "technology",
   creator: title,
   publisher: title,
+  keywords,
   openGraph: {
     title,
     description,

@@ -12,6 +12,7 @@ export const META_DATA = {
     twitter: "https://twitter.com/chtslk",
     github: "https://github.com/cihat",
   },
+  keywords: ["software", "blog", "cihat salik", "engineer", "art", "photography", "philosophy", "development"],
 };
 
 export const githubImage = 'https://github.com/cihat.png'
