@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
-@import "../public/home-styles.css";
+@import "../public/styles/home-styles.css";
 
 
 @custom-variant dark (&:is(.dark *));
