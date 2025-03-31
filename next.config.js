@@ -51,26 +51,29 @@ const nextConfig = {
   }
 }
 
+const thirdParty = [
+  'www.youtube.com',
+  'open.spotify.com',
+  'utteranc.es',
+]
+
 const domains = [
   'cdn.vercel-insights.com',
   'vercel.live',
   'va.vercel-scripts.com',
   'vitals.vercel-insights.com',
-  'www.youtube.com',
-  'www.spotify.com',
-  'utteranc.es',
+  ...thirdParty
 ]
-
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
-  default-src 'self' vercel.live www.youtube.com utteranc.es *.spotify.com;
+  default-src 'self' vercel.live www.youtube.com utteranc.es;
   script-src 'self' 'unsafe-eval' 'unsafe-inline' ${domains.join(' ')};
-  style-src 'self' 'unsafe-inline' *.spotify.com;
+  style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
-  media-src 'self' *.spotify.com;
+  media-src 'none';
   connect-src *;
-  font-src 'self' *.spotify.com;
-  frame-src 'self' www.youtube.com *.spotify.com open.spotify.com player.spotify.com;
+  font-src 'self';
+  frame-src 'self' ${thirdParty.join(' ')};
 `
 
 const securityHeaders = [
@@ -87,7 +90,7 @@ const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
   {
     key: 'X-Frame-Options',
-    value: 'SAMEORIGIN',
+    value: 'DENY',
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
   {
@@ -126,4 +129,4 @@ const withPWA = require('next-pwa')({
   disable: !isProd
 });
 
-module.exports = withPlugins([[withMDX], [withPWA]], nextConfig)
+module.exports = withPlugins([[withMDX],[withPWA]], nextConfig)
