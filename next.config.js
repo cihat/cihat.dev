@@ -66,7 +66,7 @@ const domains = [
 ]
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
-  default-src 'self' vercel.live www.youtube.com utteranc.es;
+  default-src 'self' vercel.live www.youtube.com;
   script-src 'self' 'unsafe-eval' 'unsafe-inline' ${domains.join(' ')};
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
