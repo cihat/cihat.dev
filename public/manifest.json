@@ -1,7 +1,7 @@
 {
   "name": "cihat.dev",
   "prefer_related_applications": true,
-  "orientation": "landscape",
+  "orientation": "portrait",
   "short_name": "cihat.dev",
   "description": "Cihat Salik's personal website",
   "screenshots": [
