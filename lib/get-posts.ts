@@ -8,7 +8,17 @@ type Views = {
 }
 
 export const getPostsWithViewData = async (): Promise<Post[]> => {
-  const allViews: null | Views = await redis.hgetall("views")
+  let allViews: null | Views = null
+  
+  // Redis bağlantısı varsa views verilerini al
+  if (redis) {
+    try {
+      allViews = await redis.hgetall("views")
+    } catch (error) {
+      console.warn('⚠️  Failed to fetch views from Redis:', error)
+    }
+  }
+  
   const posts = postsData.posts.map((post: Post) => {
     const views = Number(allViews?.[post.id] ?? 0)
     return {

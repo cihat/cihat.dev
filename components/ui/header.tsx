@@ -24,10 +24,9 @@ import useIsMobile from "@/hooks/useIsMobile"
 const NAVIGATION_ITEMS = {
   "/reading": "Reading",
   "/bookmarks": "Bookmarks",
-  "/about": "About",
-  "/burden": "Burden",
+  "https://apps.cihat.dev/": "Apps",
   "https://cv.cihat.dev/": "CV",
-  "https://sketchbook.cihat.dev/": "Sketchbook",
+  "/about": "About",
 }
 
 // Memoized menu item component to prevent unnecessary re-renders

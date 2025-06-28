@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "@/lib/cx";
 
-export interface ISubTitleProps extends React.HTMLAttributes<HTMLHeadElement> {
+interface ISubTitleProps extends React.HTMLAttributes<HTMLHeadElement> {
   children: React.ReactNode;
 }
 

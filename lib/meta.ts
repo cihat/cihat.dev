@@ -15,9 +15,7 @@ export const META_DATA = {
   keywords: ["software", "blog", "cihat salik", "engineer", "art", "photography", "philosophy", "development"],
 };
 
-export const githubImage = 'https://github.com/cihat.png'
 export const websiteDomain = 'https://cihat.dev'
-export const twitterUrl = 'https://twitter.com/chtslk'
 
 export const links = {
   "me-kadikoy": {

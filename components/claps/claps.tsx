@@ -18,7 +18,7 @@ enum ReactionClass {
 
 type IClapsFixedProps = "left" | "center" | "right";
 
-export type IClapsProps = {
+type IClapsProps = {
   key?: string;
   fixed?: IClapsFixedProps;
   replyUrl?: string;

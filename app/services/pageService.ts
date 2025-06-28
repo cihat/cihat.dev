@@ -1,7 +1,7 @@
 import pagesConfig from '@/lib/burden.json';
 import { cache } from 'react';
 
-export type PageConfig = {
+type PageConfig = {
   title: string;
   componentPath: string;
   description?: string;

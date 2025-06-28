@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "@/lib/cx";
 
-export interface IContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+interface IContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: string;
   size?: "default" | "large";
   children: React.ReactNode;

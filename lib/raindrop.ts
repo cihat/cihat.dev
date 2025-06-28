@@ -9,15 +9,45 @@ type Result = {
 };
 
 export default class Raindrop {
-  private readonly token: string = process.env.RAINDROP_ACCESS_TOKEN!;
-  private url = "https://api.raindrop.io";
+  private readonly token: string;
+  private readonly url = "https://api.raindrop.io";
+  private readonly isInitialized: boolean;
 
-  private normalizeData(data: ILink[]) {
-    return data?.map((bookmark) => {
-      const { _id, type, created, title, link, excerpt, domain, tags, cover } =
-        bookmark;
-      return { _id, type, created, title, link, excerpt, domain, tags, cover };
-    });
+  constructor() {
+    this.token = process.env.RAINDROP_ACCESS_TOKEN || '';
+    this.isInitialized = !!this.token;
+    
+    if (!this.token) {
+      console.warn('⚠️  RAINDROP_ACCESS_TOKEN is not set. Bookmarks features will not work.');
+    }
+  }
+
+  private normalizeData(data: ILink[]): ILink[] {
+    if (!Array.isArray(data)) {
+      console.warn('⚠️  normalizeData received non-array data:', typeof data);
+      return [];
+    }
+
+    return data.map((bookmark) => {
+      if (!bookmark || typeof bookmark !== 'object') {
+        console.warn('⚠️  Invalid bookmark item:', bookmark);
+        return null;
+      }
+
+      const { _id, type, created, title, link, excerpt, domain, tags, cover } = bookmark;
+      
+      return {
+        _id: _id || '',
+        type: type || '',
+        created: created || '',
+        title: title || '',
+        link: link || '',
+        excerpt: excerpt || '',
+        domain: domain || '',
+        tags: Array.isArray(tags) ? tags : [],
+        cover: cover || ''
+      };
+    }).filter(Boolean) as ILink[];
   }
 
   public async getBookmark({
@@ -33,38 +63,110 @@ export default class Raindrop {
     search?: string;
     collectionId: BookmarkType;
   }): Promise<ILink[]> {
-    let url = new URL(`/rest/v1/raindrops/${collectionId}`, this.url);
-
-    url.searchParams.set("perpage", perPage.toString());
-    url.searchParams.set("page", page.toString());
-    url.searchParams.set("sort", sort);
-    search && url.searchParams.set("search", search);
-
-    const response = await fetch(url.toString(), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    })
-
-    if (!response.ok) {
-      throw new Error("Something went wrong when loading bookmarks")
+    
+    // Early return if not initialized
+    if (!this.isInitialized || !this.token) {
+      console.warn('⚠️  Cannot fetch bookmarks: RAINDROP_ACCESS_TOKEN is missing');
+      return [];
     }
 
-    const data: Result = await response.json();
+    try {
+      // Validate inputs
+      if (!collectionId) {
+        console.warn('⚠️  Cannot fetch bookmarks: Collection ID is missing');
+        return [];
+      }
 
-    if (data?.items?.length === perPage) {
-      return data?.items?.concat(
-        await this.getBookmark({
+      const apiUrl = `${this.url}/rest/v1/raindrops/${collectionId}`;
+      const url = new URL(apiUrl);
+
+      // Set query parameters
+      url.searchParams.set("perpage", String(perPage));
+      url.searchParams.set("page", String(page));
+      url.searchParams.set("sort", sort);
+      if (search) {
+        url.searchParams.set("search", search);
+      }
+
+      console.log(`🔄 Fetching bookmarks from: ${url.toString()}`);
+
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        
+        try {
+          const errorText = await response.text();
+          if (errorText) {
+            errorMessage += ` - ${errorText}`;
+          }
+        } catch (textError) {
+          console.warn('Could not read error response text:', textError);
+        }
+
+        console.error(`⚠️  Raindrop API error: ${errorMessage}`);
+        
+        switch (response.status) {
+          case 401:
+            console.error("⚠️  Authentication failed. Please check your RAINDROP_ACCESS_TOKEN environment variable.");
+            break;
+          case 403:
+            console.error("⚠️  Access forbidden. Please check your token permissions.");
+            break;
+          case 404:
+            console.error("⚠️  Collection not found. Please check the collection ID.");
+            break;
+          case 429:
+            console.error("⚠️  Rate limit exceeded. Please try again later.");
+            break;
+          default:
+            console.error(`⚠️  Unexpected API error: ${response.status}`);
+        }
+        
+        return [];
+      }
+
+      const data: Result = await response.json();
+      
+      if (!data || !Array.isArray(data.items)) {
+        console.warn('⚠️  Invalid response format from Raindrop API');
+        return [];
+      }
+
+      console.log(`✅ Successfully fetched ${data.items.length} bookmarks`);
+
+      // Handle pagination
+      if (data.items.length === perPage && data.items.length > 0) {
+        const nextPageItems = await this.getBookmark({
           page: page + 1,
           perPage,
           sort,
           search,
           collectionId
-        })
-      );
-    } else {
-      return this.normalizeData(data?.items);
+        });
+        return [...data.items, ...nextPageItems];
+      }
+
+      return this.normalizeData(data.items) || [];
+      
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('⚠️  Failed to fetch bookmarks:', errorMessage);
+      console.error('⚠️  Error details:', {
+        name: error instanceof Error ? error.name : 'Unknown',
+        message: errorMessage,
+        stack: error instanceof Error ? error.stack : undefined,
+        tokenPresent: !!this.token,
+        baseUrl: this.url,
+        collectionId
+      });
+      return [];
     }
   }
 }

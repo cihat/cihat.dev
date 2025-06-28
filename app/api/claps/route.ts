@@ -37,23 +37,50 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  if (url.searchParams.get("score") != null) {
-    const clapCount = await redis.hincrby("claps", postId, score);
+  // Redis bağlantısı yoksa default değerlerle döndür
+  if (!redis) {
+    console.warn('⚠️  Redis not available, returning default clap count');
     return NextResponse.json({
-      clapCount,
-      userScore: clapCount,
-      totalScore: clapCount,
+      clapCount: 0,
+      userScore: 0,
+      totalScore: 0,
+      totalUsers: 0,
       maxClaps: 30,
-      clapCountFormatted: commaNumber(clapCount),
+      clapCountFormatted: "0",
     });
-  } else {
-    const clapCount = (await redis.hget("claps", postId)) ?? 0;
+  }
+
+  try {
+    if (url.searchParams.get("score") != null) {
+      const clapCount = await redis.hincrby("claps", postId, score);
+      return NextResponse.json({
+        clapCount,
+        userScore: clapCount,
+        totalScore: clapCount,
+        totalUsers: 1,
+        maxClaps: 30,
+        clapCountFormatted: commaNumber(clapCount),
+      });
+    } else {
+      const clapCount = (await redis.hget("claps", postId)) ?? 0;
+      return NextResponse.json({
+        clapCount,
+        userScore: clapCount,
+        totalScore: clapCount,
+        totalUsers: Number(clapCount) > 0 ? 1 : 0,
+        maxClaps: 30,
+        clapCountFormatted: commaNumber(Number(clapCount)),
+      });
+    }
+  } catch (error) {
+    console.error('⚠️  Redis error in claps API:', error);
     return NextResponse.json({
-      clapCount,
-      userScore: clapCount,
-      totalScore: clapCount,
+      clapCount: 0,
+      userScore: 0,
+      totalScore: 0,
+      totalUsers: 0,
       maxClaps: 30,
-      clapCountFormatted: commaNumber(Number(clapCount)),
+      clapCountFormatted: "0",
     });
   }
 }
