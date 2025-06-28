@@ -4,7 +4,7 @@ import Image from "next/image";
 const Logo = () => (
   <Link href="/" className="flex items-center space-x-2">
     <Image
-      src="/logo.png"
+      src="/logo.svg"
       alt="Cihat Salik Logo"
       width={40}
       height={40}
