@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Posts } from "./posts/posts";
 import { getPostsWithViewData } from "@/lib/get-posts";
 import { RandomQuote } from '@/components/ui/quote'
@@ -8,7 +9,9 @@ export default async function Home() {
 
   return (
     <Container className="flex flex-col sm:py-6 py-3 h-[calc(100vh-140px)]" as="main">
-      <Posts posts={posts}/>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <Posts posts={posts}/>
+      </Suspense>
       <RandomQuote />
     </Container>
   )

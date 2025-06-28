@@ -1,5 +1,5 @@
 import postsData from "./posts.json";
-import redis from "./redis";
+import getRedisClient from "./redis";
 import commaNumber from 'comma-number'
 import type { Post } from "@/types";
 
@@ -11,6 +11,7 @@ export const getPostsWithViewData = async (): Promise<Post[]> => {
   let allViews: null | Views = null
   
   // Redis bağlantısı varsa views verilerini al
+  const redis = getRedisClient()
   if (redis) {
     try {
       allViews = await redis.hgetall("views")

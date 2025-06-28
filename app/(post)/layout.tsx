@@ -7,12 +7,13 @@ import Pagination from "@/components/pagination";
 import Comment from "@/components/comment";
 import Claps from "@/components/claps/claps";
 import ReadingProgressIndicator from "@/components/reading-progress-indicator";
-import { posts } from "@/lib/posts.json";
+import postsData from "@/lib/posts.json";
 
+export const dynamic = 'force-dynamic'
 export const revalidate = 60;
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
-  const pageConfig = posts.find((post) => post.slug === params.slug);
+  const pageConfig = postsData.posts.find((post) => post.slug === params.slug);
 
   if (!pageConfig) {
     return {

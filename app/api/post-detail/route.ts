@@ -4,7 +4,7 @@ import postsData from "@/lib/posts.json";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import commaNumber from "comma-number"
-import redis from "@/lib/redis"
+import getRedisClient from "@/lib/redis"
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -37,6 +37,7 @@ export async function GET(req: NextRequest) {
   }
 
   // Redis bağlantısı yoksa default değerlerle döndür
+  const redis = getRedisClient()
   if (!redis) {
     console.warn('⚠️  Redis not available, returning default view count');
     return NextResponse.json({
