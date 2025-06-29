@@ -46,6 +46,7 @@ const MenuItem = memo(({ value, href, isActive, onClick }: MenuItemProps) => {
       href={href}
       className="mr-2 cursor-pointer"
       onClick={onClick}
+      title={`${value} - ${isExternal ? 'Opens in new tab' : 'Navigate to'} ${value} page`}
     >
       <Button
         variant={isActive ? "default" : "ghost"}

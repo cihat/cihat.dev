@@ -96,6 +96,8 @@ export default class Raindrop {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${this.token}`,
         },
+        // Add timeout and signal for better error handling
+        signal: AbortSignal.timeout(10000), // 10 second timeout
       });
 
       if (!response.ok) {
@@ -156,16 +158,27 @@ export default class Raindrop {
       return this.normalizeData(data.items) || [];
       
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('⚠️  Failed to fetch bookmarks:', errorMessage);
-      console.error('⚠️  Error details:', {
-        name: error instanceof Error ? error.name : 'Unknown',
-        message: errorMessage,
-        stack: error instanceof Error ? error.stack : undefined,
-        tokenPresent: !!this.token,
-        baseUrl: this.url,
-        collectionId
-      });
+      // More specific error handling
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        console.warn('⚠️  Network error: Unable to connect to Raindrop API. This might be due to:');
+        console.warn('   - Network connectivity issues');
+        console.warn('   - CORS restrictions');
+        console.warn('   - API service unavailable');
+        console.warn('   - Environment variable missing in production');
+      } else if (error instanceof DOMException && error.name === 'AbortError') {
+        console.warn('⚠️  Request timeout: Raindrop API took too long to respond');
+      } else {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        console.error('⚠️  Failed to fetch bookmarks:', errorMessage);
+        console.error('⚠️  Error details:', {
+          name: error instanceof Error ? error.name : 'Unknown',
+          message: errorMessage,
+          stack: error instanceof Error ? error.stack : undefined,
+          tokenPresent: !!this.token,
+          baseUrl: this.url,
+          collectionId
+        });
+      }
       return [];
     }
   }

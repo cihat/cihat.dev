@@ -12,11 +12,12 @@ function BookmarkCard({ bookmark }: { bookmark: ILink }) {
 
   return (
     <Container className="flex flex-col md:flex-row justify-center items-start md:justify-start mb-2 py-2 min-h-64">
-      <Link href={bookmark.link} className="flex-shrink-0 project-card">
+      <Link href={bookmark.link} className="flex-shrink-0 project-card" title={`Visit ${bookmark.title} - ${bookmark.domain}`}>
         <Image
           onError={() => setImgSrc(defaultImage.src)}
           src={imgSrc || "/"}
           alt={bookmark.title}
+          title={`${bookmark.title} - Bookmark from ${bookmark.domain}`}
           placeholder="blur"
           blurDataURL="/"
           width={300}
@@ -26,7 +27,7 @@ function BookmarkCard({ bookmark }: { bookmark: ILink }) {
       </Link>
       <article className="ml-0 mt-2 md:mt-0 md:ml-6">
         <h3 className="shine font-semibold">
-          <Link href={bookmark.link}>{bookmark.title}</Link>
+          <Link href={bookmark.link} title={`Read ${bookmark.title} on ${bookmark.domain}`}>{bookmark.title}</Link>
         </h3>
         <div className="mt-1 flex items-center space-x-2">
           <span>{bookmark.domain}</span>

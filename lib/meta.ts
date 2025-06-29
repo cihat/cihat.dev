@@ -1,18 +1,38 @@
 import { IRandomPhoto } from "@/types/random-photo";
 
 export const META_DATA = {
-  title: "Cihat Salik",
-  description: "Art enthusiast, software engineer, creating something.",
+  title: "Cihat Salik - Software Developer | Full Stack Developer Portfolio",
+  description: "Cihat Salik is a software developer sharing insights on programming, productivity, and technology through blog posts and open-source projects. Explore articles on JavaScript, React, career advice, and philosophy.",
   url: "https://cihat.dev",
   email: "cihatsalik1@gmail.com",
   name: "Cihat Salik",
+  jobTitle: "Software Developer",
+  location: "Istanbul, Turkey",
   social: {
     vsco: "https://vsco.co/cihqt/gallery",
     instagram: "https://instagram.com/cihatsalikk",
     twitter: "https://twitter.com/chtslk",
     github: "https://github.com/cihat",
   },
-  keywords: ["software", "blog", "cihat salik", "engineer", "art", "photography", "philosophy", "development"],
+  keywords: [
+    "software developer", 
+    "full stack developer", 
+    "javascript developer", 
+    "react developer", 
+    "typescript", 
+    "next.js", 
+    "programming tutorials", 
+    "career advice", 
+    "productivity tips", 
+    "stoic philosophy", 
+    "software engineering", 
+    "web development", 
+    "cihat salik", 
+    "istanbul developer", 
+    "turkish developer",
+    "blog",
+    "open source"
+  ],
 };
 
 export const websiteDomain = 'https://cihat.dev'

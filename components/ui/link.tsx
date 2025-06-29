@@ -6,6 +6,7 @@ type BaseLinkProps = {
   children?: ReactNode;
   blank?: boolean;
   className?: string;
+  title?: string;
 };
 
 export default function BaseLink({
@@ -13,6 +14,7 @@ export default function BaseLink({
   href,
   blank = true,
   className,
+  title,
   ...props
 }: BaseLinkProps) {
   const isBlank = blank
@@ -23,7 +25,7 @@ export default function BaseLink({
     : {};
 
   return (
-    <a href={href} className={cx(className)} {...isBlank} {...props}>
+    <a href={href} className={cx(className)} title={title} {...isBlank} {...props}>
       {children}
     </a>
   );

@@ -71,6 +71,7 @@ export async function Image({
           width={width * factor}
           height={height * factor}
           alt={alt ?? ""}
+          title={alt ?? "Blog post image"}
           src={src}
           className="delay-500 z-[10] xl:hover:scale-[1.2] 2xl:hover:scale-[1.3] transition"
           loading="lazy"

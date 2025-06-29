@@ -1,15 +1,36 @@
-import BookmarkLayout from "@/components/bookmark/bookmark-layout";
-import { Metadata } from "next";
+import { Suspense } from 'react'
+import BookmarkLayout from '@/components/bookmark/bookmark-layout'
+import Container from '@/components/ui/container'
+import { Metadata } from 'next'
+import { META_DATA } from '@/lib/meta'
 
 export const metadata: Metadata = {
-  title: "Bookmarks",
-  description: ""
-};
+  title: 'Bookmarks - Curated Resources | Cihat Salik',
+  description: 'Discover curated bookmarks and valuable resources handpicked by Cihat Salik. Find useful tools, articles, and websites for software development, productivity, and learning.',
+  openGraph: {
+    title: 'Bookmarks - Curated Resources for Developers',
+    description: 'Explore a carefully curated collection of bookmarks covering software development, programming tools, productivity resources, and educational content.',
+    url: `${META_DATA.url}/bookmarks`,
+    images: [
+      {
+        url: `${META_DATA.url}/og/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Bookmarks - Curated Resources',
+      }
+    ],
+  },
+  alternates: {
+    canonical: `${META_DATA.url}/bookmarks`,
+  },
+}
 
-export const revalidate = 3600; // 60*60 1 hours
-
-export default async function Bookmark() {
+export default function Bookmarks() {
   return (
-    <BookmarkLayout />
-  );
+    <Container className="flex flex-col py-6 min-h-screen">
+      <Suspense fallback={<div>Loading bookmarks...</div>}>
+        <BookmarkLayout />
+      </Suspense>
+    </Container>
+  )
 }

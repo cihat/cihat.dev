@@ -22,6 +22,7 @@ export default function AIIndexPage() {
               <Link
                 href={`/burden/${slug}`}
                 className="flex items-center justify-between p-3 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                title={`Visit ${pageConfig?.title} - AI generated page`}
               >
                 <div className="flex items-center">
                   <Sparkles className="h-4 w-4 mr-2 text-zinc-500" />

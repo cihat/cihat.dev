@@ -40,6 +40,7 @@ export function Header({ posts }: { posts: Post[] }) {
                 href="https://twitter.com/chtslk"
                 className="hover:text-gray-800 dark:hover:text-gray-400"
                 target="_blank"
+                title="Follow @chtslk on Twitter"
               >
                 @chtslk
               </a>
@@ -58,7 +59,7 @@ export function Header({ posts }: { posts: Post[] }) {
             {post.date} ({ago(post.date, true)} ago)
           </span>
           &nbsp;|&nbsp;
-          <Link href={`/?category=${post.category}`}>
+          <Link href={`/?category=${post.category}`} title={`View all posts in ${post.category} category`}>
             <Badge className="ml-2">
               {post.category}
             </Badge>

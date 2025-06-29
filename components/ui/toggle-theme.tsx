@@ -90,10 +90,10 @@ export function ThemeToggle() {
         }}
       >
         <span className="sun-icon">
-          <Image width={20} height={20} src="/icons/sun.svg" alt="sun" />
+          <Image width={20} height={20} src="/icons/sun.svg" alt="sun" title="Light mode icon" />
         </span>
         <span className="moon-icon">
-          <Image width={20} height={20} src="/icons/moon.svg" alt="sun" />
+          <Image width={20} height={20} src="/icons/moon.svg" alt="moon" title="Dark mode icon" />
         </span>
       </button>
     </div>

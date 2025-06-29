@@ -198,6 +198,7 @@ export default function Claps({
               rel="noopener noreferrer"
               target="_blank"
               className="claps-button claps-button-reply"
+              title={`Reply to this post - ${replyCount ? `${replyCount} replies` : 'Join the discussion'}`}
             >
               {iconReply || (
                 <svg width="22" height="22" aria-label="reply">

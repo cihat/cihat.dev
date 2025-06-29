@@ -16,18 +16,19 @@ const inter = Inter({
   subsets: ["latin-ext"],
 })
 
-const { title, description, url, keywords } = META_DATA
+const { title, description, url, keywords, name, jobTitle, location, social } = META_DATA
 
 export const metadata: Metadata = {
   title: {
     default: title,
-    template: `%s - ${title}`,
+    template: `%s | ${name}`,
   },
   description,
   category: "technology",
-  creator: title,
-  publisher: title,
-  keywords,
+  creator: name,
+  publisher: name,
+  keywords: keywords.join(", "),
+  authors: [{ name, url }],
   openGraph: {
     title,
     description,
@@ -35,16 +36,110 @@ export const metadata: Metadata = {
     siteName: title,
     locale: "en-US",
     type: "website",
-    images: "https://cihat.dev/img/og-image.png",
+    images: [
+      {
+        url: "https://cihat.dev/og/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: title,
+      }
+    ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@chtslk",
     creator: "@chtslk",
+    title,
+    description,
+    images: ["https://cihat.dev/og/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   metadataBase: new URL(url),
   manifest: "/manifest.json",
+  alternates: {
+    canonical: url,
+    types: {
+      "application/rss+xml": [{ url: "/rss", title: `${name} RSS Feed` }],
+    },
+  },
 }
+
+// Structured Data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${url}#person`,
+      name,
+      jobTitle,
+      description,
+      url,
+      image: `${url}/og/me.jpeg`,
+      sameAs: [
+        social.github,
+        social.twitter,
+        social.instagram,
+        "https://www.linkedin.com/in/cihatsalik/",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: location,
+        addressCountry: "Turkey",
+      },
+      email: "mailto:cihatsalik1@gmail.com",
+      knowsAbout: [
+        "Software Development",
+        "JavaScript",
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Web Development",
+        "Programming",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${url}#website`,
+      url,
+      name: title,
+      description,
+      publisher: {
+        "@id": `${url}#person`,
+      },
+      inLanguage: "en-US",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${url}/search?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "Blog",
+      "@id": `${url}#blog`,
+      url: `${url}/#posts`,
+      name: `${name}'s Blog`,
+      description: "Blog posts about software development, programming, and productivity",
+      publisher: {
+        "@id": `${url}#person`,
+      },
+      inLanguage: ["en-US", "tr-TR"],
+    }
+  ],
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -53,6 +148,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html: `(${themeEffect.toString()})();`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
           }}
         />
         <meta name="viewport" content="initial-scale=1, viewport-fit=cover, width=device-width"></meta>
