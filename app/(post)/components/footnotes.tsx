@@ -20,7 +20,7 @@ export const Ref = ({ id }) => (
 export const FootNote = ({ id, children }) => (
   <P>
     {id}.{" "}
-    <A href={`#s${id}`} id={`f${id}`} className="no-underline">
+    <A href={`#s${id}`} id={`f${id}`} className="no-underline" title={`Back to reference ${id}`}>
       ^
     </A>{" "}
     {children}

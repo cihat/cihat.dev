@@ -1,6 +1,15 @@
 import Link from "next/link";
 
-export function A({ children, className = "", href, title, ...props }) {
+interface AProps {
+  children: React.ReactNode;
+  className?: string;
+  href: string;
+  title?: string;
+  id?: string;
+  [key: string]: any;
+}
+
+export function A({ children, className = "", href, title, ...props }: AProps) {
   if (href[0] === "#") {
     return (
       <a
