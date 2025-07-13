@@ -27,29 +27,25 @@ export default function ProfileSection() {
         
         <div className="right-animation space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
           <p>
-            A curious <strong>Software Engineer</strong> living in <strong>Istanbul, Turkey</strong> who enjoys 
-            researching, learning and developing innovative solutions. I specialize in full-stack development 
-            with a focus on <strong>JavaScript</strong>, <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Next.js</strong>.
+            I'm a <strong>Software Engineer</strong> from <strong>Istanbul, Turkey</strong>. I develop for <strong>web</strong> and <strong>iOS/macOS</strong> platforms.
           </p>
           
           <p>
-            I love <strong>open source development</strong> and am passionate about sharing knowledge through 
-            blogging and contributing to the developer community. You can explore my projects and contributions 
-            on my <a href="https://github.com/cihat" className="inline-flex flex-row items-center font-bold text-blue-600 dark:text-blue-400 hover:underline" title="Cihat Salik's Github Profile">
-              Github<BsLink45Deg className="inline ml-1" />
+            I focus on <strong>productivity</strong>, <strong>lifestyle</strong>, and <strong>utility apps</strong>. 
+            Check out my apps at <a href="https://apps.cihat.dev" target="_blank" rel="noopener noreferrer" className="inline-flex flex-row items-center font-bold text-blue-600 dark:text-blue-400 hover:underline" title="Cihat Salik's Apps Portfolio">
+              apps.cihat.dev<BsLink45Deg className="inline ml-1" />
             </a>.
           </p>
           
           <p>
-            When I'm not coding, I enjoy reading about <strong>stoic philosophy</strong>, exploring 
-            <strong>productivity techniques</strong>, and continuously expanding my knowledge in software engineering. 
-            I believe in the power of <strong>continuous learning</strong> and sharing insights with fellow developers.
+            When I'm not coding, I read about <strong>philosophy</strong> and explore <strong>productivity techniques</strong>. 
+            I believe in continuous learning and sharing insights.
           </p>
         </div>
         
-        <div className="contact top-animation mt-8">
+        <div className="top-animation mt-8 w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Connect with me</h2>
-          <ul className="container-contact bottom-animation flex flex-wrap gap-3">
+          <ul className="flex flex-wrap gap-4 justify-start w-full">
             {
               personalLinks.map((link, index) => (
                 <li key={link.url}>
@@ -57,17 +53,17 @@ export default function ProfileSection() {
                     target="_blank" 
                     href={link.url} 
                     aria-label={`${link.name} - Cihat Salik's ${link.name} profile`}
-                    className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                    className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
                     title={`Visit Cihat Salik's ${link.name} profile`}
                   >
-                    {link?.name === "Linkedin" && <BsLinkedin className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "Github" && <BsGithub className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "Medium" && <BsMedium className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "Instagram" && <BsInstagram className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "Twitter" && <BsTwitter className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "Mail" && <BsMailbox className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "CV" && <BsFileText className="w-5 h-5" fill="currentColor" />}
-                    {link?.name === "RSS" && <BsRss className="w-5 h-5" fill="currentColor" />}
+                    {link?.name === "Linkedin" && <BsLinkedin className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "Github" && <BsGithub className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "Medium" && <BsMedium className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "Instagram" && <BsInstagram className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "Twitter" && <BsTwitter className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "Mail" && <BsMailbox className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "CV" && <BsFileText className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "RSS" && <BsRss className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
                   </NextLink>
                 </li>
               ))
