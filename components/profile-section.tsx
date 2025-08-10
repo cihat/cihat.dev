@@ -21,11 +21,11 @@ export default function ProfileSection() {
 
   return (
     <>
-      <article className="container flex flex-col items-start mt-10">
-        <h1 id="title" className="right-animation font-bold text-4xl" aria-label="About Cihat Salik">Hello 👋</h1>
-        <p className="name left-animation text-xl font-medium text-gray-700 dark:text-gray-300 mt-4 mb-6" id="name_paragraph">My name is Cihat Salik.</p>
+      <article className="container flex flex-col items-start mt-6 sm:mt-10 px-4 sm:px-0">
+        <h1 id="title" className="right-animation font-bold text-3xl sm:text-4xl" aria-label="About Cihat Salik">Hello 👋</h1>
+        <p className="name left-animation text-lg sm:text-xl font-medium text-gray-700 dark:text-gray-300 mt-3 sm:mt-4 mb-4 sm:mb-6" id="name_paragraph">My name is Cihat Salik.</p>
         
-        <div className="right-animation space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+        <div className="right-animation space-y-3 sm:space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed text-sm sm:text-base">
           <p>
             I'm a <strong>Software Engineer</strong> from <strong>Istanbul, Turkey</strong>. I develop for <strong>web</strong> and <strong>iOS/macOS</strong> platforms.
           </p>
@@ -43,9 +43,9 @@ export default function ProfileSection() {
           </p>
         </div>
         
-        <div className="top-animation mt-8 w-full">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Connect with me</h2>
-          <ul className="flex flex-wrap gap-4 justify-start w-full">
+        <div className="top-animation mt-6 sm:mt-8 w-full">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3 sm:mb-4">Connect with me</h2>
+          <ul className="flex flex-wrap gap-3 sm:gap-4 justify-start w-full">
             {
               personalLinks.map((link, index) => (
                 <li key={link.url}>
@@ -53,17 +53,17 @@ export default function ProfileSection() {
                     target="_blank" 
                     href={link.url} 
                     aria-label={`${link.name} - Cihat Salik's ${link.name} profile`}
-                    className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                    className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
                     title={`Visit Cihat Salik's ${link.name} profile`}
                   >
-                    {link?.name === "Linkedin" && <BsLinkedin className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "Github" && <BsGithub className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "Medium" && <BsMedium className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "Instagram" && <BsInstagram className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "Twitter" && <BsTwitter className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "Mail" && <BsMailbox className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "CV" && <BsFileText className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
-                    {link?.name === "RSS" && <BsRss className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" />}
+                    {link?.name === "Linkedin" && <BsLinkedin className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "Github" && <BsGithub className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "Medium" && <BsMedium className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "Instagram" && <BsInstagram className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "Twitter" && <BsTwitter className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "Mail" && <BsMailbox className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "CV" && <BsFileText className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
+                    {link?.name === "RSS" && <BsRss className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" />}
                   </NextLink>
                 </li>
               ))
@@ -73,7 +73,7 @@ export default function ProfileSection() {
       </article>
       {
         photo && (
-          <figure className="mt-20">
+          <figure className="mt-12 sm:mt-20 px-4 sm:px-0">
             <Image
               loading="lazy"
               placeholder="blur"
