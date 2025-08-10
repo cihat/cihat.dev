@@ -1,0 +1,10 @@
+.sortedDataWrapper {
+  margin-top: 8px;
+  overflow: auto;
+
+  height: calc(100vh - 236px);
+
+  @media(max-width: 768px) {
+    height: calc(100vh - 280px);
+  }
+}

@@ -14,6 +14,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { BookmarkType, DatePeriodType } from "@/store/types";
 import { Loading } from "../loading";
 import { useBookmarks } from "@/app/hooks/useBookmarks";
+import "./style.css";
 
 const DatePeriodConfig = {
   [DatePeriodType.LAST_ONE_WEEK]: subWeeks(new Date(), 1),
@@ -199,7 +200,8 @@ export default function BookmarkLayout() {
         <div className="text-center m-10 font-bold">No bookmarks found</div>
       )}
 
-      <div style={{ height: "calc(100vh - 280px)", marginTop: 8, overflow: "auto" }}>
+      {/* <div style={{ height: "calc(100vh - 236px)", marginTop: 8, overflow: "auto" }}> */}
+      <div className="sortedDataWrapper">
         {sortedData.map((date) => (
           <div key={date} className="mt-4 left-animation">
             <SubTitle>{date}</SubTitle>

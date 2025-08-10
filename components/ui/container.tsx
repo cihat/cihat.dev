@@ -15,7 +15,7 @@ export default function Container({
   className,
   ...props }: IContainerProps) {
   const sizes = {
-    default: "max-w-screen-md mx-auto px-4 md:px-0",
+    default: "max-w-screen-md mx-auto px-2 md:px-0",
     large: "max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8",
   };
 

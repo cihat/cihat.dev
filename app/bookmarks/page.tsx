@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function Bookmarks() {
   return (
-    <Container className="flex flex-col py-6 min-h-screen">
+    <Container className="flex flex-col py-2 overscroll-none">
       <Suspense fallback={<div>Loading bookmarks...</div>}>
         <BookmarkLayout />
       </Suspense>
