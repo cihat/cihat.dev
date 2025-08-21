@@ -24,6 +24,7 @@ import { RandomQuote } from "./components/ui/quote";
 import { CodeSnippet } from "./app/(post)/components/code-snippet";
 import { Box } from "./app/(post)/components/box";
 import { Spotify } from "./app/(post)/components/spotify";
+import CAPTheoremAnalysis from "./components/system-design/cap-teorem";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -57,6 +58,7 @@ export function useMDXComponents(components: {
     Quote: RandomQuote,
     CodeSnippet,
     Box,
-    Spotify
+    Spotify,
+    CAPTheoremAnalysis
   };
 }
