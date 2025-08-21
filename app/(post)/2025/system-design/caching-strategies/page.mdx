@@ -1,0 +1,243 @@
+export const metadata = {
+  title: "Caching Strategies - System Design",
+  description: "Understanding different caching strategies and patterns for improving application performance",
+  openGraph: {
+    title: "Caching Strategies - System Design",
+    description: "Understanding different caching strategies and patterns for improving application performance",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Caching", "Performance", "Redis", "Memcached", "Cache Patterns", "TTL"],
+}
+
+# Caching Strategies
+
+Caching is a technique used to store frequently accessed data in fast-access storage to improve application performance and reduce load on primary data sources.
+
+## Why Caching?
+
+- **Performance**: Faster data access from memory vs. disk/database
+- **Scalability**: Reduce load on primary data sources
+- **Cost**: Reduce expensive database queries or API calls
+- **User Experience**: Faster response times for users
+
+## Cache Types
+
+### 1. Application Cache (In-Memory)
+- Stored in application memory
+- Fastest access but limited by memory size
+- Lost when application restarts
+- Examples: HashMap, ConcurrentHashMap
+
+### 2. Distributed Cache
+- Shared across multiple application instances
+- Survives application restarts
+- Examples: Redis, Memcached, Hazelcast
+
+### 3. CDN Cache
+- Caches static content globally
+- Reduces latency for users worldwide
+- Examples: Cloudflare, AWS CloudFront, Akamai
+
+### 4. Database Cache
+- Built into database systems
+- Caches query results and indexes
+- Examples: MySQL Query Cache, PostgreSQL Buffer Cache
+
+## Caching Strategies
+
+### 1. Cache-Aside (Lazy Loading)
+
+Application checks cache first, then loads from database if not found.
+
+```python
+def get_user(user_id):
+    # Check cache first
+    user = cache.get(f"user:{user_id}")
+    if user:
+        return user
+    
+    # Load from database
+    user = database.get_user(user_id)
+    if user:
+        cache.set(f"user:{user_id}", user, ttl=3600)
+    
+    return user
+```
+
+**Pros:**
+- Simple to implement
+- Only caches data that's actually requested
+
+**Cons:**
+- Cache miss penalty
+- Potential for cache stampede
+
+### 2. Write-Through
+
+Data is written to both cache and database simultaneously.
+
+```python
+def update_user(user_id, user_data):
+    # Update database
+    database.update_user(user_id, user_data)
+    
+    # Update cache
+    cache.set(f"user:{user_id}", user_data, ttl=3600)
+```
+
+**Pros:**
+- Cache is always consistent with database
+- No cache invalidation needed
+
+**Cons:**
+- Slower write operations
+- Writes to cache even if data is rarely read
+
+### 3. Write-Behind (Write-Back)
+
+Data is written to cache first, then asynchronously to database.
+
+```python
+def update_user(user_id, user_data):
+    # Update cache immediately
+    cache.set(f"user:{user_id}", user_data, ttl=3600)
+    
+    # Queue for database update
+    async_queue.put(("update_user", user_id, user_data))
+```
+
+**Pros:**
+- Fast write operations
+- Can batch database writes
+
+**Cons:**
+- Risk of data loss if cache fails
+- More complex to implement
+
+### 4. Refresh-Ahead
+
+Cache is refreshed before it expires.
+
+```python
+def get_user_with_refresh(user_id):
+    user = cache.get(f"user:{user_id}")
+    
+    if user and user.is_expiring_soon():
+        # Refresh in background
+        async_refresh_user(user_id)
+    
+    return user
+```
+
+**Pros:**
+- Eliminates cache miss penalty
+- Always fresh data
+
+**Cons:**
+- More complex implementation
+- Wastes resources if data isn't accessed
+
+## Cache Invalidation Strategies
+
+### 1. TTL (Time To Live)
+- Cache entries expire after a fixed time
+- Simple but may serve stale data
+
+### 2. LRU (Least Recently Used)
+- Evict least recently accessed entries
+- Good for memory-constrained environments
+
+### 3. LFU (Least Frequently Used)
+- Evict least frequently accessed entries
+- Good for identifying popular content
+
+### 4. Manual Invalidation
+- Explicitly remove cache entries
+- Most control but requires careful management
+
+## Cache Patterns
+
+### 1. Cache-Aside Pattern
+```python
+def get_data(key):
+    # Try cache first
+    data = cache.get(key)
+    if data:
+        return data
+    
+    # Load from source
+    data = load_from_source(key)
+    
+    # Store in cache
+    cache.set(key, data, ttl=3600)
+    return data
+```
+
+### 2. Cache-As-SoR (System of Record)
+```python
+class CacheAsSoR:
+    def get(self, key):
+        return self.cache.get(key) or self.source.get(key)
+    
+    def set(self, key, value):
+        self.cache.set(key, value)
+        self.source.set(key, value)
+```
+
+### 3. Read-Through Pattern
+```python
+def get_user(user_id):
+    # Cache automatically loads from database if not found
+    return cache.get_or_load(f"user:{user_id}", load_user_from_db)
+```
+
+## Cache Key Design
+
+### 1. Hierarchical Keys
+```
+user:123:profile
+user:123:settings
+user:123:posts
+```
+
+### 2. Composite Keys
+```
+product:category:electronics:brand:apple:model:iphone
+```
+
+### 3. Versioned Keys
+```
+user:123:v2
+user:123:v3
+```
+
+## Cache Sizing
+
+### 1. Memory-Based
+- Size cache based on available memory
+- Monitor memory usage
+
+### 2. Hit Rate-Based
+- Size based on desired hit rate
+- Typically 80-90% hit rate is good
+
+### 3. Cost-Based
+- Balance cache cost vs. database cost
+- Consider storage and compute costs
+
+## Best Practices
+
+1. **Cache Hot Data**: Only cache frequently accessed data
+2. **Set Appropriate TTL**: Balance freshness vs. performance
+3. **Monitor Cache Metrics**: Hit rate, miss rate, eviction rate
+4. **Use Cache Warming**: Pre-populate cache with expected data
+5. **Implement Circuit Breaker**: Handle cache failures gracefully
+6. **Cache at Multiple Levels**: Application, CDN, database
+7. **Consider Cache Coherence**: Ensure consistency across cache layers
+
+## Real-world Examples
+
+1. **Netflix**: Uses Redis for session management and recommendations
+2. **Facebook**: Multi-level caching (application, CDN, database)
+3. **Twitter**: Uses Redis for timeline caching
+4. **GitHub**: Caches repository data and API responses

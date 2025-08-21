@@ -1,0 +1,308 @@
+export const metadata = {
+  title: "Message Queues - System Design",
+  description: "Understanding message queues and messaging patterns for building reliable distributed systems",
+  openGraph: {
+    title: "Message Queues - System Design",
+    description: "Understanding message queues and messaging patterns for building reliable distributed systems",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Message Queues", "Asynchronous Communication", "Event-Driven Architecture", "RabbitMQ", "Kafka", "SQS"],
+}
+
+# Message Queues
+
+Message queues are a fundamental component in distributed systems that enable asynchronous communication between services. They provide reliable message delivery, decoupling, and scalability.
+
+## What are Message Queues?
+
+Message queues are middleware systems that store messages sent between applications or services. They act as a buffer, allowing senders and receivers to operate independently.
+
+### Key Benefits:
+- **Decoupling**: Senders and receivers are independent
+- **Reliability**: Messages are persisted and can be retried
+- **Scalability**: Handle traffic spikes and load distribution
+- **Asynchronous Processing**: Non-blocking communication
+
+## Message Queue Architecture
+
+```
+Producer → Message Queue → Consumer
+   │           │            │
+   │           │            └── Process Message
+   │           └── Store Message
+   └── Send Message
+```
+
+## Message Queue Types
+
+### 1. Point-to-Point (Queue)
+- One message is consumed by one consumer
+- Messages are processed in order (FIFO)
+- Good for task distribution
+
+```
+Producer → Queue → Consumer 1
+                → Consumer 2
+                → Consumer 3
+```
+
+### 2. Publish-Subscribe (Topic)
+- One message is consumed by multiple consumers
+- Messages are broadcast to all subscribers
+- Good for event distribution
+
+```
+Producer → Topic → Subscriber 1
+                → Subscriber 2
+                → Subscriber 3
+```
+
+## Popular Message Queue Systems
+
+### 1. RabbitMQ
+- AMQP protocol
+- Supports both queue and topic patterns
+- Rich routing capabilities
+
+```python
+import pika
+
+# Producer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='task_queue')
+channel.basic_publish(exchange='', routing_key='task_queue', body='Hello World!')
+
+# Consumer
+def callback(ch, method, properties, body):
+    print(f"Received: {body}")
+    ch.basic_ack(delivery_tag=method.delivery_tag)
+
+channel.basic_consume(queue='task_queue', on_message_callback=callback)
+channel.start_consuming()
+```
+
+### 2. Apache Kafka
+- Distributed streaming platform
+- High throughput and fault tolerance
+- Event sourcing and stream processing
+
+```python
+from kafka import KafkaProducer, KafkaConsumer
+
+# Producer
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+producer.send('my-topic', b'Hello, Kafka!')
+
+# Consumer
+consumer = KafkaConsumer('my-topic', bootstrap_servers=['localhost:9092'])
+for message in consumer:
+    print(f"Received: {message.value}")
+```
+
+### 3. Amazon SQS
+- Managed message queue service
+- Two types: Standard and FIFO
+- Auto-scaling and high availability
+
+```python
+import boto3
+
+# Producer
+sqs = boto3.client('sqs')
+response = sqs.send_message(
+    QueueUrl='https://sqs.region.amazonaws.com/account/queue-name',
+    MessageBody='Hello, SQS!'
+)
+
+# Consumer
+messages = sqs.receive_message(
+    QueueUrl='https://sqs.region.amazonaws.com/account/queue-name',
+    MaxNumberOfMessages=10
+)
+```
+
+## Message Patterns
+
+### 1. Request-Reply Pattern
+Client sends a request and waits for a response.
+
+```python
+# Client
+def send_request(message):
+    correlation_id = generate_id()
+    producer.send('request-queue', {
+        'correlation_id': correlation_id,
+        'message': message
+    })
+    
+    # Wait for response
+    response = wait_for_response(correlation_id)
+    return response
+
+# Server
+def handle_request(message):
+    correlation_id = message['correlation_id']
+    result = process_request(message['message'])
+    
+    producer.send('response-queue', {
+        'correlation_id': correlation_id,
+        'response': result
+    })
+```
+
+### 2. Fan-Out Pattern
+One message is sent to multiple consumers.
+
+```python
+# Producer
+def publish_event(event):
+    producer.send('events', event)
+
+# Multiple Consumers
+@consumer('events')
+def handle_user_registered(event):
+    # Send welcome email
+    email_service.send_welcome(event.user_id)
+
+@consumer('events')
+def handle_user_registered(event):
+    # Create user profile
+    profile_service.create_profile(event.user_id)
+
+@consumer('events')
+def handle_user_registered(event):
+    # Update analytics
+    analytics_service.track_registration(event.user_id)
+```
+
+### 3. Dead Letter Queue Pattern
+Failed messages are moved to a separate queue for retry or analysis.
+
+```python
+def process_message(message):
+    try:
+        # Process message
+        process_business_logic(message)
+        acknowledge_message(message)
+    except Exception as e:
+        # Move to dead letter queue
+        move_to_dead_letter_queue(message, e)
+```
+
+## Message Delivery Guarantees
+
+### 1. At-Most-Once
+- Messages may be lost
+- No retry mechanism
+- Fastest delivery
+
+### 2. At-Least-Once
+- Messages are never lost
+- May be delivered multiple times
+- Requires idempotent consumers
+
+### 3. Exactly-Once
+- Messages are delivered exactly once
+- Most complex to implement
+- Requires coordination between producer and consumer
+
+## Message Ordering
+
+### 1. No Ordering
+- Messages can be processed in any order
+- Simplest to implement
+- Good for independent tasks
+
+### 2. Partial Ordering
+- Messages with the same key are processed in order
+- Good for related messages
+
+```python
+# Kafka example
+producer.send('orders', key=user_id, value=order_data)
+```
+
+### 3. Global Ordering
+- All messages are processed in order
+- Most restrictive
+- May impact performance
+
+## Error Handling
+
+### 1. Retry with Exponential Backoff
+```python
+def process_with_retry(message, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            process_message(message)
+            return
+        except Exception as e:
+            if attempt == max_retries - 1:
+                move_to_dead_letter_queue(message, e)
+            else:
+                time.sleep(2 ** attempt)  # Exponential backoff
+```
+
+### 2. Circuit Breaker Pattern
+```python
+class CircuitBreaker:
+    def __init__(self, failure_threshold=5, timeout=60):
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout
+        self.failure_count = 0
+        self.last_failure_time = None
+        self.state = 'CLOSED'
+    
+    def call(self, func, *args, **kwargs):
+        if self.state == 'OPEN':
+            if time.time() - self.last_failure_time > self.timeout:
+                self.state = 'HALF_OPEN'
+            else:
+                raise Exception("Circuit breaker is OPEN")
+        
+        try:
+            result = func(*args, **kwargs)
+            self.on_success()
+            return result
+        except Exception as e:
+            self.on_failure()
+            raise e
+```
+
+## Monitoring and Observability
+
+### 1. Queue Metrics
+- Queue depth (number of messages)
+- Message processing rate
+- Error rates
+- Consumer lag
+
+### 2. Message Tracing
+```python
+def send_message_with_trace(message):
+    trace_id = generate_trace_id()
+    message_with_trace = {
+        'trace_id': trace_id,
+        'timestamp': datetime.now(),
+        'data': message
+    }
+    producer.send('my-queue', message_with_trace)
+```
+
+## Best Practices
+
+1. **Message Design**: Keep messages small and focused
+2. **Idempotency**: Make consumers idempotent to handle duplicate messages
+3. **Error Handling**: Implement proper retry and dead letter queue mechanisms
+4. **Monitoring**: Monitor queue depth, processing rates, and error rates
+5. **Scaling**: Scale consumers based on queue depth
+6. **Security**: Encrypt sensitive messages and use authentication
+7. **Testing**: Test message processing with various failure scenarios
+
+## Real-world Examples
+
+1. **Netflix**: Uses Kafka for event streaming and data pipeline
+2. **Uber**: Uses message queues for ride matching and notifications
+3. **Twitter**: Uses message queues for tweet processing and notifications
+4. **Amazon**: Uses SQS for order processing and inventory management

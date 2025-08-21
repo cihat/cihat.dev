@@ -1,0 +1,273 @@
+export const metadata = {
+  title: "Database Design Patterns - System Design",
+  description: "Understanding database design patterns for scalable and efficient data storage",
+  openGraph: {
+    title: "Database Design Patterns - System Design",
+    description: "Understanding database design patterns for scalable and efficient data storage",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Database Design", "Sharding", "Replication", "Partitioning", "Normalization", "Denormalization"],
+}
+
+# Database Design Patterns
+
+Database design patterns are proven solutions to common database design problems. They help create scalable, maintainable, and efficient database systems.
+
+## Database Types
+
+### 1. Relational Databases (RDBMS)
+- Structured data with relationships
+- ACID compliance
+- Examples: MySQL, PostgreSQL, Oracle
+
+### 2. NoSQL Databases
+- **Document**: MongoDB, CouchDB
+- **Key-Value**: Redis, DynamoDB
+- **Column-Family**: Cassandra, HBase
+- **Graph**: Neo4j, ArangoDB
+
+### 3. NewSQL Databases
+- Combines benefits of SQL and NoSQL
+- Examples: CockroachDB, TiDB, YugabyteDB
+
+## Sharding Patterns
+
+### 1. Horizontal Sharding (Partitioning)
+Split data across multiple databases based on a key.
+
+```
+Database 1: Users A-M
+Database 2: Users N-Z
+```
+
+**Sharding Strategies:**
+- **Hash-based**: `shard_id = hash(user_id) % num_shards`
+- **Range-based**: `shard_id = user_id / 1000`
+- **Directory-based**: Lookup table for shard assignment
+
+**Pros:**
+- Scales horizontally
+- Better performance for large datasets
+
+**Cons:**
+- Complex to implement
+- Cross-shard queries are expensive
+
+### 2. Vertical Sharding
+Split tables across different databases.
+
+```
+Database 1: User profiles, authentication
+Database 2: User posts, comments
+Database 3: Analytics, logs
+```
+
+**Pros:**
+- Simpler than horizontal sharding
+- Can optimize each database for specific use cases
+
+**Cons:**
+- Limited scalability
+- Joins across databases are expensive
+
+## Replication Patterns
+
+### 1. Master-Slave Replication
+One master database handles writes, multiple slaves handle reads.
+
+```
+Master (Write) → Slave 1 (Read)
+              → Slave 2 (Read)
+              → Slave 3 (Read)
+```
+
+**Pros:**
+- Read scalability
+- Disaster recovery
+- Geographic distribution
+
+**Cons:**
+- Eventual consistency
+- Single point of failure for writes
+
+### 2. Master-Master Replication
+Multiple databases can handle both reads and writes.
+
+```
+Master 1 ←→ Master 2
+```
+
+**Pros:**
+- No single point of failure
+- Geographic distribution
+
+**Cons:**
+- Complex conflict resolution
+- Eventual consistency issues
+
+### 3. Multi-Region Replication
+Replicate data across multiple geographic regions.
+
+```
+Region 1 (Primary) → Region 2 (Replica)
+                  → Region 3 (Replica)
+```
+
+## Data Modeling Patterns
+
+### 1. Normalization
+Organize data to minimize redundancy and dependency.
+
+**First Normal Form (1NF):**
+- Atomic values
+- No repeating groups
+
+**Second Normal Form (2NF):**
+- 1NF + No partial dependencies
+
+**Third Normal Form (3NF):**
+- 2NF + No transitive dependencies
+
+### 2. Denormalization
+Intentionally add redundancy for performance.
+
+```sql
+-- Normalized
+Users: id, name, email
+Posts: id, user_id, title, content
+Comments: id, post_id, user_id, content
+
+-- Denormalized
+Posts: id, user_id, user_name, title, content, comment_count
+```
+
+**When to Denormalize:**
+- Read-heavy workloads
+- Complex joins affecting performance
+- Reporting and analytics
+
+### 3. CQRS (Command Query Responsibility Segregation)
+Separate read and write models.
+
+```
+Write Model: Optimized for writes, normalized
+Read Model: Optimized for reads, denormalized
+```
+
+## Indexing Patterns
+
+### 1. Single-Column Index
+```sql
+CREATE INDEX idx_user_email ON users(email);
+```
+
+### 2. Composite Index
+```sql
+CREATE INDEX idx_user_status_created ON users(status, created_at);
+```
+
+### 3. Partial Index
+```sql
+CREATE INDEX idx_active_users ON users(email) WHERE status = 'active';
+```
+
+### 4. Covering Index
+Include all required columns in the index.
+
+```sql
+CREATE INDEX idx_user_profile ON users(id, name, email, status);
+```
+
+## Data Access Patterns
+
+### 1. Repository Pattern
+Abstract data access logic.
+
+```python
+class UserRepository:
+    def find_by_id(self, user_id):
+        return self.db.users.find_one({"_id": user_id})
+    
+    def save(self, user):
+        return self.db.users.insert_one(user)
+```
+
+### 2. Data Access Object (DAO)
+Separate business logic from data access.
+
+```python
+class UserDAO:
+    def get_user(self, user_id):
+        # Database-specific implementation
+        pass
+    
+    def create_user(self, user_data):
+        # Database-specific implementation
+        pass
+```
+
+### 3. Unit of Work
+Manage transactions and track changes.
+
+```python
+class UnitOfWork:
+    def __init__(self):
+        self.session = Session()
+    
+    def commit(self):
+        self.session.commit()
+    
+    def rollback(self):
+        self.session.rollback()
+```
+
+## Caching Patterns
+
+### 1. Cache-Aside
+Application manages cache.
+
+```python
+def get_user(user_id):
+    user = cache.get(f"user:{user_id}")
+    if not user:
+        user = db.get_user(user_id)
+        cache.set(f"user:{user_id}", user)
+    return user
+```
+
+### 2. Write-Through
+Write to cache and database simultaneously.
+
+### 3. Write-Behind
+Write to cache first, then database asynchronously.
+
+## Consistency Patterns
+
+### 1. Eventual Consistency
+Data becomes consistent over time.
+
+### 2. Strong Consistency
+All reads see the most recent write.
+
+### 3. Read-Your-Writes Consistency
+User always sees their own writes.
+
+### 4. Monotonic Read Consistency
+User never sees older data after seeing newer data.
+
+## Best Practices
+
+1. **Choose the Right Database**: Consider data structure, scale, and access patterns
+2. **Design for Scale**: Plan for horizontal scaling from the start
+3. **Optimize for Read/Write Patterns**: Design based on workload characteristics
+4. **Use Appropriate Indexes**: Balance query performance with write overhead
+5. **Plan for Failure**: Implement replication and backup strategies
+6. **Monitor Performance**: Track query performance and database metrics
+7. **Consider Data Lifecycle**: Implement archiving and cleanup strategies
+
+## Real-world Examples
+
+1. **Facebook**: Uses MySQL with custom sharding for user data
+2. **Twitter**: Uses Cassandra for timeline data
+3. **Netflix**: Uses multiple databases for different use cases
+4. **Uber**: Uses PostgreSQL with custom partitioning

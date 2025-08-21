@@ -6,7 +6,7 @@ export const metadata = {
     description: "System Design",
     images: [{ url: "/img/system-design/system-design.jpg" }],
   },
-  keywords: ["System Design", "CAP Teoremi"],
+  keywords: ["System Design", "CAP Teoremi", "ACID", "Load Balancing", "Caching", "Database Design"],
 }
 
 # System Design
@@ -15,6 +15,581 @@ Collective knowledge about system design.
 
 <Image src="/img/system-design/system-design.jpg" alt="System Design from https://bytebytego.com/" width={1000} height={1000} />
 
-## CAP Teoremi
+## Temel Kavramlar
 
+### 1. ACID Properties
+1. [ACID Properties](/2025/system-design/acid-properties)
+
+### 2. CAP Teoremi
 1. [CAP Teoremi](/2025/system-design/cap-teorem)
+
+### 3. Load Balancing
+1. [Load Balancing](/2025/system-design/load-balancing)
+
+### 4. Caching Strategies
+1. [Caching Strategies](/2025/system-design/caching-strategies)
+
+### 5. Database Design Patterns
+1. [Database Design Patterns](/2025/system-design/database-design-patterns)
+
+## İleri Seviye Kavramlar
+
+### 6. Microservices Architecture
+1. [Microservices Architecture](/2025/system-design/microservices)
+
+### 7. Message Queues
+1. [Message Queues](/2025/system-design/message-queues)
+
+### 8. CDN (Content Delivery Networks)
+1. [CDN](/2025/system-design/cdn)
+
+### 9. Rate Limiting
+1. [Rate Limiting](/2025/system-design/rate-limiting)
+
+### 10. Circuit Breaker Pattern
+1. [Circuit Breaker Pattern](/2025/system-design/circuit-breaker)
+
+
+# Roadmap
+
+A structured learning path for mastering system design in 2025, designed for beginners to advanced practitioners.
+ [Roadmap](https://roadmap.sh/system-design)
+
+## Phase 1: Fundamentals (Weeks 1-2)
+
+### Week 1: Introduction to System Design
+- **Core Concepts**: Understanding what system design is and why it matters
+- **Key Principles**: Scalability, reliability, maintainability, and performance
+- **System Design Process**: Requirements gathering, capacity planning, component design
+- **Non-Functional Requirements**: Performance, availability, consistency, durability
+
+**Resources:**
+- "Designing Data-Intensive Applications" by Martin Kleppmann (Introduction)
+- "System Design Interview Vol. 1" by Alex Xu (Chapters 1-2)
+- [Gaurav Sen's System Design Playlist](https://www.youtube.com/playlist?list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX)
+
+### Week 2: Networking & Infrastructure
+- **Networking Basics**: DNS, HTTP/HTTPS, TCP vs. UDP
+- **Load Balancing**: Different algorithms and their applications
+- **Operating Systems**: Processes, threads, concurrency, memory management
+- **Basic Architecture Patterns**: Client-Server, Peer-to-Peer
+
+**Resources:**
+- "Computer Networks" by Andrew Tanenbaum (Chapters 1-3)
+- [Hussein Nasser's YouTube Channel](https://www.youtube.com/c/HusseinNasser-software-enginner)
+
+## Phase 2: Core System Components (Weeks 3-5)
+
+### Week 3: Database Fundamentals
+- **Database Types**: SQL vs. NoSQL, when to use each
+- **ACID Properties**: Understanding transaction guarantees
+- **CAP Theorem**: Consistency, Availability, Partition tolerance trade-offs
+- **Database Design Patterns**: Sharding, replication, indexing
+
+**Resources:**
+- "Designing Data-Intensive Applications" by Martin Kleppmann (Chapters 1-4)
+- [Database Design Patterns](/2025/system-design/database-design-patterns)
+
+### Week 4: Caching & Performance
+- **Caching Strategies**: Cache-aside, write-through, write-behind
+- **Cache Types**: Application cache, distributed cache, CDN
+- **Cache Invalidation**: TTL, LRU, LFU strategies
+- **Performance Optimization**: Query optimization, connection pooling
+
+**Resources:**
+- [Caching Strategies](/2025/system-design/caching-strategies)
+- Redis documentation and tutorials
+
+### Week 5: Load Balancing & High Availability
+- **Load Balancing Algorithms**: Round-robin, least connections, weighted
+- **Health Checks**: Active and passive monitoring
+- **Session Persistence**: Sticky sessions and their trade-offs
+- **High Availability**: Redundancy, failover, disaster recovery
+
+**Resources:**
+- [Load Balancing](/2025/system-design/load-balancing)
+- HAProxy and Nginx documentation
+
+## Phase 3: Low-Level Design (Weeks 6-8)
+
+### Week 6: Object-Oriented Design
+- **OOP Principles**: Encapsulation, inheritance, polymorphism, abstraction
+- **SOLID Principles**: Single responsibility, open/closed, Liskov substitution, interface segregation, dependency inversion
+- **Design Patterns**: Creational, structural, behavioral patterns
+
+**Resources:**
+- "Head First Design Patterns" by Freeman & Robson
+- [Apna College's OOP Playlist](https://www.youtube.com/playlist?list=PLfqMhTWNBTe3LtFWcvwpqTkUSlB32kJop)
+
+### Week 7: Advanced Design Patterns
+- **Creational Patterns**: Singleton, Factory, Builder, Prototype
+- **Structural Patterns**: Adapter, Bridge, Composite, Decorator
+- **Behavioral Patterns**: Observer, Strategy, Command, State
+- **Anti-patterns**: Common mistakes and how to avoid them
+
+**Resources:**
+- "Design Patterns: Elements of Reusable Object-Oriented Software" by Gang of Four
+- Refactoring.guru website
+
+### Week 8: UML & Documentation
+- **UML Diagrams**: Class, component, sequence, activity diagrams
+- **System Documentation**: Architecture Decision Records (ADRs)
+- **Code Documentation**: API documentation, inline comments
+- **Version Control**: Git workflows for system design
+
+**Resources:**
+- "UML Distilled" by Martin Fowler
+- [Excalidraw](https://excalidraw.com/) for diagramming
+
+## Phase 4: High-Level Design (Weeks 9-12)
+
+### Week 9: Microservices Architecture
+- **Service Decomposition**: How to break down monolithic applications
+- **API Design**: RESTful APIs, GraphQL, gRPC
+- **Service Communication**: Synchronous vs. asynchronous patterns
+- **Service Discovery**: Client-side vs. server-side discovery
+
+**Resources:**
+- [Microservices Architecture](/2025/system-design/microservices)
+- "Building Microservices" by Sam Newman
+
+### Week 10: Distributed Systems
+- **Distributed Computing**: Challenges and solutions
+- **Consistency Models**: Strong, eventual, causal consistency
+- **Consensus Algorithms**: Paxos, Raft, Byzantine fault tolerance
+- **Message Queues**: Asynchronous communication patterns
+
+**Resources:**
+- [Message Queues](/2025/system-design/message-queues)
+- "Distributed Systems: Concepts and Design" by Coulouris
+
+### Week 11: Security & Authentication
+- **Authentication**: OAuth 2.0, JWT, SAML
+- **Authorization**: Role-based access control (RBAC), attribute-based access control (ABAC)
+- **Data Security**: Encryption at rest and in transit
+- **API Security**: Rate limiting, input validation, CORS
+
+**Resources:**
+- "Web Application Security" by Andrew Hoffman
+- OAuth 2.0 and JWT documentation
+
+### Week 12: Advanced Topics
+- **Event-Driven Architecture**: Event sourcing, CQRS
+- **Stream Processing**: Real-time data processing
+- **Machine Learning in Systems**: Recommendation systems, A/B testing
+- **Edge Computing**: CDN, edge functions, IoT considerations
+
+**Resources:**
+- "Event Streaming with Kafka" by Alexander Dean
+- "System Design Interview Vol. 2" by Alex Xu
+
+## Phase 5: Real-World Practice (Weeks 13-15)
+
+### Week 13: System Design Case Studies
+- **URL Shortener**: Design a URL shortening service
+- **Real-time Chat**: Build a messaging system
+- **Social Media Feed**: Design a news feed system
+- **Video Streaming**: Netflix-like video streaming platform
+
+**Resources:**
+- [SystemDesignPrep.com](https://www.systemdesignprep.com/) for practice questions
+- [Grokking the System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview)
+
+### Week 14: Mock Interviews & Practice
+- **Interview Preparation**: Common system design interview questions
+- **Whiteboard Practice**: Drawing system diagrams
+- **Communication Skills**: Explaining complex systems clearly
+- **Trade-off Analysis**: Making design decisions under constraints
+
+**Resources:**
+- [LeetCode System Design](https://leetcode.com/discuss/interview-question/system-design)
+- Mock interview platforms
+
+### Week 15: Advanced System Design
+- **Large-Scale Systems**: Google, Facebook, Amazon scale
+- **Performance Tuning**: Profiling, optimization techniques
+- **Monitoring & Observability**: Metrics, logging, tracing
+- **DevOps & Deployment**: CI/CD, containerization, orchestration
+
+**Resources:**
+- "Site Reliability Engineering" by Google
+- "The Phoenix Project" by Gene Kim
+
+## Essential Tools & Platforms
+
+### Diagramming Tools
+- [Excalidraw](https://excalidraw.com/) - Free, collaborative diagramming
+- [Draw.io](https://draw.io/) - Professional diagramming
+- [Lucidchart](https://www.lucidchart.com/) - Enterprise diagramming
+
+### Practice Platforms
+- [SystemDesignPrep.com](https://www.systemdesignprep.com/) - Practice questions
+- [Grokking the System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview) - Interactive course
+- [LeetCode System Design](https://leetcode.com/discuss/interview-question/system-design) - Community discussions
+
+### Learning Resources
+- **Books**: "Designing Data-Intensive Applications", "System Design Interview" series
+- **YouTube**: Gaurav Sen, Hussein Nasser, Tech Dummies
+- **Blogs**: High Scalability, Martin Fowler's blog
+- **Podcasts**: Software Engineering Daily, The Changelog
+
+## Assessment & Progress Tracking
+
+### Weekly Checkpoints
+- Complete assigned readings and exercises
+- Build small proof-of-concept systems
+- Participate in discussion forums
+- Document learning in a personal blog or notes
+
+### Monthly Milestones
+- Design and implement a complete system
+- Conduct mock interviews
+- Review and revise previous concepts
+- Update personal system design portfolio
+
+### Final Project
+Design and document a complete system that demonstrates:
+- Scalability considerations
+- Fault tolerance mechanisms
+- Performance optimization
+- Security implementation
+- Monitoring and observability
+
+This roadmap provides a structured approach to mastering system design in 2025, with practical resources and hands-on experience to build real-world skills.
+
+# Practical Challenges & Exercises
+
+Hands-on projects to reinforce system design concepts and build real-world skills.
+
+## Challenge 1: URL Shortener Design
+
+**Objective**: Design a system that converts long URLs into short, unique URLs.
+
+**Key Learning Areas**:
+- Database design for URL mappings
+- Hashing algorithms for generating short URLs
+- Caching strategies for frequently accessed URLs
+- Load balancing for high traffic scenarios
+
+**Requirements**:
+- Convert URLs like `https://www.example.com/very/long/path` to `https://short.ly/abc123`
+- Handle 100 million URLs
+- Support 1000 requests per second
+- 99.9% uptime
+
+**Implementation Steps**:
+1. Design the database schema
+2. Choose a hashing algorithm (MD5, SHA-1, or custom)
+3. Implement caching with Redis
+4. Add load balancing with multiple servers
+5. Handle URL expiration and analytics
+
+**Resources**: [Coudo AI Blog: URL Shortener Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 2: Rate Limiter System
+
+**Objective**: Build a rate limiting system to prevent API abuse.
+
+**Key Learning Areas**:
+- Rate limiting algorithms (Token Bucket, Leaky Bucket, Fixed Window)
+- Distributed rate limiting across multiple servers
+- Caching for request counting
+- API security and abuse prevention
+
+**Requirements**:
+- Support 1000 requests per minute per user
+- Work across multiple servers
+- Handle burst traffic gracefully
+- Provide real-time rate limit status
+
+**Implementation Steps**:
+1. Implement Token Bucket algorithm
+2. Use Redis for distributed rate limiting
+3. Add rate limit headers to responses
+4. Handle rate limit violations gracefully
+5. Monitor and alert on abuse patterns
+
+**Resources**: [Coudo AI Blog: Rate Limiter Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 3: Real-time Chat Application
+
+**Objective**: Design a messaging system supporting real-time communication.
+
+**Key Learning Areas**:
+- WebSocket connections for real-time communication
+- Message queues for reliable message delivery
+- Database design for messages and user data
+- Scalability for concurrent users
+
+**Requirements**:
+- Support 10,000 concurrent users
+- Message delivery within 100ms
+- Support group chats and private messages
+- Message persistence and history
+- Online/offline status
+
+**Implementation Steps**:
+1. Design WebSocket connection management
+2. Implement message queuing with RabbitMQ/Kafka
+3. Design database schema for messages and users
+4. Add message encryption and security
+5. Implement push notifications for offline users
+
+**Resources**: [Coudo AI Blog: Chat Application Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 4: Movie Ticket Booking System
+
+**Objective**: Create a system for booking movie tickets with seat management.
+
+**Key Learning Areas**:
+- Concurrency control for seat reservations
+- Database transactions and ACID properties
+- Payment gateway integration
+- Handling high demand for popular movies
+
+**Requirements**:
+- Support 1000 concurrent bookings
+- Prevent double booking of seats
+- Integrate with payment systems
+- Handle seat selection and cancellation
+- Support multiple theaters and showtimes
+
+**Implementation Steps**:
+1. Design database with proper constraints
+2. Implement optimistic locking for seat reservations
+3. Add payment gateway integration
+4. Handle booking timeouts and cancellations
+5. Implement seat selection UI and logic
+
+**Resources**: [Coudo AI Blog: Movie Ticket Booking Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 5: Expense Sharing App (Splitwise Clone)
+
+**Objective**: Build an application for managing group expenses and settlements.
+
+**Key Learning Areas**:
+- Graph theory for user relationships
+- Complex algorithms for optimal payment calculations
+- Notification systems
+- Data consistency in distributed scenarios
+
+**Requirements**:
+- Support groups of up to 50 people
+- Calculate optimal payment settlements
+- Send notifications for expenses and settlements
+- Support multiple currencies
+- Generate expense reports
+
+**Implementation Steps**:
+1. Design graph-based data model for user relationships
+2. Implement settlement algorithms (minimum transactions)
+3. Add notification system with email/push
+4. Design multi-currency support
+5. Create reporting and analytics features
+
+**Resources**: [Coudo AI Blog: Expense Sharing App Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 6: Social Media News Feed
+
+**Objective**: Design a news feed system similar to Facebook or Twitter.
+
+**Key Learning Areas**:
+- Feed generation algorithms
+- Content ranking and personalization
+- Caching strategies for feed data
+- Handling high read-to-write ratios
+
+**Requirements**:
+- Support 1 million users
+- Generate personalized feeds
+- Handle 10,000 posts per second
+- Support real-time updates
+- Implement content moderation
+
+**Implementation Steps**:
+1. Design feed generation algorithms
+2. Implement content ranking with ML
+3. Use caching for feed data
+4. Add real-time updates with WebSockets
+5. Implement content moderation pipeline
+
+---
+
+## Challenge 7: Video Streaming Platform
+
+**Objective**: Build a Netflix-like video streaming service.
+
+**Key Learning Areas**:
+- CDN integration for global content delivery
+- Video encoding and transcoding
+- Recommendation systems
+- Handling high bandwidth requirements
+
+**Requirements**:
+- Support 4K video streaming
+- Global content delivery
+- Personalized recommendations
+- Handle 100,000 concurrent streams
+- Support multiple devices
+
+**Implementation Steps**:
+1. Design video storage and CDN architecture
+2. Implement video transcoding pipeline
+3. Build recommendation engine
+4. Add adaptive bitrate streaming
+5. Implement DRM and content protection
+
+---
+
+## Challenge 8: E-commerce Platform
+
+**Objective**: Design a scalable e-commerce system.
+
+**Key Learning Areas**:
+- Inventory management
+- Order processing workflows
+- Payment processing
+- Search and recommendation systems
+
+**Requirements**:
+- Support 1 million products
+- Handle 10,000 orders per day
+- Real-time inventory updates
+- Product search and filtering
+- Secure payment processing
+
+**Implementation Steps**:
+1. Design product catalog and inventory system
+2. Implement order processing workflow
+3. Add search with Elasticsearch
+4. Integrate payment gateways
+5. Build recommendation system
+
+---
+
+## Challenge 9: Ride-Sharing Service
+
+**Objective**: Create a system similar to Uber or Lyft.
+
+**Key Learning Areas**:
+- Real-time location tracking
+- Matching algorithms
+- Payment processing
+- Driver and rider management
+
+**Requirements**:
+- Real-time driver-rider matching
+- Location tracking and routing
+- Payment processing and splitting
+- Driver and rider ratings
+- Support multiple cities
+
+**Implementation Steps**:
+1. Design location tracking system
+2. Implement matching algorithms
+3. Add real-time communication
+4. Build payment and rating systems
+5. Implement surge pricing logic
+
+---
+
+## Challenge 10: Distributed Cache System
+
+**Objective**: Build a distributed caching system like Redis.
+
+**Key Learning Areas**:
+- Distributed systems
+- Consistency models
+- Partitioning and replication
+- Cache eviction strategies
+
+**Requirements**:
+- Support 1 million key-value pairs
+- Handle 100,000 requests per second
+- Implement LRU eviction
+- Support replication across nodes
+- Handle node failures gracefully
+
+**Implementation Steps**:
+1. Design distributed hash table
+2. Implement cache eviction algorithms
+3. Add replication and consistency
+4. Handle node failures and recovery
+5. Add monitoring and metrics
+
+---
+
+## How to Approach These Challenges
+
+### 1. Planning Phase
+- **Requirements Analysis**: Understand functional and non-functional requirements
+- **Capacity Planning**: Estimate traffic, storage, and compute needs
+- **Component Design**: Break down the system into logical components
+- **Technology Selection**: Choose appropriate technologies and tools
+
+### 2. Design Phase
+- **High-Level Architecture**: Create system diagrams
+- **Database Design**: Design schemas and relationships
+- **API Design**: Define interfaces and contracts
+- **Security Considerations**: Plan authentication, authorization, and data protection
+
+### 3. Implementation Phase
+- **Start Small**: Begin with a minimal viable product
+- **Iterate**: Add features incrementally
+- **Test**: Implement comprehensive testing
+- **Monitor**: Add logging and monitoring
+
+### 4. Optimization Phase
+- **Performance Tuning**: Optimize bottlenecks
+- **Scalability**: Add horizontal scaling
+- **Reliability**: Implement fault tolerance
+- **Security**: Conduct security audits
+
+## Tools for Implementation
+
+### Development Tools
+- **Backend**: Node.js, Python, Java, Go
+- **Databases**: PostgreSQL, MongoDB, Redis
+- **Message Queues**: RabbitMQ, Apache Kafka
+- **Cloud Platforms**: AWS, Google Cloud, Azure
+
+### Design Tools
+- **Diagrams**: Draw.io, Lucidchart, Excalidraw
+- **API Design**: Postman, Swagger
+- **Monitoring**: Prometheus, Grafana, ELK Stack
+
+### Testing Tools
+- **Load Testing**: Apache JMeter, Artillery
+- **API Testing**: Postman, Insomnia
+- **Database Testing**: Database testing frameworks
+
+## Success Metrics
+
+Track your progress with these metrics:
+- **Functional Requirements**: All features working correctly
+- **Performance**: Response times under acceptable thresholds
+- **Scalability**: System handles expected load
+- **Reliability**: High uptime and fault tolerance
+- **Security**: No critical vulnerabilities
+- **Maintainability**: Clean, well-documented code
+
+## Next Steps
+
+1. **Choose a Challenge**: Start with the URL shortener or rate limiter
+2. **Set Up Environment**: Prepare your development environment
+3. **Create Timeline**: Set realistic deadlines for each phase
+4. **Document Progress**: Keep a design journal
+5. **Share Work**: Get feedback from the community
+6. **Iterate**: Continuously improve your designs
+
+Remember: The goal is not just to build working systems, but to understand the trade-offs and design decisions that go into creating scalable, reliable, and maintainable software systems.

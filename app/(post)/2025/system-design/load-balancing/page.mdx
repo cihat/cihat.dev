@@ -1,0 +1,146 @@
+export const metadata = {
+  title: "Load Balancing - System Design",
+  description: "Understanding load balancing strategies and algorithms for distributing traffic across multiple servers",
+  openGraph: {
+    title: "Load Balancing - System Design",
+    description: "Understanding load balancing strategies and algorithms for distributing traffic across multiple servers",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Load Balancing", "Traffic Distribution", "High Availability", "Scalability", "Server Management"],
+}
+
+# Load Balancing
+
+Load balancing is a technique used to distribute incoming network traffic across multiple servers to ensure no single server bears too much load. This improves responsiveness, increases availability, and provides redundancy.
+
+## Why Load Balancing?
+
+- **High Availability**: If one server fails, traffic is redirected to healthy servers
+- **Scalability**: Add more servers to handle increased traffic
+- **Performance**: Distribute load to prevent any single server from becoming overwhelmed
+- **Maintenance**: Take servers offline for maintenance without service interruption
+
+## Load Balancing Algorithms
+
+### 1. Round Robin
+Requests are distributed sequentially across all available servers.
+
+```
+Server 1 → Server 2 → Server 3 → Server 1 → Server 2...
+```
+
+**Pros:**
+- Simple to implement
+- Even distribution
+
+**Cons:**
+- Doesn't consider server capacity or current load
+- May not be optimal for varying request sizes
+
+### 2. Least Connections
+Routes requests to the server with the fewest active connections.
+
+**Pros:**
+- Considers current server load
+- Good for long-lived connections
+
+**Cons:**
+- Requires tracking connection counts
+- May not account for server capacity differences
+
+### 3. Weighted Round Robin
+Similar to round robin, but servers are assigned weights based on their capacity.
+
+```
+Server 1 (weight: 3) → Server 2 (weight: 1) → Server 1 → Server 1 → Server 2...
+```
+
+**Pros:**
+- Accounts for server capacity differences
+- More flexible than simple round robin
+
+### 4. IP Hash
+Uses client IP address to determine which server to route to.
+
+**Pros:**
+- Ensures session affinity (same client always goes to same server)
+- Good for applications requiring session persistence
+
+**Cons:**
+- May not distribute load evenly if IP addresses are clustered
+
+### 5. Least Response Time
+Routes requests to the server with the fastest response time.
+
+**Pros:**
+- Optimizes for performance
+- Self-adjusting based on server health
+
+**Cons:**
+- Requires monitoring response times
+- More complex to implement
+
+## Load Balancer Types
+
+### 1. Application Load Balancer (Layer 7)
+- Works at the application layer
+- Can route based on HTTP headers, URLs, etc.
+- More intelligent routing decisions
+- Examples: HAProxy, Nginx, AWS ALB
+
+### 2. Network Load Balancer (Layer 4)
+- Works at the transport layer
+- Routes based on IP and port
+- Faster but less intelligent
+- Examples: AWS NLB, F5 BIG-IP
+
+### 3. Global Server Load Balancer (GSLB)
+- Distributes traffic across multiple data centers
+- Provides geographic distribution
+- Improves latency and availability
+
+## Health Checks
+
+Load balancers continuously monitor server health:
+
+- **Active Health Checks**: Load balancer sends requests to servers
+- **Passive Health Checks**: Monitor actual client requests
+- **Custom Health Endpoints**: `/health` or `/ping` endpoints
+
+## Session Persistence (Sticky Sessions)
+
+Some applications require clients to always connect to the same server:
+
+- **Cookie-based**: Load balancer sets a cookie with server information
+- **IP-based**: Route based on client IP address
+- **Application-based**: Use application-level session management
+
+## Load Balancer Placement
+
+### 1. Client-Side Load Balancing
+- Load balancing logic in the client
+- Examples: Netflix Ribbon, client-side service discovery
+
+### 2. Server-Side Load Balancing
+- Dedicated load balancer hardware/software
+- Examples: HAProxy, Nginx, cloud load balancers
+
+### 3. DNS Load Balancing
+- Multiple IP addresses for the same domain
+- Simple but limited control
+
+## Real-world Examples
+
+1. **Netflix**: Uses client-side load balancing with Ribbon
+2. **Google**: Global load balancing across data centers
+3. **Amazon**: Multiple layers of load balancing (ALB, NLB, Route 53)
+4. **GitHub**: Load balancing across multiple regions
+
+## Best Practices
+
+1. **Health Checks**: Implement comprehensive health checking
+2. **Monitoring**: Monitor load balancer performance and server health
+3. **Redundancy**: Use multiple load balancers for high availability
+4. **SSL Termination**: Handle SSL at the load balancer level
+5. **Rate Limiting**: Implement rate limiting at the load balancer
+6. **Logging**: Log all traffic for debugging and analytics

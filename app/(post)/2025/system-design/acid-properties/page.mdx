@@ -1,0 +1,86 @@
+export const metadata = {
+  title: "ACID Properties - System Design",
+  description: "Understanding ACID properties in database transactions: Atomicity, Consistency, Isolation, and Durability",
+  openGraph: {
+    title: "ACID Properties - System Design",
+    description: "Understanding ACID properties in database transactions: Atomicity, Consistency, Isolation, and Durability",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["ACID", "Database", "Transactions", "Atomicity", "Consistency", "Isolation", "Durability"],
+}
+
+# ACID Properties
+
+ACID properties are fundamental concepts in database systems that ensure reliable transaction processing. The acronym ACID stands for Atomicity, Consistency, Isolation, and Durability.
+
+## Atomicity
+
+Atomicity ensures that a transaction is treated as a single, indivisible unit. Either all operations within the transaction succeed, or none of them do.
+
+**Example:**
+```sql
+BEGIN TRANSACTION;
+  UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;
+```
+
+If either UPDATE fails, both operations are rolled back, maintaining data integrity.
+
+## Consistency
+
+Consistency ensures that a transaction can only bring the database from one valid state to another. The database must satisfy all constraints and rules before and after the transaction.
+
+**Example:**
+- Account balances cannot be negative
+- Foreign key constraints must be maintained
+- Business rules must be enforced
+
+## Isolation
+
+Isolation ensures that concurrent transactions do not interfere with each other. Each transaction appears to be executed in isolation, even when multiple transactions are running simultaneously.
+
+**Isolation Levels:**
+1. **Read Uncommitted** - Lowest isolation, allows dirty reads
+2. **Read Committed** - Prevents dirty reads
+3. **Repeatable Read** - Prevents non-repeatable reads
+4. **Serializable** - Highest isolation, prevents phantom reads
+
+## Durability
+
+Durability ensures that once a transaction has been committed, it will remain committed even in the event of a system failure (power loss, crash, etc.).
+
+**Implementation:**
+- Write-Ahead Logging (WAL)
+- Checkpointing
+- Backup and recovery mechanisms
+
+## ACID vs BASE
+
+While ACID focuses on consistency and reliability, BASE (Basically Available, Soft state, Eventually consistent) prioritizes availability and performance over strict consistency.
+
+**When to use ACID:**
+- Financial transactions
+- Inventory management
+- User authentication
+- Critical business operations
+
+**When to use BASE:**
+- Social media feeds
+- Analytics data
+- Caching layers
+- High-traffic web applications
+
+## Trade-offs
+
+- **Performance**: ACID transactions are slower due to locking and logging
+- **Scalability**: ACID databases are harder to scale horizontally
+- **Complexity**: Implementing ACID properties adds complexity to the system
+- **Reliability**: ACID provides strong guarantees for data integrity
+
+## Real-world Examples
+
+1. **Banking Systems**: All financial transactions must be ACID compliant
+2. **E-commerce**: Order processing requires ACID properties
+3. **Inventory Management**: Stock updates must be atomic and consistent
+4. **User Registration**: Account creation must be atomic and durable

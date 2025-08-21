@@ -1,0 +1,287 @@
+export const metadata = {
+  title: "Microservices Architecture - System Design",
+  description: "Understanding microservices architecture patterns and best practices for building scalable distributed systems",
+  openGraph: {
+    title: "Microservices Architecture - System Design",
+    description: "Understanding microservices architecture patterns and best practices for building scalable distributed systems",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Microservices", "Distributed Systems", "Service Architecture", "API Gateway", "Service Discovery"],
+}
+
+# Microservices Architecture
+
+Microservices is an architectural style where an application is built as a collection of small, independent services that communicate over well-defined APIs.
+
+## What are Microservices?
+
+Microservices break down a monolithic application into smaller, loosely coupled services that can be developed, deployed, and scaled independently.
+
+### Characteristics:
+- **Single Responsibility**: Each service has one specific business function
+- **Independent Deployment**: Services can be deployed independently
+- **Technology Diversity**: Different services can use different technologies
+- **Data Isolation**: Each service manages its own database
+- **Fault Isolation**: Failure in one service doesn't bring down the entire system
+
+## Microservices vs Monolith
+
+### Monolithic Architecture
+```
+┌─────────────────────────────────────┐
+│           Monolithic App            │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ │
+│  │ User    │ │ Order   │ │ Payment │ │
+│  │ Service │ │ Service │ │ Service │ │
+│  └─────────┘ └─────────┘ └─────────┘ │
+└─────────────────────────────────────┘
+```
+
+### Microservices Architecture
+```
+┌─────────┐  ┌─────────┐  ┌─────────┐
+│ User    │  │ Order   │  │ Payment │
+│ Service │  │ Service │  │ Service │
+└─────────┘  └─────────┘  └─────────┘
+     │            │            │
+     └────────────┼────────────┘
+                  │
+            ┌─────────┐
+            │ API     │
+            │ Gateway │
+            └─────────┘
+```
+
+## Service Communication Patterns
+
+### 1. Synchronous Communication
+Services communicate directly via HTTP/REST or gRPC.
+
+```python
+# User Service calling Order Service
+def create_order(user_id, order_data):
+    # Call Order Service
+    response = requests.post(
+        f"{ORDER_SERVICE_URL}/orders",
+        json={"user_id": user_id, **order_data}
+    )
+    return response.json()
+```
+
+**Pros:**
+- Simple to implement
+- Immediate response
+
+**Cons:**
+- Tight coupling
+- Network latency
+- Failure propagation
+
+### 2. Asynchronous Communication
+Services communicate via message queues or event streams.
+
+```python
+# User Service publishing event
+def user_registered(user_data):
+    event = {
+        "type": "USER_REGISTERED",
+        "data": user_data,
+        "timestamp": datetime.now()
+    }
+    message_queue.publish("user-events", event)
+
+# Order Service consuming event
+@event_handler("USER_REGISTERED")
+def handle_user_registered(event):
+    # Process user registration
+    pass
+```
+
+**Pros:**
+- Loose coupling
+- Better fault tolerance
+- Scalability
+
+**Cons:**
+- More complex
+- Eventual consistency
+
+## Service Discovery
+
+### 1. Client-Side Discovery
+Client is responsible for finding service instances.
+
+```python
+def get_order_service():
+    instances = service_registry.get_instances("order-service")
+    instance = load_balancer.select(instances)
+    return instance.url
+```
+
+### 2. Server-Side Discovery
+Load balancer handles service discovery.
+
+```python
+def get_order_service():
+    return load_balancer.route("order-service")
+```
+
+## API Gateway Pattern
+
+API Gateway acts as a single entry point for all client requests.
+
+### Responsibilities:
+- **Routing**: Route requests to appropriate services
+- **Authentication**: Handle authentication and authorization
+- **Rate Limiting**: Implement rate limiting
+- **Caching**: Cache responses
+- **Monitoring**: Log and monitor requests
+
+```python
+# API Gateway routing
+@app.route("/api/users/<user_id>")
+def get_user(user_id):
+    return user_service.get_user(user_id)
+
+@app.route("/api/users/<user_id>/orders")
+def get_user_orders(user_id):
+    return order_service.get_orders_by_user(user_id)
+```
+
+## Data Management
+
+### 1. Database per Service
+Each service has its own database.
+
+```
+User Service → User Database
+Order Service → Order Database
+Payment Service → Payment Database
+```
+
+**Pros:**
+- Data isolation
+- Technology flexibility
+- Independent scaling
+
+**Cons:**
+- Data consistency challenges
+- Distributed transactions
+
+### 2. Shared Database
+Multiple services share a database.
+
+**Pros:**
+- ACID transactions
+- Data consistency
+
+**Cons:**
+- Tight coupling
+- Single point of failure
+
+### 3. Saga Pattern
+Manage distributed transactions using a sequence of local transactions.
+
+```python
+def create_order_saga(order_data):
+    try:
+        # Step 1: Create order
+        order = order_service.create_order(order_data)
+        
+        # Step 2: Reserve inventory
+        inventory_service.reserve_inventory(order.items)
+        
+        # Step 3: Process payment
+        payment_service.process_payment(order.payment_info)
+        
+        # Step 4: Confirm order
+        order_service.confirm_order(order.id)
+        
+    except Exception as e:
+        # Compensating actions
+        order_service.cancel_order(order.id)
+        inventory_service.release_inventory(order.items)
+        payment_service.refund_payment(order.payment_info)
+```
+
+## Deployment Strategies
+
+### 1. Multiple Service Instances per Host
+Multiple services run on the same host.
+
+### 2. Service Instance per Host
+Each service runs on its own host.
+
+### 3. Service Instance per VM
+Each service runs in its own VM.
+
+### 4. Service Instance per Container
+Each service runs in its own container (Docker).
+
+### 5. Serverless Deployment
+Services run as serverless functions.
+
+## Monitoring and Observability
+
+### 1. Distributed Tracing
+Track requests across multiple services.
+
+```python
+# Using OpenTelemetry
+from opentelemetry import trace
+
+tracer = trace.get_tracer(__name__)
+
+def create_order(order_data):
+    with tracer.start_as_current_span("create_order"):
+        # Create order logic
+        pass
+```
+
+### 2. Centralized Logging
+Aggregate logs from all services.
+
+### 3. Health Checks
+Monitor service health.
+
+```python
+@app.route("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now(),
+        "version": "1.0.0"
+    }
+```
+
+## Best Practices
+
+1. **Service Boundaries**: Define clear service boundaries based on business domains
+2. **API Design**: Design APIs for service consumers, not internal implementation
+3. **Data Consistency**: Use eventual consistency and saga pattern for distributed transactions
+4. **Fault Tolerance**: Implement circuit breakers and retry mechanisms
+5. **Monitoring**: Implement comprehensive monitoring and observability
+6. **Security**: Implement proper authentication and authorization
+7. **Testing**: Use contract testing and integration testing
+
+## When to Use Microservices
+
+### Use Microservices When:
+- Large, complex applications
+- Need for independent scaling
+- Multiple teams working on different services
+- Need for technology diversity
+- High availability requirements
+
+### Don't Use Microservices When:
+- Small, simple applications
+- Limited team size
+- Tight coupling between components
+- Performance is critical
+
+## Real-world Examples
+
+1. **Netflix**: Microservices for video streaming, recommendations, billing
+2. **Amazon**: Microservices for e-commerce, AWS services
+3. **Uber**: Microservices for ride matching, payment, notifications
+4. **Spotify**: Microservices for music streaming, recommendations
