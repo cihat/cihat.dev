@@ -1,0 +1,385 @@
+export const metadata = {
+  title: "Rate Limiting - System Design",
+  description: "Understanding rate limiting algorithms and strategies for protecting APIs and managing system resources",
+  openGraph: {
+    title: "Rate Limiting - System Design",
+    description: "Understanding rate limiting algorithms and strategies for protecting APIs and managing system resources",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Rate Limiting", "API Protection", "Token Bucket", "Leaky Bucket", "Fixed Window", "Sliding Window"],
+}
+
+# Rate Limiting
+
+Rate limiting is a technique used to control the rate of requests a client can make to an API or service, preventing abuse and ensuring fair resource usage.
+
+## What is Rate Limiting?
+
+Rate limiting restricts how many requests a user, IP address, or API key can make within a specified time period. It's essential for:
+- **API Protection**: Prevent abuse and DDoS attacks
+- **Resource Management**: Ensure fair usage of system resources
+- **Cost Control**: Limit expensive operations
+- **Service Quality**: Maintain performance for all users
+
+## Rate Limiting Algorithms
+
+### 1. Fixed Window Counter
+
+Counts requests in fixed time windows (e.g., per minute, per hour).
+
+```python
+class FixedWindowRateLimiter:
+    def __init__(self, max_requests, window_size):
+        self.max_requests = max_requests
+        self.window_size = window_size
+        self.requests = {}
+    
+    def is_allowed(self, user_id):
+        current_time = time.time()
+        window_start = current_time - (current_time % self.window_size)
+        
+        if user_id not in self.requests:
+            self.requests[user_id] = {'count': 0, 'window': window_start}
+        
+        if self.requests[user_id]['window'] != window_start:
+            self.requests[user_id] = {'count': 0, 'window': window_start}
+        
+        if self.requests[user_id]['count'] >= self.max_requests:
+            return False
+        
+        self.requests[user_id]['count'] += 1
+        return True
+```
+
+**Pros:**
+- Simple to implement
+- Memory efficient
+
+**Cons:**
+- Allows burst traffic at window boundaries
+- Not smooth rate limiting
+
+### 2. Sliding Window Counter
+
+Smoother rate limiting using overlapping time windows.
+
+```python
+class SlidingWindowRateLimiter:
+    def __init__(self, max_requests, window_size):
+        self.max_requests = max_requests
+        self.window_size = window_size
+        self.requests = {}
+    
+    def is_allowed(self, user_id):
+        current_time = time.time()
+        
+        if user_id not in self.requests:
+            self.requests[user_id] = []
+        
+        # Remove old requests outside the window
+        self.requests[user_id] = [
+            req_time for req_time in self.requests[user_id]
+            if current_time - req_time < self.window_size
+        ]
+        
+        if len(self.requests[user_id]) >= self.max_requests:
+            return False
+        
+        self.requests[user_id].append(current_time)
+        return True
+```
+
+**Pros:**
+- Smooth rate limiting
+- More accurate than fixed window
+
+**Cons:**
+- More memory usage
+- Slightly more complex
+
+### 3. Token Bucket
+
+Maintains a bucket of tokens that are consumed by requests.
+
+```python
+class TokenBucketRateLimiter:
+    def __init__(self, capacity, refill_rate):
+        self.capacity = capacity
+        self.refill_rate = refill_rate  # tokens per second
+        self.tokens = capacity
+        self.last_refill = time.time()
+    
+    def is_allowed(self, user_id, tokens_needed=1):
+        current_time = time.time()
+        
+        # Refill tokens based on time passed
+        time_passed = current_time - self.last_refill
+        tokens_to_add = time_passed * self.refill_rate
+        self.tokens = min(self.capacity, self.tokens + tokens_to_add)
+        self.last_refill = current_time
+        
+        if self.tokens >= tokens_needed:
+            self.tokens -= tokens_needed
+            return True
+        
+        return False
+```
+
+**Pros:**
+- Allows burst traffic up to bucket capacity
+- Smooth rate limiting
+- Configurable burst allowance
+
+**Cons:**
+- More complex implementation
+- Requires per-user state
+
+### 4. Leaky Bucket
+
+Fixed-rate processing with a queue for requests.
+
+```python
+class LeakyBucketRateLimiter:
+    def __init__(self, capacity, leak_rate):
+        self.capacity = capacity
+        self.leak_rate = leak_rate  # requests per second
+        self.queue = []
+        self.last_leak = time.time()
+    
+    def is_allowed(self, user_id):
+        current_time = time.time()
+        
+        # Process leaks
+        time_passed = current_time - self.last_leak
+        leaks = int(time_passed * self.leak_rate)
+        
+        # Remove leaked requests
+        self.queue = self.queue[leaks:]
+        self.last_leak = current_time
+        
+        if len(self.queue) >= self.capacity:
+            return False
+        
+        self.queue.append(current_time)
+        return True
+```
+
+**Pros:**
+- Fixed output rate
+- Smooth traffic flow
+- Good for processing pipelines
+
+**Cons:**
+- No burst allowance
+- Requests may be dropped
+
+## Distributed Rate Limiting
+
+### 1. Redis-Based Rate Limiting
+
+Using Redis for distributed rate limiting across multiple servers.
+
+```python
+import redis
+import time
+
+class RedisRateLimiter:
+    def __init__(self, redis_client, max_requests, window_size):
+        self.redis = redis_client
+        self.max_requests = max_requests
+        self.window_size = window_size
+    
+    def is_allowed(self, user_id):
+        current_time = time.time()
+        window_start = current_time - (current_time % self.window_size)
+        key = f"rate_limit:{user_id}:{window_start}"
+        
+        # Use Redis pipeline for atomic operations
+        pipe = self.redis.pipeline()
+        pipe.incr(key)
+        pipe.expire(key, self.window_size)
+        results = pipe.execute()
+        
+        return results[0] <= self.max_requests
+```
+
+### 2. Sliding Window with Redis
+
+```python
+def is_allowed_sliding_window(user_id, max_requests, window_size):
+    current_time = time.time()
+    key = f"rate_limit:{user_id}"
+    
+    # Remove old entries
+    self.redis.zremrangebyscore(key, 0, current_time - window_size)
+    
+    # Count current requests
+    current_requests = self.redis.zcard(key)
+    
+    if current_requests >= max_requests:
+        return False
+    
+    # Add current request
+    self.redis.zadd(key, {str(current_time): current_time})
+    self.redis.expire(key, window_size)
+    
+    return True
+```
+
+## Rate Limiting Strategies
+
+### 1. User-Based Rate Limiting
+```python
+# Rate limit per user
+rate_limiter = TokenBucketRateLimiter(capacity=100, refill_rate=10)
+if not rate_limiter.is_allowed(user_id):
+    return {"error": "Rate limit exceeded"}, 429
+```
+
+### 2. IP-Based Rate Limiting
+```python
+# Rate limit per IP address
+client_ip = request.remote_addr
+if not rate_limiter.is_allowed(client_ip):
+    return {"error": "Too many requests"}, 429
+```
+
+### 3. API Key-Based Rate Limiting
+```python
+# Different limits for different API keys
+api_key = request.headers.get('X-API-Key')
+if api_key.startswith('premium_'):
+    rate_limiter = TokenBucketRateLimiter(capacity=1000, refill_rate=100)
+else:
+    rate_limiter = TokenBucketRateLimiter(capacity=100, refill_rate=10)
+```
+
+### 4. Endpoint-Based Rate Limiting
+```python
+# Different limits for different endpoints
+endpoint = request.endpoint
+if endpoint == 'upload_file':
+    rate_limiter = TokenBucketRateLimiter(capacity=10, refill_rate=1)
+elif endpoint == 'get_data':
+    rate_limiter = TokenBucketRateLimiter(capacity=1000, refill_rate=100)
+```
+
+## Rate Limiting Headers
+
+### 1. Standard Headers
+```http
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1640995200
+Retry-After: 60
+```
+
+### 2. Implementation
+```python
+def add_rate_limit_headers(response, rate_limiter, user_id):
+    remaining = rate_limiter.get_remaining(user_id)
+    reset_time = rate_limiter.get_reset_time(user_id)
+    
+    response.headers['X-RateLimit-Limit'] = rate_limiter.max_requests
+    response.headers['X-RateLimit-Remaining'] = remaining
+    response.headers['X-RateLimit-Reset'] = reset_time
+    
+    if remaining == 0:
+        response.headers['Retry-After'] = rate_limiter.get_retry_after(user_id)
+    
+    return response
+```
+
+## Rate Limiting Best Practices
+
+### 1. Choose the Right Algorithm
+- **Fixed Window**: Simple APIs, low traffic
+- **Sliding Window**: Smooth rate limiting needed
+- **Token Bucket**: Allow burst traffic
+- **Leaky Bucket**: Fixed processing rate
+
+### 2. Set Appropriate Limits
+- **Authentication Endpoints**: Lower limits (5-10 per minute)
+- **Data Retrieval**: Higher limits (100-1000 per minute)
+- **File Uploads**: Very low limits (1-5 per minute)
+- **Admin Operations**: Strict limits (1-10 per hour)
+
+### 3. Handle Rate Limit Exceeded
+```python
+def handle_rate_limit_exceeded(user_id, rate_limiter):
+    retry_after = rate_limiter.get_retry_after(user_id)
+    
+    return {
+        "error": "Rate limit exceeded",
+        "message": "Too many requests, please try again later",
+        "retry_after": retry_after,
+        "limit": rate_limiter.max_requests
+    }, 429
+```
+
+### 4. Monitoring and Analytics
+```python
+def log_rate_limit_event(user_id, endpoint, action):
+    logger.info(f"Rate limit {action}: user={user_id}, endpoint={endpoint}")
+    
+    # Send to analytics
+    analytics.track("rate_limit_exceeded", {
+        "user_id": user_id,
+        "endpoint": endpoint,
+        "timestamp": time.time()
+    })
+```
+
+## Real-world Examples
+
+### 1. Twitter API
+- **Rate Limits**: 300 requests per 15-minute window
+- **Algorithm**: Sliding window
+- **Headers**: X-RateLimit-* headers
+
+### 2. GitHub API
+- **Rate Limits**: 5000 requests per hour for authenticated users
+- **Algorithm**: Token bucket
+- **Headers**: X-RateLimit-* headers
+
+### 3. Stripe API
+- **Rate Limits**: 100 requests per second
+- **Algorithm**: Token bucket
+- **Headers**: Stripe-Version headers
+
+### 4. Google APIs
+- **Rate Limits**: Varies by API and quota
+- **Algorithm**: Quota-based
+- **Headers**: Quota-* headers
+
+## Advanced Rate Limiting
+
+### 1. Adaptive Rate Limiting
+```python
+class AdaptiveRateLimiter:
+    def __init__(self, base_limit, max_limit):
+        self.base_limit = base_limit
+        self.max_limit = max_limit
+        self.current_limit = base_limit
+    
+    def adjust_limit(self, system_load):
+        if system_load > 0.8:
+            self.current_limit = max(self.base_limit, self.current_limit * 0.9)
+        elif system_load < 0.3:
+            self.current_limit = min(self.max_limit, self.current_limit * 1.1)
+```
+
+### 2. Machine Learning Rate Limiting
+```python
+def ml_rate_limiting(user_id, request_data):
+    # Use ML model to predict if request is legitimate
+    features = extract_features(request_data)
+    prediction = ml_model.predict(features)
+    
+    if prediction > 0.8:  # Likely legitimate
+        return TokenBucketRateLimiter(capacity=1000, refill_rate=100)
+    else:  # Suspicious
+        return TokenBucketRateLimiter(capacity=10, refill_rate=1)
+```
+
+Rate limiting is crucial for protecting APIs and ensuring fair resource usage. Choose the right algorithm and strategy based on your specific requirements and traffic patterns.

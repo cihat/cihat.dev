@@ -1,0 +1,437 @@
+export const metadata = {
+  title: "Circuit Breaker Pattern - System Design",
+  description: "Understanding the Circuit Breaker pattern for fault tolerance and resilience in distributed systems",
+  openGraph: {
+    title: "Circuit Breaker Pattern - System Design",
+    description: "Understanding the Circuit Breaker pattern for fault tolerance and resilience in distributed systems",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["Circuit Breaker", "Fault Tolerance", "Resilience", "Distributed Systems", "Failure Handling"],
+}
+
+# Circuit Breaker Pattern
+
+The Circuit Breaker pattern is a fault tolerance design pattern that prevents cascading failures in distributed systems by monitoring for failures and temporarily stopping requests to failing services.
+
+## What is the Circuit Breaker Pattern?
+
+The Circuit Breaker pattern is inspired by electrical circuit breakers. It monitors calls to a remote service and, when a certain threshold of failures is reached, it "trips" and stops allowing calls to the failing service for a specified period.
+
+### Key Benefits:
+- **Prevents Cascading Failures**: Stops failures from propagating through the system
+- **Fast Failure Detection**: Quickly identifies and responds to service failures
+- **Automatic Recovery**: Attempts to restore service when it becomes healthy again
+- **Resource Protection**: Prevents resource exhaustion from repeated failed calls
+
+## Circuit Breaker States
+
+### 1. Closed State (Normal Operation)
+- Requests are allowed to pass through to the service
+- Success and failure counts are tracked
+- When failure threshold is reached, transitions to Open state
+
+### 2. Open State (Failure Detected)
+- All requests are immediately rejected
+- No calls are made to the failing service
+- After timeout period, transitions to Half-Open state
+
+### 3. Half-Open State (Testing Recovery)
+- Limited requests are allowed to test if service has recovered
+- If successful, transitions back to Closed state
+- If failed, returns to Open state
+
+## Circuit Breaker Implementation
+
+### Basic Implementation
+
+```python
+import time
+from enum import Enum
+from typing import Callable, Any
+
+class CircuitBreakerState(Enum):
+    CLOSED = "CLOSED"
+    OPEN = "OPEN"
+    HALF_OPEN = "HALF_OPEN"
+
+class CircuitBreaker:
+    def __init__(self, failure_threshold: int = 5, timeout: int = 60, 
+                 success_threshold: int = 2):
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout
+        self.success_threshold = success_threshold
+        
+        self.failure_count = 0
+        self.success_count = 0
+        self.last_failure_time = None
+        self.state = CircuitBreakerState.CLOSED
+    
+    def call(self, func: Callable, *args, **kwargs) -> Any:
+        if self.state == CircuitBreakerState.OPEN:
+            if time.time() - self.last_failure_time > self.timeout:
+                self.state = CircuitBreakerState.HALF_OPEN
+                self.success_count = 0
+            else:
+                raise Exception("Circuit breaker is OPEN")
+        
+        try:
+            result = func(*args, **kwargs)
+            self.on_success()
+            return result
+        except Exception as e:
+            self.on_failure()
+            raise e
+    
+    def on_success(self):
+        self.failure_count = 0
+        if self.state == CircuitBreakerState.HALF_OPEN:
+            self.success_count += 1
+            if self.success_count >= self.success_threshold:
+                self.state = CircuitBreakerState.CLOSED
+                self.success_count = 0
+    
+    def on_failure(self):
+        self.failure_count += 1
+        self.last_failure_time = time.time()
+        
+        if self.failure_count >= self.failure_threshold:
+            self.state = CircuitBreakerState.OPEN
+```
+
+### Advanced Implementation with Monitoring
+
+```python
+import logging
+from dataclasses import dataclass
+from datetime import datetime
+
+@dataclass
+class CircuitBreakerMetrics:
+    total_requests: int = 0
+    successful_requests: int = 0
+    failed_requests: int = 0
+    last_state_change: datetime = None
+
+class AdvancedCircuitBreaker:
+    def __init__(self, name: str, failure_threshold: int = 5, 
+                 timeout: int = 60, success_threshold: int = 2):
+        self.name = name
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout
+        self.success_threshold = success_threshold
+        
+        self.failure_count = 0
+        self.success_count = 0
+        self.last_failure_time = None
+        self.state = CircuitBreakerState.CLOSED
+        self.metrics = CircuitBreakerMetrics()
+        self.logger = logging.getLogger(f"circuit_breaker.{name}")
+    
+    def call(self, func: Callable, *args, **kwargs) -> Any:
+        self.metrics.total_requests += 1
+        
+        if self.state == CircuitBreakerState.OPEN:
+            if time.time() - self.last_failure_time > self.timeout:
+                self._transition_to_half_open()
+            else:
+                self.logger.warning(f"Circuit breaker {self.name} is OPEN, request rejected")
+                raise Exception(f"Circuit breaker {self.name} is OPEN")
+        
+        try:
+            result = func(*args, **kwargs)
+            self.on_success()
+            return result
+        except Exception as e:
+            self.on_failure(e)
+            raise e
+    
+    def on_success(self):
+        self.failure_count = 0
+        self.metrics.successful_requests += 1
+        
+        if self.state == CircuitBreakerState.HALF_OPEN:
+            self.success_count += 1
+            if self.success_count >= self.success_threshold:
+                self._transition_to_closed()
+    
+    def on_failure(self, exception: Exception):
+        self.failure_count += 1
+        self.last_failure_time = time.time()
+        self.metrics.failed_requests += 1
+        
+        self.logger.error(f"Circuit breaker {self.name} failure: {exception}")
+        
+        if self.failure_count >= self.failure_threshold:
+            self._transition_to_open()
+    
+    def _transition_to_open(self):
+        old_state = self.state
+        self.state = CircuitBreakerState.OPEN
+        self.metrics.last_state_change = datetime.now()
+        self.logger.warning(f"Circuit breaker {self.name} transitioned from {old_state} to OPEN")
+    
+    def _transition_to_half_open(self):
+        old_state = self.state
+        self.state = CircuitBreakerState.HALF_OPEN
+        self.success_count = 0
+        self.metrics.last_state_change = datetime.now()
+        self.logger.info(f"Circuit breaker {self.name} transitioned from {old_state} to HALF_OPEN")
+    
+    def _transition_to_closed(self):
+        old_state = self.state
+        self.state = CircuitBreakerState.CLOSED
+        self.success_count = 0
+        self.metrics.last_state_change = datetime.now()
+        self.logger.info(f"Circuit breaker {self.name} transitioned from {old_state} to CLOSED")
+```
+
+## Circuit Breaker Configuration
+
+### 1. Failure Threshold
+```python
+# Sensitive to failures
+circuit_breaker = CircuitBreaker(failure_threshold=3)
+
+# Tolerant to failures
+circuit_breaker = CircuitBreaker(failure_threshold=10)
+```
+
+### 2. Timeout Configuration
+```python
+# Quick recovery
+circuit_breaker = CircuitBreaker(timeout=30)  # 30 seconds
+
+# Conservative recovery
+circuit_breaker = CircuitBreaker(timeout=300)  # 5 minutes
+```
+
+### 3. Success Threshold
+```python
+# Require multiple successes
+circuit_breaker = CircuitBreaker(success_threshold=5)
+
+# Quick recovery
+circuit_breaker = CircuitBreaker(success_threshold=1)
+```
+
+## Circuit Breaker Patterns
+
+### 1. Service-Level Circuit Breaker
+```python
+class UserService:
+    def __init__(self):
+        self.circuit_breaker = CircuitBreaker(
+            name="user_service",
+            failure_threshold=5,
+            timeout=60
+        )
+    
+    def get_user(self, user_id: int) -> dict:
+        return self.circuit_breaker.call(self._get_user_from_db, user_id)
+    
+    def _get_user_from_db(self, user_id: int) -> dict:
+        # Actual database call
+        pass
+```
+
+### 2. Method-Level Circuit Breaker
+```python
+class PaymentService:
+    def __init__(self):
+        self.payment_circuit_breaker = CircuitBreaker(
+            name="payment_processing",
+            failure_threshold=3,
+            timeout=120
+        )
+        self.refund_circuit_breaker = CircuitBreaker(
+            name="refund_processing",
+            failure_threshold=2,
+            timeout=300
+        )
+    
+    def process_payment(self, payment_data: dict) -> dict:
+        return self.payment_circuit_breaker.call(self._process_payment, payment_data)
+    
+    def process_refund(self, refund_data: dict) -> dict:
+        return self.refund_circuit_breaker.call(self._process_refund, refund_data)
+```
+
+### 3. Distributed Circuit Breaker
+```python
+import redis
+
+class DistributedCircuitBreaker:
+    def __init__(self, name: str, redis_client: redis.Redis):
+        self.name = name
+        self.redis = redis_client
+        self.key_prefix = f"circuit_breaker:{name}"
+    
+    def is_open(self) -> bool:
+        state = self.redis.get(f"{self.key_prefix}:state")
+        return state == b"OPEN"
+    
+    def record_failure(self):
+        pipe = self.redis.pipeline()
+        pipe.incr(f"{self.key_prefix}:failures")
+        pipe.expire(f"{self.key_prefix}:failures", 300)  # 5 minutes
+        pipe.execute()
+        
+        failures = int(self.redis.get(f"{self.key_prefix}:failures") or 0)
+        if failures >= 5:
+            self.redis.setex(f"{self.key_prefix}:state", 60, "OPEN")
+```
+
+## Fallback Strategies
+
+### 1. Default Values
+```python
+def get_user_with_fallback(user_id: int) -> dict:
+    try:
+        return user_service.get_user(user_id)
+    except Exception:
+        # Return default user data
+        return {
+            "id": user_id,
+            "name": "Unknown User",
+            "email": "unknown@example.com"
+        }
+```
+
+### 2. Cached Data
+```python
+def get_user_with_cache(user_id: int) -> dict:
+    try:
+        return user_service.get_user(user_id)
+    except Exception:
+        # Return cached data
+        cached_user = cache.get(f"user:{user_id}")
+        if cached_user:
+            return cached_user
+        return {"id": user_id, "name": "Unknown User"}
+```
+
+### 3. Alternative Service
+```python
+def get_user_with_alternative(user_id: int) -> dict:
+    try:
+        return primary_user_service.get_user(user_id)
+    except Exception:
+        # Try alternative service
+        try:
+            return backup_user_service.get_user(user_id)
+        except Exception:
+            return {"id": user_id, "name": "Unknown User"}
+```
+
+## Monitoring and Alerting
+
+### 1. Circuit Breaker Metrics
+```python
+class CircuitBreakerMonitor:
+    def __init__(self):
+        self.metrics = {}
+    
+    def record_state_change(self, circuit_breaker_name: str, 
+                           old_state: str, new_state: str):
+        if circuit_breaker_name not in self.metrics:
+            self.metrics[circuit_breaker_name] = {
+                "state_changes": [],
+                "total_requests": 0,
+                "failed_requests": 0
+            }
+        
+        self.metrics[circuit_breaker_name]["state_changes"].append({
+            "timestamp": datetime.now(),
+            "old_state": old_state,
+            "new_state": new_state
+        })
+    
+    def get_health_status(self) -> dict:
+        return {
+            name: {
+                "current_state": cb.state.value,
+                "failure_rate": cb.metrics.failed_requests / cb.metrics.total_requests,
+                "last_state_change": cb.metrics.last_state_change
+            }
+            for name, cb in self.circuit_breakers.items()
+        }
+```
+
+### 2. Alerting
+```python
+def alert_circuit_breaker_open(circuit_breaker_name: str):
+    alert = {
+        "level": "WARNING",
+        "message": f"Circuit breaker {circuit_breaker_name} is OPEN",
+        "timestamp": datetime.now(),
+        "service": circuit_breaker_name
+    }
+    
+    # Send to monitoring system
+    monitoring_system.send_alert(alert)
+```
+
+## Best Practices
+
+### 1. Choose Appropriate Thresholds
+- **Failure Threshold**: 3-5 for critical services, 10+ for non-critical
+- **Timeout**: 30-60 seconds for quick recovery, 5+ minutes for conservative
+- **Success Threshold**: 1-3 for quick recovery
+
+### 2. Implement Proper Fallbacks
+- Always provide fallback behavior
+- Use cached data when possible
+- Return meaningful default values
+- Log fallback usage for monitoring
+
+### 3. Monitor and Alert
+- Track circuit breaker state changes
+- Monitor failure rates and patterns
+- Set up alerts for circuit breaker openings
+- Analyze circuit breaker behavior over time
+
+### 4. Test Circuit Breakers
+```python
+def test_circuit_breaker():
+    circuit_breaker = CircuitBreaker(failure_threshold=3, timeout=5)
+    
+    # Simulate failures
+    for i in range(3):
+        try:
+            circuit_breaker.call(failing_function)
+        except Exception:
+            pass
+    
+    # Circuit breaker should be OPEN
+    assert circuit_breaker.state == CircuitBreakerState.OPEN
+    
+    # Wait for timeout
+    time.sleep(6)
+    
+    # Circuit breaker should be HALF_OPEN
+    assert circuit_breaker.state == CircuitBreakerState.HALF_OPEN
+```
+
+## Real-world Examples
+
+### 1. Netflix Hystrix
+- **Features**: Circuit breaker, fallback, monitoring
+- **Use Cases**: Microservices resilience
+- **Status**: In maintenance mode, replaced by Resilience4j
+
+### 2. Resilience4j
+- **Features**: Circuit breaker, retry, timeout, bulkhead
+- **Use Cases**: Java microservices
+- **Integration**: Spring Boot, Micronaut
+
+### 3. Polly (C#)
+- **Features**: Circuit breaker, retry, timeout
+- **Use Cases**: .NET applications
+- **Integration**: ASP.NET Core
+
+### 4. Sentinel (Java)
+- **Features**: Circuit breaker, flow control, adaptive protection
+- **Use Cases**: Alibaba microservices
+- **Integration**: Spring Cloud
+
+The Circuit Breaker pattern is essential for building resilient distributed systems. It helps prevent cascading failures and provides automatic recovery mechanisms.

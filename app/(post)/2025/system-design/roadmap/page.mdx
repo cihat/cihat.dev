@@ -1,0 +1,276 @@
+export const metadata = {
+  title: "System Design Roadmap 2025 - Learning Path",
+  description: "A structured learning path for mastering system design in 2025, designed for beginners to advanced practitioners",
+  openGraph: {
+    title: "System Design Roadmap 2025 - Learning Path",
+    description: "A structured learning path for mastering system design in 2025, designed for beginners to advanced practitioners",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["System Design", "Roadmap", "Learning Path", "2025", "Study Plan", "Resources"],
+}
+
+# System Design Roadmap 2025
+
+A structured learning path for mastering system design in 2025, designed for beginners to advanced practitioners.
+
+[Roadmap](https://roadmap.sh/system-design)
+
+## Phase 1: Fundamentals (Weeks 1-2)
+
+### Week 1: Introduction to System Design
+- **Core Concepts**: Understanding what system design is and why it matters
+- **Key Principles**: Scalability, reliability, maintainability, and performance
+- **System Design Process**: Requirements gathering, capacity planning, component design
+- **Non-Functional Requirements**: Performance, availability, consistency, durability
+
+**Resources:**
+- "Designing Data-Intensive Applications" by Martin Kleppmann (Introduction)
+- "System Design Interview Vol. 1" by Alex Xu (Chapters 1-2)
+- [Gaurav Sen's System Design Playlist](https://www.youtube.com/playlist?list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX)
+
+### Week 2: Networking & Infrastructure
+- **Networking Basics**: DNS, HTTP/HTTPS, TCP vs. UDP
+- **Load Balancing**: Different algorithms and their applications
+- **Operating Systems**: Processes, threads, concurrency, memory management
+- **Basic Architecture Patterns**: Client-Server, Peer-to-Peer
+
+**Resources:**
+- "Computer Networks" by Andrew Tanenbaum (Chapters 1-3)
+- [Hussein Nasser's YouTube Channel](https://www.youtube.com/c/HusseinNasser-software-enginner)
+
+## Phase 2: Core System Components (Weeks 3-5)
+
+### Week 3: Database Fundamentals
+- **Database Types**: SQL vs. NoSQL, when to use each
+- **ACID Properties**: Understanding transaction guarantees
+- **CAP Theorem**: Consistency, Availability, Partition tolerance trade-offs
+- **Database Design Patterns**: Sharding, replication, indexing
+
+**Resources:**
+- "Designing Data-Intensive Applications" by Martin Kleppmann (Chapters 1-4)
+- [Database Design Patterns](/2025/system-design/database-design-patterns)
+
+### Week 4: Caching & Performance
+- **Caching Strategies**: Cache-aside, write-through, write-behind
+- **Cache Types**: Application cache, distributed cache, CDN
+- **Cache Invalidation**: TTL, LRU, LFU strategies
+- **Performance Optimization**: Query optimization, connection pooling
+
+**Resources:**
+- [Caching Strategies](/2025/system-design/caching-strategies)
+- Redis documentation and tutorials
+
+### Week 5: Load Balancing & High Availability
+- **Load Balancing Algorithms**: Round-robin, least connections, weighted
+- **Health Checks**: Active and passive monitoring
+- **Session Persistence**: Sticky sessions and their trade-offs
+- **High Availability**: Redundancy, failover, disaster recovery
+
+**Resources:**
+- [Load Balancing](/2025/system-design/load-balancing)
+- HAProxy and Nginx documentation
+
+## Phase 3: Low-Level Design (Weeks 6-8)
+
+### Week 6: Object-Oriented Design
+- **OOP Principles**: Encapsulation, inheritance, polymorphism, abstraction
+- **SOLID Principles**: Single responsibility, open/closed, Liskov substitution, interface segregation, dependency inversion
+- **Design Patterns**: Creational, structural, behavioral patterns
+
+**Resources:**
+- "Head First Design Patterns" by Freeman & Robson
+- [Apna College's OOP Playlist](https://www.youtube.com/playlist?list=PLfqMhTWNBTe3LtFWcvwpqTkUSlB32kJop)
+
+### Week 7: Advanced Design Patterns
+- **Creational Patterns**: Singleton, Factory, Builder, Prototype
+- **Structural Patterns**: Adapter, Bridge, Composite, Decorator
+- **Behavioral Patterns**: Observer, Strategy, Command, State
+- **Anti-patterns**: Common mistakes and how to avoid them
+
+**Resources:**
+- "Design Patterns: Elements of Reusable Object-Oriented Software" by Gang of Four
+- Refactoring.guru website
+
+### Week 8: UML & Documentation
+- **UML Diagrams**: Class, component, sequence, activity diagrams
+- **System Documentation**: Architecture Decision Records (ADRs)
+- **Code Documentation**: API documentation, inline comments
+- **Version Control**: Git workflows for system design
+
+**Resources:**
+- "UML Distilled" by Martin Fowler
+- [Excalidraw](https://excalidraw.com/) for diagramming
+
+## Phase 4: High-Level Design (Weeks 9-12)
+
+### Week 9: Microservices Architecture
+- **Service Decomposition**: How to break down monolithic applications
+- **API Design**: RESTful APIs, GraphQL, gRPC
+- **Service Communication**: Synchronous vs. asynchronous patterns
+- **Service Discovery**: Client-side vs. server-side discovery
+
+**Resources:**
+- [Microservices Architecture](/2025/system-design/microservices)
+- "Building Microservices" by Sam Newman
+
+### Week 10: Distributed Systems
+- **Distributed Computing**: Challenges and solutions
+- **Consistency Models**: Strong, eventual, causal consistency
+- **Consensus Algorithms**: Paxos, Raft, Byzantine fault tolerance
+- **Message Queues**: Asynchronous communication patterns
+
+**Resources:**
+- [Message Queues](/2025/system-design/message-queues)
+- "Distributed Systems: Concepts and Design" by Coulouris
+
+### Week 11: Security & Authentication
+- **Authentication**: OAuth 2.0, JWT, SAML
+- **Authorization**: Role-based access control (RBAC), attribute-based access control (ABAC)
+- **Data Security**: Encryption at rest and in transit
+- **API Security**: Rate limiting, input validation, CORS
+
+**Resources:**
+- "Web Application Security" by Andrew Hoffman
+- OAuth 2.0 and JWT documentation
+
+### Week 12: Advanced Topics
+- **Event-Driven Architecture**: Event sourcing, CQRS
+- **Stream Processing**: Real-time data processing
+- **Machine Learning in Systems**: Recommendation systems, A/B testing
+- **Edge Computing**: CDN, edge functions, IoT considerations
+
+**Resources:**
+- "Event Streaming with Kafka" by Alexander Dean
+- "System Design Interview Vol. 2" by Alex Xu
+
+## Phase 5: Real-World Practice (Weeks 13-15)
+
+### Week 13: System Design Case Studies
+- **URL Shortener**: Design a URL shortening service
+- **Real-time Chat**: Build a messaging system
+- **Social Media Feed**: Design a news feed system
+- **Video Streaming**: Netflix-like video streaming platform
+
+**Resources:**
+- [SystemDesignPrep.com](https://www.systemdesignprep.com/) for practice questions
+- [Grokking the System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview)
+
+### Week 14: Mock Interviews & Practice
+- **Interview Preparation**: Common system design interview questions
+- **Whiteboard Practice**: Drawing system diagrams
+- **Communication Skills**: Explaining complex systems clearly
+- **Trade-off Analysis**: Making design decisions under constraints
+
+**Resources:**
+- [LeetCode System Design](https://leetcode.com/discuss/interview-question/system-design)
+- Mock interview platforms
+
+### Week 15: Advanced System Design
+- **Large-Scale Systems**: Google, Facebook, Amazon scale
+- **Performance Tuning**: Profiling, optimization techniques
+- **Monitoring & Observability**: Metrics, logging, tracing
+- **DevOps & Deployment**: CI/CD, containerization, orchestration
+
+**Resources:**
+- "Site Reliability Engineering" by Google
+- "The Phoenix Project" by Gene Kim
+
+## Essential Tools & Platforms
+
+### Diagramming Tools
+- [Excalidraw](https://excalidraw.com/) - Free, collaborative diagramming
+- [Draw.io](https://draw.io/) - Professional diagramming
+- [Lucidchart](https://www.lucidchart.com/) - Enterprise diagramming
+
+### Practice Platforms
+- [SystemDesignPrep.com](https://www.systemdesignprep.com/) - Practice questions
+- [Grokking the System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview) - Interactive course
+- [LeetCode System Design](https://leetcode.com/discuss/interview-question/system-design) - Community discussions
+
+### Learning Resources
+- **Books**: "Designing Data-Intensive Applications", "System Design Interview" series
+- **YouTube**: Gaurav Sen, Hussein Nasser, Tech Dummies
+- **Blogs**: High Scalability, Martin Fowler's blog
+- **Podcasts**: Software Engineering Daily, The Changelog
+
+## Assessment & Progress Tracking
+
+### Weekly Checkpoints
+- Complete assigned readings and exercises
+- Build small proof-of-concept systems
+- Participate in discussion forums
+- Document learning in a personal blog or notes
+
+### Monthly Milestones
+- Design and implement a complete system
+- Conduct mock interviews
+- Review and revise previous concepts
+- Update personal system design portfolio
+
+### Final Project
+Design and document a complete system that demonstrates:
+- Scalability considerations
+- Fault tolerance mechanisms
+- Performance optimization
+- Security implementation
+- Monitoring and observability
+
+## Learning Tips
+
+### 1. Start with Fundamentals
+- Don't skip the basics - they're the foundation
+- Understand why each concept exists
+- Practice drawing simple diagrams
+
+### 2. Build Projects
+- Implement what you learn
+- Start with simple systems and scale up
+- Use real-world constraints and requirements
+
+### 3. Practice Communication
+- Explain your designs to others
+- Practice whiteboard interviews
+- Write design documents
+
+### 4. Stay Updated
+- Follow industry blogs and podcasts
+- Read case studies from major tech companies
+- Participate in system design communities
+
+### 5. Focus on Trade-offs
+- Every design decision has pros and cons
+- Understand the context for each choice
+- Be able to justify your decisions
+
+## Common Mistakes to Avoid
+
+### 1. Over-Engineering
+- Start simple and add complexity as needed
+- Don't design for scale you don't need
+- Focus on the problem at hand
+
+### 2. Ignoring Non-Functional Requirements
+- Performance, availability, and security matter
+- Consider maintenance and operational costs
+- Think about user experience
+
+### 3. Not Considering Failure Scenarios
+- Design for failure
+- Plan for partial system failures
+- Consider disaster recovery
+
+### 4. Poor Communication
+- Practice explaining complex concepts simply
+- Use diagrams effectively
+- Be prepared to discuss trade-offs
+
+## Success Metrics
+
+Track your progress with these indicators:
+- **Understanding**: Can explain concepts without looking them up
+- **Application**: Can apply concepts to new problems
+- **Communication**: Can explain designs clearly to others
+- **Problem Solving**: Can break down complex problems systematically
+- **Interview Performance**: Can handle system design interview questions
+
+This roadmap provides a structured approach to mastering system design in 2025, with practical resources and hands-on experience to build real-world skills.

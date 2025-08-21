@@ -1,0 +1,365 @@
+export const metadata = {
+  title: "Practical Challenges & Exercises - System Design",
+  description: "Hands-on projects to reinforce system design concepts and build real-world skills",
+  openGraph: {
+    title: "Practical Challenges & Exercises - System Design",
+    description: "Hands-on projects to reinforce system design concepts and build real-world skills",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["System Design", "Challenges", "Exercises", "Projects", "Practice", "Hands-on"],
+}
+
+# Practical Challenges & Exercises
+
+Hands-on projects to reinforce system design concepts and build real-world skills.
+
+## Challenge 1: URL Shortener Design
+
+**Objective**: Design a system that converts long URLs into short, unique URLs.
+
+**Key Learning Areas**:
+- Database design for URL mappings
+- Hashing algorithms for generating short URLs
+- Caching strategies for frequently accessed URLs
+- Load balancing for high traffic scenarios
+
+**Requirements**:
+- Convert URLs like `https://www.example.com/very/long/path` to `https://short.ly/abc123`
+- Handle 100 million URLs
+- Support 1000 requests per second
+- 99.9% uptime
+
+**Implementation Steps**:
+1. Design the database schema
+2. Choose a hashing algorithm (MD5, SHA-1, or custom)
+3. Implement caching with Redis
+4. Add load balancing with multiple servers
+5. Handle URL expiration and analytics
+
+**Resources**: [Coudo AI Blog: URL Shortener Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 2: Rate Limiter System
+
+**Objective**: Build a rate limiting system to prevent API abuse.
+
+**Key Learning Areas**:
+- Rate limiting algorithms (Token Bucket, Leaky Bucket, Fixed Window)
+- Distributed rate limiting across multiple servers
+- Caching for request counting
+- API security and abuse prevention
+
+**Requirements**:
+- Support 1000 requests per minute per user
+- Work across multiple servers
+- Handle burst traffic gracefully
+- Provide real-time rate limit status
+
+**Implementation Steps**:
+1. Implement Token Bucket algorithm
+2. Use Redis for distributed rate limiting
+3. Add rate limit headers to responses
+4. Handle rate limit violations gracefully
+5. Monitor and alert on abuse patterns
+
+**Resources**: [Coudo AI Blog: Rate Limiter Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 3: Real-time Chat Application
+
+**Objective**: Design a messaging system supporting real-time communication.
+
+**Key Learning Areas**:
+- WebSocket connections for real-time communication
+- Message queues for reliable message delivery
+- Database design for messages and user data
+- Scalability for concurrent users
+
+**Requirements**:
+- Support 10,000 concurrent users
+- Message delivery within 100ms
+- Support group chats and private messages
+- Message persistence and history
+- Online/offline status
+
+**Implementation Steps**:
+1. Design WebSocket connection management
+2. Implement message queuing with RabbitMQ/Kafka
+3. Design database schema for messages and users
+4. Add message encryption and security
+5. Implement push notifications for offline users
+
+**Resources**: [Coudo AI Blog: Chat Application Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 4: Movie Ticket Booking System
+
+**Objective**: Create a system for booking movie tickets with seat management.
+
+**Key Learning Areas**:
+- Concurrency control for seat reservations
+- Database transactions and ACID properties
+- Payment gateway integration
+- Handling high demand for popular movies
+
+**Requirements**:
+- Support 1000 concurrent bookings
+- Prevent double booking of seats
+- Integrate with payment systems
+- Handle seat selection and cancellation
+- Support multiple theaters and showtimes
+
+**Implementation Steps**:
+1. Design database with proper constraints
+2. Implement optimistic locking for seat reservations
+3. Add payment gateway integration
+4. Handle booking timeouts and cancellations
+5. Implement seat selection UI and logic
+
+**Resources**: [Coudo AI Blog: Movie Ticket Booking Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 5: Expense Sharing App (Splitwise Clone)
+
+**Objective**: Build an application for managing group expenses and settlements.
+
+**Key Learning Areas**:
+- Graph theory for user relationships
+- Complex algorithms for optimal payment calculations
+- Notification systems
+- Data consistency in distributed scenarios
+
+**Requirements**:
+- Support groups of up to 50 people
+- Calculate optimal payment settlements
+- Send notifications for expenses and settlements
+- Support multiple currencies
+- Generate expense reports
+
+**Implementation Steps**:
+1. Design graph-based data model for user relationships
+2. Implement settlement algorithms (minimum transactions)
+3. Add notification system with email/push
+4. Design multi-currency support
+5. Create reporting and analytics features
+
+**Resources**: [Coudo AI Blog: Expense Sharing App Design](https://www.coudo.ai/blog/how-to-learn-system-design-practical-exercises-and-case-studies)
+
+---
+
+## Challenge 6: Social Media News Feed
+
+**Objective**: Design a news feed system similar to Facebook or Twitter.
+
+**Key Learning Areas**:
+- Feed generation algorithms
+- Content ranking and personalization
+- Caching strategies for feed data
+- Handling high read-to-write ratios
+
+**Requirements**:
+- Support 1 million users
+- Generate personalized feeds
+- Handle 10,000 posts per second
+- Support real-time updates
+- Implement content moderation
+
+**Implementation Steps**:
+1. Design feed generation algorithms
+2. Implement content ranking with ML
+3. Use caching for feed data
+4. Add real-time updates with WebSockets
+5. Implement content moderation pipeline
+
+---
+
+## Challenge 7: Video Streaming Platform
+
+**Objective**: Build a Netflix-like video streaming service.
+
+**Key Learning Areas**:
+- CDN integration for global content delivery
+- Video encoding and transcoding
+- Recommendation systems
+- Handling high bandwidth requirements
+
+**Requirements**:
+- Support 4K video streaming
+- Global content delivery
+- Personalized recommendations
+- Handle 100,000 concurrent streams
+- Support multiple devices
+
+**Implementation Steps**:
+1. Design video storage and CDN architecture
+2. Implement video transcoding pipeline
+3. Build recommendation engine
+4. Add adaptive bitrate streaming
+5. Implement DRM and content protection
+
+---
+
+## Challenge 8: E-commerce Platform
+
+**Objective**: Design a scalable e-commerce system.
+
+**Key Learning Areas**:
+- Inventory management
+- Order processing workflows
+- Payment processing
+- Search and recommendation systems
+
+**Requirements**:
+- Support 1 million products
+- Handle 10,000 orders per day
+- Real-time inventory updates
+- Product search and filtering
+- Secure payment processing
+
+**Implementation Steps**:
+1. Design product catalog and inventory system
+2. Implement order processing workflow
+3. Add search with Elasticsearch
+4. Integrate payment gateways
+5. Build recommendation system
+
+---
+
+## Challenge 9: Ride-Sharing Service
+
+**Objective**: Create a system similar to Uber or Lyft.
+
+**Key Learning Areas**:
+- Real-time location tracking
+- Matching algorithms
+- Payment processing
+- Driver and rider management
+
+**Requirements**:
+- Real-time driver-rider matching
+- Location tracking and routing
+- Payment processing and splitting
+- Driver and rider ratings
+- Support multiple cities
+
+**Implementation Steps**:
+1. Design location tracking system
+2. Implement matching algorithms
+3. Add real-time communication
+4. Build payment and rating systems
+5. Implement surge pricing logic
+
+---
+
+## Challenge 10: Distributed Cache System
+
+**Objective**: Build a distributed caching system like Redis.
+
+**Key Learning Areas**:
+- Distributed systems
+- Consistency models
+- Partitioning and replication
+- Cache eviction strategies
+
+**Requirements**:
+- Support 1 million key-value pairs
+- Handle 100,000 requests per second
+- Implement LRU eviction
+- Support replication across nodes
+- Handle node failures gracefully
+
+**Implementation Steps**:
+1. Design distributed hash table
+2. Implement cache eviction algorithms
+3. Add replication and consistency
+4. Handle node failures and recovery
+5. Add monitoring and metrics
+
+---
+
+## How to Approach These Challenges
+
+### 1. Planning Phase
+- **Requirements Analysis**: Understand functional and non-functional requirements
+- **Capacity Planning**: Estimate traffic, storage, and compute needs
+- **Component Design**: Break down the system into logical components
+- **Technology Selection**: Choose appropriate technologies and tools
+
+### 2. Design Phase
+- **High-Level Architecture**: Create system diagrams
+- **Database Design**: Design schemas and relationships
+- **API Design**: Define interfaces and contracts
+- **Security Considerations**: Plan authentication, authorization, and data protection
+
+### 3. Implementation Phase
+- **Start Small**: Begin with a minimal viable product
+- **Iterate**: Add features incrementally
+- **Test**: Implement comprehensive testing
+- **Monitor**: Add logging and monitoring
+
+### 4. Optimization Phase
+- **Performance Tuning**: Optimize bottlenecks
+- **Scalability**: Add horizontal scaling
+- **Reliability**: Implement fault tolerance
+- **Security**: Conduct security audits
+
+## Tools for Implementation
+
+### Development Tools
+- **Backend**: Node.js, Python, Java, Go
+- **Databases**: PostgreSQL, MongoDB, Redis
+- **Message Queues**: RabbitMQ, Apache Kafka
+- **Cloud Platforms**: AWS, Google Cloud, Azure
+
+### Design Tools
+- **Diagrams**: Draw.io, Lucidchart, Excalidraw
+- **API Design**: Postman, Swagger
+- **Monitoring**: Prometheus, Grafana, ELK Stack
+
+### Testing Tools
+- **Load Testing**: Apache JMeter, Artillery
+- **API Testing**: Postman, Insomnia
+- **Database Testing**: Database testing frameworks
+
+## Success Metrics
+
+Track your progress with these metrics:
+- **Functional Requirements**: All features working correctly
+- **Performance**: Response times under acceptable thresholds
+- **Scalability**: System handles expected load
+- **Reliability**: High uptime and fault tolerance
+- **Security**: No critical vulnerabilities
+- **Maintainability**: Clean, well-documented code
+
+## Next Steps
+
+1. **Choose a Challenge**: Start with the URL shortener or rate limiter
+2. **Set Up Environment**: Prepare your development environment
+3. **Create Timeline**: Set realistic deadlines for each phase
+4. **Document Progress**: Keep a design journal
+5. **Share Work**: Get feedback from the community
+6. **Iterate**: Continuously improve your designs
+
+## Additional Resources
+
+### Practice Platforms
+- [SystemDesignPrep.com](https://www.systemdesignprep.com/) - Practice questions
+- [Grokking the System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview) - Interactive course
+- [LeetCode System Design](https://leetcode.com/discuss/interview-question/system-design) - Community discussions
+
+### Design Tools
+- [Excalidraw](https://excalidraw.com/) - Free, collaborative diagramming
+- [Draw.io](https://draw.io/) - Professional diagramming
+- [Lucidchart](https://www.lucidchart.com/) - Enterprise diagramming
+
+### Learning Resources
+- **Books**: "Designing Data-Intensive Applications", "System Design Interview" series
+- **YouTube**: Gaurav Sen, Hussein Nasser, Tech Dummies
+- **Blogs**: High Scalability, Martin Fowler's blog
+- **Podcasts**: Software Engineering Daily, The Changelog
+
+Remember: The goal is not just to build working systems, but to understand the trade-offs and design decisions that go into creating scalable, reliable, and maintainable software systems.

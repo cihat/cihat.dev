@@ -1,0 +1,282 @@
+export const metadata = {
+  title: "CDN (Content Delivery Networks) - System Design",
+  description: "Understanding Content Delivery Networks and their role in improving website performance and global content distribution",
+  openGraph: {
+    title: "CDN (Content Delivery Networks) - System Design",
+    description: "Understanding Content Delivery Networks and their role in improving website performance and global content distribution",
+    images: [{ url: "/img/system-design/system-design.jpg" }],
+  },
+  keywords: ["CDN", "Content Delivery Network", "Performance", "Global Distribution", "Caching"],
+}
+
+# CDN (Content Delivery Networks)
+
+Content Delivery Networks (CDNs) are distributed server networks that deliver web content to users based on their geographic location, improving performance and reducing latency.
+
+## What is a CDN?
+
+A CDN is a network of servers distributed across multiple locations worldwide that cache and serve content to users from the server closest to them.
+
+### Key Benefits:
+- **Reduced Latency**: Content served from nearby servers
+- **Improved Performance**: Faster page load times
+- **Reduced Bandwidth Costs**: Less load on origin servers
+- **High Availability**: Multiple servers provide redundancy
+- **DDoS Protection**: Distributed infrastructure resists attacks
+
+## How CDNs Work
+
+```
+User Request → CDN Edge Server → Origin Server (if needed)
+     ↓              ↓                    ↓
+   Fast Response  Cached Content    Original Content
+```
+
+### 1. Content Distribution
+- Origin server uploads content to CDN
+- CDN distributes content across edge servers
+- Users access content from nearest edge server
+
+### 2. Caching Strategy
+- **Static Content**: Images, CSS, JavaScript, videos
+- **Dynamic Content**: API responses, personalized content
+- **Cache Invalidation**: TTL-based or manual invalidation
+
+## CDN Architecture
+
+### Edge Servers
+- Located in multiple geographic regions
+- Cache frequently requested content
+- Serve content to nearby users
+
+### Origin Server
+- Original source of content
+- Updated when content changes
+- Backup when edge servers don't have content
+
+### Load Balancer
+- Routes requests to appropriate edge servers
+- Handles failover and health checks
+- Optimizes for performance and cost
+
+## Popular CDN Providers
+
+### 1. Cloudflare
+- **Features**: Free tier, DDoS protection, SSL certificates
+- **Use Cases**: Small to large websites, security-focused
+- **Pricing**: Free tier available, paid plans for advanced features
+
+### 2. Amazon CloudFront
+- **Features**: AWS integration, global edge locations
+- **Use Cases**: AWS-based applications, video streaming
+- **Pricing**: Pay-per-use model
+
+### 3. Google Cloud CDN
+- **Features**: Google Cloud integration, load balancing
+- **Use Cases**: Google Cloud applications, global distribution
+- **Pricing**: Integrated with Google Cloud billing
+
+### 4. Akamai
+- **Features**: Enterprise-grade, advanced security
+- **Use Cases**: Large enterprises, high-traffic websites
+- **Pricing**: Enterprise pricing model
+
+## CDN Implementation
+
+### 1. Static Content Caching
+```html
+<!-- Original image URL -->
+<img src="https://example.com/images/logo.png" />
+
+<!-- CDN URL -->
+<img src="https://cdn.example.com/images/logo.png" />
+```
+
+### 2. Cache Headers
+```http
+Cache-Control: public, max-age=31536000
+ETag: "33a64df551"
+Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
+```
+
+### 3. Cache Invalidation
+```bash
+# Invalidate specific file
+curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  --data '{"files":["https://example.com/image.jpg"]}'
+```
+
+## CDN Optimization Strategies
+
+### 1. Content Types
+- **Images**: WebP format, responsive images
+- **Videos**: Adaptive bitrate streaming
+- **JavaScript/CSS**: Minification and compression
+- **Fonts**: Web font optimization
+
+### 2. Cache Policies
+- **Long TTL**: Static assets (images, CSS, JS)
+- **Medium TTL**: Semi-dynamic content (blog posts)
+- **Short TTL**: Dynamic content (user data)
+- **No Cache**: Real-time data (stock prices)
+
+### 3. Geographic Distribution
+- **Edge Locations**: Choose servers close to users
+- **Load Balancing**: Distribute traffic across servers
+- **Failover**: Automatic server switching
+
+## CDN vs. Traditional Hosting
+
+### Traditional Hosting
+```
+User → Internet → Single Server → Response
+```
+
+**Problems:**
+- High latency for distant users
+- Single point of failure
+- Limited bandwidth
+- No DDoS protection
+
+### CDN Hosting
+```
+User → Internet → Nearest Edge Server → Response
+```
+
+**Benefits:**
+- Low latency for all users
+- Multiple points of presence
+- High bandwidth capacity
+- Built-in DDoS protection
+
+## CDN Use Cases
+
+### 1. Website Performance
+- **Static Assets**: Images, CSS, JavaScript
+- **Media Files**: Videos, audio, documents
+- **Web Fonts**: Custom typography
+
+### 2. Video Streaming
+- **Live Streaming**: Real-time video delivery
+- **Video on Demand**: Pre-recorded content
+- **Adaptive Streaming**: Quality adjustment
+
+### 3. API Acceleration
+- **API Responses**: Cached API data
+- **Authentication**: Token validation
+- **Rate Limiting**: Request throttling
+
+### 4. Security
+- **DDoS Protection**: Attack mitigation
+- **SSL/TLS**: Encrypted connections
+- **Bot Protection**: Automated traffic filtering
+
+## CDN Configuration
+
+### 1. DNS Configuration
+```dns
+# CNAME record for CDN
+www.example.com.    CNAME   example.com.cdn.cloudflare.com.
+```
+
+### 2. Cache Headers
+```http
+# Long-term caching for static assets
+Cache-Control: public, max-age=31536000, immutable
+
+# Short-term caching for dynamic content
+Cache-Control: public, max-age=300, must-revalidate
+
+# No caching for sensitive data
+Cache-Control: no-cache, no-store, must-revalidate
+```
+
+### 3. Compression
+```nginx
+# Enable gzip compression
+gzip on;
+gzip_types text/plain text/css application/json application/javascript;
+```
+
+## Monitoring and Analytics
+
+### 1. Performance Metrics
+- **Response Time**: Time to first byte
+- **Throughput**: Bytes transferred per second
+- **Cache Hit Ratio**: Percentage of cached requests
+- **Error Rate**: Failed request percentage
+
+### 2. Geographic Analytics
+- **User Locations**: Where requests originate
+- **Server Performance**: Response times by region
+- **Traffic Patterns**: Peak usage times
+
+### 3. Cost Optimization
+- **Bandwidth Usage**: Data transfer costs
+- **Request Count**: API call costs
+- **Cache Efficiency**: Storage costs
+
+## Best Practices
+
+### 1. Content Strategy
+- **Cache Static Content**: Images, CSS, JavaScript
+- **Optimize File Sizes**: Compression and minification
+- **Use Appropriate Formats**: WebP for images, Brotli for text
+
+### 2. Cache Management
+- **Set Proper TTL**: Balance freshness and performance
+- **Implement Cache Invalidation**: Update content when needed
+- **Monitor Cache Hit Rates**: Optimize caching strategy
+
+### 3. Security
+- **Enable HTTPS**: Encrypt all traffic
+- **Configure Security Headers**: CSP, HSTS, etc.
+- **Monitor for Attacks**: DDoS and bot traffic
+
+### 4. Performance
+- **Use Multiple CDNs**: Geographic redundancy
+- **Implement Edge Computing**: Process data at edge
+- **Monitor Performance**: Regular testing and optimization
+
+## Real-world Examples
+
+### 1. Netflix
+- **CDN**: Netflix Open Connect
+- **Use Case**: Video streaming to 200+ countries
+- **Strategy**: ISP partnerships for local caching
+
+### 2. Facebook
+- **CDN**: Facebook's internal CDN
+- **Use Case**: Global content delivery
+- **Strategy**: Custom edge servers in data centers
+
+### 3. Amazon
+- **CDN**: Amazon CloudFront
+- **Use Case**: E-commerce and AWS services
+- **Strategy**: Global edge locations
+
+### 4. YouTube
+- **CDN**: Google's global CDN
+- **Use Case**: Video streaming worldwide
+- **Strategy**: Adaptive bitrate streaming
+
+## Future Trends
+
+### 1. Edge Computing
+- **Serverless Functions**: Process data at edge
+- **AI/ML**: Machine learning at edge locations
+- **IoT Integration**: Real-time data processing
+
+### 2. 5G Networks
+- **Ultra-Low Latency**: Sub-10ms response times
+- **High Bandwidth**: 4K/8K video streaming
+- **Network Slicing**: Customized network segments
+
+### 3. WebAssembly
+- **Client-Side Processing**: Heavy computation in browser
+- **Edge Functions**: WASM at CDN edge
+- **Performance Optimization**: Faster than JavaScript
+
+CDNs are essential for modern web applications, providing performance, security, and global reach. Understanding CDN concepts is crucial for designing scalable and performant systems.
