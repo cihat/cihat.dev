@@ -45,18 +45,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   // Blog posts
-  const blogPosts = posts.map((post) => {
-    // Parse the date string and create a proper date
-    const postDate = new Date(post.date)
-    const formattedDate = format(postDate, 'yyyy-MM-dd')
-    
-    return {
-      url: post.link,
-      lastModified: formattedDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }
-  })
+  const blogPosts = posts
+    .filter((post) => post.link) // Filter out posts with undefined links
+    .map((post) => {
+      // Parse the date string and create a proper date
+      const postDate = new Date(post.date)
+      const formattedDate = format(postDate, 'yyyy-MM-dd')
+      
+      return {
+        url: post.link!, // Use non-null assertion since we filtered undefined values
+        lastModified: formattedDate,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      }
+    })
 
   return [
     ...staticPages,
