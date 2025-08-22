@@ -109,7 +109,7 @@ export default function BookmarkLayout() {
   };
 
   return (
-    <Container className="left-animation text-sm overflow-hidden">
+    <Container className="left-animation text-sm overflow-hidden w-full">
       <div className="flex flex-col space-y-3 w-full mb-4">
         <Tabs
           defaultValue={BookmarkType.Technical}
