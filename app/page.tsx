@@ -27,15 +27,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Home() {
+// Posts bileşenini ayrı bir async component olarak tanımla
+async function PostsWithData() {
   const posts = await getPostsWithViewData();
+  return <Posts posts={posts} />;
+}
 
+export default function Home() {
   return (
     <Container className="flex flex-col sm:py-6 py-3 h-[calc(100vh-140px)]" as="main">
-      <Suspense fallback={<div>Loading posts...</div>}>
-        <Posts posts={posts}/>
+      <Suspense fallback={<div className="flex items-center justify-center h-full">Loading posts...</div>}>
+        <PostsWithData />
       </Suspense>
-      <RandomQuote />
+      <Suspense fallback={<div className="h-8 mt-8" />}>
+        <RandomQuote />
+      </Suspense>
     </Container>
   )
 }

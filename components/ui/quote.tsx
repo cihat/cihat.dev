@@ -1,8 +1,7 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect, useCallback } from "react";
 import { IQuote } from "@/types"
-import { useEffect } from "react";
 import getQuote from "@/lib/fetch-stoic-quote"
 import cx from "@/lib/cx";
 
@@ -17,18 +16,25 @@ export function RandomQuote({ quoteProp, authorProp }: Props) {
     author: ""
   })
 
+  const fetchQuote = useCallback(async () => {
+    try {
+      const data = await getQuote()
+      setQuote(data)
+    } catch (error) {
+      console.warn('Failed to fetch quote:', error)
+    }
+  }, [])
+
   useEffect(() => {
     if (quoteProp && authorProp && quoteProp?.length > 0) {
       setQuote({
         text: quoteProp,
         author: authorProp
       })
+    } else {
+      fetchQuote()
     }
-    else (async () => {
-      const data = await getQuote()
-      setQuote(data)
-    })()
-  }, [authorProp, quoteProp])
+  }, [quoteProp, authorProp, fetchQuote])
 
   return (
     <>
@@ -43,7 +49,7 @@ export function RandomQuote({ quoteProp, authorProp }: Props) {
         <div className="relative z-10">
           <p className="text-gray-800 dark:text-white">
             <em className="text-sm sm:text-lg">
-              “{quote.text}”
+              "{quote.text}"
             </em></p>
           <p className="text-right font-bold">{quote.author}</p>
         </div>

@@ -40,7 +40,14 @@ function getRedisClient(): Redis | null {
   }
 
   try {
-    const config = { url, token }
+    const config = { 
+      url, 
+      token,
+      // Timeout ayarları ekle
+      timeout: 5000,
+      retryDelayOnFailover: 100,
+      maxRetriesPerRequest: 3
+    }
     redis = new Redis(config)
     if (!isBuildTime) {
       console.log('✅ Redis connection initialized successfully')

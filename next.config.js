@@ -8,8 +8,9 @@ const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   reactStrictMode: true,
   experimental: {
-    mdxRs: true
+    mdxRs: true,
   },
+  compress: true,
   env: {
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
     UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,
@@ -41,11 +42,26 @@ const nextConfig = {
         hostname: "**",
       }
     ],
+    formats: ['image/webp', 'image/avif'],
   },
-  webpack(config) {
+  webpack(config, { dev, isServer }) {
     config.resolve.fallback = {
       fs: false,
     };
+
+    // Bundle analizi için
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      };
+    }
 
     return config;
   }

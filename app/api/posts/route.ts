@@ -3,6 +3,13 @@ import { getPostsWithViewData } from "@/lib/get-posts";
 
 export const dynamic = "force-dynamic";
 
+// Cache için headers ekle
 export async function GET() {
-  return NextResponse.json(await getPostsWithViewData());
+  const posts = await getPostsWithViewData();
+  
+  return NextResponse.json(posts, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+    },
+  });
 }

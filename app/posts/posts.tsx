@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { Suspense } from "react";
 import useSWR from "swr";
@@ -29,20 +29,23 @@ export function Posts({ posts: initialPosts }) {
   const [input, setInput] = useState("");
   const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
 
+  // SWR polling'i kaldır ve sadece manuel refresh için kullan
   const { data: posts } = useSWR("/api/posts", fetcher, {
     fallbackData: initialPosts,
-    refreshInterval: 5000,
+    refreshInterval: 0, // Polling'i kapat
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
   });
 
-  function sortDate() {
+  const sortDate = useCallback(() => {
     setSort((sort) => ["date", sort[0] !== "date" || sort[1] === "asc" ? "desc" : "asc"]);
-  }
+  }, []);
 
-  function sortViews() {
+  const sortViews = useCallback(() => {
     setSort((sort) => [sort[0] === "views" && sort[1] === "asc" ? "date" : "views", sort[0] !== "views" ? "desc" : sort[1] === "asc" ? "desc" : "asc"]);
-  }
+  }, []);
 
-  function handleEmoji() {
+  const handleEmoji = useCallback(() => {
     switch (lang) {
       case LangEnum.en: {
         setFlag("🇹🇷🇬🇧");
@@ -60,9 +63,15 @@ export function Posts({ posts: initialPosts }) {
         break;
       }
     }
-  }
+  }, [lang]);
 
-  const fuse = useMemo(() => new Fuse(posts, { keys: ["title", "category"], threshold: 0.4 }), [posts]);
+  // Fuse.js'i sadece posts değiştiğinde yeniden oluştur
+  const fuse = useMemo(() => new Fuse(posts, { 
+    keys: ["title", "category"], 
+    threshold: 0.4,
+    includeScore: true,
+    minMatchCharLength: 2
+  }), [posts]);
 
   const debouncedSearch = useRef(
     debounce((query: string) => {
@@ -75,7 +84,9 @@ export function Posts({ posts: initialPosts }) {
     }, 300)
   ).current;
 
-  useEffect(() => debouncedSearch(input), [input, debouncedSearch]);
+  useEffect(() => {
+    debouncedSearch(input);
+  }, [input, debouncedSearch, fuse]);
 
   return (
     <Suspense fallback={<div>Loading</div>}>

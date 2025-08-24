@@ -117,9 +117,9 @@ export default function BookmarkLayout() {
           className="w-full flex flex-col justify-center items-center"
         >
           <TabsList className="bg-[var(--primary-color)]">
-            <TabsTrigger value={BookmarkType.Technical}>Technical</TabsTrigger>
-            <TabsTrigger value={BookmarkType.DesignArtMusic}>Design & Art & Music</TabsTrigger>
-            <TabsTrigger value={BookmarkType.Other}>Other</TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value={BookmarkType.Technical}>Technical</TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value={BookmarkType.DesignArtMusic}>Design & Art & Music</TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value={BookmarkType.Other}>Other</TabsTrigger>
           </TabsList>
         </Tabs>
 
