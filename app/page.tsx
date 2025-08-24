@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Static generation için - çok daha uzun cache
+export const revalidate = 86400; // 24 saat
+
 // Posts bileşenini ayrı bir async component olarak tanımla
 async function PostsWithData() {
   const posts = await getPostsWithViewData();
@@ -36,7 +39,7 @@ async function PostsWithData() {
 export default function Home() {
   return (
     <Container className="flex flex-col sm:py-6 py-3 h-[calc(100vh-140px)]" as="main">
-      <Suspense fallback={<div className="flex items-center justify-center h-full">Loading posts...</div>}>
+      <Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-pulse">Loading posts...</div></div>}>
         <PostsWithData />
       </Suspense>
       <Suspense fallback={<div className="h-8 mt-8" />}>

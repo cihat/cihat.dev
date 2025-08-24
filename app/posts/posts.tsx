@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { Suspense } from "react";
-import useSWR from "swr";
 import type { Post } from "@/types";
 import Category from "./category";
 import { CategoryEnum, LangEnum } from "@/types";
@@ -17,8 +16,6 @@ import { useSearchParams } from "next/navigation";
 
 type SortSetting = ["date" | "views", "desc" | "asc"];
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 export function Posts({ posts: initialPosts }) {
   const searchParams = useSearchParams();
 
@@ -29,13 +26,8 @@ export function Posts({ posts: initialPosts }) {
   const [input, setInput] = useState("");
   const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
 
-  // SWR polling'i kaldır ve sadece manuel refresh için kullan
-  const { data: posts } = useSWR("/api/posts", fetcher, {
-    fallbackData: initialPosts,
-    refreshInterval: 0, // Polling'i kapat
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  // Posts'u cache'le - props'tan gelen data'yı kullan
+  const posts = useMemo(() => initialPosts, [initialPosts]);
 
   const sortDate = useCallback(() => {
     setSort((sort) => ["date", sort[0] !== "date" || sort[1] === "asc" ? "desc" : "asc"]);
@@ -81,7 +73,7 @@ export function Posts({ posts: initialPosts }) {
         const results = fuse.search(query.trim()).map((result) => result.item as Post);
         setFilteredPosts(results);
       }
-    }, 300)
+    }, 200) // Debounce süresini kısalt
   ).current;
 
   useEffect(() => {

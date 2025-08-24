@@ -146,10 +146,15 @@
     },
     {
       "id": "system-design",
+      "category": "Technical",
+      "link": "https://cihat.dev/2025/system-design",
+      "description": "System Design",
+      "issueNumber": 14,
       "path": "system-design",
       "date": "August 22, 2025",
       "title": "System Design",
-      "minuteToRead": 2
+      "minuteToRead": 30,
+      "language": "en-US"
     }
   ]
 }

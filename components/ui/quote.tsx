@@ -10,6 +10,11 @@ type Props = {
   authorProp?: string
 }
 
+// Cache for quotes to avoid repeated API calls
+let quoteCache: IQuote | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 export function RandomQuote({ quoteProp, authorProp }: Props) {
   const [quote, setQuote] = useState<IQuote>({
     text: "",
@@ -17,9 +22,20 @@ export function RandomQuote({ quoteProp, authorProp }: Props) {
   })
 
   const fetchQuote = useCallback(async () => {
+    // Check cache first
+    const now = Date.now();
+    if (quoteCache && (now - cacheTimestamp) < CACHE_DURATION) {
+      setQuote(quoteCache);
+      return;
+    }
+
     try {
       const data = await getQuote()
       setQuote(data)
+      
+      // Update cache
+      quoteCache = data;
+      cacheTimestamp = now;
     } catch (error) {
       console.warn('Failed to fetch quote:', error)
     }
@@ -32,6 +48,7 @@ export function RandomQuote({ quoteProp, authorProp }: Props) {
         author: authorProp
       })
     } else {
+      // Her durumda API çağrısı yap
       fetchQuote()
     }
   }, [quoteProp, authorProp, fetchQuote])
