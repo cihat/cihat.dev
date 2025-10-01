@@ -1,5 +1,3 @@
-export const runtime = "edge";
-
 import { links } from "@/lib/meta";
 import { headers } from "next/headers";
 import { redirect, notFound } from "next/navigation";

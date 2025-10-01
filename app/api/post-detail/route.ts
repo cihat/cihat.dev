@@ -1,5 +1,3 @@
-export const runtime = "edge";
-
 import postsData from "@/lib/posts.json";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
