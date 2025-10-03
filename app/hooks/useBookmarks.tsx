@@ -54,7 +54,7 @@ export function useBookmarks(initialTab, initialTimeRange) {
   const [timeRange, setTimeRange] = useState(initialTimeRange);
   const [searchInput, setSearchInput] = useState("");
   const [dateRange, setDateRange] = useState({
-    from: subWeeks(new Date(), 1),
+    from: addDays(subWeeks(new Date(), 1), -1),
     //! Fix better this bug, i add one day for hot fix but it's not the best solution
     to: addDays(new Date(), 1),
   });
