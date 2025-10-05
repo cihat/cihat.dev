@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { executeClientRedisCommand } from '@/lib/redis-client'
 
 interface UseViewCountReturn {
   views: number
@@ -10,7 +9,7 @@ interface UseViewCountReturn {
 }
 
 /**
- * Client-side hook for tracking and displaying view counts
+ * Client-side hook for tracking and displaying view counts using API
  * Automatically increments view count on mount
  */
 export function useViewCount(postId: string): UseViewCountReturn {
@@ -23,15 +22,21 @@ export function useViewCount(postId: string): UseViewCountReturn {
 
     async function trackView() {
       try {
-        // Increment view count
-        const newViews = await executeClientRedisCommand(
-          (redis) => redis.hincrby("views", postId, 1),
-          0,
-          2000
-        )
+        const response = await fetch(`/api/post-detail?id=${postId}&incr=1`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to track view')
+        }
+
+        const data = await response.json()
 
         if (isMounted) {
-          setViews(newViews)
+          setViews(data.views ?? 0)
           setIsLoading(false)
         }
       } catch (err) {
@@ -66,14 +71,21 @@ export function useViewCountRead(postId: string): UseViewCountReturn {
 
     async function fetchViews() {
       try {
-        const currentViews = await executeClientRedisCommand(
-          (redis) => redis.hget<number>("views", postId),
-          0,
-          2000
-        )
+        const response = await fetch(`/api/post-detail?id=${postId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch views')
+        }
+
+        const data = await response.json()
 
         if (isMounted) {
-          setViews(currentViews ?? 0)
+          setViews(data.views ?? 0)
           setIsLoading(false)
         }
       } catch (err) {

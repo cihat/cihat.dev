@@ -17,11 +17,34 @@ const DEFAULT_CLAPS = {
   clapCountFormatted: "0",
 };
 
+// Rate limiting map (in-memory, simple implementation)
+// In production, use Redis or a proper rate limiting service
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(identifier: string, maxRequests: number = 10, windowMs: number = 60000): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(identifier);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs });
+    return true;
+  }
+
+  if (record.count >= maxRequests) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const postId = url.searchParams.get("id") ?? null;
   const scoreParam = url.searchParams.get("score");
-  const score = scoreParam ? Number(scoreParam) : 1;
+  
+  // Input validation: clamp score between 1 and 5
+  const score = scoreParam ? Math.max(1, Math.min(5, Number(scoreParam) || 1)) : 1;
 
   if (postId === null) {
     return NextResponse.json(
@@ -47,6 +70,24 @@ export async function GET(req: NextRequest) {
       },
       { status: 400 }
     );
+  }
+
+  // Rate limiting for increment operations
+  if (scoreParam != null) {
+    const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const rateLimitKey = `clap:${clientIp}:${postId}`;
+    
+    if (!checkRateLimit(rateLimitKey, 10, 60000)) {
+      return NextResponse.json(
+        {
+          error: {
+            message: "Too many requests. Please try again later.",
+            code: "RATE_LIMIT_EXCEEDED",
+          },
+        },
+        { status: 429 }
+      );
+    }
   }
 
   try {

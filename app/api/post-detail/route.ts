@@ -8,6 +8,26 @@ import { executeRedisCommand } from "@/lib/redis"
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+// Rate limiting for view increments
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(identifier: string, maxRequests: number = 5, windowMs: number = 60000): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(identifier);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs });
+    return true;
+  }
+
+  if (record.count >= maxRequests) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const id = url.searchParams.get("id") ?? null;
@@ -37,6 +57,24 @@ export async function GET(req: NextRequest) {
       },
       { status: 400 }
     );
+  }
+
+  // Rate limiting for view increments
+  if (shouldIncrement) {
+    const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const rateLimitKey = `view:${clientIp}:${id}`;
+    
+    if (!checkRateLimit(rateLimitKey, 5, 60000)) {
+      return NextResponse.json(
+        {
+          error: {
+            message: "Too many requests. Please try again later.",
+            code: "RATE_LIMIT_EXCEEDED",
+          },
+        },
+        { status: 429 }
+      );
+    }
   }
 
   try {

@@ -5,14 +5,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
     "start": "next start",
     "lint": "next lint",
     "prep-build": "rm -rf .next && pnpm i && pnpm run build",
     "prep-dev": "rip .next node_modules && pnpm i && pnpm dev",
+    "clean": "rm -rf .next out node_modules/.cache",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "knip": "knip"
   },
   "engines": {
     "node": ">=20.11.0"
@@ -51,7 +53,6 @@
     "swr": "^2.3.3",
     "tailwindcss-animate": "^1.0.7",
     "time-ago": "^0.2.1",
-    "typescript": "5.8.2",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -62,9 +63,11 @@
     "@types/react-dom": "19.0.4",
     "eslint": "9.36.0",
     "eslint-config-next": "15.5.4",
+    "knip": "5.64.1",
     "postcss": "^8.4.47",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.14",
+    "typescript": "5.8.2",
     "wrangler": "4.40.3"
   },
   "pnpm": {

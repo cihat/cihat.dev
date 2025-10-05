@@ -7,10 +7,35 @@ const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   reactStrictMode: true,
+  
+  // Performance optimizations
+  swcMinify: true,
+  compress: true,
+  
+  // Disable sourcemaps in production for faster builds
+  productionBrowserSourceMaps: false,
+  
   experimental: {
     mdxRs: true,
+    // Optimize package imports for better tree-shaking
+    optimizePackageImports: [
+      'react-icons',
+      'lucide-react',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-tabs',
+    ],
+    // Turbopack optimizations
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
-  compress: true,
+  
   env: {
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
     UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,
@@ -21,7 +46,9 @@ const nextConfig = {
     VERCEL_URL: process.env.VERCEL_URL,
     RAINDROP_ACCESS_TOKEN: process.env.RAINDROP_ACCESS_TOKEN,
   },
+  
   poweredByHeader: false,
+  
   headers() {
     return [
       {
@@ -31,6 +58,7 @@ const nextConfig = {
       },
     ]
   },
+  
   images: {
     remotePatterns: [
       {
@@ -43,23 +71,50 @@ const nextConfig = {
       }
     ],
     formats: ['image/webp', 'image/avif'],
+    // Optimize image loading
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
   },
+  
   webpack(config, { dev, isServer }) {
+    // Disable sourcemaps in production
+    if (!dev) {
+      config.devtool = false;
+    }
+    
     config.resolve.fallback = {
       fs: false,
     };
 
-    // Bundle analizi için
+    // Optimize production builds
     if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-        },
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'deterministic',
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            // Vendor chunk
+            vendor: {
+              name: 'vendor',
+              chunks: 'all',
+              test: /node_modules/,
+              priority: 20
+            },
+            // Common chunk
+            common: {
+              name: 'common',
+              minChunks: 2,
+              chunks: 'all',
+              priority: 10,
+              reuseExistingChunk: true,
+              enforce: true
+            }
+          }
+        }
       };
     }
 
