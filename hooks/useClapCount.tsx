@@ -31,6 +31,7 @@ export function useClapCount(postId: string): UseClapCountReturn {
           headers: {
             'Content-Type': 'application/json',
           },
+          cache: 'no-store',
         })
 
         if (!response.ok) {
@@ -69,6 +70,7 @@ export function useClapCount(postId: string): UseClapCountReturn {
         headers: {
           'Content-Type': 'application/json',
         },
+        cache: 'no-store',
       })
 
       if (!response.ok) {

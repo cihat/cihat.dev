@@ -32,6 +32,7 @@ export function useViewCount(postId: string, skip = false): UseViewCountReturn {
           headers: {
             'Content-Type': 'application/json',
           },
+          cache: 'no-store',
         })
 
         if (!response.ok) {
@@ -86,6 +87,7 @@ export function useViewCountRead(postId: string, skip = false): UseViewCountRetu
           headers: {
             'Content-Type': 'application/json',
           },
+          cache: 'no-store',
         })
 
         if (!response.ok) {
