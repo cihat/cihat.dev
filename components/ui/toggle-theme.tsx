@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { themeEffect } from "@/lib/theme-effect";
 import Image from "next/image";
+import { Monitor } from "lucide-react";
 
 export function ThemeToggle() {
   const [preference, setPreference] = useState<undefined | null | string>(undefined);
@@ -63,24 +64,26 @@ export function ThemeToggle() {
           bg-gray-200
           dark:bg-[#313131]
           theme-system:!bg-inherit
-          [&_.sun-icon]:hidden
-          dark:[&_.moon-icon]:hidden
-          dark:[&_.sun-icon]:inline
         }`}
         onClick={(ev) => {
           ev.preventDefault();
           // prevent the hover state from rendering
           setIsHoveringOverride(true);
 
-          let newPreference: string | null = currentTheme === "dark" ? "light" : "dark";
-          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-
-          if (preference !== null && systemTheme === currentTheme) {
+          let newPreference: string | null;
+          
+          // Cycle through: light -> dark -> system (null)
+          if (preference === "light") {
+            newPreference = "dark";
+            localStorage.setItem("theme", "dark");
+          } else if (preference === "dark") {
             newPreference = null;
             localStorage.removeItem("theme");
           } else {
-            localStorage.setItem("theme", newPreference);
+            newPreference = "light";
+            localStorage.setItem("theme", "light");
           }
+          
           setPreference(newPreference);
         }}
         onMouseEnter={() => setIsHovering(true)}
@@ -89,12 +92,26 @@ export function ThemeToggle() {
           setIsHoveringOverride(false);
         }}
       >
-        <span className="sun-icon">
-          <Image width={20} height={20} src="/icons/sun.svg" alt="sun" title="Light mode icon" />
-        </span>
-        <span className="moon-icon">
-          <Image width={20} height={20} src="/icons/moon.svg" alt="moon" title="Dark mode icon" />
-        </span>
+        {/* Light mode - Sun icon */}
+        {preference === "light" && (
+          <span className="sun-icon">
+            <Image width={20} height={20} src="/icons/sun.svg" alt="sun" title="Light mode icon" />
+          </span>
+        )}
+        
+        {/* Dark mode - Moon icon */}
+        {preference === "dark" && (
+          <span className="moon-icon">
+            <Image width={20} height={20} src="/icons/moon.svg" alt="moon" title="Dark mode icon" />
+          </span>
+        )}
+        
+        {/* System mode - Monitor icon (when preference is null or undefined) */}
+        {(preference === null || preference === undefined) && (
+          <span className="system-icon" title="System mode - follows your device settings">
+            <Monitor size={20} className="text-gray-700 dark:text-gray-300" />
+          </span>
+        )}
       </button>
     </div>
   );
