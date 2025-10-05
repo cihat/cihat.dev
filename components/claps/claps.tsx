@@ -154,10 +154,22 @@ export default function Claps({
 
   useEffect(() => {
     if(!pathname) return;
+    
+    // Reset state immediately when pathname changes to prevent showing old data
+    setReady(false);
+    setCacheCount(0);
+    setData({
+      totalScore: 0,
+      userScore: 0,
+      totalUsers: 0,
+      maxClaps: 0,
+    });
+    
     getData();
 
     return () => {
       setReady(false);
+      setCacheCount(0);
       setData({
         totalScore: 0,
         userScore: 0,

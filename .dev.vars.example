@@ -1,0 +1,28 @@
+# Unsplash API Keys
+UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
+UNSPLASH_SECRET_KEY=your_unsplash_secret_key_here
+
+# Upstash Redis
+UPSTASH_REDIS_REST_URL=your_upstash_redis_url_here
+UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_token_here
+
+# Stoic Quotes API
+STOIC_API_PATH=https://stoic-quotes.com/api/quote
+
+# Base URL
+BASE_URL=./
+
+# Raindrop.io API
+RAINDROP_ACCESS_TOKEN=your_raindrop_access_token_here
+
+# Literal.club API
+# Get your token from Literal.club:
+# 1. Go to literal.club and login
+# 2. Open browser DevTools (F12)
+# 3. Go to Application tab -> Local Storage
+# 4. Find 'profile' key and copy the token value
+LITERAL_API_TOKEN=your_literal_api_token_here
+
+# Public keys for client-side (NEXT_PUBLIC_ prefix)
+NEXT_PUBLIC_UPSTASH_REDIS_REST_URL=your_upstash_redis_url_here
+NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_token_here

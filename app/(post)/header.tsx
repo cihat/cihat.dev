@@ -18,6 +18,9 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
     {
       fallbackData: initialPost,
       refreshInterval: 5000,
+      revalidateOnMount: true,
+      dedupingInterval: 0, // Disable deduplication to prevent stale cache
+      keepPreviousData: false, // Don't show previous post data when navigating
     }
   );
 
@@ -82,10 +85,17 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
 function Views({ id, mutate, defaultValue }) {
   const views = defaultValue;
   const didLogViewRef = useRef(false);
+  const lastIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     // Skip if no ID (shouldn't happen, but safety check)
     if (!id) return;
+    
+    // Reset the ref if the post ID has changed
+    if (lastIdRef.current !== id) {
+      didLogViewRef.current = false;
+      lastIdRef.current = id;
+    }
     
     // Remove the development check - we want to track views in all environments
     if (!didLogViewRef.current) {
