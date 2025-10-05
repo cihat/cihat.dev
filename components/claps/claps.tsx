@@ -68,11 +68,19 @@ export default function Claps({
       const url = window.location.pathname
       const postId = url.substring(url.lastIndexOf('/') + 1);
 
+      // Skip if no valid postId
+      if (!postId || postId === '' || postId === 'undefined') {
+        console.log('⚠️  Skipping clap save - no valid post ID');
+        setCacheCount(0);
+        return setReactionAnim(ReactionClass.no);
+      }
+
       try {
         if (score >= data.maxClaps) {
           return setReactionAnim(ReactionClass.no);
         }
 
+        console.log('👏 Saving clap for:', postId, 'score:', score);
         const url = `/api/claps?score=${score}&id=${encodeURIComponent(postId)}`
         const response = await fetch(url, {
           method: "GET",
@@ -82,15 +90,17 @@ export default function Claps({
         });
 
         if (!response.ok) {
+          console.log('❌ Clap save failed:', response.status);
           return setReactionAnim(ReactionClass.no);
         }
 
         const newData = await response.json();
+        console.log('✅ Clap saved:', newData);
         setData(newData);
 
         setReactionAnim(ReactionClass.yes);
       } catch (error) {
-        console.error(error);
+        console.error('❌ Clap save error:', error);
       } finally {
         setCacheCount(0);
       }
@@ -109,7 +119,15 @@ export default function Claps({
     const url = window.location.pathname
     const postId = url.substring(url.lastIndexOf('/') + 1);
 
+    // Skip if no valid postId (e.g., on home page or root paths)
+    if (!postId || postId === '' || postId === 'undefined') {
+      console.log('⚠️  Skipping claps - no valid post ID');
+      setReady(true);
+      return;
+    }
+
     try {
+      console.log('👏 Fetching claps for:', postId);
       const url = "/api/claps?id=" + encodeURIComponent(postId)
       const response = await fetch(url, {
         method: "GET",
@@ -118,13 +136,17 @@ export default function Claps({
         },
       });
 
-      if (!response.ok) return;
+      if (!response.ok) {
+        console.log('❌ Claps fetch failed:', response.status);
+        return;
+      }
 
       const data = await response.json();
+      console.log('✅ Claps data:', data);
 
       setData(data);
     } catch (error) {
-      console.log(error);
+      console.log('❌ Claps error:', error);
     } finally {
       setReady(true);
     }

@@ -63,6 +63,7 @@ function getRedisClient(): Redis | null {
 }
 
 // Helper function to execute Redis commands with timeout and error handling
+// Default timeout is 3 seconds for better reliability
 export async function executeRedisCommand<T>(
   command: (client: Redis) => Promise<T>,
   fallback: T,
@@ -71,6 +72,7 @@ export async function executeRedisCommand<T>(
   const redis = getRedisClient()
   
   if (!redis) {
+    console.log('⚠️  Redis client not available, using fallback')
     return fallback
   }
 
@@ -84,6 +86,7 @@ export async function executeRedisCommand<T>(
       timeoutPromise
     ])
     
+    console.log('✅ Redis command successful')
     return result
   } catch (error) {
     console.warn('⚠️  Redis command failed:', error)

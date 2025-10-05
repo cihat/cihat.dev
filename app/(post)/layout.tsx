@@ -1,7 +1,4 @@
-// @ts-nocheck
-
 import { Header } from "./header";
-import { getPostsWithViewData } from "@/lib/get-posts";
 import Container from "@/components/ui/container";
 import Pagination from "@/components/pagination";
 import Comment from "@/components/comment";
@@ -10,12 +7,42 @@ import ReadingProgressIndicator from "@/components/reading-progress-indicator";
 import SocialShare from "@/components/social-share";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
+import { headers } from 'next/headers';
 
 // Enable static generation with revalidation
 export const revalidate = 300; // Revalidate every 5 minutes
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const pageConfig = postsData.posts.find((post) => post.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }) {
+  const resolvedParams = await params;
+  
+  let slug: string | null = null;
+  
+  // Try to get slug from params first (for dynamic routes)
+  if (resolvedParams?.slug) {
+    slug = resolvedParams.slug.join('/');
+  } else {
+    // For static routes, get the pathname from headers (set by middleware)
+    const headersList = await headers();
+    const pathname = headersList.get('x-pathname') || '';
+    // Extract slug from pathname (e.g., "/2025/system-design" -> "system-design")
+    const pathParts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/');
+    // Get the last part as the slug (e.g., "system-design" from "/2025/system-design")
+    slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : '';
+  }
+  
+  if (!slug) {
+    return {
+      title: 'Blog Post | Cihat Salik',
+      description: 'Read my latest blog post about software development and technology.',
+    };
+  }
+  
+  const pageConfig = postsData.posts.find((post) => {
+    // Match either the full path or just the last segment
+    const fullPath = post.path;
+    const lastSegment = post.path.split('/').pop();
+    return fullPath === slug || lastSegment === slug || slug.endsWith(fullPath) || slug.endsWith(post.id);
+  });
 
   if (!pageConfig) {
     return {
@@ -80,9 +107,52 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default async function Layout({ children, params }) {
-  const posts = await getPostsWithViewData();
-  const pageConfig = postsData.posts.find((post) => post.slug === params.slug);
+export default async function Layout({ children, params }: { children: React.ReactNode, params: Promise<{ slug?: string[] }> }) {
+  // Use static posts data - no Redis calls on server
+  // The Header component will fetch fresh view counts client-side via SWR
+  const resolvedParams = await params;
+  
+  let pageConfig: typeof postsData.posts[0] | undefined = undefined;
+  let slug: string | null = null;
+  
+  // Try to get slug from params first (for dynamic routes)
+  if (resolvedParams?.slug) {
+    slug = resolvedParams.slug.join('/');
+  } else {
+    // For static routes, get the pathname from headers (set by middleware)
+    const headersList = await headers();
+    const pathname = headersList.get('x-pathname') || '';
+    // Extract slug from pathname (e.g., "/2025/system-design" -> "system-design")
+    const pathParts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/');
+    // Get the last part as the slug (e.g., "system-design" from "/2025/system-design")
+    slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : '';
+  }
+  
+  // Find the post config by matching the slug
+  if (slug) {
+    console.log('🔍 Looking for post with slug:', slug);
+    pageConfig = postsData.posts.find((post) => {
+      // Match by ID first (most reliable), then by path
+      const matches = post.id === slug || post.path === slug || 
+                     post.path.endsWith(slug) || slug.endsWith(post.id);
+      return matches;
+    });
+    if (pageConfig) {
+      console.log('✅ Found post:', pageConfig.title, 'ID:', pageConfig.id);
+    } else {
+      console.log('❌ No post found for slug:', slug);
+    }
+  }
+  
+  // Add default views data for initial render (will be updated client-side)
+  const pageConfigWithViews = pageConfig ? {
+    ...pageConfig,
+    views: 0,
+    viewsFormatted: '0'
+  } : undefined;
+  
+  console.log('📋 PageConfig:', pageConfig ? `Found: ${pageConfig.title}` : 'Not found');
+  console.log('📋 PageConfigWithViews:', pageConfigWithViews ? `ID: ${pageConfigWithViews.id}` : 'undefined');
 
   // Structured data for the article
   const structuredData = pageConfig ? {
@@ -132,7 +202,7 @@ export default async function Layout({ children, params }) {
       )}
       <ReadingProgressIndicator />
       <Container as="article" className="flex flex-col mb-10 py-6 min-h-screen text-gray-800 dark:text-gray-300 left-animation">
-        <Header posts={posts} />
+        <Header initialPost={pageConfigWithViews} />
         {children}
         {pageConfig && (
           <SocialShare 

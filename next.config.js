@@ -9,7 +9,6 @@ const nextConfig = {
   reactStrictMode: true,
   
   // Performance optimizations
-  swcMinify: true,
   compress: true,
   
   // Disable sourcemaps in production for faster builds
@@ -25,15 +24,6 @@ const nextConfig = {
       '@radix-ui/react-popover',
       '@radix-ui/react-tabs',
     ],
-    // Turbopack optimizations
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
   
   env: {

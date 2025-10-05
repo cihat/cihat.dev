@@ -1,6 +1,5 @@
 "use client";
 
-import { useSelectedLayoutSegments } from "next/navigation";
 import { useRef, useEffect } from 'react'
 import { ago } from "time-ago";
 import useSWR from "swr";
@@ -10,13 +9,11 @@ import Link from "next/link";
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-export function Header({ posts }: { posts: Post[] }) {
-  const segments = useSelectedLayoutSegments();
-  const initialPost = posts.find(
-    post => post.id === segments[segments.length - 1]
-  );
+export function Header({ initialPost }: { initialPost: Post | undefined }) {
+  console.log('🎯 Header render - initialPost:', initialPost ? `ID: ${initialPost.id}, Title: ${initialPost.title}` : 'undefined');
+  
   const { data: post, mutate } = useSWR(
-    `/api/post-detail?id=${initialPost?.id ?? ""}`,
+    initialPost ? `/api/post-detail?id=${initialPost.id}` : null,
     fetcher,
     {
       fallbackData: initialPost,
@@ -24,7 +21,12 @@ export function Header({ posts }: { posts: Post[] }) {
     }
   );
 
-  if (initialPost == null) return <></>;
+  console.log('🎯 Header render - post:', post ? `ID: ${post.id}` : 'undefined');
+
+  if (initialPost == null || !post) {
+    console.log('⚠️  Header: returning empty - initialPost or post is null');
+    return <></>;
+  }
 
   return (
     <>
@@ -82,18 +84,25 @@ function Views({ id, mutate, defaultValue }) {
   const didLogViewRef = useRef(false);
 
   useEffect(() => {
-    if ("development" === process.env.NODE_ENV) return;
+    // Skip if no ID (shouldn't happen, but safety check)
+    if (!id) return;
+    
+    // Remove the development check - we want to track views in all environments
     if (!didLogViewRef.current) {
       const url = "/api/post-detail?incr=1&id=" + encodeURIComponent(id);
+      console.log('📊 Incrementing view count for:', id);
       fetch(url)
         .then(res => res.json())
         .then(obj => {
+          console.log('✅ View count updated:', obj.views);
           mutate(obj);
         })
-        .catch(console.error);
+        .catch((error) => {
+          console.error('❌ Failed to update view count:', error);
+        });
       didLogViewRef.current = true;
     }
-  });
+  }, [id, mutate]);
 
   return <>{views != null ? <span>{views} views</span> : null}</>;
 }

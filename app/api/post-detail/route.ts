@@ -81,12 +81,14 @@ export async function GET(req: NextRequest) {
     let views: number | null;
     
     if (shouldIncrement) {
-      // Increment view count
+      // Increment view count with longer timeout for write operations
+      console.log('📊 Incrementing view count for:', id);
       views = await executeRedisCommand(
         (redis) => redis.hincrby("views", id, 1),
         0,
-        2000
+        5000 // 5 second timeout for write operations
       );
+      console.log('✅ View count after increment:', views);
       
       return NextResponse.json({
         ...post,
@@ -99,11 +101,13 @@ export async function GET(req: NextRequest) {
       });
     } else {
       // Get current view count
+      console.log('📊 Fetching view count for:', id);
       views = await executeRedisCommand(
         (redis) => redis.hget<number|null>("views", id),
         0,
-        2000
+        3000 // 3 second timeout for read operations
       );
+      console.log('✅ Current view count:', views);
       
       return NextResponse.json({
         ...post,

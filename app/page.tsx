@@ -27,7 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Static generation with revalidation
+// Force static generation to avoid CPU timeout on Cloudflare Workers
+export const dynamic = 'force-static';
 export const revalidate = 300; // Revalidate every 5 minutes
 
 // Posts bileşenini ayrı bir async component olarak tanımla
