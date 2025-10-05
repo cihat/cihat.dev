@@ -1,15 +1,15 @@
 export const metadata = {
-  title: "System Design",
+  title: "System Design (New Journey)",
   description: "System Design",
   openGraph: {
-    title: "System Design",
+    title: "System Design (New Journey)",
     description: "System Design",
     images: [{ url: "/img/system-design/system-design.jpg" }],
   },
   keywords: ["System Design", "CAP Teoremi", "ACID", "Load Balancing", "Caching", "Database Design"],
 }
 
-# System Design
+# System Design (New Journey)
 
 Collective knowledge about system design.
 
@@ -37,3 +37,581 @@ Collective knowledge about system design.
 
 1. [System Design Roadmap](/2025/system-design/roadmap)
 2. [Practical Challenges & Exercises](/2025/system-design/challenges)
+
+---
+
+# 🧱 Modern Backend Software Engineer — 2025 Yol Haritası ve Kaynaklar
+
+## 🔍 Giriş
+
+Bu rehber, **büyük firmaların (Google, Amazon, Netflix, Stripe, Meta, Microsoft)** güncel backend software engineer ilanları incelenerek hazırlanmıştır.  
+Amacı: **günümüzün üretim ortamlarında kullanılan mimariler, araçlar ve beceriler** üzerine kapsamlı bir öğrenme planı sunmak.
+
+---
+
+## 🧩 1. İş İlanlarından Çıkan Ortak Temalar
+
+| Alan | Beklenen Yetkinlikler |
+|------|------------------------|
+| **Dil & Mühendislik Temeli** | Java, Go, Python, C++, TypeScript; concurrency & memory management bilgisi |
+| **Dağıtık Sistemler** | scalability, fault-tolerance, event-driven mimari, consistency modelleri |
+| **Veri Yönetimi** | SQL/NoSQL, caching (Redis), indexing, partitioning |
+| **Cloud & Containerization** | AWS / GCP / Azure, Docker, Kubernetes, Terraform |
+| **CI/CD & Observability** | GitHub Actions, Jenkins, Prometheus, Grafana, OpenTelemetry |
+| **SRE & Reliability** | SLO/SLI tanımları, incident handling, monitoring kültürü |
+| **Security & Auth** | OAuth2, JWT, API security best practices |
+| **Test & Quality** | Unit, Integration, Contract testleri; otomatik pipeline süreçleri |
+| **AI Entegrasyonu (Yeni Trend)** | ML pipeline’larıyla entegre servisler, veri akışı farkındalığı |
+
+---
+
+## 📚 2. Öğrenme Başlıkları ve Kaynaklar
+
+### 🧠 A. Dağıtık Sistemler & Sistem Tasarımı
+
+**Temel Kavramlar:** Replication, Partitioning, Consensus, Eventual Consistency, CAP Theorem.
+
+**Kaynaklar:**
+- 📘 *Designing Data-Intensive Applications* — Martin Kleppmann  
+- 🌐 [Grokking the System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview)  
+- 🧑‍💻 MIT / Stanford dağıtık sistem notları  
+- 🎥 YouTube: Gaurav Sen - “System Design Primer” serisi  
+
+**Pratik Fikir:**  
+> Bir URL Shortener veya Chat servisinin hem tek node hem de shard edilmiş versiyonunu tasarla ve latency farklarını ölç.
+
+---
+
+### ☁️ B. Cloud & Containerization
+
+**Öğrenilecek Teknolojiler:**  
+AWS (EC2, ECS/EKS, RDS, S3), GCP (Compute, Pub/Sub), Docker, Kubernetes.
+
+**Kaynaklar:**
+- 🎓 *AWS Certified Solutions Architect – Associate* (A Cloud Guru / Coursera)  
+- 📘 *Kubernetes in Action* — Marko Lukša  
+- 🌐 [Kubernetes Docs](https://kubernetes.io/docs/)  
+- 💻 Katacoda / Play with Kubernetes (hands-on laboratuvar)
+
+**Pratik Fikir:**  
+> Multi-container microservice mimarini docker-compose ile çalıştır ve Kubernetes üzerinde deploy et.  
+> Health checks + auto-scaling (HPA) ekle.
+
+---
+
+### ⚙️ C. Backend Dilleri & Performans
+
+**Önerilen Diller:**  
+Go, Java/Kotlin, Python, Node.js/TypeScript
+
+**Kaynaklar:**
+- 📗 *The Go Programming Language* — Donovan & Kernighan  
+- 📕 *Effective Java* — Joshua Bloch  
+- 🌐 TypeScript Handbook (resmi dokümantasyon)  
+- 🎥 “Go Concurrency Patterns” — GopherCon Talks  
+
+**Pratik Fikir:**  
+> Aynı API’yi (örneğin `/users`) 3 farklı dilde yaz ve latency/memory benchmark’larını karşılaştır.
+
+---
+
+### 🧮 D. Veri Tabanları & Depolama
+
+**Kavramlar:**  
+Schema design, indexing, normalization, transactions, partitioning, caching.
+
+**Kaynaklar:**
+- 📘 *Designing Data-Intensive Applications*  
+- 🗄️ [PostgreSQL Documentation](https://www.postgresql.org/docs/)  
+- 🔴 [Redis Docs](https://redis.io/docs/)  
+
+**Pratik Fikir:**  
+> Postgres’te karmaşık sorgular oluştur, `EXPLAIN ANALYZE` ile performansını incele.  
+> Redis ile “cache-aside” pattern’i uygula.
+
+---
+
+### 📬 E. Messaging & Streaming
+
+**Teknolojiler:** Kafka, RabbitMQ, Google Pub/Sub.
+
+**Kaynaklar:**
+- 📘 *Kafka: The Definitive Guide* — Neha Narkhede  
+- 🎓 Confluent Kafka Academy (ücretsiz)  
+- 🌐 RabbitMQ Tutorials  
+
+**Pratik Fikir:**  
+> Producer → Kafka → Consumer zincirinde idempotency, retry ve offset yönetimini uygula.
+
+---
+
+### 🧭 F. Observability & Reliability
+
+**Konular:** Metrics, tracing, logging, alerting, SLO/SLI, on-call süreçleri.
+
+**Kaynaklar:**
+- 📗 *Site Reliability Engineering* — Google  
+- 🌐 [Prometheus Docs](https://prometheus.io/docs/)  
+- 🌐 [Grafana Docs](https://grafana.com/docs/)  
+- 🌐 [OpenTelemetry.io](https://opentelemetry.io/)
+
+**Pratik Fikir:**  
+> Uygulamanın latency ve error rate metric’lerini Prometheus ile ölç, Grafana’da dashboard oluştur.  
+> “Latency > 300ms” olduğunda alert tetikle.
+
+---
+
+### 🧰 G. CI/CD & Test Automation
+
+**Araçlar:** GitHub Actions, GitLab CI, Jenkins.
+
+**Kaynaklar:**
+- 🌐 GitHub Actions Docs  
+- 📘 *Continuous Delivery* — Jez Humble & David Farley  
+
+**Pratik Fikir:**  
+> PR açıldığında testleri çalıştıran ve staging ortamına otomatik deploy eden bir pipeline kur.
+
+---
+
+### 🧮 H. Algoritma & System Design Mülakatı
+
+**Kaynaklar:**
+- 📗 *Cracking the Coding Interview* — Gayle Laakmann McDowell  
+- 🌐 LeetCode (Medium / Hard)  
+- 🧩 *Grokking the System Design Interview*
+
+**Odak Konular:**  
+Data structures, concurrency, load balancing, consistency vs availability.
+
+---
+
+### 🤖 I. AI / ML Temel Bilgi (Ekstra Artı)
+
+**Neden Önemli:**  
+Modern backend ekipleri, ML servisleriyle entegre API’ler geliştiriyor.
+
+**Kaynaklar:**
+- 🎓 *Machine Learning* — Andrew Ng (Coursera)  
+- 🧰 MLOps Primer (Google Cloud docs)  
+
+**Pratik Fikir:**  
+> Basit bir model servisini (örneğin sentiment analysis) Flask veya FastAPI üzerinden deploy et.
+
+---
+
+## 🗓️ 3. 12 Haftalık Öğrenme Planı
+
+| Hafta | Hedef | Görevler |
+|-------|--------|----------|
+| **1** | Backend stack seçimi + basit API | Seçtiğin dilde CRUD API yaz; unit test ekle |
+| **2** | SQL temelleri | Postgres ile schema & index denemeleri yap |
+| **3** | Caching | Redis cache-aside pattern; latency karşılaştırması |
+| **4** | Messaging | Kafka / RabbitMQ üzerinden event-driven flow oluştur |
+| **5** | Containerization | Dockerfile + docker-compose setup |
+| **6** | Kubernetes deploy | EKS/GKE deployment + auto-scaling |
+| **7** | Observability | Prometheus + Grafana dashboard |
+| **8** | CI/CD pipeline | GitHub Actions ile test & deploy |
+| **9** | Dağıtık sistem teorisi | Leader election / replication örneği yap |
+| **10** | Security & reliability | JWT auth, rate limiting, failure injection |
+| **11** | System design pratiği | 2–3 system design örneği dokümante et |
+| **12** | Mülakat + portfolyo | Mock interview + GitHub demo & README |
+
+---
+
+## 💡 4. Uygulamalı Proje Fikirleri
+
+| Proje | Açıklama |
+|--------|-----------|
+| **Mini Payments Platform** | Stripe benzeri payment + event pipeline (Kafka + DB + retry jobs) |
+| **Realtime Notifications / Feed System** | Pub/Sub + fan-out + eventual consistency |
+| **URL Shortener at Scale** | Sharding + caching + analytics pipeline |
+| **Microservice Monitoring Tool** | Prometheus metric exporter + Grafana dashboard |
+
+---
+
+## 📘 5. Önerilen Kitaplar
+
+| Kitap | Yazar | Konu |
+|-------|--------|------|
+| *Designing Data-Intensive Applications* | Martin Kleppmann | Dağıtık sistem temelleri |
+| *Effective Java* | Joshua Bloch | Java best practices |
+| *The Go Programming Language* | Donovan & Kernighan | Go temelleri ve concurrency |
+| *Site Reliability Engineering* | Google SRE Team | Reliability & Monitoring |
+| *Continuous Delivery* | Jez Humble | CI/CD kültürü |
+
+---
+
+## 🧾 6. Ölçüm ve İlerleme Takibi
+
+- Her hafta 1 **README**: “Bu hafta ne öğrendim?”  
+- Her 3 haftada 1 **benchmark raporu** (ör. `wrk`, `k6`)  
+- 12. haftada **mock interview** (System Design + Coding)  
+- GitHub repo’da **demo + metrics + dashboard** örnekleri olsun.  
+
+---
+
+## 🎯 7. CV / Başvuruya Yansıtılacak Yetkinlikler
+
+| Alan | CV'de Nasıl Vurgulanmalı |
+|------|---------------------------|
+| **Scalability** | TPS / latency benchmark sonuçları |
+| **Cloud** | AWS/GCP servisleriyle proje |
+| **Observability** | Prometheus/Grafana entegrasyonu |
+| **Event-driven mimari** | Kafka / PubSub deneyimi |
+| **Diller** | Go / Java / TypeScript gibi üretim seviyesinde diller |
+| **Reliability** | Alerting, SLO, incident response örnekleri |
+
+---
+
+## 🧩 8. Ekstra Kaynaklar
+
+- [System Design Primer (GitHub)](https://github.com/donnemartin/system-design-primer)  
+- [Awesome Scalability](https://github.com/binhnguyennus/awesome-scalability)  
+- [Google SRE Book (Free Online)](https://sre.google/sre-book/table-of-contents/)  
+- [PostgreSQL Internals Book](https://www.interdb.jp/pg/)  
+- [Kubernetes Hands-on Labs](https://www.katacoda.com/courses/kubernetes)
+
+---
+
+## 🏁 Sonuç
+
+Bu rehber, **modern backend mühendisliği** alanında 12 haftada “interview + production readiness” seviyesine ulaşmanı hedefler.  
+İlerledikçe:
+- Haftalık mini projeleri GitHub’da belgeleyin.
+- Design doc ve benchmark raporları yazın.
+- 3. ayın sonunda güçlü bir **production-grade backend demo**’nuz olacak.
+
+---
+
+
+# 🧭 Güncel — Modern Backend Software Engineer (İlan Bazlı, 2025)  
+**Kaynak:** Büyük firmaların (Google, Amazon, Stripe, Netflix, Microsoft vb.) güncel iş ilanları ve endüstri trendleri taranarak hazırlanmıştır. Aşağıdaki rehber doğrudan işe başvuru ve üretim/scale odaklı görevler için gereken becerileri, öncelikleri ve pratik kaynakları güncel ilan içeriğine göre detaylandırır. (Atıflar: Google Careers, Amazon Jobs, Stripe Jobs, Netflix Jobs, sektör ilan özetleri).
+
+---
+
+## 🔑 İş İlanlarından (2025) Çıkan En Önemli Güncel Vurgular — Hızlı Özet
+
+- **Bulut (Cloud) yetkinliği artık neredeyse zorunlu:** AWS / GCP / Azure servisleriyle üretim deneyimi ve “cloud-native” uygulama geliştirme deneyimi birçok irili firma ilanında açıkça talep ediliyor. (ör. Amazon, Google ilanlarındaki “cloud-native” vurgusu).  
+- **Dağıtık sistemler & performans optimizasyonu kritik:** Büyük ölçekli sistemlerde replication/sharding/consistency konularına hakim olma beklentisi yaygın — Stripe, Netflix ve Core infra ekipleri özellikle “optimize end-to-end performance of distributed systems” türü nitelikler istiyor.  
+- **Konteyner / Orkestrasyon ve CI/CD pratikleri** (Docker, Kubernetes, GitHub Actions/Jenkins/Terraform) ilanlarda sıkça geçiyor; production deploy, config & secrets yönetimi, autoscaling bilgisi aranan yetkinlikler arasında.  
+- **Messaging / Streaming (Kafka, Pub/Sub) ve event-driven design** roller için öncelikli; birçok backend/infra rolünde streaming pipeline tecrübesi avantaj.  
+- **ML/AI altyapısına aşinalık**: özellikle Google/AI-lab/modern ürün ekipleri ML infra (model deployment/evaluation) ile çalışma deneyimi istiyor; AI entegrasyonuna dair bilgi artı değer sağlıyor.
+
+> Bu beş madde iş ilanlarında en güçlü tekrar edilen temalar — rehberin geri kalan kısmı bu önceliklere göre kaynak ve pratik önerileri güncelleyerek detaylandırır.
+
+---
+
+## 🧭 Rollere Göre (Büyük Firmalardan) Sık Görülen Sorumluluklar — Örnekleme
+
+> Aşağıda örneklenen sorumluluk ve tercih edilen beceri setleri gerçek ilan ifadelerine dayanır.
+
+- **Google (SoftEng / ML infra / Backend)**  
+  - Model deployment, ML infra debugging, production ML pipelines, backend services in Java/Python/Go. Minimum deneyim ve production ML/infra tecrübesi talep ediliyor.
+
+- **Amazon (SDE Backend / Ring AI / Full Stack Backend)**  
+  - Cloud-native uygulamalar, yüksek ölçekli backend servisi yazma, PostgreSQL ve üretim DB deneyimi, performans & reliability focus.
+
+- **Stripe (Core Technology / Payments & Risk / Data Platform)**  
+  - Distributed systems optimization, ergonomik API tasarımı, ödeme ve risk alanında yüksek doğruluk/availability gerektiren servisler.
+
+- **Netflix (Data & Insights / Backend)**  
+  - Büyük veri altyapısı, veri mühendisliği ile yakın çalışma, yüksek ölçekli telemetri ve kullanıcı odaklı optimizasyon.
+
+- **Microsoft / Diğer büyük firmalar**  
+  - Cloud & Ads/AI altyapıları, güvenlik, yüksek-availability sistemleri, hybrid on-prem/cloud çözümleri.
+
+---
+
+## 🎯 Güncel Beceri Prioriteleri (Önceliklendirilmiş)
+
+1. **Cloud Platforms (AWS/GCP/Azure) — Çok yüksek**  
+   - IAM, VPC, managed DB (RDS/Cloud SQL), object storage (S3/GCS), managed streaming (Kinesis/PubSub).
+
+2. **Distributed Systems & Scalability — Çok yüksek**  
+   - Sharding, replication, leader election, consensus (Raft/Paxos), backpressure ve idempotency patternleri.
+
+3. **Kubernetes & Containerization — Yüksek**  
+   - Deployments, StatefulSets, HPA, health checks, secrets/configmaps, Helm/Operators.
+
+4. **Languages for Scale — Orta/Yüksek**  
+   - **Go** (yüksek concurrency + performans), **Java/Kotlin** (enterprise), **C++** (sistem kritikal), **Python/Node.js/TS** (glue/prototyping). (İlanlarda birden fazla dil tecrübesi artı puan).
+
+5. **Streaming / Messaging — Orta/Yüksek**  
+   - Kafka, Pulsar, RabbitMQ, Pub/Sub; schema evolution (Avro/Protobuf).
+
+6. **Observability / SRE Practices — Orta/Yüksek**  
+   - Prometheus/Grafana, OpenTelemetry, Jaeger, ELK/EFK stack, SLO/SLI/Alerting kültürü.
+
+7. **Security & Compliance — Orta**  
+   - OAuth2/JWT, secret management, encryption at rest/in transit, PCI/PII awareness (özellikle fintech/payments rollerde).
+
+---
+
+## 📚 Önerilen Güncel Kaynaklar (İlanlara Dayalı, 2025)
+
+> Her kaynak satırında neden seçildiğini ve hangi hedefe hizmet ettiğini belirtiyorum.
+
+### Dağıtık Sistemler & Sistem Tasarımı
+- **Kitap:** *Designing Data-Intensive Applications* — Martin Kleppmann — (core distributed patterns, consistency).  
+- **Konu odaklı:** Confluent/Kafka docs (stream processing patterns) — Kafka ilanlarda sürekli isteniyor.  
+- **Pratik:** “Grokking the System Design Interview” + system-design-primer GitHub — gerçek iş-ilanlarında istenen tasarım düşüncesini kazandırır.
+
+### Cloud & Kubernetes
+- **Kurs:** AWS Solutions Architect (A Cloud Guru / Coursera) — Amazon/Stripe/Google rolleri için doğrudan fayda.  
+- **Hands-on:** Kubernetes resmi labs + Play with Kubernetes / Katacoda — K8s yetkinliği bir çok ilanda kritik.
+
+### Diller & Performans
+- **Go:** The Go Programming Language (kitap) + “Go Concurrency Patterns” talk’ları — Cloud-native backend rollere uygundur.  
+- **Java/Kotlin:** Effective Java — enterprise ve latency-sensitive servislerde ciddi avantaj.
+
+### Messaging / Streaming
+- **Kafka:** *Kafka: The Definitive Guide* + Confluent Kafka kursları (schema, idempotency, consumer group yönetimi).
+
+### Observability / Reliability
+- **SRE Book (Google)** — SLO/SLI/On-call pratikleri (ilanlarda reliability kültürünü ölçerler).  
+- **Prometheus/Grafana/OpenTelemetry** dokümanları — production monitoring requirements.
+
+### Security / Payments-specific
+- **PCI-DSS & Payments docs** — Stripe/Payments rollerde uyumluluk ve güvenlik beklentileri sebebiyle önemli.
+
+---
+
+## 🔬 12 Haftalık – (İlan İçeriğine Dayalı, Güncellenmiş & Detaylı) Haftalık Görevler  
+(her hafta: hedef, “iş-ilanı” odaklı sonuçlar, somut deliverable)
+
+- **Hafta 1 — Stack & Cloud Temelleri**  
+  - Hedef: AWS hesabı + temel IAM role, S3 bucket, VPC baseline oluştur.  
+  - Deliverable: `README` + "infra-setup" Terraform/CloudFormation şablonu. (İlanlarda cloud deneyimi direkt sayılıyor).
+
+- **Hafta 2 — API & DB (Postgres)**  
+  - Hedef: Seçilen dilde (örn. Go) REST API + Postgres (schema, index).  
+  - Deliverable: End-to-end CRUD, `EXPLAIN ANALYZE` raporu.
+
+- **Hafta 3 — Caching & Performance**  
+  - Hedef: Redis cache-aside, cache invalidation stratejileri.  
+  - Deliverable: Latency benchmark (wrk/k6) cold vs warm cache.
+
+- **Hafta 4 — Event-driven & Streaming**  
+  - Hedef: Kafka producer/consumer, schema (Avro/Protobuf) kullanımı, idempotency.  
+  - Deliverable: Working pipeline + consumer offset-handling doc. (Kafka talebi sık).
+
+- **Hafta 5 — Containerization (Docker)**  
+  - Hedef: Multi-service Dockerfile + docker-compose test ortamı.  
+  - Deliverable: `docker-compose` ile integration test suite.
+
+- **Hafta 6 — Kubernetes Deploy (EKS/GKE)**  
+  - Hedef: Deployment, Service, HPA, ConfigMap/Secrets.  
+  - Deliverable: K8s manifests + `kubectl` deploy script. (K8s bir çok ilan için beklenti).
+
+- **Hafta 7 — Observability & Tracing**  
+  - Hedef: Prometheus exporter, Grafana dashboard, OpenTelemetry trace.  
+  - Deliverable: Dashboard + alert rule (SLO tanımlı).
+
+- **Hafta 8 — CI/CD Pipeline**  
+  - Hedef: GitHub Actions pipeline: lint → tests → build → deploy to dev.  
+  - Deliverable: GitHub Actions YAML, canary deploy step.
+
+- **Hafta 9 — Distributed Systems Patterns (Derin)**  
+  - Hedef: Sharding strategy + leader election (mini Raft örneği) veya koordinasyon (etcd/consul).  
+  - Deliverable: Design doc + POC.
+
+- **Hafta 10 — Security & Payments (opsiyonel: fintech hedefliyorsan)**  
+  - Hedef: JWT/OAuth, rate limiting, secrets management; PCI/PII handling incelemesi.  
+  - Deliverable: Threat model + secrets rotation plan.
+
+- **Hafta 11 — System Design Case Studies**  
+  - Hedef: 2 büyük tasarım: URL shortener at scale + Realtime feed.  
+  - Deliverable: Diagrams (draw.io), bottlenecks & scaling plan.
+
+- **Hafta 12 — Mülakat Provası & Portfolyo**  
+  - Hedef: Mock design interview + LeetCode set (medium/hard).  
+  - Deliverable: Deployed demo link (Heroku/GKE) + one-pager design doc.
+
+---
+
+## 🧩 Örnek Başvuru/İlan Odaklı CV Girdileri (2025’e uygun, kısa gösterim)
+
+- *Built & deployed a Kafka-backed event pipeline processing 100k events/min with 200ms> P99 latency; used Avro schema registry and consumer group partitioning.*  
+- *Designed & maintained microservices on AWS (EKS, RDS, S3); automated CI/CD with GitHub Actions and canary deploys.*  
+- *Implemented OpenTelemetry tracing & Prometheus metrics, established SLOs and alerting for production services.*
+
+---
+
+## ✅ Hızlı “Interview/Job-Ready” Checklist (İlanlara göre)
+
+- [ ] Cloud project (AWS/GCP) deployed and documented.  
+- [ ] Kubernetes deployment with HPA + health checks.  
+- [ ] Event-driven pipeline (Kafka/PubSub) POC.  
+- [ ] DB schema + indexing + `EXPLAIN` optimizasyon raporu.  
+- [ ] Observability: Prometheus metrics + Grafana dashboard + tracing.  
+- [ ] 3 production-quality repos (service + infra + README + benchmarks).
+
+---
+
+## 📌 Notlar / Son Durum Özeti (Neden bu güncelleme önemli?)
+- Büyük firmaların ilanlarında **cloud-native, distributed-systems, streaming ve observability** etrafında konsolidasyon var — bu nedenle kaynaklarını ve zamanını bu eksenlere göre ağırlıklandırmak en yüksek işe giriş getirisi sağlayacaktır. (Google/Amazon/Stripe ilanları örnekleriyle tutarlı).
+
+---
+
+## 🔗 Kaynaklar & İlan Referansları (Doğrudan örnekler, 2025 taraması)
+- Google Careers — Software Engineering & ML infra ilanları.  
+- Amazon Jobs — Backend / Ring AI / Cloud-native pozisyon örnekleri.  
+- Stripe Jobs — Backend (Core Technology / Payments) ilanları.  
+- Netflix Jobs — Data & Insights (büyük veri / telemetri odaklı roller).  
+- Sektör iş panoları & trend özetleri (BuiltIn, ZipRecruiter gibi).
+
+---
+
+
+# 🔎 Büyük Şirketlere Göre — Backend / Systems Engineer Gereksinimleri (Güncel, 2025)
+
+> Not: Aşağıdaki bulgular doğrudan ilgili şirketlerin iş-ilanı sayfalarından ve kariyer portallarından türetilmiştir. (Google, Amazon, Stripe, Netflix, Microsoft, Meta). İlanlar genelde "cloud-native", "distributed systems", "observability" ve "scalability" konularını vurguluyor; her şirket bloğunda ilgili ilan kaynaklarını belirttim.
+
+---
+
+## 1) Google — Öne Çıkan Gereksinimler & Teknolojiler
+
+**Öne Çıkan Gereksinimler**
+- Güçlü bilgisayar bilimi temeli: veri yapıları, algoritmalar ve yazılım tasarımı deneyimi (tercih edilen diller: Java, C++, Python, Go).  
+- Production-grade servisler: test, release otomasyonu, ölçeklenebilir mikroservis tasarımı ve işletimi.  
+- ML/ML-infrastructure rolleri için model deployment, veri pipeline’ları ve ML infra debugging tecrübesi aranıyor.
+
+**Sıklıkla Görülen Teknolojiler**
+- Diller: Java, C++, Python, Go.  
+- Cloud: GCP servisleri (Compute Engine, Cloud Storage, Pub/Sub vb.) — Google için GCP deneyimi artı puan.  
+- Observability: OpenTelemetry/Stackdriver/Prometheus tarzı tracing & metrics.
+
+**Güncel Kaynak / Öğrenme Önerileri (Hedef odaklı)**
+- Sistem tasarımı: *Designing Data-Intensive Applications* (Kleppmann).  
+- GCP hands-on: Google Cloud “Qwiklabs” veya Coursera GCP specialization.  
+- ML infra: TensorFlow Serving / TFX / Kubeflow dokümanları (deployment & monitoring pratikleri).
+
+**Kaynak (ilan örnekleri):** Google Careers job listings (search & specific SRE/Backend roles).
+
+---
+
+## 2) Amazon — Öne Çıkan Gereksinimler & Teknolojiler
+
+**Öne Çıkan Gereksinimler**
+- Büyük ölçekli, müşteri-facing backend servisleri geliştirme; performans/latency optimizasyonu ve sistem tasarımı tecrübesi.  
+- Cloud-native uygulamalar; AWS servisleri ile üretim deploy/operasyon deneyimi (EC2, ECS/EKS, RDS, S3, IAM).
+
+**Sıklıkla Görülen Teknolojiler**
+- Diller: Java, Kotlin, (bazı ekiplerde C++, Python, TypeScript)  
+- AWS stack (Lambda, Kinesis, SQS, DynamoDB ya da RDS)  
+- CI/CD araçları: CodePipeline/CodeBuild ya da GitHub Actions/Jenkins/Terraform.
+
+**Güncel Kaynak / Öğrenme Önerileri**
+- AWS Solutions Architect + hands-on labs (A Cloud Guru / Coursera) — ilanlarda cloud tecrübesi açıkça isteniyor.  
+- Performans: JVM tuning, async patterns, load-testing (wrk/k6).  
+- Microservice patterns: resiliency (circuit-breaker), backpressure, idempotency.
+
+**Kaynak (ilan örnekleri):** Amazon Jobs — SDE, Ring AI, backend pozisyonları.
+
+---
+
+## 3) Stripe — Öne Çıkan Gereksinimler & Teknolojiler
+
+**Öne Çıkan Gereksinimler**
+- Büyük ölçekli dağıtık sistemler ve ödeme/risk alanında reliability, correctness gerektiren servis tecrübesi (fintech özelinde uyumluluk farkındalığı: PII/PCI vb.).  
+- Güçlü yazılım mühendisliği: veri yapılarına hakim, iyi test yazma ve kod kalitesi. (İlanlar dil-agnostik fakat production code tecrübesi şart).
+
+**Sıklıkla Görülen Teknolojiler**
+- Event-driven & streaming: Kafka veya benzerleri; schema management (Avro/Protobuf).  
+- DB: PostgreSQL / distributed stores / caching (Redis).  
+- Cloud infra: AWS/GCP ve Kubernetes.
+
+**Güncel Kaynak / Öğrenme Önerileri**
+- Payments-specific: Stripe docs & PCI basics, güvenli API tasarımı (idempotency keys, retries, reconciliation).  
+- Event-driven: “Kafka: The Definitive Guide”, Confluent eğitimleri.  
+- Reliability: SLO/SLA pratikleri, testable architecture (property tests, contract tests).
+
+**Kaynak (ilan örnekleri):** Stripe Careers — Backend Engineer (Core, Payments & Risk, Data).
+
+---
+
+## 4) Netflix — Öne Çıkan Gereksinimler & Teknolojiler
+
+**Öne Çıkan Gereksinimler**
+- Büyük veri/telemetri ve kullanıcı-odaklı optimizasyon: veri mühendisliği ile yakın çalışma, yüksek ölçekli telemetri işleme ve analiz.  
+- High-performance backend design: latency-sensitive iş yükleri ve dağıtık mimari bilgisi.
+
+**Sıklıkla Görülen Teknolojiler**
+- Veri platformları: Spark/Flink, Kafka, OLAP çözümleri; geniş logging/metric/trace altyapıları.  
+- Mikroservisler: yüksek trafikli API tasarımları, caching stratejileri.
+
+**Güncel Kaynak / Öğrenme Önerileri**
+- Büyük veri: Spark/Flink tutorial’ları, Kafka stream processing.  
+- Observability: yüksek trafikte metric collection & sampling stratejileri, A/B evaluation.  
+- Culture: Netflix “Culture Memo” — yüksek performans & ownership kültürü ile çalışmaya hazır olmak.
+
+**Kaynak (ilan örnekleri):** Netflix Jobs — Data & Insights ve backend pozisyonları.
+
+---
+
+## 5) Microsoft — Öne Çıkan Gereksinimler & Teknolojiler
+
+**Öne Çıkan Gereksinimler**
+- Çok çeşitli backend roller: düşük seviyeli sistem programlama (C++), cloud & AI altyapısı, bulut servisleri geliştirme. İlanlarda hem sistemsel performans hem de cloud/AI yetkinlikleri görülüyor.  
+- Bilgisayar bilimi temeli (algoritma & design) + üretim sistemleri geliştirme tecrübesi.
+
+**Sıklıkla Görülen Teknolojiler**
+- Diller: C++, C#, Java, Python.  
+- Azure platformu: Azure Compute, Azure Storage, Azure identity/AD vb.  
+- Large-scale systems: Kusto (Azure Data Explorer), Bing infra, Defender gibi yüksek-availability ürünleri.
+
+**Güncel Kaynak / Öğrenme Önerileri**
+- Azure hands-on: Microsoft Learn (Azure fundamentals, Azure Kubernetes Service labs).  
+- Low-level perf: C++ profiling, memory management, async IO patterns.  
+- AI infra: ML deployment on Azure (ML Ops).
+
+**Kaynak (ilan örnekleri):** Microsoft Careers — Software Engineer roles (Azure Core, Bing, Identity, Defender).
+
+---
+
+## 6) Meta (Facebook) — Öne Çıkan Gereksinimler & Teknolojiler
+
+**Öne Çıkan Gereksinimler**
+- Infrastructure & systems engineering: yüksek trafikli servislerin tasarımı, distributed systems, storage & caching.  
+- ML/AI ekipleri için hem model deployment hem de scalable infra tecrübesi isteniyor.
+
+**Sıklıkla Görülen Teknolojiler**
+- Diller: C++, Java, Python, Hack/PHP (bazı iç uygulamalar), Go.  
+- İç platformlar: büyük meta-scale veri platformları, Kafka benzeri streaming altyapılar, memcached / TAO gibi cache çözümleri (Meta iç araçları ve açık kaynak projeler).
+
+**Güncel Kaynak / Öğrenme Önerileri**
+- Meta infra: şirket blog yazıları (scalability, HHVM, TAO) ve Meta Research yayınları.  
+- Distributed data stores: tasarım & optimizasyon üzerine pratikler.
+
+**Kaynak (ilan örnekleri):** Meta Careers — Software Engineering / Infrastructure / Systems job listings.
+
+---
+
+## Özet — En Yüksek Öncelikli Konular (Tüm İlanlara Göre)
+1. **Cloud-native uygulama geliştirme (AWS/GCP/Azure)** — tüm büyük firmalar cloud tecrübesini vurguluyor.  
+2. **Distributed systems (sharding, replication, consensus, backpressure, idempotency)** — Stripe/Netflix/Google ilanlarında özellikle öne çıkıyor.  
+3. **Kubernetes & containerization + CI/CD** — production deploy ve infra as code bilgisi aranıyor.  
+4. **Observability / SRE mindset (metrics, tracing, SLOs)** — reliability beklentisi büyük firmalar için kritik.  
+5. **Event-driven / Streaming (Kafka, Pub/Sub)** — gerçek zamanlı/streaming iş yükleri için geniş talep.
+
+---
+
+## Uygulama Odaklı Kaynaklar (Şirket İlanlarına Göre Eşleştirilmiş)
+
+- **GCP / Google-specific:** Qwiklabs hands-on, Kubeflow docs (ML infra), Google Careers SRE/Backend job listings.  
+- **AWS / Amazon-specific:** A Cloud Guru – Solutions Architect, AWS Well-Architected Framework, Amazon job pages.  
+- **Streaming / Kafka:** Confluent courses, *Kafka: The Definitive Guide*, Avro/Protobuf schema registry pratikleri.  
+- **Observability / SRE:** Google SRE Book, Prometheus/Grafana/OpenTelemetry labs; ilanlarda SLO/SLI bilgisi sıklıkla isteniyor.  
+- **Fintech / Payments (Stripe):** Stripe docs + PCI basics + event-driven reconciliation pattern tutorial’ları.
+
+---
+
+## Sonraki Adımlar — Sana Özel Çıktı
+Eğer istersen, hemen aşağıdaki seçeneklerden birini seç (cevap ver), ben o yönde **detaylı, şirket-şirket eşleştirilmiş öğrenme yol haritası** (hafta-hafta) + **her beceri için 2–3 kesin uygulamalı görev + örnek PR/README başlığı** üretirim:
+
+- **A)** Sadece bir şirket seç (ör. Stripe) → o şirkete özel 12 haftalık uygulamalı plan.  
+- **B)** 2–3 şirket seç (ör. Google + Netflix) → her biri için hedefe yönelik PLL (priority learning list) + örnek projeler.  
+- **C)** Genel (tüm şirketlere uygun) ama haftalık step-by-step plan istiyorum.
+
+Seçimini söyle, hemen tam MD formatında (README-ready) çıktı hazırlayayım.
