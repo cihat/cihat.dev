@@ -12,12 +12,17 @@ interface UseViewCountReturn {
  * Client-side hook for tracking and displaying view counts using API
  * Automatically increments view count on mount
  */
-export function useViewCount(postId: string): UseViewCountReturn {
+export function useViewCount(postId: string, skip = false): UseViewCountReturn {
   const [views, setViews] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(!skip)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (skip) {
+      setIsLoading(false)
+      return
+    }
+
     let isMounted = true
 
     async function trackView() {
@@ -53,7 +58,7 @@ export function useViewCount(postId: string): UseViewCountReturn {
     return () => {
       isMounted = false
     }
-  }, [postId])
+  }, [postId, skip])
 
   return { views, isLoading, error }
 }
@@ -61,12 +66,17 @@ export function useViewCount(postId: string): UseViewCountReturn {
 /**
  * Hook to only fetch view count without incrementing
  */
-export function useViewCountRead(postId: string): UseViewCountReturn {
+export function useViewCountRead(postId: string, skip = false): UseViewCountReturn {
   const [views, setViews] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(!skip)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (skip) {
+      setIsLoading(false)
+      return
+    }
+
     let isMounted = true
 
     async function fetchViews() {
@@ -102,7 +112,7 @@ export function useViewCountRead(postId: string): UseViewCountReturn {
     return () => {
       isMounted = false
     }
-  }, [postId])
+  }, [postId, skip])
 
   return { views, isLoading, error }
 }

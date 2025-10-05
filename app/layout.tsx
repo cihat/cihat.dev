@@ -1,20 +1,13 @@
 import "./globals.css"
 
-import { Inter } from "next/font/google"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
 import { Metadata } from "next"
 import { META_DATA } from "@/lib/meta"
 
 import Header from "@/components/ui/header"
 import { themeEffect } from "@/lib/theme-effect"
 import Footer from "@/components/ui/footer"
-
-const inter = Inter({
-  variable: "--font-inter",
-  display: "swap",
-  style: "normal",
-  subsets: ["latin-ext"],
-  preload: true,
-})
 
 const { title, description, url, keywords, name, jobTitle, location, social } = META_DATA
 
@@ -143,7 +136,7 @@ const structuredData = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.className} antialiased`} suppressHydrationWarning={true}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} antialiased`} suppressHydrationWarning={true}>
       <head>
         <script
           dangerouslySetInnerHTML={{

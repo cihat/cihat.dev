@@ -23,7 +23,7 @@ export const getPostsWithViewData = async (): Promise<Post[]> => {
   console.log('🔄 Fetching posts with view data...');
   
   // Fetch all views from Redis with timeout and error handling
-  const allViews = await executeRedisCommand<Views>(
+  const allViews = await executeRedisCommand<Views|null>(
     (redis) => redis.hgetall("views"),
     {},
     2000 // 2 second timeout

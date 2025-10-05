@@ -78,7 +78,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    let views: number;
+    let views: number | null;
     
     if (shouldIncrement) {
       // Increment view count
@@ -90,8 +90,8 @@ export async function GET(req: NextRequest) {
       
       return NextResponse.json({
         ...post,
-        views,
-        viewsFormatted: commaNumber(views),
+        views: views ?? 0,
+        viewsFormatted: commaNumber(views ?? 0),
       }, {
         headers: {
           'Cache-Control': 'no-store, must-revalidate',
@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
     } else {
       // Get current view count
       views = await executeRedisCommand(
-        (redis) => redis.hget<number>("views", id),
+        (redis) => redis.hget<number|null>("views", id),
         0,
         2000
       );

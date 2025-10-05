@@ -24,34 +24,51 @@ export async function Image({
   } else {
     if (width === null || height === null) {
       let imageBuffer: Buffer | null = null;
-      if (src.startsWith("http")) {
-        // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer
-        const response = await fetch(src);
-        const arrayBuffer = await response.arrayBuffer();
-        imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
-      } else {
-        if (!process.env.CI && process.env.NODE_ENV === "production") {
-          // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer
-          const response = await fetch("https://" + process.env.VERCEL_URL + src);
+      try {
+        if (src.startsWith("http")) {
+          // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer with timeout
+          const response = await fetch(src, {
+            signal: AbortSignal.timeout(5000) // 5 second timeout
+          });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch image: ${response.status}`);
+          }
           const arrayBuffer = await response.arrayBuffer();
           imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
         } else {
-          imageBuffer = await readFile(
-            new URL(
-              join(import.meta.url, "..", "..", "..", "..", "public", src)
-            ).pathname
-          );
+          if (!process.env.CI && process.env.NODE_ENV === "production") {
+            // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer with timeout
+            const response = await fetch("https://" + process.env.VERCEL_URL + src, {
+              signal: AbortSignal.timeout(5000) // 5 second timeout
+            });
+            if (!response.ok) {
+              throw new Error(`Failed to fetch image: ${response.status}`);
+            }
+            const arrayBuffer = await response.arrayBuffer();
+            imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
+          } else {
+            imageBuffer = await readFile(
+              new URL(
+                join(import.meta.url, "..", "..", "..", "..", "public", src)
+              ).pathname
+            );
+          }
         }
+        const computedSize = sizeOf(imageBuffer);
+        if (
+          computedSize.width === undefined ||
+          computedSize.height === undefined
+        ) {
+          throw new Error("Could not compute image size");
+        }
+        width = computedSize.width;
+        height = computedSize.height;
+      } catch (error) {
+        console.warn(`⚠️ Failed to fetch or compute image size for ${src}:`, error);
+        // Fallback to reasonable defaults to prevent build failure
+        width = 800;
+        height = 600;
       }
-      const computedSize = sizeOf(imageBuffer);
-      if (
-        computedSize.width === undefined ||
-        computedSize.height === undefined
-      ) {
-        throw new Error("Could not compute image size");
-      }
-      width = computedSize.width;
-      height = computedSize.height;
     }
     let alt: string | null = null;
     let dividedBy = 100;

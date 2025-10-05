@@ -24,9 +24,12 @@ export function ViewCounter({
   className = '',
   showLabel = true 
 }: ViewCounterProps) {
-  const { views, isLoading, error } = trackView 
-    ? useViewCount(postId)
-    : useViewCountRead(postId)
+  // Call both hooks unconditionally to satisfy Rules of Hooks
+  const writeResult = useViewCount(postId, !trackView) // Pass skip flag
+  const readResult = useViewCountRead(postId, trackView) // Pass skip flag
+  
+  // Use the appropriate result based on trackView
+  const { views, isLoading, error } = trackView ? writeResult : readResult
 
   if (error) {
     return null

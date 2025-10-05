@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useMemo, useState } from "react"
+import { memo, useMemo, useState, useCallback } from "react"
 import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs"
@@ -105,11 +105,11 @@ export default function Header() {
   }, [pathname])
 
   // Close dropdown when a menu item is clicked
-  const handleMenuItemClick = () => {
+  const handleMenuItemClick = useCallback(() => {
     if (isMobile) {
       setDropdownOpen(false)
     }
-  }
+  }, [isMobile])
 
   // Generate menu items - memoized to prevent recreation on every render
   const navigationLinks = useMemo(() => {
