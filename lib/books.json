@@ -1,9 +1,49 @@
 {
   "books": [
     {
+      "title": "How to Think Like a Roman Emperor",
+      "alt": "How to Think Like a Roman Emperor: The Stoic Philosophy of Marcus Aurelius",
+      "currentPage": 45,
+      "page": 304,
+      "bookCover": "https://m.media-amazon.com/images/I/7173Hedc4ZL._SL1500_.jpg",
+      "link": "https://www.amazon.com/How-Think-Like-Roman-Emperor/dp/1250196620",
+      "subtitle": "The Stoic Philosophy of Marcus Aurelius",
+      "author": "Donald Robertson"
+    },
+    {
+      "title": "Gündelik Şeylerin Tasarımı",
+      "alt": "Gündelik Şeylerin Tasarımı",
+      "currentPage": 30,
+      "page": 120,
+      "bookCover": "https://m.media-amazon.com/images/I/61YH-B1Jg8L._SL1273_.jpg",
+      "link": "https://www.amazon.com.tr/gp/product/6053121525",
+      "subtitle": "Alfred Adler'in Klasik Eseri",
+      "author": "Alfred Adler"
+    },
+    {
+      "title": "Effortless English",
+      "alt": "Effortless English: Learn To Speak English Like A Native",
+      "currentPage": 50,
+      "page": 200,
+      "bookCover": "https://m.media-amazon.com/images/I/61QBNLeqv5L._SL1500_.jpg",
+      "link": "https://www.amazon.com.tr/Effortless-English-Native-Paperback-J/dp/1942250002",
+      "subtitle": "Learn To Speak English Like A Native",
+      "author": "A.J. Hoge"
+    },
+    {
+      "title": "Çizginin Dışındakiler (Outliers)",
+      "alt": "Outliers: Başarı İnsanları Niçin Farklı Yapar?",
+      "currentPage": 80,
+      "page": 296,
+      "bookCover": "https://m.media-amazon.com/images/I/71jm6iF7qmL._SL1500_.jpg",
+      "link": "https://www.amazon.com.tr/Outliers-Çizginin-Dışındakiler-İnsanlar-Başarılı/dp/6055755300",
+      "subtitle": "Başarı İnsanları Niçin Farklı Yapar?",
+      "author": "Malcolm Gladwell"
+    },
+    {
       "title": "Cracking The Coding Interview",
       "alt": "Cracking The Coding Interview",
-      "currentPage": 60,
+      "currentPage": 696,
       "page": 696,
       "bookCover": "/img/cs-basics-series/cracking-the-coding-interview.jpg",
       "link": "#",
@@ -11,9 +51,9 @@
       "author": "Gayle Laakmann McDowell"
     },
     {
-      "title": "Data Structures & Algorithms in C++`",
-      "alt": "Data Structures & Algorithms in C++`",
-      "currentPage": 90,
+      "title": "Data Structures & Algorithms in C++",
+      "alt": "Data Structures & Algorithms in C++",
+      "currentPage": 714,
       "page": 714,
       "bookCover": "/img/cs-basics-series/data-structures-and-algorithms-in-cpp.jpg",
       "link": "#",
@@ -21,8 +61,8 @@
       "author": "Michael T. Goodrich, Roberto Tamassia, David M. Mount"
     },
     {
-      "title": "Suç ve Ceza",
-      "alt": "Suç ve Ceza",
+      "title": "Suç ve Ceza",
+      "alt": "Suç ve Ceza",
       "currentPage": 672,
       "page": 672,
       "bookCover": "/books/suc-ve-ceza.jpg",
@@ -33,7 +73,7 @@
     {
       "title": "The Pragmatic Programmer",
       "alt": "The Pragmatic Programmer",
-      "currentPage": 74,
+      "currentPage": 321,
       "page": 321,
       "bookCover": "/books/the-pragratic-programmer.jpeg",
       "link": "https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
@@ -43,7 +83,7 @@
     {
       "title": "JavaScript Pro Design Patterns",
       "alt": "JavaScript Pro Design Patterns",
-      "currentPage": 40,
+      "currentPage": 270,
       "page": 270,
       "bookCover": "/books/javascript-pro-design-patterns.jpeg",
       "link": "https://www.amazon.com/JavaScript-Pro-Design-Patterns-Object-Oriented/dp/159059908X",
@@ -51,9 +91,9 @@
       "author": "Ross Harmes, Dustin Diaz"
     },
     {
-      "title": "Elooquent JavaScript",
-      "alt": "Elooquent JavaScript",
-      "currentPage": 100,
+      "title": "Eloquent JavaScript",
+      "alt": "Eloquent JavaScript",
+      "currentPage": 472,
       "page": 472,
       "bookCover": "/books/eloquent-javascript.jpeg",
       "link": "https://www.amazon.com/Eloquent-JavaScript-2nd-Edition-Introduction/dp/1593275846",
@@ -81,8 +121,8 @@
       "author": "Cal Newport"
     },
     {
-      "title": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
-      "alt": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi ",
+      "title": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi",
+      "alt": "Niçin Uyuruz?: Yeni Uyku ve Rüya Bilimi",
       "currentPage": 400,
       "page": 400,
       "bookCover": "/books/nicin-uyuruz.jpg",
@@ -121,8 +161,8 @@
       "author": "Robert C. Martin"
     },
     {
-      "title": "Funcional JavaScript",
-      "alt": "Funcional JavaScript",
+      "title": "Functional JavaScript",
+      "alt": "Functional JavaScript",
       "currentPage": 0,
       "page": 260,
       "bookCover": "/books/funcional-javascript.jpeg",
@@ -173,7 +213,7 @@
     {
       "title": "Seneca Ile Kahvalti",
       "alt": "Seneca İle Kahvaltı: Yasam Sanati icin Stoaci bir rehber",
-      "currentPage": 0,
+      "currentPage": 278,
       "page": 278,
       "bookCover": "/books/seneca-ile-kahvalti.jpeg",
       "link": "https://www.amazon.com.tr/dp/6052995185",
@@ -213,7 +253,7 @@
     {
       "title": "Bilgenin Sarsilmazligi Uzerine ~ Inziva Uzerine",
       "alt": "Bilgenin Sarsılmazlığı Üzerine ~ İnziva Üzerine",
-      "currentPage": 0,
+      "currentPage": 96,
       "page": 96,
       "bookCover": "/books/bilgenin-sarsilmazligi-uzerine.jpg",
       "link": "https://www.amazon.com.tr/dp/6052995193",
@@ -223,7 +263,7 @@
     {
       "title": "Mutlu Yasam Uzerine ~ Yasamin Kisaligi Uzerine",
       "alt": "Mutlu Yaşam Üzerine ~ Yaşamın Kısalığı Üzerine",
-      "currentPage": 0,
+      "currentPage": 77,
       "page": 77,
       "bookCover": "/books/mutlu-yasam-uzerine.jpg",
       "link": "https://www.amazon.com.tr/dp/6052995207",
@@ -266,7 +306,7 @@
       "currentPage": 0,
       "page": 360,
       "bookCover": "/books/korluk.jpeg",
-      "link": "https://www.amazon.com/K%C3%B6rl%C3%BCk-Jose-Saramago/dp/9750706970",
+      "link": "https://www.amazon.com/Körlük-Jose-Saramago/dp/9750706970",
       "subtitle": "Jose Saramago",
       "author": "Jose Saramago"
     },
@@ -276,16 +316,16 @@
       "currentPage": 0,
       "page": 144,
       "bookCover": "/books/karisini-sapka-sanam-adam.jpeg",
-      "link": "https://www.amazon.com/Kar%C4%B1s%C4%B1n%C4%B1-%C5%9Eapka-Sanan-Adam/dp/9750706970",
+      "link": "https://www.amazon.com/Karısını-Şapka-Sanan-Adam/dp/9750706970",
       "subtitle": "Oliver Sacks",
       "author": "Oliver Sacks"
     },
     {
       "title": "Sokak Kodçusu",
       "alt": "Sokak Kodçusu",
-      "currentPage": 20,
+      "currentPage": 312,
       "page": 312,
-      "bookCover": "https://m.media-amazon.com/images/I/41kpnhBltWL.jpg",
+      "bookCover": "/books/clean-code.jpeg",
       "link": "https://www.amazon.com.tr/dp/6256377982",
       "subtitle": "Yıkılması Gereken Kurallar ve Yıkmanın Yolları",
       "author": "Sedat Kapanoğlu"
@@ -293,9 +333,9 @@
     {
       "title": "Yaratıcı Eylem - Bir Var Olma Biçimi",
       "alt": "Yaratıcı Eylem - Bir Var Olma Biçimi",
-      "currentPage": 76,
+      "currentPage": 344,
       "page": 344,
-      "bookCover": "https://m.media-amazon.com/images/I/515i4hvWTzL._SL1500_.jpg",
+      "bookCover": "/books/the-creative-act-a-way-of-being.jpeg",
       "link": "https://www.amazon.com.tr/dp/6051983198",
       "subtitle": "Bir Var Olma Bicimi",
       "author": "Rick Rubin"
