@@ -11,8 +11,8 @@ import SocialShare from "@/components/social-share";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 60;
+// Enable static generation with revalidation
+export const revalidate = 300; // Revalidate every 5 minutes
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const pageConfig = postsData.posts.find((post) => post.slug === params.slug);

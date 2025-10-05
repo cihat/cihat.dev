@@ -1,65 +1,95 @@
 import { Redis } from "@upstash/redis"
 
 let redis: Redis | null = null
-let initializationAttempted = false
+let redisError: boolean = false
 
-// Lazy initialization function
+// Lazy initialization function with retry capability
 function getRedisClient(): Redis | null {
-  // Only attempt initialization once
-  if (initializationAttempted) {
-    return redis
+  // If previous initialization failed, return null immediately
+  if (redisError) {
+    return null
   }
 
-  initializationAttempted = true
+  // Return existing client if already initialized
+  if (redis) {
+    return redis
+  }
 
   const url = process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.UPSTASH_REDIS_REST_TOKEN
 
-  // Don't log warnings during build time (when NODE_ENV is not development/production with server)
+  // Don't log warnings during build time
   const isBuildTime = process.env.NODE_ENV === undefined || process.env.NEXT_PHASE === 'phase-production-build'
 
   if (!url || !token) {
     if (!isBuildTime) {
-      console.warn('⚠️  Redis environment variables are not set properly')
-      console.warn('   Please create a .env.local file with:')
-      console.warn('   UPSTASH_REDIS_REST_URL=https://your-redis-url.upstash.io')
-      console.warn('   UPSTASH_REDIS_REST_TOKEN=your-redis-token')
+      console.warn('⚠️  Redis credentials not found')
+      console.warn('   Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN')
     }
+    redisError = true
     return null
   }
 
   if (!url.startsWith('https://')) {
     if (!isBuildTime) {
-      console.warn('⚠️  Invalid Redis URL format detected')
-      console.warn(`   Expected: URL starting with 'https://'`)
-      console.warn(`   Received: "${url.substring(0, 50)}${url.length > 50 ? '...' : ''}"`)
-      console.warn('   Redis features will be disabled.')
-      console.warn('   Please check your UPSTASH_REDIS_REST_URL environment variable.')
+      console.warn('⚠️  Invalid Redis URL format')
+      console.warn(`   Expected: https://...`)
+      console.warn(`   Received: ${url.substring(0, 30)}...`)
     }
+    redisError = true
     return null
   }
 
   try {
-    const config = { 
-      url, 
+    // Upstash Redis REST API only needs url and token
+    redis = new Redis({
+      url,
       token,
-      // Timeout ayarları ekle
-      timeout: 5000,
-      retryDelayOnFailover: 100,
-      maxRetriesPerRequest: 3
-    }
-    redis = new Redis(config)
+      // Enable automatic retry with exponential backoff
+      automaticDeserialization: true,
+    })
+    
     if (!isBuildTime) {
-      console.log('✅ Redis connection initialized successfully')
+      console.log('✅ Redis client initialized')
     }
     return redis
   } catch (error) {
     if (!isBuildTime) {
-      console.warn('⚠️  Failed to initialize Redis client:', error)
+      console.warn('⚠️  Failed to initialize Redis:', error)
     }
+    redisError = true
     return null
   }
 }
 
-// Export the lazy initialization function instead of the client directly
+// Helper function to execute Redis commands with timeout and error handling
+export async function executeRedisCommand<T>(
+  command: (client: Redis) => Promise<T>,
+  fallback: T,
+  timeoutMs: number = 3000
+): Promise<T> {
+  const redis = getRedisClient()
+  
+  if (!redis) {
+    return fallback
+  }
+
+  try {
+    const timeoutPromise = new Promise<T>((_, reject) => 
+      setTimeout(() => reject(new Error('Redis timeout')), timeoutMs)
+    )
+    
+    const result = await Promise.race([
+      command(redis),
+      timeoutPromise
+    ])
+    
+    return result
+  } catch (error) {
+    console.warn('⚠️  Redis command failed:', error)
+    return fallback
+  }
+}
+
+// Export the lazy initialization function
 export default getRedisClient

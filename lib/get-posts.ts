@@ -1,5 +1,5 @@
 import postsData from "./posts.json";
-import getRedisClient from "./redis";
+import { executeRedisCommand } from "./redis";
 import commaNumber from 'comma-number'
 import type { Post } from "@/types";
 
@@ -7,41 +7,29 @@ type Views = {
   [key: string]: string
 }
 
-// In-memory cache - çok daha uzun süre
+// In-memory cache with configurable duration
 let postsCache: Post[] | null = null;
 let cacheTimestamp: number = 0;
-const CACHE_DURATION = 60 * 60 * 1000; // 1 saat (development ve production için)
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
 
 export const getPostsWithViewData = async (): Promise<Post[]> => {
-  // Check cache first - her zaman cache kullan
+  // Check in-memory cache first
   const now = Date.now();
   if (postsCache && (now - cacheTimestamp) < CACHE_DURATION) {
     console.log('📦 Using cached posts data');
     return postsCache;
   }
 
-  console.log('🔄 Fetching fresh posts data...');
-  let allViews: null | Views = null
+  console.log('🔄 Fetching posts with view data...');
   
-  // Development'ta Redis'i devre dışı bırak
-  if (process.env.NODE_ENV === 'production') {
-    const redis = getRedisClient()
-    if (redis) {
-      try {
-        // Timeout ile Redis çağrısını sınırla
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Redis timeout')), 500) // Timeout'u daha da kısalt
-        );
-        
-        const redisPromise = redis.hgetall("views");
-        
-        allViews = await Promise.race([redisPromise, timeoutPromise]) as Views;
-      } catch (error) {
-        console.warn('⚠️  Failed to fetch views from Redis:', error)
-      }
-    }
-  }
+  // Fetch all views from Redis with timeout and error handling
+  const allViews = await executeRedisCommand<Views>(
+    (redis) => redis.hgetall("views"),
+    {},
+    2000 // 2 second timeout
+  );
   
+  // Map posts with view data
   const posts = postsData.posts.map((post: Post) => {
     const views = Number(allViews?.[post.id] ?? 0)
     return {
@@ -51,10 +39,10 @@ export const getPostsWithViewData = async (): Promise<Post[]> => {
     }
   })
 
-  // Update cache
+  // Update in-memory cache
   postsCache = posts;
   cacheTimestamp = now;
-  console.log('✅ Posts data cached for 1 hour');
+  console.log('✅ Posts data cached');
 
   return posts
 }

@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Static generation için - çok daha uzun cache
-export const revalidate = 86400; // 24 saat
+// Static generation with revalidation
+export const revalidate = 300; // Revalidate every 5 minutes
 
 // Posts bileşenini ayrı bir async component olarak tanımla
 async function PostsWithData() {
