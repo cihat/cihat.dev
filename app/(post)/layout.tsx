@@ -7,51 +7,37 @@ import ReadingProgressIndicator from "@/components/reading-progress-indicator";
 import SocialShare from "@/components/social-share";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
+import { headers } from 'next/headers';
 
-// Enable static generation with dynamic params
-export const dynamicParams = true;
-export const revalidate = false; // Static generation
+// Dynamic rendering for layouts (no caching for metadata)
+export const dynamic = 'force-dynamic';
 
-// Generate static params for all blog posts
-export async function generateStaticParams() {
-  return postsData.posts.map((post) => {
-    // Extract path from link (e.g., "https://cihat.dev/2023/initial-blog-post" -> ["2023", "initial-blog-post"])
-    const url = new URL(post.link);
-    const pathSegments = url.pathname.split('/').filter(Boolean); // Remove empty strings
-    return {
-      slug: pathSegments,
-    };
-  });
-}
-
-export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }) {
-  const resolvedParams = await params;
+export async function generateMetadata() {
+  // Get pathname from middleware header
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
   
-  if (!resolvedParams?.slug || resolvedParams.slug.length === 0) {
+  console.log('🔍 [generateMetadata] Pathname from header:', pathname);
+  
+  if (!pathname || pathname === '/') {
     return {
       title: 'Blog Post | Cihat Salik',
       description: 'Read my latest blog post about software development and technology.',
     };
   }
   
-  // Get slug from params - slug is [year, post-name] or [year, category, post-name]
-  const slugPath = '/' + resolvedParams.slug.join('/'); // e.g., "/2025/system-design"
-  
-  console.log('🔍 [generateMetadata] Looking for post with slug path:', slugPath);
-  
   const pageConfig = postsData.posts.find((post) => {
     // Match by comparing with link path
     const url = new URL(post.link);
-    const matches = url.pathname === slugPath;
+    const matches = url.pathname === pathname;
     if (matches) {
-      console.log('✅ [generateMetadata] Found match:', post.title, 'link:', post.link);
+      console.log('✅ [generateMetadata] Found match:', post.title);
     }
     return matches;
   });
   
   if (!pageConfig) {
-    console.log('❌ [generateMetadata] No post found for slug path:', slugPath);
-    console.log('Available paths:', postsData.posts.map(p => new URL(p.link).pathname).join(', '));
+    console.log('❌ [generateMetadata] No post found for pathname:', pathname);
   }
 
   if (!pageConfig) {
@@ -117,36 +103,32 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   };
 }
 
-export default async function Layout({ children, params }: { children: React.ReactNode, params: Promise<{ slug?: string[] }> }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
   // Use static posts data - no Redis calls on server
   // The Header component will fetch fresh view counts client-side via SWR
-  const resolvedParams = await params;
+  
+  // Get pathname from middleware header
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
+  
+  console.log('🔍 [Layout] Pathname from header:', pathname);
   
   let pageConfig: typeof postsData.posts[0] | undefined = undefined;
   
-  // Get slug from params - slug is [year, post-name] or [year, category, post-name]
-  if (resolvedParams?.slug && resolvedParams.slug.length > 0) {
-    const slugPath = '/' + resolvedParams.slug.join('/'); // e.g., "/2025/system-design"
-    
-    console.log('🔍 [Layout] Looking for post with slug path:', slugPath);
-    console.log('🔍 [Layout] Params:', resolvedParams);
-    
+  if (pathname && pathname !== '/') {
     // Find the post config by matching with link path
     pageConfig = postsData.posts.find((post) => {
       const url = new URL(post.link);
-      const matches = url.pathname === slugPath;
+      const matches = url.pathname === pathname;
       if (matches) {
-        console.log('✅ [Layout] Match found:', post.title, 'link:', post.link);
+        console.log('✅ [Layout] Match found:', post.title);
       }
       return matches;
     });
     
     if (!pageConfig) {
-      console.log('❌ [Layout] No post found for slug path:', slugPath);
-      console.log('Available paths:', postsData.posts.slice(0, 5).map(p => new URL(p.link).pathname).join(', '));
+      console.log('❌ [Layout] No post found for pathname:', pathname);
     }
-  } else {
-    console.log('❌ [Layout] No slug in params:', resolvedParams);
   }
   
   // Add default views data for initial render (will be updated client-side)
