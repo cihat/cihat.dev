@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { ago } from "time-ago";
 import useSWR from "swr";
 import type { Post } from "@/types";
@@ -19,27 +19,28 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
   console.log('🎯 Header render - initialPost:', initialPost ? `ID: ${initialPost.id}, Title: ${initialPost.title}` : 'undefined');
   
   const lastPostIdRef = useRef<string | null>(null);
+  const [currentPost, setCurrentPost] = React.useState(initialPost);
+  
+  // Reset post data immediately when initialPost changes
+  useEffect(() => {
+    if (initialPost && initialPost.id !== lastPostIdRef.current) {
+      console.log('🔄 Post ID changed from', lastPostIdRef.current, 'to', initialPost.id);
+      lastPostIdRef.current = initialPost.id;
+      setCurrentPost(initialPost);
+    }
+  }, [initialPost]);
   
   const { data: post, mutate } = useSWR(
-    initialPost ? `/api/post-detail?id=${initialPost.id}` : null,
+    currentPost ? `/api/post-detail?id=${currentPost.id}` : null,
     fetcher,
     {
-      fallbackData: initialPost,
+      fallbackData: currentPost,
       refreshInterval: 5000,
       revalidateOnMount: true,
       dedupingInterval: 0, // Disable deduplication to prevent stale cache
       keepPreviousData: false, // Don't show previous post data when navigating
     }
   );
-
-  // Force revalidate when post ID changes
-  useEffect(() => {
-    if (initialPost && lastPostIdRef.current !== initialPost.id) {
-      console.log('🔄 Post ID changed from', lastPostIdRef.current, 'to', initialPost.id, '- forcing revalidation');
-      lastPostIdRef.current = initialPost.id;
-      mutate(initialPost, { revalidate: true });
-    }
-  }, [initialPost, mutate]);
 
   console.log('🎯 Header render - post:', post ? `ID: ${post.id}` : 'undefined');
 

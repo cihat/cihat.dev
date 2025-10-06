@@ -7,43 +7,52 @@ import ReadingProgressIndicator from "@/components/reading-progress-indicator";
 import SocialShare from "@/components/social-share";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
-import { headers } from 'next/headers';
 
-// Force dynamic rendering to prevent metadata caching
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // No caching
+// Enable static generation with dynamic params
+export const dynamicParams = true;
+export const revalidate = false; // Static generation
+
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  return postsData.posts.map((post) => {
+    // Extract path from link (e.g., "https://cihat.dev/2023/initial-blog-post" -> ["2023", "initial-blog-post"])
+    const url = new URL(post.link);
+    const pathSegments = url.pathname.split('/').filter(Boolean); // Remove empty strings
+    return {
+      slug: pathSegments,
+    };
+  });
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolvedParams = await params;
   
-  let slug: string | null = null;
-  
-  // Try to get slug from params first (for dynamic routes)
-  if (resolvedParams?.slug) {
-    slug = resolvedParams.slug.join('/');
-  } else {
-    // For static routes, get the pathname from headers (set by middleware)
-    const headersList = await headers();
-    const pathname = headersList.get('x-pathname') || '';
-    // Extract slug from pathname (e.g., "/2025/system-design" -> "system-design")
-    const pathParts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/');
-    // Get the last part as the slug (e.g., "system-design" from "/2025/system-design")
-    slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : '';
-  }
-  
-  if (!slug) {
+  if (!resolvedParams?.slug || resolvedParams.slug.length === 0) {
     return {
       title: 'Blog Post | Cihat Salik',
       description: 'Read my latest blog post about software development and technology.',
     };
   }
   
+  // Get slug from params - slug is [year, post-name] or [year, category, post-name]
+  const slugPath = '/' + resolvedParams.slug.join('/'); // e.g., "/2025/system-design"
+  
+  console.log('🔍 [generateMetadata] Looking for post with slug path:', slugPath);
+  
   const pageConfig = postsData.posts.find((post) => {
-    // Match either the full path or just the last segment
-    const fullPath = post.path;
-    const lastSegment = post.path.split('/').pop();
-    return fullPath === slug || lastSegment === slug || slug.endsWith(fullPath) || slug.endsWith(post.id);
+    // Match by comparing with link path
+    const url = new URL(post.link);
+    const matches = url.pathname === slugPath;
+    if (matches) {
+      console.log('✅ [generateMetadata] Found match:', post.title, 'link:', post.link);
+    }
+    return matches;
   });
+  
+  if (!pageConfig) {
+    console.log('❌ [generateMetadata] No post found for slug path:', slugPath);
+    console.log('Available paths:', postsData.posts.map(p => new URL(p.link).pathname).join(', '));
+  }
 
   if (!pageConfig) {
     return {
@@ -114,35 +123,30 @@ export default async function Layout({ children, params }: { children: React.Rea
   const resolvedParams = await params;
   
   let pageConfig: typeof postsData.posts[0] | undefined = undefined;
-  let slug: string | null = null;
   
-  // Try to get slug from params first (for dynamic routes)
-  if (resolvedParams?.slug) {
-    slug = resolvedParams.slug.join('/');
-  } else {
-    // For static routes, get the pathname from headers (set by middleware)
-    const headersList = await headers();
-    const pathname = headersList.get('x-pathname') || '';
-    // Extract slug from pathname (e.g., "/2025/system-design" -> "system-design")
-    const pathParts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/');
-    // Get the last part as the slug (e.g., "system-design" from "/2025/system-design")
-    slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : '';
-  }
-  
-  // Find the post config by matching the slug
-  if (slug) {
-    console.log('🔍 Looking for post with slug:', slug);
+  // Get slug from params - slug is [year, post-name] or [year, category, post-name]
+  if (resolvedParams?.slug && resolvedParams.slug.length > 0) {
+    const slugPath = '/' + resolvedParams.slug.join('/'); // e.g., "/2025/system-design"
+    
+    console.log('🔍 [Layout] Looking for post with slug path:', slugPath);
+    console.log('🔍 [Layout] Params:', resolvedParams);
+    
+    // Find the post config by matching with link path
     pageConfig = postsData.posts.find((post) => {
-      // Match by ID first (most reliable), then by path
-      const matches = post.id === slug || post.path === slug || 
-                     post.path.endsWith(slug) || slug.endsWith(post.id);
+      const url = new URL(post.link);
+      const matches = url.pathname === slugPath;
+      if (matches) {
+        console.log('✅ [Layout] Match found:', post.title, 'link:', post.link);
+      }
       return matches;
     });
-    if (pageConfig) {
-      console.log('✅ Found post:', pageConfig.title, 'ID:', pageConfig.id);
-    } else {
-      console.log('❌ No post found for slug:', slug);
+    
+    if (!pageConfig) {
+      console.log('❌ [Layout] No post found for slug path:', slugPath);
+      console.log('Available paths:', postsData.posts.slice(0, 5).map(p => new URL(p.link).pathname).join(', '));
     }
+  } else {
+    console.log('❌ [Layout] No slug in params:', resolvedParams);
   }
   
   // Add default views data for initial render (will be updated client-side)
