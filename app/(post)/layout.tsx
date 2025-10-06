@@ -9,8 +9,9 @@ import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
 import { headers } from 'next/headers';
 
-// Enable static generation with revalidation
-export const revalidate = 300; // Revalidate every 5 minutes
+// Force dynamic rendering to prevent metadata caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // No caching
 
 export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolvedParams = await params;

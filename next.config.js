@@ -42,6 +42,15 @@ const nextConfig = {
   headers() {
     return [
       {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
+      },
+      {
         source: '/(.*)',
         locale: false,
         headers: securityHeaders,
@@ -175,7 +184,7 @@ const securityHeaders = [
   },
   {
     key: 'Cache-Control',
-    value: 'public, max-age=3600, must-revalidate',
+    value: 'public, max-age=60, must-revalidate',
   },
   {
     key: 'X-XSS-Protection',
