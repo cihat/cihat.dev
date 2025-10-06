@@ -189,7 +189,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       )}
       <ReadingProgressIndicator />
       <Container as="article" className="flex flex-col mb-10 py-6 min-h-screen text-gray-800 dark:text-gray-300 left-animation">
-        <Header initialPost={pageConfigWithViews} />
+        <Header key={pageConfigWithViews?.id || 'no-post'} initialPost={pageConfigWithViews} />
         {children}
         {pageConfig && (
           <SocialShare 

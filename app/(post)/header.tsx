@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { ago } from "time-ago";
 import useSWR from "swr";
 import type { Post } from "@/types";
@@ -16,33 +16,22 @@ const fetcher = (url: string) => fetch(url, {
 }).then(res => res.json());
 
 export function Header({ initialPost }: { initialPost: Post | undefined }) {
-  console.log('🎯 Header render - initialPost:', initialPost ? `ID: ${initialPost.id}, Title: ${initialPost.title}` : 'undefined');
+  console.log('🎯 Header MOUNTED - initialPost:', initialPost ? `ID: ${initialPost.id}, Title: ${initialPost.title}` : 'undefined');
   
-  const lastPostIdRef = useRef<string | null>(null);
-  const [currentPost, setCurrentPost] = React.useState(initialPost);
-  
-  // Reset post data immediately when initialPost changes
-  useEffect(() => {
-    if (initialPost && initialPost.id !== lastPostIdRef.current) {
-      console.log('🔄 Post ID changed from', lastPostIdRef.current, 'to', initialPost.id);
-      lastPostIdRef.current = initialPost.id;
-      setCurrentPost(initialPost);
-    }
-  }, [initialPost]);
-  
+  // Use SWR with unique key per post to prevent cache issues
   const { data: post, mutate } = useSWR(
-    currentPost ? `/api/post-detail?id=${currentPost.id}` : null,
+    initialPost ? `/api/post-detail?id=${initialPost.id}` : null,
     fetcher,
     {
-      fallbackData: currentPost,
+      fallbackData: initialPost,
       refreshInterval: 5000,
       revalidateOnMount: true,
-      dedupingInterval: 0, // Disable deduplication to prevent stale cache
-      keepPreviousData: false, // Don't show previous post data when navigating
+      dedupingInterval: 0,
+      keepPreviousData: false,
     }
   );
 
-  console.log('🎯 Header render - post:', post ? `ID: ${post.id}` : 'undefined');
+  console.log('🎯 Header render - post:', post ? `ID: ${post.id}, Title: ${post.title}` : 'undefined');
 
   if (initialPost == null || !post) {
     console.log('⚠️  Header: returning empty - initialPost or post is null');
