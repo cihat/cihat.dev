@@ -40,21 +40,11 @@ export function middleware(req: NextRequest) {
     }
   }
   
-  const response = NextResponse.next({
+  return NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   });
-  
-  // Add no-cache headers for blog post pages to prevent stale data
-  const isBlogPost = /^\/(20\d{2})\/[\w-]+/.test(req.nextUrl.pathname);
-  if (isBlogPost) {
-    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-  }
-  
-  return response;
 }
 
 // See "Matching Paths" below to learn more

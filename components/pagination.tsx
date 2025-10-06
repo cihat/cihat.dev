@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Container from "./ui/container";
 import type { Post, Pagination } from "@/types";
 import { getPosts } from "@/lib/get-posts";
@@ -43,24 +42,22 @@ export default function Pagination() {
   return (
     <Container className="flex justify-between flex-wrap items-center mt-6 mx-0 min-h-[28px] top-animation">
       {pagination?.prev && (
-        <Link 
+        <a 
           href={`/${pagination.prev.date.split(" ")[2]}/${pagination.prev.path}`} 
           className="text-gray-800 dark:text-gray-300 hover:underline mr-auto cursor-pointer text-lg font-bold"
           title={`Previous post: ${pagination.prev.title}`}
-          prefetch={true}
         >
           ← {pagination.prev.title}
-        </Link>
+        </a>
       )}
       {pagination?.next && (
-        <Link 
+        <a 
           href={`/${pagination.next.date.split(" ")[2]}/${pagination.next.path}`} 
           className="text-gray-800 dark:text-gray-300 hover:underline ml-auto cursor-pointer text-lg mt-6 sm:mt-0 font-bold"
           title={`Next post: ${pagination.next.title}`}
-          prefetch={true}
         >
           {pagination.next.title} →
-        </Link>
+        </a>
       )}
     </Container>
   );

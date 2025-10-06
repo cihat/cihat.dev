@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
 import { ago } from "time-ago";
-import useSWR, { mutate as globalMutate } from "swr";
+import useSWR from "swr";
 import type { Post } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -11,22 +11,6 @@ const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export function Header({ initialPost }: { initialPost: Post | undefined }) {
   console.log('🎯 Header render - initialPost:', initialPost ? `ID: ${initialPost.id}, Title: ${initialPost.title}` : 'undefined');
-  
-  // Track the current post ID to detect changes
-  const [currentPostId, setCurrentPostId] = useState(initialPost?.id);
-  
-  // Clear SWR cache when post changes
-  useEffect(() => {
-    if (initialPost?.id && initialPost.id !== currentPostId) {
-      console.log('🔄 Post changed from', currentPostId, 'to', initialPost.id);
-      // Clear the old post's cache
-      if (currentPostId) {
-        globalMutate(`/api/post-detail?id=${currentPostId}`, undefined, { revalidate: false });
-      }
-      // Update current post ID
-      setCurrentPostId(initialPost.id);
-    }
-  }, [initialPost?.id, currentPostId]);
   
   const { data: post, mutate } = useSWR(
     initialPost ? `/api/post-detail?id=${initialPost.id}` : null,
@@ -37,22 +21,13 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
       revalidateOnMount: true,
       dedupingInterval: 0, // Disable deduplication to prevent stale cache
       keepPreviousData: false, // Don't show previous post data when navigating
-      revalidateOnFocus: false, // Prevent revalidation on focus
     }
   );
 
-  console.log('🎯 Header render - post:', post ? `ID: ${post.id}, Title: ${post.title}` : 'undefined');
+  console.log('🎯 Header render - post:', post ? `ID: ${post.id}` : 'undefined');
 
   if (initialPost == null || !post) {
     console.log('⚠️  Header: returning empty - initialPost or post is null');
-    return <></>;
-  }
-  
-  // Double-check that we're showing the correct post
-  if (post.id !== initialPost.id) {
-    console.warn('⚠️  Post ID mismatch! Expected:', initialPost.id, 'Got:', post.id);
-    // Force re-fetch the correct post
-    mutate(initialPost);
     return <></>;
   }
 
