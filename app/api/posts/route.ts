@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
-import { getPostsWithViewData } from "@/lib/get-posts";
+import { getPosts } from "@/lib/get-posts";
 
-// Enable caching with revalidation
-export const revalidate = 300; // Revalidate every 5 minutes
+// Static API route - no revalidation needed
+export const dynamic = 'force-static';
 
 export async function GET() {
   try {
-    const posts = await getPostsWithViewData();
+    const posts = getPosts();
     
     return NextResponse.json(posts, {
       headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+        'Cache-Control': 'public, max-age=31536000, immutable',
       },
     });
   } catch (error) {

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Posts } from "./posts/posts";
-import { getPostsWithViewData } from "@/lib/get-posts";
+import { getPosts } from "@/lib/get-posts";
 import { RandomQuote } from '@/components/ui/quote'
 import Container from "@/components/ui/container";
 import { Metadata } from "next";
@@ -27,22 +27,23 @@ export const metadata: Metadata = {
   },
 };
 
-// Force static generation to avoid CPU timeout on Cloudflare Workers
+// Force static generation - view counts will be fetched client-side per post
 export const dynamic = 'force-static';
-export const revalidate = 300; // Revalidate every 5 minutes
-
-// Posts bileşenini ayrı bir async component olarak tanımla
-async function PostsWithData() {
-  const posts = await getPostsWithViewData();
-  return <Posts posts={posts} />;
-}
 
 export default function Home() {
+  // Get static posts data (without Redis calls)
+  const posts = getPosts();
+  
+  // Add default view counts (will be shown initially)
+  const postsWithViews = posts.map(post => ({
+    ...post,
+    views: 0,
+    viewsFormatted: '0'
+  }));
+  
   return (
     <Container className="flex flex-col sm:py-6 py-3 h-[calc(100vh-140px)]" as="main">
-      <Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-pulse">Loading posts...</div></div>}>
-        <PostsWithData />
-      </Suspense>
+      <Posts posts={postsWithViews} />
       <Suspense fallback={<div className="h-8 mt-8" />}>
         <RandomQuote />
       </Suspense>

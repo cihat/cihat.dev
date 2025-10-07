@@ -1,23 +1,17 @@
 import Container from "@/components/ui/container";
 import Pagination from "@/components/pagination";
 import Comment from "@/components/comment";
-import Claps from "@/components/claps/claps";
 import ReadingProgressIndicator from "@/components/reading-progress-indicator";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
 import { headers } from 'next/headers';
 
-const DEBUG = process.env.NEXT_PUBLIC_DEBUG === '1';
-
-// Dynamic rendering for layouts (no caching for metadata)
+// Force dynamic rendering for metadata (since it depends on pathname)
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata() {
-  // Get pathname from middleware header
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '';
-  
-  console.log('🔍 [generateMetadata] Pathname from header:', pathname);
   
   if (!pathname || pathname === '/') {
     return {
@@ -26,59 +20,50 @@ export async function generateMetadata() {
     };
   }
   
-  const pageConfig = postsData.posts.find((post) => {
-    // Match by comparing with link path
-    const url = new URL(post.link);
-    const matches = url.pathname === pathname;
-    if (matches) {
-      console.log('✅ [generateMetadata] Found match:', post.title);
-    }
-    return matches;
+  // Find post by pathname
+  const post = postsData.posts.find((p) => {
+    const url = new URL(p.link);
+    return url.pathname === pathname;
   });
-  
-  if (!pageConfig) {
-    console.log('❌ [generateMetadata] No post found for pathname:', pathname);
-  }
 
-  if (!pageConfig) {
+  if (!post) {
     return {
       title: 'Page Not Found | Cihat Salik',
       description: 'The page you are looking for does not exist.',
     };
   }
 
-  const postUrl = pageConfig.link;
   const ogImage = `${META_DATA.url}/og/og-image.png`;
 
   return {
-    title: `${pageConfig.title} | ${META_DATA.name}`,
-    description: pageConfig.description,
+    title: `${post.title} | ${META_DATA.name}`,
+    description: post.description,
     keywords: [
-      pageConfig.category.toLowerCase(),
-      pageConfig.language,
+      post.category.toLowerCase(),
+      post.language,
       'programming',
       'software development',
       'tech blog',
       ...META_DATA.keywords
-    ].join(', '),
+    ],
     authors: [{ name: META_DATA.name, url: META_DATA.url }],
     openGraph: {
-      title: pageConfig.title,
-      description: pageConfig.description,
-      url: postUrl,
+      title: post.title,
+      description: post.description,
+      url: post.link,
       siteName: META_DATA.title,
-      locale: pageConfig.language,
+      locale: post.language,
       type: 'article',
-      publishedTime: new Date(pageConfig.date).toISOString(),
+      publishedTime: new Date(post.date).toISOString(),
       authors: [META_DATA.name],
-      section: pageConfig.category,
-      tags: [pageConfig.category, 'programming', 'software development'],
+      section: post.category,
+      tags: [post.category, 'programming', 'software development'],
       images: [
         {
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: pageConfig.title,
+          alt: post.title,
         }
       ],
     },
@@ -86,82 +71,31 @@ export async function generateMetadata() {
       card: 'summary_large_image',
       site: '@chtslk',
       creator: '@chtslk',
-      title: pageConfig.title,
-      description: pageConfig.description,
+      title: post.title,
+      description: post.description,
       images: [ogImage],
     },
     alternates: {
-      canonical: postUrl,
+      canonical: post.link,
     },
     other: {
       'article:author': META_DATA.name,
-      'article:section': pageConfig.category,
-      'article:published_time': new Date(pageConfig.date).toISOString(),
-      'article:modified_time': new Date(pageConfig.date).toISOString(),
-      'article:tag': pageConfig.category,
+      'article:section': post.category,
+      'article:published_time': new Date(post.date).toISOString(),
+      'article:modified_time': new Date(post.date).toISOString(),
+      'article:tag': post.category,
     },
   };
 }
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-  // Use static posts data - no Redis calls on server
-  // The Header component will fetch fresh view counts client-side via SWR
-  
-  // Get pathname from middleware header
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') || '';
-  
-  if (DEBUG) console.log('🔍 [Layout] Pathname from header:', pathname);
-  
-  let pageConfig: typeof postsData.posts[0] | undefined = undefined;
-  
-  if (pathname && pathname !== '/') {
-    // Find the post config by matching with link path
-    pageConfig = postsData.posts.find((post) => {
-      const url = new URL(post.link);
-      const matches = url.pathname === pathname;
-      if (matches && DEBUG) {
-        console.log('✅ [Layout] Match found:', post.title);
-      }
-      return matches;
-    });
-    
-    if (!pageConfig && DEBUG) {
-      console.log('❌ [Layout] No post found for pathname:', pathname);
-    }
-  }
-  
-  // Add default views data for initial render (will be updated client-side)
-  const pageConfigWithViews = pageConfig ? {
-    ...pageConfig,
-    views: 0,
-    viewsFormatted: '0'
-  } : undefined;
-  
-  if (DEBUG) {
-    console.log('📋 PageConfig:', pageConfig ? `Found: ${pageConfig.title}` : 'Not found');
-    console.log('📋 PageConfigWithViews:', pageConfigWithViews ? `ID: ${pageConfigWithViews.id}` : 'undefined');
-  }
-
-  // Structured data moved to template to ensure per-navigation updates
-  const structuredData = null;
-
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      {structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-      )}
       <ReadingProgressIndicator />
       <Container as="article" className="flex flex-col mb-10 py-6 min-h-screen text-gray-800 dark:text-gray-300 left-animation">
         {children}
-        {<Comment />}
+        <Comment />
         <Pagination />
-        <Claps />
       </Container>
     </>
   );

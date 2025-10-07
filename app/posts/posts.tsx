@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
-import { Suspense } from "react";
 import type { Post } from "@/types";
 import Category from "./category";
 import { CategoryEnum, LangEnum } from "@/types";
@@ -10,13 +9,12 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Fuse from "fuse.js";
-import { debounce } from "@/lib/utils";
 import { getYear } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 
 type SortSetting = ["date" | "views", "desc" | "asc"];
 
-export function Posts({ posts: initialPosts }) {
+export function Posts({ posts }: { posts: Post[] }) {
   const searchParams = useSearchParams();
 
   const [sort, setSort] = useState<SortSetting>(["date", "desc"]);
@@ -24,18 +22,20 @@ export function Posts({ posts: initialPosts }) {
   const [category, setCategory] = useState<CategoryEnum>((searchParams.get("category") as CategoryEnum) || CategoryEnum.all);
   const [flag, setFlag] = useState("🇹🇷🇬🇧");
   const [input, setInput] = useState("");
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts);
 
-  // Posts'u cache'le - props'tan gelen data'yı kullan
-  const posts = useMemo(() => initialPosts, [initialPosts]);
+  // Create Fuse instance for search
+  const [fuse] = useState(() => new Fuse(posts, { 
+    keys: ["title", "category"], 
+    threshold: 0.4,
+    includeScore: true,
+    minMatchCharLength: 2
+  }));
 
   const sortDate = useCallback(() => {
     setSort((sort) => ["date", sort[0] !== "date" || sort[1] === "asc" ? "desc" : "asc"]);
   }, []);
 
-  const sortViews = useCallback(() => {
-    setSort((sort) => [sort[0] === "views" && sort[1] === "asc" ? "date" : "views", sort[0] !== "views" ? "desc" : sort[1] === "asc" ? "desc" : "asc"]);
-  }, []);
 
   const handleEmoji = useCallback(() => {
     switch (lang) {
@@ -57,53 +57,45 @@ export function Posts({ posts: initialPosts }) {
     }
   }, [lang]);
 
-  // Fuse.js'i sadece posts değiştiğinde yeniden oluştur
-  const fuse = useMemo(() => new Fuse(posts, { 
-    keys: ["title", "category"], 
-    threshold: 0.4,
-    includeScore: true,
-    minMatchCharLength: 2
-  }), [posts]);
-
-  const debouncedSearch = useRef(
-    debounce((query: string) => {
-      if (query.trim() === "") {
-        setFilteredPosts(posts);
-      } else {
-        const results = fuse.search(query.trim()).map((result) => result.item as Post);
-        setFilteredPosts(results);
-      }
-    }, 200) // Debounce süresini kısalt
-  ).current;
-
+  // Search effect
   useEffect(() => {
-    debouncedSearch(input);
-  }, [input, debouncedSearch, fuse]);
+    if (input.trim() === "") {
+      setFilteredPosts(posts);
+    } else {
+      const results = fuse.search(input.trim()).map((result) => result.item as Post);
+      setFilteredPosts(results);
+    }
+  }, [input, posts, fuse]);
 
   return (
-    <Suspense fallback={<div>Loading</div>}>
-      <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
-        <header className="flex items-center text-sm sticky top-0 p-1 rounded-md bg-white dark:bg-black">
-          <Button variant="outline" size="sm" onClick={sortDate} className="w-13 h-9 text-left text-md font-semibold">
-            Date
-            {sort[0] === "date" && sort[1] === "asc" && "↑"}
-          </Button>
-          <div className={`grow pl-2`}>
-            <Input type="text" placeholder="Search posts..." className="w-full" value={input} onChange={(e) => setInput(e.target.value)} />
-          </div>
-          <Category category={category} setCategory={setCategory} />
-          <Button variant="outline" size="sm" onClick={handleEmoji} className="flex items-center justify-center h-9 text-md font-semibold w-16 mr-2">
-            {flag}
-          </Button>
-          <Button variant="outline" size="sm" onClick={sortViews} className="h-9 text-md font-semibold">
-            Views
-            {sort[0] === "views" ? (sort[1] === "asc" ? "↑" : "↓") : ""}
-          </Button>
-        </header>
+    <div className="left-animation text-sm no-scrollbar grow overflow-y-scroll h-full">
+      <header className="flex items-center text-sm sticky top-0 p-1 rounded-md bg-white dark:bg-black">
+        <Button variant="outline" size="sm" onClick={sortDate} className="w-13 h-9 text-left text-md font-semibold">
+          Date
+          {sort[0] === "date" && sort[1] === "asc" && "↑"}
+        </Button>
+        <div className="grow pl-2">
+          <Input 
+            type="text" 
+            placeholder="Search posts..." 
+            className="w-full" 
+            value={input} 
+            onChange={(e) => setInput(e.target.value)} 
+          />
+        </div>
+        <Category category={category} setCategory={setCategory} />
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleEmoji} 
+          className="flex items-center justify-center h-9 text-md font-semibold w-16 mr-2"
+        >
+          {flag}
+        </Button>
+      </header>
 
-        <List posts={filteredPosts} sort={sort} lang={lang} category={category} />
-      </div>
-    </Suspense>
+      <List posts={filteredPosts} sort={sort} lang={lang} category={category} />
+    </div>
   );
 }
 
@@ -113,11 +105,8 @@ function List({ posts, sort, lang, category }: { posts: Post[]; sort: SortSettin
     const [sortKey, sortDirection] = sort;
     return [...posts]
       .sort((a, b) => {
-        if (sortKey === "date") {
-          return sortDirection === "desc" ? new Date(b.date).getTime() - new Date(a.date).getTime() : new Date(a.date).getTime() - new Date(b.date).getTime();
-        } else {
-          return sortDirection === "desc" ? b.views - a.views : a.views - b.views;
-        }
+        // Sort by date only
+        return sortDirection === "desc" ? new Date(b.date).getTime() - new Date(a.date).getTime() : new Date(a.date).getTime() - new Date(b.date).getTime();
       })
       .filter((post) => {
         if (lang === LangEnum.all) return post;
@@ -161,7 +150,6 @@ function List({ posts, sort, lang, category }: { posts: Post[]; sort: SortSettin
                     </div>
                   </div>
 
-                  <span className="text-gray-500 dark:text-gray-500 text-xs">{post.viewsFormatted}</span>
                 </div>
               </span>
             </Link>
