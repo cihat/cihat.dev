@@ -9,11 +9,15 @@ export const metadata = {
   keywords: ["Pro JavaScript Design Patterns", "JavaScript", "Design Patterns", "Ross Harmes", "Dustin Diaz"],
 }
 
+<h1 className="text-5xl md:text-6xl font-black mb-6 dark:text-gray-100 leading-tight">My Notes from Pro JavaScript Design Patterns</h1>
+
+<div className="text-sm text-gray-500 dark:text-gray-500 mb-10 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <span className="font-semibold">July 27, 2023</span> • <span className="font-semibold">Learning</span> • <span>5 mins read</span>
+</div>
+
 <Image src="/books/javascript-pro-design-patterns.jpeg" width="400" height="400" />
 
 <p className="text-center mb-2">[All Example Codes on the Book](http://jsdesignpatterns.com/code.zip)</p>
-
-## Chapter-1: Expressive JavaScript
 
 [The flexibility of JavaScript.js](/files/pro-js-design-patterns/source-code/Chapter01/1.01%20-%20The%20flexibility%20of%20JavaScript.js)<br />
 [Functions as first-class objects.js](/files/pro-js-design-patterns/source-code/Chapter01/1.02%20-%20Functions%20as%20first-class%20objects.js)<br />
@@ -104,8 +108,6 @@ bill.displayGreeting();
 // Also just bill has the displayGreeting method, alice does not.
 `} lang="js"/>
 
-## Chapter-2: Interfaces
-
 Object oriented language have interfaces keyword that easy allows you to define an interface that other objects must implement. JavaScript does not have this feature, but you can simulate it by defining a method that checks for the presence of certain methods and properties.
 
 Three ways to check for the presence of a method or property:
@@ -113,8 +115,6 @@ Three ways to check for the presence of a method or property:
 1. Comments
 2. Duck Typing
 3. Attribute Checking
-
-### Comments
 
 <CodeSnippet content={`
 
@@ -159,8 +159,6 @@ CompositeForm.prototype.save = function() {
 // No error will be thrown if you forget to implement a method.
 `} lang="js"/>
 
-### Emulating Interfaces with Duck Typing
-
 <CodeSnippet content={`
 
 /*
@@ -186,8 +184,6 @@ function addForm(formInstance) {
     throw new Error('Object does not implement a required interface.');
   }
 }
-
-
 
 // This is a better way to emulate interfaces. The addForm function checks to make sure that the object passed in implements the required interfaces.
 // The CompositeForm constructor also checks to make sure that the object implements the required interfaces.
@@ -215,8 +211,6 @@ function implements(object) {
 
 This function checks to make sure that the object passed in implements all of the interfaces passed in. In this exmaple, CompositeForm implements both the Composite and FormItem interfaces. The main drawback to this approach is that you are not ensuring that the object implements the methods defined in the interface. You only know if it says it implements the interface.
 
-### Emulating Interfaces with Attribute Checking
-
 <CodeSnippet content={`
 
 var Composite = new Interface('Composite', ['add', 'remove', 'getChild']);
@@ -238,8 +232,6 @@ fucntion addForm(formInstance) {
 `} lang="js"/>
 
 A class never declares which interface it implements, reducing the reusability of the class and not self-documenting like the other approaches. It requires a helper class, Interface, and a helper function, ensureImplemtns. It does not check the nomes or numbers of arguments used in the methods or their types, only that the method has the method has the correct name.
-
-### The Interface Inplements for This book
 
 Using a combination of the first(Comments) and third(Attribute Checking) approaches.
 
@@ -316,8 +308,6 @@ Interface.ensureImplements = function(object) {
 The Interface constructor is used to define an interface. It takes a name and an array of method names. The constructor checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The Interface.ensureImplements method is a static method that is used to check that an object implements the required interface. It takes an object as its first argument and one or more interfaces as subsequent arguments. The method checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The method then loops through each method in the interface and checks to make sure that the object implements that method. If the object does not implement the method, an error is thrown.
 
 It becomes most beneficial when you start implementing complex systems using design patterns. It might seem like interfaces reduce JavaScript's flexibility, but they actually improve it by allowing your objects to be more loosely coupled. Your functions can be more flexible because you can pass in arguments of any type and still ensure that only objects with the needed method will be used.
-
-## Chapter-3: Encapsulation
 
 <br />
 <Reading text="Reading" />

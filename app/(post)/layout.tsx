@@ -1,13 +1,35 @@
-import Container from "@/components/ui/container";
-import Pagination from "@/components/pagination";
-import Comment from "@/components/comment";
-import ReadingProgressIndicator from "@/components/reading-progress-indicator";
+import { LayoutWrapper } from "./LayoutWrapper";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
 import { headers } from 'next/headers';
 
 // Force dynamic rendering for metadata (since it depends on pathname)
 export const dynamic = 'force-dynamic';
+
+/**
+ * Finds a post from posts.json by matching pathname components
+ * Uses a deterministic approach: extracts year and slug from pathname
+ * and matches against post.path and post.link
+ */
+function findPostByPathname(pathname: string) {
+  // Extract year and slug from pathname (e.g., /2023/initial-blog-post)
+  const pathMatch = pathname.match(/^\/(\d{4})\/([^\/]+)/);
+  
+  return postsData.posts.find((p) => {
+    if (pathMatch) {
+      // Match by year and path - this is more reliable for OpenNext
+      const [, year, slug] = pathMatch;
+      return p.path === slug && p.link.includes(`/${year}/`);
+    }
+    // Fallback to full pathname match
+    try {
+      const url = new URL(p.link);
+      return url.pathname === pathname;
+    } catch {
+      return false;
+    }
+  });
+}
 
 export async function generateMetadata() {
   const headersList = await headers();
@@ -20,11 +42,7 @@ export async function generateMetadata() {
     };
   }
   
-  // Find post by pathname
-  const post = postsData.posts.find((p) => {
-    const url = new URL(p.link);
-    return url.pathname === pathname;
-  });
+  const post = findPostByPathname(pathname);
 
   if (!post) {
     return {
@@ -89,14 +107,5 @@ export async function generateMetadata() {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <ReadingProgressIndicator />
-      <Container as="article" className="flex flex-col mb-10 py-6 min-h-screen text-gray-800 dark:text-gray-300 left-animation">
-        {children}
-        <Comment />
-        <Pagination />
-      </Container>
-    </>
-  );
+  return <LayoutWrapper>{children}</LayoutWrapper>;
 }

@@ -59,6 +59,6 @@ export function useMDXComponents(components: {
     CodeSnippet,
     Box,
     Spotify,
-    CAPTheoremAnalysis
+    CAPTheoremAnalysis,
   };
 }

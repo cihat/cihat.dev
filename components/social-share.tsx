@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BsTwitter, BsLinkedin, BsLink45Deg, BsCheck2 } from 'react-icons/bs'
 
 interface SocialShareProps {
@@ -11,6 +11,11 @@ interface SocialShareProps {
 
 export default function SocialShare({ url, title, description }: SocialShareProps) {
   const [copied, setCopied] = useState(false)
+
+  // Reset copied state when URL changes (new post)
+  useEffect(() => {
+    setCopied(false)
+  }, [url])
 
   const shareData = {
     twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&via=chtslk`,

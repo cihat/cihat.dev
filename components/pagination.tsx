@@ -14,8 +14,27 @@ export default function Pagination() {
   useEffect(() => {
     function init() {
       const posts: Post[] = getPosts() as Post[];
-      const currentBlog = path.split("/").slice(2).join("/");
-      const currentBlogIndex = posts.findIndex((post) => post.path === currentBlog);
+      
+      // Extract year and slug from pathname (e.g., /2023/initial-blog-post)
+      const pathMatch = path.match(/^\/(\d{4})\/([^\/]+)/);
+      
+      if (!pathMatch) {
+        setPagination({ prev: null, next: null });
+        return;
+      }
+      
+      const [, year, slug] = pathMatch;
+      
+      // Find current post by matching both year and slug for more accuracy
+      const currentBlogIndex = posts.findIndex((post) => {
+        return post.path === slug && post.link.includes(`/${year}/`);
+      });
+      
+      if (currentBlogIndex === -1) {
+        setPagination({ prev: null, next: null });
+        return;
+      }
+      
       let prevBlog;
       let nextBlog;
 

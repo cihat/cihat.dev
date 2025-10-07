@@ -24,6 +24,11 @@ const nextConfig = {
       '@radix-ui/react-popover',
       '@radix-ui/react-tabs',
     ],
+    // Reduce client-side router cache to prevent stale content
+    staleTimes: {
+      dynamic: 0,
+      static: 0,
+    },
   },
   
   env: {
