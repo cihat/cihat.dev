@@ -1,13 +1,22 @@
 "use client";
 
-import { useRef, useEffect, useMemo, useState } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import { ago } from "time-ago";
+import useSWR from "swr";
 import type { Post } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const DEBUG = process.env.NEXT_PUBLIC_DEBUG === '1';
+
+const fetcher = (url: string) => fetch(url, { 
+  cache: 'no-store',
+  headers: {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+  }
+}).then(res => res.json());
 
 export function Header({ initialPost }: { initialPost: Post | undefined }) {
   if (DEBUG) console.log('🎯 Header MOUNTED - initialPost:', initialPost ? `ID: ${initialPost.id}, Title: ${initialPost.title}` : 'undefined');
@@ -19,12 +28,31 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
     return segments[segments.length - 1];
   }, [pathname]);
 
-  // Use only the server-provided initial data; do not fetch client-side
-  const post = initialPost && initialPost.id === currentId ? initialPost : undefined;
+  // Key SWR by the CURRENT pathname-based id so client navigations re-fetch
+  const swrKey = currentId ? `/api/post-detail?id=${encodeURIComponent(currentId)}` : null;
+
+  // Only use fallbackData if it matches the current route's id to avoid stale UI
+  const fallback = initialPost && initialPost.id === currentId ? initialPost : undefined;
+
+  const { data: post, mutate } = useSWR(
+    swrKey,
+    fetcher,
+    {
+      fallbackData: fallback,
+      // Fetch once per navigation; avoid background polling
+      refreshInterval: 0,
+      revalidateOnMount: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+      dedupingInterval: 60000,
+      keepPreviousData: false,
+    }
+  );
 
   if (DEBUG) console.log('🎯 Header render - post:', post ? `ID: ${post.id}, Title: ${post.title}` : 'undefined');
 
-  // Prevent stale UI: don't render until the initial data matches current route id
+  // Prevent stale UI: don't render until the fetched post matches current route id
   if (!currentId || !post || post.id !== currentId) {
     if (DEBUG) console.log('⚠️  Header: returning empty - waiting for correct post data');
     return <></>;
@@ -72,6 +100,7 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
         <span className="pr-1.5">
           <Views
             id={post.id}
+            mutate={mutate}
             defaultValue={post.viewsFormatted}
           />
         </span>
@@ -80,8 +109,8 @@ export function Header({ initialPost }: { initialPost: Post | undefined }) {
   );
 }
 
-function Views({ id, defaultValue }) {
-  const [views, setViews] = useState<string | number | null>(defaultValue ?? null);
+function Views({ id, mutate, defaultValue }) {
+  const views = defaultValue;
   const didLogViewRef = useRef(false);
   const lastIdRef = useRef<string | null>(null);
 
@@ -95,14 +124,6 @@ function Views({ id, defaultValue }) {
       lastIdRef.current = id;
     }
     
-    // Prevent multiple increments within the same session
-    const viewedKey = `viewed:${id}`;
-    if (typeof window !== 'undefined' && sessionStorage.getItem(viewedKey) === '1') {
-      if (DEBUG) console.log('🛑 Skipping view increment (already viewed this session):', id);
-      didLogViewRef.current = true;
-      return;
-    }
-
     if (!didLogViewRef.current) {
       const url = "/api/post-detail?incr=1&id=" + encodeURIComponent(id);
       if (DEBUG) console.log('📊 Incrementing view count for:', id);
@@ -110,18 +131,15 @@ function Views({ id, defaultValue }) {
         .then(res => res.json())
         .then(obj => {
           if (DEBUG) console.log('✅ View count updated:', obj.views);
-          // Update local state with the latest view count
-          setViews(obj.viewsFormatted ?? obj.views ?? defaultValue ?? null);
-          if (typeof window !== 'undefined') {
-            sessionStorage.setItem(viewedKey, '1');
-          }
+          // Update SWR cache without triggering a revalidation fetch
+          mutate(obj, { revalidate: false, populateCache: true });
         })
         .catch((error) => {
           if (DEBUG) console.error('❌ Failed to update view count:', error);
         });
       didLogViewRef.current = true;
     }
-  }, [id, defaultValue]);
+  }, [id, mutate]);
 
   return <>{views != null ? <span>{views} views</span> : null}</>;
 }
