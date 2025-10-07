@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 import commaNumber from "comma-number"
 import { executeRedisCommand } from "@/lib/redis"
 
+const DEBUG = process.env.NEXT_PUBLIC_DEBUG === '1';
 // Disable caching for claps (dynamic data)
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -93,13 +94,13 @@ export async function GET(req: NextRequest) {
   try {
     // Increment clap count if score parameter is provided
     if (scoreParam != null) {
-      console.log('👏 Incrementing claps for:', postId, 'by:', score);
+      if (DEBUG) console.log('👏 Incrementing claps for:', postId, 'by:', score);
       const clapCount = await executeRedisCommand(
         (redis) => redis.hincrby("claps", postId, score),
         0,
         5000 // 5 second timeout for write operations
       );
-      console.log('✅ Clap count after increment:', clapCount);
+      if (DEBUG) console.log('✅ Clap count after increment:', clapCount);
       
       return NextResponse.json({
         clapCount,
@@ -115,13 +116,13 @@ export async function GET(req: NextRequest) {
       });
     } else {
       // Get current clap count
-      console.log('👏 Fetching claps for:', postId);
+      if (DEBUG) console.log('👏 Fetching claps for:', postId);
       const clapCount = await executeRedisCommand(
         (redis) => redis.hget<number>("claps", postId),
         0,
         3000 // 3 second timeout for read operations
       );
-      console.log('✅ Current clap count:', clapCount);
+      if (DEBUG) console.log('✅ Current clap count:', clapCount);
       
       return NextResponse.json({
         clapCount: clapCount ?? 0,

@@ -8,6 +8,8 @@ import "./style.css"
 import { usePathname } from "next/navigation";
 import useIsMobile from "@/hooks/useIsMobile";
 
+const DEBUG = process.env.NEXT_PUBLIC_DEBUG === '1';
+
 const REACTION_DURATION = 600;
 
 enum ReactionClass {
@@ -70,7 +72,7 @@ export default function Claps({
 
       // Skip if no valid postId
       if (!postId || postId === '' || postId === 'undefined') {
-        console.log('⚠️  Skipping clap save - no valid post ID');
+        if (DEBUG) console.log('⚠️  Skipping clap save - no valid post ID');
         setCacheCount(0);
         return setReactionAnim(ReactionClass.no);
       }
@@ -80,7 +82,7 @@ export default function Claps({
           return setReactionAnim(ReactionClass.no);
         }
 
-        console.log('👏 Saving clap for:', postId, 'score:', score);
+        if (DEBUG) console.log('👏 Saving clap for:', postId, 'score:', score);
         const url = `/api/claps?score=${score}&id=${encodeURIComponent(postId)}`
         const response = await fetch(url, {
           method: "GET",
@@ -90,17 +92,17 @@ export default function Claps({
         });
 
         if (!response.ok) {
-          console.log('❌ Clap save failed:', response.status);
+          if (DEBUG) console.log('❌ Clap save failed:', response.status);
           return setReactionAnim(ReactionClass.no);
         }
 
         const newData = await response.json();
-        console.log('✅ Clap saved:', newData);
+        if (DEBUG) console.log('✅ Clap saved:', newData);
         setData(newData);
 
         setReactionAnim(ReactionClass.yes);
       } catch (error) {
-        console.error('❌ Clap save error:', error);
+        if (DEBUG) console.error('❌ Clap save error:', error);
       } finally {
         setCacheCount(0);
       }
@@ -121,13 +123,13 @@ export default function Claps({
 
     // Skip if no valid postId (e.g., on home page or root paths)
     if (!postId || postId === '' || postId === 'undefined') {
-      console.log('⚠️  Skipping claps - no valid post ID');
+      if (DEBUG) console.log('⚠️  Skipping claps - no valid post ID');
       setReady(true);
       return;
     }
 
     try {
-      console.log('👏 Fetching claps for:', postId);
+      if (DEBUG) console.log('👏 Fetching claps for:', postId);
       const url = "/api/claps?id=" + encodeURIComponent(postId)
       const response = await fetch(url, {
         method: "GET",
@@ -137,16 +139,16 @@ export default function Claps({
       });
 
       if (!response.ok) {
-        console.log('❌ Claps fetch failed:', response.status);
+        if (DEBUG) console.log('❌ Claps fetch failed:', response.status);
         return;
       }
 
       const data = await response.json();
-      console.log('✅ Claps data:', data);
+      if (DEBUG) console.log('✅ Claps data:', data);
 
       setData(data);
     } catch (error) {
-      console.log('❌ Claps error:', error);
+      if (DEBUG) console.log('❌ Claps error:', error);
     } finally {
       setReady(true);
     }

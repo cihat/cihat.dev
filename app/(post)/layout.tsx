@@ -1,13 +1,13 @@
-import { Header } from "./header";
 import Container from "@/components/ui/container";
 import Pagination from "@/components/pagination";
 import Comment from "@/components/comment";
 import Claps from "@/components/claps/claps";
 import ReadingProgressIndicator from "@/components/reading-progress-indicator";
-import SocialShare from "@/components/social-share";
 import postsData from "@/lib/posts.json";
 import { META_DATA } from "@/lib/meta";
 import { headers } from 'next/headers';
+
+const DEBUG = process.env.NEXT_PUBLIC_DEBUG === '1';
 
 // Dynamic rendering for layouts (no caching for metadata)
 export const dynamic = 'force-dynamic';
@@ -111,7 +111,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '';
   
-  console.log('🔍 [Layout] Pathname from header:', pathname);
+  if (DEBUG) console.log('🔍 [Layout] Pathname from header:', pathname);
   
   let pageConfig: typeof postsData.posts[0] | undefined = undefined;
   
@@ -120,13 +120,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
     pageConfig = postsData.posts.find((post) => {
       const url = new URL(post.link);
       const matches = url.pathname === pathname;
-      if (matches) {
+      if (matches && DEBUG) {
         console.log('✅ [Layout] Match found:', post.title);
       }
       return matches;
     });
     
-    if (!pageConfig) {
+    if (!pageConfig && DEBUG) {
       console.log('❌ [Layout] No post found for pathname:', pathname);
     }
   }
@@ -138,44 +138,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
     viewsFormatted: '0'
   } : undefined;
   
-  console.log('📋 PageConfig:', pageConfig ? `Found: ${pageConfig.title}` : 'Not found');
-  console.log('📋 PageConfigWithViews:', pageConfigWithViews ? `ID: ${pageConfigWithViews.id}` : 'undefined');
+  if (DEBUG) {
+    console.log('📋 PageConfig:', pageConfig ? `Found: ${pageConfig.title}` : 'Not found');
+    console.log('📋 PageConfigWithViews:', pageConfigWithViews ? `ID: ${pageConfigWithViews.id}` : 'undefined');
+  }
 
-  // Structured data for the article
-  const structuredData = pageConfig ? {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": pageConfig.title,
-    "description": pageConfig.description,
-    "image": `${META_DATA.url}/og/og-image.png`,
-    "author": {
-      "@type": "Person",
-      "name": META_DATA.name,
-      "url": META_DATA.url,
-      "sameAs": [
-        META_DATA.social.github,
-        META_DATA.social.twitter,
-        META_DATA.social.instagram,
-      ]
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": META_DATA.name,
-      "url": META_DATA.url,
-    },
-    "datePublished": new Date(pageConfig.date).toISOString(),
-    "dateModified": new Date(pageConfig.date).toISOString(),
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": pageConfig.link,
-    },
-    "url": pageConfig.link,
-    "inLanguage": pageConfig.language,
-    "genre": pageConfig.category,
-    "keywords": [pageConfig.category, 'programming', 'software development'],
-    "wordCount": pageConfig.minuteToRead * 200, // Estimate based on reading time
-    "timeRequired": `PT${pageConfig.minuteToRead}M`,
-  } : null;
+  // Structured data moved to template to ensure per-navigation updates
+  const structuredData = null;
 
   return (
     <>
@@ -189,15 +158,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       )}
       <ReadingProgressIndicator />
       <Container as="article" className="flex flex-col mb-10 py-6 min-h-screen text-gray-800 dark:text-gray-300 left-animation">
-        <Header key={pageConfigWithViews?.id || 'no-post'} initialPost={pageConfigWithViews} />
         {children}
-        {pageConfig && (
-          <SocialShare 
-            url={pageConfig.link}
-            title={pageConfig.title}
-            description={pageConfig.description}
-          />
-        )}
         {<Comment />}
         <Pagination />
         <Claps />

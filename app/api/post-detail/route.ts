@@ -4,6 +4,8 @@ import type { NextRequest } from "next/server";
 import commaNumber from "comma-number"
 import { executeRedisCommand } from "@/lib/redis"
 
+const DEBUG = process.env.NEXT_PUBLIC_DEBUG === '1';
+
 // Disable caching for view counts (dynamic data)
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -82,13 +84,13 @@ export async function GET(req: NextRequest) {
     
     if (shouldIncrement) {
       // Increment view count with longer timeout for write operations
-      console.log('📊 Incrementing view count for:', id);
+      if (DEBUG) console.log('📊 Incrementing view count for:', id);
       views = await executeRedisCommand(
         (redis) => redis.hincrby("views", id, 1),
         0,
         5000 // 5 second timeout for write operations
       );
-      console.log('✅ View count after increment:', views);
+      if (DEBUG) console.log('✅ View count after increment:', views);
       
       return NextResponse.json({
         ...post,
@@ -101,13 +103,13 @@ export async function GET(req: NextRequest) {
       });
     } else {
       // Get current view count
-      console.log('📊 Fetching view count for:', id);
+      if (DEBUG) console.log('📊 Fetching view count for:', id);
       views = await executeRedisCommand(
         (redis) => redis.hget<number|null>("views", id),
         0,
         3000 // 3 second timeout for read operations
       );
-      console.log('✅ Current view count:', views);
+      if (DEBUG) console.log('✅ Current view count:', views);
       
       return NextResponse.json({
         ...post,
