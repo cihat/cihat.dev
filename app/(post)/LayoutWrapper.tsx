@@ -6,6 +6,7 @@ import Container from "@/components/ui/container";
 import Pagination from "@/components/pagination";
 import Comment from "@/components/comment";
 import ReadingProgressIndicator from "@/components/reading-progress-indicator";
+import { BackButton } from "@/components/ui/back-button";
 
 /**
  * Client wrapper for post layout
@@ -26,6 +27,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
         as="article" 
         className="flex flex-col mb-10 py-6 min-h-screen text-gray-800 dark:text-gray-300 left-animation"
       >
+        <BackButton />
         {children}
         <Comment />
         <Pagination />
