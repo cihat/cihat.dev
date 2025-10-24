@@ -116,8 +116,7 @@ Three ways to check for the presence of a method or property:
 2. Duck Typing
 3. Attribute Checking
 
-<CodeSnippet content={`
-
+<CodeSnippet content={`// Interface definition in comments
 /*
 interface Composite {
   function add(child);
@@ -128,35 +127,19 @@ interface Composite {
 interface FormItem {
   function save();
 }
-
 */
 
-var CompositeForm = function(id, method, action) { // implements Composite, FormItem
-  ....
+var CompositeForm = function(id, method, action) {
+  // implements Composite, FormItem
 }
 
 // Implement the Composite interface
-
-CompositeForm.prototype.add = function(child) {
-  ....
-}
-
-CompositeForm.prototype.remove = function(child) {
-  ....
-}
-
-CompositeForm.prototype.getChild = function(index) {
-  ....
-}
+CompositeForm.prototype.add = function(child) { /* ... */ }
+CompositeForm.prototype.remove = function(child) { /* ... */ }
+CompositeForm.prototype.getChild = function(index) { /* ... */ }
 
 // Implement the FormItem interface
-
-CompositeForm.prototype.save = function() {
-  ....
-}
-
-// This doesn't emulate the interface functionality very well. There is no checking to ensure that CompositeForm implements the methods defined in the interface.
-// No error will be thrown if you forget to implement a method.
+CompositeForm.prototype.save = function() { /* ... */ }
 `} lang="js"/>
 
 <CodeSnippet content={`
@@ -261,49 +244,42 @@ fucntion addForm(formInstance) {
 
 `} lang="js"/>
 
-<CodeSnippet content={`
-
-// Interface.js - Defines Interface constructor.
-
+<CodeSnippet content={`// Interface.js - Defines Interface constructor
 var Interface = function(name, methods) {
   if(arguments.length != 2) {
     throw new Error('Interface constructor called with ' + arguments.length + 'arguments, but expected exactly 2.');
   }
-
   this.name = name;
   this.methods = methods;
-
+  
   for(var i = 0, len = methods.length; i < len; i++) {
-    if(tpeof methods[i] !== 'string') {
+    if(typeof methods[i] !== 'string') {
       throw new Error('Interface constructor expects method names to be passed in as a string.');
     }
     this.methods.push(methods[i]);
   }
 }
 
-// Static class method.
-
+// Static class method
 Interface.ensureImplements = function(object) {
   if(arguments.length < 2) {
-    throw new Error("Function Interface.ensureImplemtns called with" + arguments.length + "arguments, but expected at least 2.");
+    throw new Error("Function Interface.ensureImplements called with " + arguments.length + "arguments, but expected at least 2.");
   }
 
   for(var i = 1, len = arguments.length; i < len; i++) {
     var interface = arguments[i];
     if(interface.constructor !== Interface) {
-      throw new Error("Function Interface.ensureImplements expects arguments" + "two and above to be instancs instaces of Interface.");;
+      throw new Error("Function Interface.ensureImplements expects arguments two and above to be instances of Interface.");
     }
 
-    for(var j = 0; methodsLen = interface.method.length; j < methodsLen; j++) {
-      var methods = interface.methods[j];
-      if(!object[methods] || typeof object[methods] !== 'function') {
-        throw new Error("Function Interface.ensureImplements: object" + "does not implement the " + interface.name + " interface. Method " + methods + " was not found.");
+    for(var j = 0, methodsLen = interface.methods.length; j < methodsLen; j++) {
+      var method = interface.methods[j];
+      if(!object[method] || typeof object[method] !== 'function') {
+        throw new Error("Function Interface.ensureImplements: object does not implement the " + interface.name + " interface. Method " + method + " was not found.");
       }
     }
   }
-}
-
-  `} lang="js"/>
+}`} lang="js"/>
 
 The Interface constructor is used to define an interface. It takes a name and an array of method names. The constructor checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The Interface.ensureImplements method is a static method that is used to check that an object implements the required interface. It takes an object as its first argument and one or more interfaces as subsequent arguments. The method checks to make sure that the correct number of arguments are passed in and that the arguments are of the correct type. The method then loops through each method in the interface and checks to make sure that the object implements that method. If the object does not implement the method, an error is thrown.
 

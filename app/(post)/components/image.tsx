@@ -1,9 +1,7 @@
-import sizeOf from "image-size";
-import { join } from "path";
-import { readFile } from "fs/promises";
 import { Caption } from "./caption";
 import NextImage from "next/image";
 import cx from "@/lib/cx";
+
 export async function Image({
   src,
   alt: originalAlt,
@@ -22,54 +20,13 @@ export async function Image({
     /* eslint-disable @next/next/no-img-element */
     return <img src={src} alt={originalAlt ?? ""} />;
   } else {
+    // Skip server-side image processing on Cloudflare Workers to reduce CPU usage
     if (width === null || height === null) {
-      let imageBuffer: Buffer | null = null;
-      try {
-        if (src.startsWith("http")) {
-          // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer with timeout
-          const response = await fetch(src, {
-            signal: AbortSignal.timeout(5000) // 5 second timeout
-          });
-          if (!response.ok) {
-            throw new Error(`Failed to fetch image: ${response.status}`);
-          }
-          const arrayBuffer = await response.arrayBuffer();
-          imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
-        } else {
-          if (!process.env.CI && process.env.NODE_ENV === "production") {
-            // Fix: Convert ArrayBuffer to Uint8Array before creating Buffer with timeout
-            const response = await fetch("https://" + process.env.VERCEL_URL + src, {
-              signal: AbortSignal.timeout(5000) // 5 second timeout
-            });
-            if (!response.ok) {
-              throw new Error(`Failed to fetch image: ${response.status}`);
-            }
-            const arrayBuffer = await response.arrayBuffer();
-            imageBuffer = Buffer.from(new Uint8Array(arrayBuffer));
-          } else {
-            imageBuffer = await readFile(
-              new URL(
-                join(import.meta.url, "..", "..", "..", "..", "public", src)
-              ).pathname
-            );
-          }
-        }
-        const computedSize = sizeOf(imageBuffer);
-        if (
-          computedSize.width === undefined ||
-          computedSize.height === undefined
-        ) {
-          throw new Error("Could not compute image size");
-        }
-        width = computedSize.width;
-        height = computedSize.height;
-      } catch (error) {
-        console.warn(`⚠️ Failed to fetch or compute image size for ${src}:`, error);
-        // Fallback to reasonable defaults to prevent build failure
-        width = 800;
-        height = 600;
-      }
+      // Use default dimensions to avoid CPU-intensive image processing
+      width = width || 800;
+      height = height || 600;
     }
+    
     let alt: string | null = null;
     let dividedBy = 100;
     if ("string" === typeof originalAlt) {

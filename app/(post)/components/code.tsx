@@ -1,7 +1,4 @@
-import SyntaxHighlighter from 'react-syntax-highlighter';
-
 export const Code = ({ children, lang }) => {
-
   if (!lang) {
     return (
       <code
@@ -19,9 +16,11 @@ export const Code = ({ children, lang }) => {
       </code>
     )
   }
+  
+  // Simple code block without syntax highlighting to avoid SSR issues
   return (
-    <SyntaxHighlighter language={lang} showLineNumbers={true} className="rounded-md">
-      {children}
-    </SyntaxHighlighter>
+    <pre className="rounded-md bg-gray-100 dark:bg-gray-800 p-4 overflow-x-auto text-sm">
+      <code className="text-gray-800 dark:text-gray-200">{children}</code>
+    </pre>
   );
 };

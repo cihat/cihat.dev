@@ -14,6 +14,11 @@ const nextConfig = {
   // Disable sourcemaps in production for faster builds
   productionBrowserSourceMaps: false,
   
+  // Disable CSS optimization completely
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
   experimental: {
     mdxRs: true,
     // Optimize package imports for better tree-shaking
@@ -23,13 +28,21 @@ const nextConfig = {
       '@radix-ui/react-dropdown-menu',
       '@radix-ui/react-popover',
       '@radix-ui/react-tabs',
+      'react-syntax-highlighter', // Optimize syntax highlighter
     ],
     // Reduce client-side router cache to prevent stale content
     staleTimes: {
       dynamic: 0,
       static: 0,
     },
+    // Memory optimizations
+    memoryBasedWorkersCount: true,
+    // Disable CSS optimization to prevent critters issues
+    optimizeCss: false,
   },
+  
+  // Remove serverExternalPackages to avoid conflict with transpilePackages
+  // serverExternalPackages: ['react-syntax-highlighter'],
   
   env: {
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
@@ -95,7 +108,12 @@ const nextConfig = {
     if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,
+        minimize: true,
         moduleIds: 'deterministic',
+        // Disable CSS optimization to prevent critters dependency issues
+        minimizer: config.optimization.minimizer?.filter(
+          (plugin) => plugin.constructor.name !== 'CssMinimizerPlugin'
+        ),
         splitChunks: {
           chunks: 'all',
           cacheGroups: {
