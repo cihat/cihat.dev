@@ -12,10 +12,6 @@
   "observability": {
     "enabled": true
   },
-  "limits": {
-    "cpu_ms": 50000,
-    "memory_mb": 256
-  },
   "placement": {
     "mode": "smart"
   }
