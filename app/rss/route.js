@@ -38,14 +38,32 @@ export async function GET() {
   posts.forEach(post => {
     // Handle both string and array categories
     const categories = Array.isArray(post.category) ? post.category : [post.category];
+    
+    // Parse date string to Date object for RSS
+    let pubDate;
+    try {
+      pubDate = new Date(post.date);
+      // If date is invalid, use current date
+      if (isNaN(pubDate.getTime())) {
+        pubDate = new Date();
+      }
+    } catch (e) {
+      pubDate = new Date();
+    }
+    
+    // Ensure link is absolute URL
+    const link = post.link.startsWith('http') 
+      ? post.link 
+      : `https://cihat.dev${post.link.startsWith('/') ? post.link : '/' + post.link}`;
+    
     feed.item({
       title: post.title,
-      description: post.description,
-      url: post.link,
-      date: post.date,
+      description: post.description || '',
+      link: link,
+      guid: link, // Use link as guid for uniqueness
+      date: pubDate,
       categories: categories,
       author: "Cihat Salik",
-      ...post
     });
   });
 
