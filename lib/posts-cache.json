@@ -17,6 +17,22 @@
     "viewsFormatted": "0"
   },
   {
+    "id": "vibe-coding",
+    "path": "vibe-coding",
+    "date": "November 16, 2025",
+    "title": "Vibe Coding",
+    "minuteToRead": 5,
+    "language": "tr-TR",
+    "category": [
+      "Vibe Coding"
+    ],
+    "link": "https://cihat.dev/2025/vibe-coding",
+    "description": "About Vibe Coding",
+    "issueNumber": 16,
+    "views": 0,
+    "viewsFormatted": "0"
+  },
+  {
     "id": "system-design",
     "path": "system-design",
     "date": "August 22, 2025",
