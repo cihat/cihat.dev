@@ -8,6 +8,11 @@ const Comment = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!ref.current) return;
+
+    // Önceki utterances içeriğini temizle
+    ref.current.innerHTML = "";
+
     const script = document.createElement("script");
     script.src = "https://utteranc.es/client.js";
     script.setAttribute("repo", "cihat/cihat.dev");
@@ -16,12 +21,17 @@ const Comment = () => {
     script.setAttribute("crossOrigin", "anonymous");
     script.setAttribute("async", "true");
 
-    ref.current?.appendChild(script);
+    ref.current.appendChild(script);
 
     return () => {
+      // Cleanup: script ve utterances iframe'ini kaldır
       if (ref.current) {
-        // @ts-ignore
-        ref.current = null;
+        ref.current.innerHTML = "";
+      }
+      // Utterances tarafından oluşturulan iframe'i de kaldır
+      const utterancesFrame = document.querySelector('iframe[src*="utteranc.es"]');
+      if (utterancesFrame) {
+        utterancesFrame.remove();
       }
     };
   }, [pathname]);

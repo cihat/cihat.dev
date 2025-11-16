@@ -9,6 +9,11 @@ class Unsplash {
   public photo: IRandomPhoto = dummyPhoto
 
   async getData(url): Promise<IRandomPhoto> {
+    // Don't make external calls during development
+    if (process.env.NODE_ENV === "development") {
+      return dummyPhoto
+    }
+
     try {
       const res = await fetch(url, {
         method: "GET",
