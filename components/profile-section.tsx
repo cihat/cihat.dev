@@ -87,12 +87,13 @@ export default function ProfileSection() {
             loading="lazy"
             placeholder="blur"
             quality={100}
+            unoptimized={true}
             blurDataURL={photo?.urls?.small}
             width={photo?.width}
             height={photo?.height}
             className="rounded-lg w-full"
             alt={photo?.alt_description || `Random photo by ${photo?.user?.first_name} ${photo?.user?.last_name} from Unsplash`}
-            src={`${photo?.urls?.regular}?t=${imageKey}`}
+            src={`${photo?.urls?.regular}?t=${imageKey}&v=${Math.random()}`}
             style={{ width: '100%', height: 'auto' }}
           />
           <figcaption className="mt-2 text-xs text-center text-gray-500 dark:text-gray-400">

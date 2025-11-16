@@ -4,16 +4,27 @@ import { dummyPhoto } from "./meta";
 class Unsplash {
   private base_url: string = "https://api.unsplash.com";
   private client_id: string = `?client_id=${process.env.UNSPLASH_ACCESS_KEY}`
-  private uiUxKeywords: string = "natural,landscape,designer,design,art,artist,illustration,illustrator,graphic,graphic design,graphic designer,web,web design,web designer,ui,ux,ui/ux,ui design,ux design,ui/ux design,ui designer";
+  private uiUxKeywords: string[] = [
+    "natural", "landscape", "designer", "design", "art", "artist", 
+    "illustration", "illustrator", "graphic", "graphic design", 
+    "graphic designer", "web", "web design", "web designer", 
+    "ui", "ux", "ui/ux", "ui design", "ux design", "ui/ux design", 
+    "ui designer", "minimalist", "modern", "creative", "aesthetic",
+    "technology", "code", "developer", "workspace", "productivity"
+  ];
 
   public photo: IRandomPhoto = dummyPhoto
 
-  async getData(url): Promise<IRandomPhoto> {
-    // Don't make external calls during development
-    if (process.env.NODE_ENV === "development") {
-      return dummyPhoto
-    }
+  private getRandomKeyword(): string {
+    return this.uiUxKeywords[Math.floor(Math.random() * this.uiUxKeywords.length)];
+  }
 
+  private getRandomOrientation(): string {
+    const orientations = ['landscape', 'portrait', 'squarish'];
+    return orientations[Math.floor(Math.random() * orientations.length)];
+  }
+
+  async getData(url): Promise<IRandomPhoto | IRandomPhoto[]> {
     try {
       const res = await fetch(url, {
         method: "GET",
@@ -37,18 +48,28 @@ class Unsplash {
   }
 
   async getRandomPhoto(): Promise<IRandomPhoto> {
-    // Don't make external calls during development or build time
-    if (process.env.NODE_ENV === "development" || 
-        process.env.NEXT_PHASE === "phase-production-build" ||
-        !process.env.UNSPLASH_ACCESS_KEY) {
+    // Only check for API key, allow development and production
+    if (!process.env.UNSPLASH_ACCESS_KEY) {
       return dummyPhoto
     }
 
-    // Use multiple random values to ensure unique requests
+    // Use random keyword, orientation, and multiple cache-busting parameters
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(7);
-    const url = `${this.base_url}/photos/random/${this.client_id}&query=${this.uiUxKeywords}&t=${timestamp}&r=${random}`;
-    return await this.getData(url)
+    const randomKeyword = this.getRandomKeyword();
+    const orientation = this.getRandomOrientation();
+    const count = Math.floor(Math.random() * 5) + 1; // Random count between 1-5
+    
+    // Try to get multiple photos and pick one randomly, or use single random photo
+    const url = `${this.base_url}/photos/random/${this.client_id}&query=${randomKeyword}&orientation=${orientation}&count=${count}&t=${timestamp}&r=${random}`;
+    const result = await this.getData(url);
+    
+    // If result is an array (when count > 1), pick random one
+    if (Array.isArray(result) && result.length > 0) {
+      return result[Math.floor(Math.random() * result.length)];
+    }
+    
+    return result;
   }
 }
 

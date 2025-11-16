@@ -275,78 +275,15 @@ export default function BookmarkLayout() {
                     </Button>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row">
-                  <div className="sm:border-r border-b sm:border-b-0">
-                    <CalendarComponent
-                      mode="range"
-                      selected={{
-                        from: dateRange.from ?? undefined,
-                        to: dateRange.to ?? undefined
-                      }}
-                      onSelect={handleDateRangeChangeWithSync}
-                      initialFocus
-                    />
-                  </div>
-                  <div className="p-4 min-w-[280px] border-t sm:border-t-0 sm:border-l">
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Start Date</label>
-                        <Input
-                          type="date"
-                          value={customStartDate}
-                          onChange={(e) => {
-                            setCustomStartDate(e.target.value);
-                            if (e.target.value) setCustomStartMonth("");
-                          }}
-                          placeholder="YYYY-MM-DD"
-                          className="w-full"
-                        />
-                        <div className="text-xs text-muted-foreground text-center">or</div>
-                        <Input
-                          type="month"
-                          value={customStartMonth}
-                          onChange={(e) => {
-                            setCustomStartMonth(e.target.value);
-                            if (e.target.value) setCustomStartDate("");
-                          }}
-                          placeholder="YYYY-MM"
-                          className="w-full"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">End Date</label>
-                        <Input
-                          type="date"
-                          value={customEndDate}
-                          onChange={(e) => {
-                            setCustomEndDate(e.target.value);
-                            if (e.target.value) setCustomEndMonth("");
-                          }}
-                          placeholder="YYYY-MM-DD"
-                          className="w-full"
-                        />
-                        <div className="text-xs text-muted-foreground text-center">or</div>
-                        <Input
-                          type="month"
-                          value={customEndMonth}
-                          onChange={(e) => {
-                            setCustomEndMonth(e.target.value);
-                            if (e.target.value) setCustomEndDate("");
-                          }}
-                          placeholder="YYYY-MM"
-                          className="w-full"
-                        />
-                      </div>
-                      <Button
-                        onClick={handleCustomDateSubmit}
-                        className="w-full"
-                        size="sm"
-                      >
-                        Apply Custom Date
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <CalendarComponent
+                  mode="range"
+                  selected={{
+                    from: dateRange.from ?? undefined,
+                    to: dateRange.to ?? undefined
+                  }}
+                  onSelect={handleDateRangeChangeWithSync}
+                  initialFocus
+                />
               </PopoverContent>
             </Popover>
           </div>
