@@ -4,7 +4,7 @@ import { memo, useMemo, useState, useCallback } from "react"
 import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs"
-import { GiHamburger } from "react-icons/gi"
+import { HiMenu } from "react-icons/hi"
 
 import { ThemeToggle } from "@/components/ui/toggle-theme"
 import Container from "@/components/ui/container"
@@ -71,7 +71,7 @@ interface NavigationDropdownProps {
 
 const NavigationDropdown = memo(({ menuItems, currentPath, children }: NavigationDropdownProps) => {
   const [open, setOpen] = useState(false)
-  const currentLabel = menuItems[currentPath] || <GiHamburger size={20} />
+  const currentLabel = menuItems[currentPath] || <HiMenu size={20} />
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -152,7 +152,7 @@ export default function Header() {
           <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <Button variant="default" className="text-md font-semibold h-9 p-2">
-                {NAVIGATION_ITEMS[currentPath] || <GiHamburger size={20} />}
+                {NAVIGATION_ITEMS[currentPath] || <HiMenu size={20} />}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 mr-4" align="start" side="bottom">
