@@ -20,6 +20,9 @@ const Comment = () => {
     script.setAttribute("theme", "preferred-color-scheme");
     script.setAttribute("crossOrigin", "anonymous");
     script.setAttribute("async", "true");
+    // Tam URL'i belirtmek için url attribute'unu ekle
+    // Bu, GitHub OAuth callback'inin doğru URL'e yönlendirilmesini sağlar
+    script.setAttribute("url", window.location.href);
 
     ref.current.appendChild(script);
 
