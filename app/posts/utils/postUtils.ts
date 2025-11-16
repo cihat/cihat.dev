@@ -8,7 +8,10 @@ export function filterPostsByLanguage(posts: Post[], lang: LangEnum): Post[] {
 
 export function filterPostsByCategory(posts: Post[], category: CategoryEnum): Post[] {
   if (category === CategoryEnum.all) return posts;
-  return posts.filter((post) => post.category.toLowerCase() === category.toLowerCase());
+  return posts.filter((post) => {
+    const postCategories = Array.isArray(post.category) ? post.category : [post.category];
+    return postCategories.some((cat) => cat.toLowerCase() === category.toLowerCase());
+  });
 }
 
 export function sortPostsByDate(posts: Post[], direction: "asc" | "desc"): Post[] {

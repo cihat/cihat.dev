@@ -62,7 +62,10 @@ export function usePostFilters(posts: Post[]) {
     
     // 3. Then apply category filter
     if (category !== CategoryEnum.all) {
-      filtered = filtered.filter((post) => post.category.toLowerCase() === category.toLowerCase());
+      filtered = filtered.filter((post) => {
+        const postCategories = Array.isArray(post.category) ? post.category : [post.category];
+        return postCategories.some((cat) => cat.toLowerCase() === category.toLowerCase());
+      });
     }
     
     // 4. Finally sort

@@ -36,12 +36,14 @@ export async function GET() {
 
   const posts = getPosts();
   posts.forEach(post => {
+    // Handle both string and array categories
+    const categories = Array.isArray(post.category) ? post.category : [post.category];
     feed.item({
       title: post.title,
       description: post.description,
       url: post.link,
       date: post.date,
-      categories: [post.category],
+      categories: categories,
       author: "Cihat Salik",
       ...post
     });

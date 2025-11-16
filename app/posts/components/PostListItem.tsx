@@ -44,7 +44,13 @@ export function PostListItem({ post, year, isFirstOfYear, isLastOfYear }: PostLi
               </div>
               
               <div>
-                <Badge className="mr-2">{post.category}</Badge>
+                {Array.isArray(post.category) ? (
+                  post.category.map((cat, idx) => (
+                    <Badge key={idx} className="mr-2">{cat}</Badge>
+                  ))
+                ) : (
+                  <Badge className="mr-2">{post.category}</Badge>
+                )}
                 <span className="text-xs">{post.date}</span>
               </div>
             </div>

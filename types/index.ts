@@ -26,7 +26,7 @@ export type Post = {
   title: string;
   language: string;
   minuteToRead: number;
-  category: string;
+  category: string | string[];
   description: string;
   link: string;
   issueNumber: number;
@@ -44,6 +44,28 @@ export enum CategoryEnum {
   productivity = "Productivity",
   sport = "Sport",
   etc = "Etc",
+  personal = "Personal",
+  career = "Career",
+  finance = "Finance",
+  technology = "Technology",
+  design = "Design",
+  marketing = "Marketing",
+  business = "Business",
+  music = "Music",
+  art = "Art",
+  photography = "Photography",
+  architecture = "Architecture",
+  bouldering = "Bouldering",
+  hiking = "Hiking",
+  camping = "Camping",
+  fishing = "Fishing",
+  swimming = "Swimming",
+  psychology = "Psychology",
+  literature = "Literature",
+  history = "History",
+  science = "Science",
+  engineering = "Engineering",
+  mathematics = "Mathematics",  
 }
 
 export enum LangEnum {

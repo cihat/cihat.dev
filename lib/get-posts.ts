@@ -89,6 +89,44 @@ function parseMetadata(fileContents: string): Record<string, any> {
     return match ? match[1] : undefined;
   };
   
+  // Helper function to extract array values (handles string arrays)
+  const extractArray = (key: string): string[] | undefined => {
+    // Match: key: ["value1", "value2"] or key: ['value1', 'value2']
+    // Find the array start
+    const arrayStartRegex = new RegExp(`\\b${key}:\\s*\\[`, 'i');
+    const arrayStartMatch = metadataContent.match(arrayStartRegex);
+    if (!arrayStartMatch) return undefined;
+    
+    const startPos = arrayStartMatch.index! + arrayStartMatch[0].length;
+    let bracketCount = 1;
+    let endPos = startPos;
+    
+    // Find matching closing bracket
+    for (let i = startPos; i < metadataContent.length; i++) {
+      if (metadataContent[i] === '[') {
+        bracketCount++;
+      } else if (metadataContent[i] === ']') {
+        bracketCount--;
+        if (bracketCount === 0) {
+          endPos = i;
+          break;
+        }
+      }
+    }
+    
+    if (bracketCount !== 0) return undefined;
+    
+    const arrayContent = metadataContent.substring(startPos, endPos);
+    // Extract all string values from the array
+    const stringMatches = arrayContent.matchAll(/["']([^"']+)["']/g);
+    const values: string[] = [];
+    for (const match of stringMatches) {
+      values.push(match[1]);
+    }
+    
+    return values.length > 0 ? values : undefined;
+  };
+  
   // Helper function to extract number values
   const extractNumber = (key: string): number | undefined => {
     const regex = new RegExp(`\\b${key}:\\s*(\\d+)`, 'i');
@@ -108,7 +146,8 @@ function parseMetadata(fileContents: string): Record<string, any> {
   metadata.title = extractString('title');
   metadata.description = extractString('description') || '';
   metadata.date = extractDate();
-  metadata.category = extractString('category');
+  // Try to extract as array first, fallback to string
+  metadata.category = extractArray('category') || extractString('category');
   metadata.minuteToRead = extractNumber('minuteToRead');
   metadata.language = extractString('language');
   metadata.issueNumber = extractNumber('issueNumber');
@@ -190,6 +229,7 @@ export const getPosts = (): Post[] => {
       const finalLink = link || generateLink(year, slug);
       const finalMinuteToRead = minuteToRead || 5;
       const finalLanguage = language || 'en-US';
+      // Handle both string and array categories
       const finalCategory = category || 'Etc';
       const finalIssueNumber = issueNumber || 0;
 

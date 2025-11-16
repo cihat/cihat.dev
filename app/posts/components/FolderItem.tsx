@@ -47,7 +47,13 @@ export function FolderItem({ group, year, isFirstOfYear, isLastOfYear, onFolderC
                 </div>
                 
                 <div>
-                  <Badge className="mr-2">{group.post.category}</Badge>
+                  {Array.isArray(group.post.category) ? (
+                    group.post.category.map((cat, idx) => (
+                      <Badge key={idx} className="mr-2">{cat}</Badge>
+                    ))
+                  ) : (
+                    <Badge className="mr-2">{group.post.category}</Badge>
+                  )}
                   <span className="text-xs">{group.post.date}</span>
                 </div>
               </div>
@@ -106,7 +112,13 @@ export function FolderItem({ group, year, isFirstOfYear, isLastOfYear, onFolderC
             </div>
             
             <div>
-              <Badge className="mr-2">{folderCategory}</Badge>
+              {Array.isArray(folderCategory) ? (
+                folderCategory.map((cat, idx) => (
+                  <Badge key={idx} className="mr-2">{cat}</Badge>
+                ))
+              ) : (
+                <Badge className="mr-2">{folderCategory}</Badge>
+              )}
               <span className="text-xs">{folderDate || 'Folder'}</span>
             </div>
           </div>
