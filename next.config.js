@@ -100,9 +100,69 @@ const nextConfig = {
       config.devtool = false;
     }
     
+    // Prevent fs and path from being bundled in client-side code
     config.resolve.fallback = {
       fs: false,
+      path: false,
     };
+    
+    // Ensure fs and path are treated as external modules in server-side bundles
+    // Next.js already handles this, but we ensure it's explicit
+    if (isServer && Array.isArray(config.externals)) {
+      if (!config.externals.includes('fs')) {
+        config.externals.push('fs');
+      }
+      if (!config.externals.includes('path')) {
+        config.externals.push('path');
+      }
+    }
+
+    // Remove frontmatter from MDX content
+    // This prevents frontmatter from being displayed on the page
+    // We need to process ALL rules, not just MDX rules, because Next.js uses multiple loaders
+    config.module.rules.forEach((rule) => {
+      if (rule.oneOf) {
+        // Handle oneOf rules (Next.js uses this pattern)
+        rule.oneOf.forEach((oneOfRule) => {
+          if (oneOfRule.test && oneOfRule.test.toString().includes('mdx')) {
+            const originalUse = oneOfRule.use;
+            if (Array.isArray(originalUse)) {
+              // Add our custom loader at the beginning
+              oneOfRule.use = [
+                {
+                  loader: require.resolve('./lib/webpack-mdx-frontmatter-loader.js'),
+                },
+                ...originalUse,
+              ];
+            } else if (originalUse && typeof originalUse === 'object') {
+              oneOfRule.use = [
+                {
+                  loader: require.resolve('./lib/webpack-mdx-frontmatter-loader.js'),
+                },
+                originalUse,
+              ];
+            }
+          }
+        });
+      } else if (rule.test && rule.test.toString().includes('mdx')) {
+        const originalUse = rule.use;
+        if (Array.isArray(originalUse)) {
+          rule.use = [
+            {
+              loader: require.resolve('./lib/webpack-mdx-frontmatter-loader.js'),
+            },
+            ...originalUse,
+          ];
+        } else if (originalUse) {
+          rule.use = [
+            {
+              loader: require.resolve('./lib/webpack-mdx-frontmatter-loader.js'),
+            },
+            originalUse,
+          ];
+        }
+      }
+    });
 
     // Optimize production builds
     if (!dev && !isServer) {
@@ -148,6 +208,7 @@ const thirdParty = [
   'www.youtube.com',
   'open.spotify.com',
   'utteranc.es',
+  'www.google.com',
 ]
 
 const domains = [

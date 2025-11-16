@@ -3,6 +3,8 @@ import { getPosts } from "@/lib/get-posts";
 
 // Static API route - no revalidation needed
 export const dynamic = 'force-static';
+// Use Node.js runtime to support fs and path modules
+export const runtime = 'nodejs';
 
 export async function GET() {
   try {

@@ -1,4 +1,5 @@
 {
+  "_deprecated": "This file is deprecated. Post metadata is now stored in MDX frontmatter. Use getPosts() from lib/get-posts.ts instead.",
   "posts": [
     {
       "id": "initial-blog-post",

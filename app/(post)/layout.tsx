@@ -1,5 +1,5 @@
 import { LayoutWrapper } from "./LayoutWrapper";
-import postsData from "@/lib/posts.json";
+import { getPosts } from "@/lib/get-posts";
 import { META_DATA } from "@/lib/meta";
 import { headers } from 'next/headers';
 
@@ -7,19 +7,23 @@ import { headers } from 'next/headers';
 export const dynamic = 'auto';
 
 /**
- * Finds a post from posts.json by matching pathname components
+ * Finds a post by matching pathname components
  * Uses a deterministic approach: extracts year and slug from pathname
  * and matches against post.path and post.link
  */
 function findPostByPathname(pathname: string) {
-  // Extract year and slug from pathname (e.g., /2023/initial-blog-post)
-  const pathMatch = pathname.match(/^\/(\d{4})\/([^\/]+)/);
+  const posts = getPosts();
   
-  return postsData.posts.find((p) => {
+  // Extract year and slug from pathname (e.g., /2023/initial-blog-post)
+  const pathMatch = pathname.match(/^\/(\d{4})\/(.+)/);
+  
+  return posts.find((p) => {
     if (pathMatch) {
       // Match by year and path - this is more reliable for OpenNext
       const [, year, slug] = pathMatch;
-      return p.path === slug && p.link.includes(`/${year}/`);
+      // Handle nested paths (e.g., /2024/sport/agirlik-antrenmanlarina-baslangic)
+      const normalizedSlug = slug.replace(/\/$/, ''); // Remove trailing slash
+      return (p.path === normalizedSlug || p.path === slug) && p.link.includes(`/${year}/`);
     }
     // Fallback to full pathname match
     try {

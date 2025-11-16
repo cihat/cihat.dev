@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import RSS from 'rss';
-import postsData from "@/lib/posts.json";
+import { getPosts } from "@/lib/get-posts";
+
+// Use Node.js runtime to support fs and path modules
+export const runtime = 'nodejs';
 
 export async function GET() {
   const feed = new RSS({
@@ -31,7 +34,8 @@ export async function GET() {
     },
   });
 
-  postsData.posts.forEach(post => {
+  const posts = getPosts();
+  posts.forEach(post => {
     feed.item({
       title: post.title,
       description: post.description,

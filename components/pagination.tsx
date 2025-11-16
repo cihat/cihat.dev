@@ -5,15 +5,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Container from "./ui/container";
 import type { Post, Pagination } from "@/types";
-import { getPosts } from "@/lib/get-posts";
 
 export default function Pagination() {
   const [pagination, setPagination] = useState<Pagination>({ prev: null, next: null });
   const path = usePathname();
 
   useEffect(() => {
-    function init() {
-      const posts: Post[] = getPosts() as Post[];
+    async function init() {
+      // Fetch posts from API route instead of importing server-only module
+      const response = await fetch('/api/posts');
+      if (!response.ok) {
+        setPagination({ prev: null, next: null });
+        return;
+      }
+      const posts: Post[] = await response.json();
       
       // Extract year and slug from pathname (e.g., /2023/initial-blog-post)
       const pathMatch = path.match(/^\/(\d{4})\/([^\/]+)/);
