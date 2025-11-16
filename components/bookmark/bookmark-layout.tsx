@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { addDays, format, startOfWeek, subMonths, subWeeks, parse, startOfMonth, endOfMonth } from "date-fns";
+import { addDays, format, startOfWeek, subMonths, subWeeks } from "date-fns";
 import { Search, Calendar } from "lucide-react";
 
 import BookmarkCard from "./bookmark-card";
@@ -47,10 +46,6 @@ export default function BookmarkLayout() {
     setDateRange
   } = useBookmarks(initialTab, initialTimeRange);
 
-  const [customStartDate, setCustomStartDate] = useState("");
-  const [customEndDate, setCustomEndDate] = useState("");
-  const [customStartMonth, setCustomStartMonth] = useState("");
-  const [customEndMonth, setCustomEndMonth] = useState("");
 
   const sortedData = Object.keys(data);
 
@@ -77,22 +72,6 @@ export default function BookmarkLayout() {
       to: dateType !== DatePeriodType.ALL_TIME ? end : null
     };
     setDateRange(newDateRange);
-
-    // Sync custom inputs
-    if (start) {
-      setCustomStartDate(format(start, "yyyy-MM-dd"));
-      setCustomStartMonth(format(start, "yyyy-MM"));
-    } else {
-      setCustomStartDate("");
-      setCustomStartMonth("");
-    }
-    if (dateType !== DatePeriodType.ALL_TIME && end) {
-      setCustomEndDate(format(end, "yyyy-MM-dd"));
-      setCustomEndMonth(format(end, "yyyy-MM"));
-    } else {
-      setCustomEndDate("");
-      setCustomEndMonth("");
-    }
   };
 
   const handleDateRangeChange = (range) => {
@@ -134,71 +113,6 @@ export default function BookmarkLayout() {
     }[timeRange.type] || "Custom Range";
   };
 
-  const handleCustomDateSubmit = () => {
-    let start: Date | null = null;
-    let end: Date | null = null;
-
-    // Handle custom start date
-    if (customStartDate) {
-      try {
-        start = parse(customStartDate, "yyyy-MM-dd", new Date());
-      } catch (e) {
-        console.error("Invalid start date format");
-      }
-    } else if (customStartMonth) {
-      try {
-        const monthDate = parse(customStartMonth, "yyyy-MM", new Date());
-        start = startOfMonth(monthDate);
-      } catch (e) {
-        console.error("Invalid start month format");
-      }
-    }
-
-    // Handle custom end date
-    if (customEndDate) {
-      try {
-        end = parse(customEndDate, "yyyy-MM-dd", new Date());
-      } catch (e) {
-        console.error("Invalid end date format");
-      }
-    } else if (customEndMonth) {
-      try {
-        const monthDate = parse(customEndMonth, "yyyy-MM", new Date());
-        end = endOfMonth(monthDate);
-      } catch (e) {
-        console.error("Invalid end month format");
-      }
-    }
-
-    if (start && end) {
-      const startDate = startOfWeek(start);
-      setDateRange({ from: start, to: end });
-      setTimeRange({
-        type: "custom",
-        dateStartOfWeek: startDate,
-        subDate: format(startDate, "yyyy-MM-dd"),
-        start,
-        end
-      });
-    } else if (start) {
-      setDateRange({ from: start, to: null });
-    } else if (end) {
-      setDateRange({ from: null, to: end });
-    }
-  };
-
-  // Sync custom inputs when dateRange changes from calendar
-  const handleDateRangeChangeWithSync = (range) => {
-    handleDateRangeChange(range);
-    if (range.from) {
-      setCustomStartDate(format(range.from, "yyyy-MM-dd"));
-      setCustomStartMonth(format(range.from, "yyyy-MM"));
-    }
-    if (range.to) {
-      setCustomEndDate(format(range.to, "yyyy-MM-dd"));
-      setCustomEndMonth(format(range.to, "yyyy-MM"));
-    }
-  };
 
   return (
     <Container className="left-animation text-sm overflow-hidden w-full">
@@ -281,7 +195,7 @@ export default function BookmarkLayout() {
                     from: dateRange.from ?? undefined,
                     to: dateRange.to ?? undefined
                   }}
-                  onSelect={handleDateRangeChangeWithSync}
+                  onSelect={handleDateRangeChange}
                   initialFocus
                 />
               </PopoverContent>
