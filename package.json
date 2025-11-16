@@ -11,8 +11,10 @@
     "prep-build": "rm -rf .next && pnpm i && pnpm run build",
     "prep-dev": "rip .next node_modules && pnpm i && pnpm dev",
     "clean": "rm -rf .next out node_modules/.cache",
+    "generate-posts-cache": "node scripts/generate-posts-cache.js",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "prep-deploy": "pnpm run generate-posts-cache",
+    "deploy": "pnpm run prep-deploy && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "knip": "knip"
   },

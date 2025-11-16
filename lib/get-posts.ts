@@ -1,8 +1,47 @@
 // Server-only module - uses Node.js fs and path modules
 // This file should only be imported in server components and API routes
-import fs from 'fs';
+import fs from 'node:fs';
 import path from 'path';
 import type { Post } from "@/types";
+
+// Try to import posts cache (will be bundled at build time)
+// This works in both Node.js and Cloudflare Workers
+let postsCache: Post[] | null = null;
+try {
+  // First try TypeScript cache file (preferred - can be imported directly)
+  try {
+    // @ts-ignore - dynamic require for TypeScript cache
+    const tsCache = require('./posts-cache');
+    if (tsCache.postsCache && Array.isArray(tsCache.postsCache)) {
+      postsCache = tsCache.postsCache;
+    } else if (tsCache.default && Array.isArray(tsCache.default)) {
+      postsCache = tsCache.default;
+    }
+  } catch (e) {
+    // TypeScript cache not available, try JSON files
+    try {
+      // Try multiple paths - webpack/Next.js may resolve differently
+      // @ts-ignore - dynamic require for bundled JSON
+      const cacheModule = require('../public/posts-cache.json') || 
+                          require('./posts-cache.json') ||
+                          require('../lib/posts-cache.json');
+      
+      // Handle different export formats
+      if (Array.isArray(cacheModule)) {
+        postsCache = cacheModule;
+      } else if (Array.isArray(cacheModule.default)) {
+        postsCache = cacheModule.default;
+      } else if (cacheModule.posts && Array.isArray(cacheModule.posts)) {
+        postsCache = cacheModule.posts;
+      }
+    } catch (e2) {
+      // JSON cache also not available
+    }
+  }
+} catch (e) {
+  // Cache file not available or not bundled - will use fs fallback
+  postsCache = null;
+}
 
 // Ensure this module is not imported in client components
 if (typeof window !== 'undefined') {
@@ -187,77 +226,155 @@ function parseMetadata(fileContents: string): Record<string, any> {
   return metadata;
 }
 
+// Helper function to load posts from cache JSON file (for Cloudflare Workers)
+async function loadPostsFromCache(): Promise<Post[] | null> {
+  try {
+    // Try to read from public/posts-cache.json using fetch (works in Cloudflare Workers)
+    // First try relative path (for static assets)
+    let response: Response | null = null;
+    
+    // In Cloudflare Workers, try to fetch from ASSETS binding or public path
+    try {
+      // Try fetching from public directory (static asset)
+      response = await fetch('/posts-cache.json');
+    } catch (e) {
+      // If that fails, try using ASSETS binding (Cloudflare Workers)
+      try {
+        // @ts-ignore - Cloudflare Workers ASSETS binding (available at runtime)
+        const assetsBinding = (globalThis as any).ASSETS || (globalThis as any).env?.ASSETS;
+        if (assetsBinding && typeof assetsBinding.fetch === 'function') {
+          const assetRequest = new Request('https://fake-host/posts-cache.json');
+          response = await assetsBinding.fetch(assetRequest);
+        }
+      } catch (e2) {
+        // Both methods failed
+      }
+    }
+    
+    if (response && response.ok) {
+      const posts = await response.json();
+      if (Array.isArray(posts) && posts.length > 0) {
+        return posts;
+      }
+    }
+  } catch (error) {
+    console.warn('⚠️  Could not load posts from cache:', error);
+  }
+  
+  return null;
+}
+
 // Simple function to get all posts with default view counts
 export const getPosts = (): Post[] => {
-  const mdxFiles = findMdxFiles(postsDirectory);
-  const posts: Post[] = [];
+  // Try to use fs if available (build time or Node.js runtime)
+  try {
+    // Check if fs is available and has required methods
+    if (typeof fs !== 'undefined' && typeof fs.readdirSync === 'function' && typeof fs.readFileSync === 'function') {
+      const mdxFiles = findMdxFiles(postsDirectory);
+      const posts: Post[] = [];
 
-  mdxFiles.forEach((filePath) => {
-    try {
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      const { year, slug } = extractPathInfo(filePath);
-      
-      // Parse metadata from export const metadata
-      const metadata = parseMetadata(fileContents);
-      
-      // Extract all fields from metadata
-      const title = metadata.title;
-      const description = metadata.description || '';
-      let date = metadata.date;
-      const category = metadata.category;
-      const minuteToRead = metadata.minuteToRead;
-      const language = metadata.language;
-      const issueNumber = metadata.issueNumber;
-      const link = metadata.link;
-      const id = metadata.id;
-      const postPath = metadata.path;
-      
-      // Fallback: if date is not in metadata, use year from path
-      if (!date) {
-        date = `January 1, ${year}`;
-      }
-      
-      // Skip if still missing required fields
-      if (!title || !date) {
-        console.warn(`⚠️  Skipping ${filePath}: missing required fields (title: ${title}, date: ${date})`);
-        return;
-      }
+      mdxFiles.forEach((filePath) => {
+        try {
+          const fileContents = fs.readFileSync(filePath, 'utf8');
+          const { year, slug } = extractPathInfo(filePath);
+          
+          // Parse metadata from export const metadata
+          const metadata = parseMetadata(fileContents);
+          
+          // Extract all fields from metadata
+          const title = metadata.title;
+          const description = metadata.description || '';
+          let date = metadata.date;
+          const category = metadata.category;
+          const minuteToRead = metadata.minuteToRead;
+          const language = metadata.language;
+          const issueNumber = metadata.issueNumber;
+          const link = metadata.link;
+          const id = metadata.id;
+          const postPath = metadata.path;
+          
+          // Fallback: if date is not in metadata, use year from path
+          if (!date) {
+            date = `January 1, ${year}`;
+          }
+          
+          // Skip if still missing required fields
+          if (!title || !date) {
+            console.warn(`⚠️  Skipping ${filePath}: missing required fields (title: ${title}, date: ${date})`);
+            return;
+          }
 
-      // Generate fallback values
-      const finalId = id || slug.replace(/\//g, '-');
-      const finalPath = postPath || slug;
-      const finalLink = link || generateLink(year, slug);
-      const finalMinuteToRead = minuteToRead || 5;
-      const finalLanguage = language || 'en-US';
-      // Handle both string and array categories
-      const finalCategory = category || 'Etc';
-      const finalIssueNumber = issueNumber || 0;
+          // Generate fallback values
+          const finalId = id || slug.replace(/\//g, '-');
+          const finalPath = postPath || slug;
+          const finalLink = link || generateLink(year, slug);
+          const finalMinuteToRead = minuteToRead || 5;
+          const finalLanguage = language || 'en-US';
+          // Handle both string and array categories
+          const finalCategory = category || 'Etc';
+          const finalIssueNumber = issueNumber || 0;
 
-      const post: Post = {
-        id: finalId,
-        path: finalPath,
-        date: date,
-        title: title,
-        minuteToRead: finalMinuteToRead,
-        language: finalLanguage,
-        category: finalCategory,
-        link: finalLink,
-        description: description,
-        issueNumber: finalIssueNumber,
-        views: 0,
-        viewsFormatted: '0'
-      };
+          const post: Post = {
+            id: finalId,
+            path: finalPath,
+            date: date,
+            title: title,
+            minuteToRead: finalMinuteToRead,
+            language: finalLanguage,
+            category: finalCategory,
+            link: finalLink,
+            description: description,
+            issueNumber: finalIssueNumber,
+            views: 0,
+            viewsFormatted: '0'
+          };
 
-      posts.push(post);
-    } catch (error) {
-      console.error(`Error reading ${filePath}:`, error);
+          posts.push(post);
+        } catch (error) {
+          console.error(`Error reading ${filePath}:`, error);
+        }
+      });
+
+      // Sort by date (newest first)
+      return posts.sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return dateB - dateA;
+      });
     }
-  });
+  } catch (error) {
+    // fs operations failed, will try cache fallback
+    console.warn('⚠️  fs operations failed, will try cache:', error);
+  }
 
-  // Sort by date (newest first)
-  return posts.sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
+  // If fs is not available (Cloudflare Workers runtime), try to use bundled cache
+  if (postsCache && Array.isArray(postsCache) && postsCache.length > 0) {
+    console.log(`✅ Loaded ${postsCache.length} posts from bundled cache`);
+    return postsCache.map(post => ({
+      ...post,
+      views: 0,
+      viewsFormatted: '0'
+    }));
+  }
+
+  // If no cache available, return empty array - page should be pre-rendered at build time
+  console.warn('⚠️  fs module not available and no posts cache found. Page should be pre-rendered at build time.');
+  return [];
+}
+
+// Async version for runtime use in Cloudflare Workers
+export async function getPostsAsync(): Promise<Post[]> {
+  // First try fs (build time)
+  const syncPosts = getPosts();
+  if (syncPosts.length > 0) {
+    return syncPosts;
+  }
+
+  // If no posts from fs, try loading from cache (runtime)
+  const cachedPosts = await loadPostsFromCache();
+  if (cachedPosts && cachedPosts.length > 0) {
+    return cachedPosts;
+  }
+
+  return [];
 }
