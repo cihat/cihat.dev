@@ -11,11 +11,24 @@ interface FolderItemProps {
   isFirstOfYear: boolean;
   isLastOfYear: boolean;
   onFolderClick?: (group: PostGroup) => void;
+  parentFolder?: PostGroup | null; // Parent folder if this post is inside a folder
 }
 
-export function FolderItem({ group, year, isFirstOfYear, isLastOfYear, onFolderClick }: FolderItemProps) {
+export function FolderItem({ group, year, isFirstOfYear, isLastOfYear, onFolderClick, parentFolder }: FolderItemProps) {
   if (group.type === 'post' && group.post) {
     // Regular post item
+    const handlePostClick = () => {
+      // Save folder info if post is inside a folder
+      // Include timestamp to ensure we only restore if recently saved
+      if (parentFolder && parentFolder.type === 'folder') {
+        sessionStorage.setItem('postListFolder', JSON.stringify({
+          year: parentFolder.year,
+          folderName: parentFolder.name,
+          timestamp: Date.now()
+        }));
+      }
+    };
+
     return (
       <li>
         <Link
@@ -23,6 +36,7 @@ export function FolderItem({ group, year, isFirstOfYear, isLastOfYear, onFolderC
           title={`Read ${group.name} - ${group.post.minuteToRead} minute read`}
           prefetch={false}
           scroll={true}
+          onClick={handlePostClick}
         >
           <span
             className={`flex px-2 transition-[background-color] hover:bg-gray-100 dark:hover:bg-[#242424] active:bg-gray-200 dark:active:bg-[#222] border-y border-gray-200 dark:border-[#313131]

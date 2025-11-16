@@ -183,11 +183,6 @@ export const personalLinks: Link[] = [
     icon: "Medium"
   },
   {
-    name: "Twitter",
-    url: "https://twitter.com/chtslk",
-    icon: "Twitter"
-  },
-  {
     name: "Instagram",
     url: "https://www.instagram.com/cihat.png/",
     icon: "Instagram"

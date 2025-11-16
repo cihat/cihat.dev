@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import type { Post } from "@/types";
 import { getYear } from "@/lib/utils";
 import { groupPostsByFolder, type PostGroup } from "../utils/postGrouping";
@@ -16,8 +17,74 @@ interface PostListProps {
  * Supports navigation into folders (Finder-like)
  */
 export function PostList({ posts }: PostListProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [navigationStack, setNavigationStack] = useState<PostGroup[]>([]);
   const [currentGroup, setCurrentGroup] = useState<PostGroup | null>(null);
+
+  // Restore folder state from URL params or sessionStorage
+  // Only restore if recently saved (within last 10 seconds) to prevent unwanted folder opening
+  useEffect(() => {
+    // Only restore if we don't already have a currentGroup set (user-initiated navigation)
+    if (currentGroup) return;
+
+    const restoreFolder = (year: string, folderName: string) => {
+      const yearPosts = posts.filter(post => getYear(post.date).toString() === year);
+      const groupedPosts = groupPostsByFolder(yearPosts);
+      const folderGroup = groupedPosts.find(
+        group => group.type === 'folder' && group.name === folderName
+      );
+      
+      if (folderGroup && folderGroup.type === 'folder') {
+        setCurrentGroup(folderGroup);
+        return true;
+      }
+      return false;
+    };
+
+    const folderParam = searchParams.get('folder');
+    if (folderParam) {
+      // Parse folder path: "year/folderName"
+      const [year, folderName] = folderParam.split('/');
+      if (year && folderName && restoreFolder(year, folderName)) {
+        // Remove folder param from URL after restoring state
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        newSearchParams.delete('folder');
+        const newUrl = newSearchParams.toString() 
+          ? `${window.location.pathname}?${newSearchParams.toString()}`
+          : window.location.pathname;
+        router.replace(newUrl, { scroll: false });
+      }
+    } else {
+      // Try sessionStorage - only restore if saved within last 10 seconds
+      // This ensures we only restore when coming back from a post detail page
+      const savedFolder = typeof window !== 'undefined' ? sessionStorage.getItem('postListFolder') : null;
+      if (savedFolder) {
+        try {
+          const data = JSON.parse(savedFolder);
+          const { year, folderName, timestamp } = data;
+          
+          // Only restore if saved within last 10 seconds (prevents stale data)
+          const isRecent = timestamp && (Date.now() - timestamp) < 10000;
+          
+          if (isRecent && year && folderName && restoreFolder(year, folderName)) {
+            sessionStorage.removeItem('postListFolder');
+          } else {
+            // Remove stale or invalid data
+            if (typeof window !== 'undefined') {
+              sessionStorage.removeItem('postListFolder');
+            }
+          }
+        } catch (e) {
+          // Invalid saved data, ignore
+          if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('postListFolder');
+          }
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, posts]);
 
   if (!posts.length) {
     return (
@@ -90,6 +157,7 @@ export function PostList({ posts }: PostListProps) {
                 year={year}
                 isFirstOfYear={isFirst}
                 isLastOfYear={isLast}
+                parentFolder={currentGroup}
                 onFolderClick={(group) => {
                   setNavigationStack([...navigationStack, currentGroup]);
                   setCurrentGroup(group);
