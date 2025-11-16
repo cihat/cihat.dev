@@ -2,6 +2,9 @@ import ProfileSection from "@/components/profile-section";
 import { Metadata } from "next";
 import { META_DATA } from "@/lib/meta";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "About - Cihat Salik | Software Developer",
   description: "Learn about Cihat Salik, a passionate software developer from Istanbul, Turkey. Discover my journey in programming, open-source contributions, and philosophy. Currently building innovative solutions with JavaScript, React, and modern web technologies.",

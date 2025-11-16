@@ -14,9 +14,11 @@ export default function ProfileSection() {
 
   useEffect(() => {
     (async () => {
+      // Add timestamp to ensure fresh fetch on each page load
+      const timestamp = Date.now();
       const photo = await unsplash.getRandomPhoto() as IRandomPhoto;
       setPhoto(photo);
-      setImageKey(Date.now());
+      setImageKey(timestamp);
     })();
   }, []);
 

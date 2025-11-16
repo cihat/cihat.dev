@@ -18,6 +18,10 @@ class Unsplash {
       const res = await fetch(url, {
         method: "GET",
         cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+        },
       })
 
       if (!res.ok) {
@@ -40,8 +44,10 @@ class Unsplash {
       return dummyPhoto
     }
 
+    // Use multiple random values to ensure unique requests
     const timestamp = Date.now();
-    const url = `${this.base_url}/photos/random/${this.client_id}&query=${this.uiUxKeywords}&t=${timestamp}`;
+    const random = Math.random().toString(36).substring(7);
+    const url = `${this.base_url}/photos/random/${this.client_id}&query=${this.uiUxKeywords}&t=${timestamp}&r=${random}`;
     return await this.getData(url)
   }
 }
