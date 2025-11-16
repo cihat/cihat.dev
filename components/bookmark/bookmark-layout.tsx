@@ -1,6 +1,7 @@
 "use client";
 
-import { addDays, format, startOfWeek, subMonths, subWeeks } from "date-fns";
+import { useState } from "react";
+import { addDays, format, startOfWeek, subMonths, subWeeks, parse, startOfMonth, endOfMonth } from "date-fns";
 import { Search, Calendar } from "lucide-react";
 
 import BookmarkCard from "./bookmark-card";
@@ -46,6 +47,11 @@ export default function BookmarkLayout() {
     setDateRange
   } = useBookmarks(initialTab, initialTimeRange);
 
+  const [customStartDate, setCustomStartDate] = useState("");
+  const [customEndDate, setCustomEndDate] = useState("");
+  const [customStartMonth, setCustomStartMonth] = useState("");
+  const [customEndMonth, setCustomEndMonth] = useState("");
+
   const sortedData = Object.keys(data);
 
   const handleTabChange = (value) => {
@@ -66,10 +72,27 @@ export default function BookmarkLayout() {
       end: dateType !== DatePeriodType.ALL_TIME ? end : null
     });
 
-    setDateRange({
+    const newDateRange = {
       from: start,
-      to: end
-    });
+      to: dateType !== DatePeriodType.ALL_TIME ? end : null
+    };
+    setDateRange(newDateRange);
+
+    // Sync custom inputs
+    if (start) {
+      setCustomStartDate(format(start, "yyyy-MM-dd"));
+      setCustomStartMonth(format(start, "yyyy-MM"));
+    } else {
+      setCustomStartDate("");
+      setCustomStartMonth("");
+    }
+    if (dateType !== DatePeriodType.ALL_TIME && end) {
+      setCustomEndDate(format(end, "yyyy-MM-dd"));
+      setCustomEndMonth(format(end, "yyyy-MM"));
+    } else {
+      setCustomEndDate("");
+      setCustomEndMonth("");
+    }
   };
 
   const handleDateRangeChange = (range) => {
@@ -106,6 +129,72 @@ export default function BookmarkLayout() {
       [DatePeriodType.LAST_TWO_WEEKS]: "Last 2 Weeks",
       [DatePeriodType.LAST_ONE_MONTH]: "Last Month"
     }[timeRange.type] || "Custom Range";
+  };
+
+  const handleCustomDateSubmit = () => {
+    let start: Date | null = null;
+    let end: Date | null = null;
+
+    // Handle custom start date
+    if (customStartDate) {
+      try {
+        start = parse(customStartDate, "yyyy-MM-dd", new Date());
+      } catch (e) {
+        console.error("Invalid start date format");
+      }
+    } else if (customStartMonth) {
+      try {
+        const monthDate = parse(customStartMonth, "yyyy-MM", new Date());
+        start = startOfMonth(monthDate);
+      } catch (e) {
+        console.error("Invalid start month format");
+      }
+    }
+
+    // Handle custom end date
+    if (customEndDate) {
+      try {
+        end = parse(customEndDate, "yyyy-MM-dd", new Date());
+      } catch (e) {
+        console.error("Invalid end date format");
+      }
+    } else if (customEndMonth) {
+      try {
+        const monthDate = parse(customEndMonth, "yyyy-MM", new Date());
+        end = endOfMonth(monthDate);
+      } catch (e) {
+        console.error("Invalid end month format");
+      }
+    }
+
+    if (start && end) {
+      const startDate = startOfWeek(start);
+      setDateRange({ from: start, to: end });
+      setTimeRange({
+        type: "custom",
+        dateStartOfWeek: startDate,
+        subDate: format(startDate, "yyyy-MM-dd"),
+        start,
+        end
+      });
+    } else if (start) {
+      setDateRange({ from: start, to: null });
+    } else if (end) {
+      setDateRange({ from: null, to: end });
+    }
+  };
+
+  // Sync custom inputs when dateRange changes from calendar
+  const handleDateRangeChangeWithSync = (range) => {
+    handleDateRangeChange(range);
+    if (range.from) {
+      setCustomStartDate(format(range.from, "yyyy-MM-dd"));
+      setCustomStartMonth(format(range.from, "yyyy-MM"));
+    }
+    if (range.to) {
+      setCustomEndDate(format(range.to, "yyyy-MM-dd"));
+      setCustomEndMonth(format(range.to, "yyyy-MM"));
+    }
   };
 
   return (
@@ -183,12 +272,75 @@ export default function BookmarkLayout() {
                     </Button>
                   </div>
                 </div>
-                <CalendarComponent
-                  mode="range"
-                  selected={dateRange}
-                  onSelect={handleDateRangeChange}
-                  initialFocus
-                />
+                <div className="flex flex-col sm:flex-row">
+                  <div className="sm:border-r border-b sm:border-b-0">
+                    <CalendarComponent
+                      mode="range"
+                      selected={dateRange}
+                      onSelect={handleDateRangeChangeWithSync}
+                      initialFocus
+                    />
+                  </div>
+                  <div className="p-4 min-w-[280px] border-t sm:border-t-0 sm:border-l">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Start Date</label>
+                        <Input
+                          type="date"
+                          value={customStartDate}
+                          onChange={(e) => {
+                            setCustomStartDate(e.target.value);
+                            if (e.target.value) setCustomStartMonth("");
+                          }}
+                          placeholder="YYYY-MM-DD"
+                          className="w-full"
+                        />
+                        <div className="text-xs text-muted-foreground text-center">or</div>
+                        <Input
+                          type="month"
+                          value={customStartMonth}
+                          onChange={(e) => {
+                            setCustomStartMonth(e.target.value);
+                            if (e.target.value) setCustomStartDate("");
+                          }}
+                          placeholder="YYYY-MM"
+                          className="w-full"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">End Date</label>
+                        <Input
+                          type="date"
+                          value={customEndDate}
+                          onChange={(e) => {
+                            setCustomEndDate(e.target.value);
+                            if (e.target.value) setCustomEndMonth("");
+                          }}
+                          placeholder="YYYY-MM-DD"
+                          className="w-full"
+                        />
+                        <div className="text-xs text-muted-foreground text-center">or</div>
+                        <Input
+                          type="month"
+                          value={customEndMonth}
+                          onChange={(e) => {
+                            setCustomEndMonth(e.target.value);
+                            if (e.target.value) setCustomEndDate("");
+                          }}
+                          placeholder="YYYY-MM"
+                          className="w-full"
+                        />
+                      </div>
+                      <Button
+                        onClick={handleCustomDateSubmit}
+                        className="w-full"
+                        size="sm"
+                      >
+                        Apply Custom Date
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </PopoverContent>
             </Popover>
           </div>

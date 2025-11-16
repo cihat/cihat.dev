@@ -5,6 +5,7 @@ import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 import { BsLink45Deg as ExternalLinkIcon } from "react-icons/bs"
 import { HiMenu } from "react-icons/hi"
+import { ChevronDown } from "lucide-react"
 
 import { ThemeToggle } from "@/components/ui/toggle-theme"
 import Container from "@/components/ui/container"
@@ -19,14 +20,19 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 
-const NAVIGATION_ITEMS = {
+const INTERNAL_NAVIGATION = {
   "/": "Writing",
   "/reading": "Reading",
   "/bookmarks": "Bookmarks",
-  "https://apps.cihat.dev/": "Apps",
-  "https://cv.cihat.dev/": "CV",
   "/about": "About",
 }
+
+const EXTERNAL_NAVIGATION = {
+  "https://apps.cihat.dev/": "Apps",
+  "https://cv.cihat.dev/": "CV",
+}
+
+const ALL_NAVIGATION = { ...INTERNAL_NAVIGATION, ...EXTERNAL_NAVIGATION }
 
 interface MenuItemProps {
   value: string
@@ -59,17 +65,31 @@ function MenuItem({ value, href, isActive, onClick }: MenuItemProps) {
 
 export default function Header() {
   const pathname = usePathname()
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false)
+  const [externalDropdownOpen, setExternalDropdownOpen] = useState(false)
 
   const currentPath = pathname?.split("/")[1] ? `/${pathname.split("/")[1]}` : "/"
 
-  const navigationLinks = Object.entries(NAVIGATION_ITEMS).map(([key, value]) => (
+  const internalLinks = Object.entries(INTERNAL_NAVIGATION).map(([key, value]) => (
     <MenuItem
       key={key}
       value={value}
       href={key}
       isActive={key === currentPath}
-      onClick={() => setDropdownOpen(false)}
+      onClick={() => setMobileDropdownOpen(false)}
+    />
+  ))
+
+  const externalLinks = Object.entries(EXTERNAL_NAVIGATION).map(([key, value]) => (
+    <MenuItem
+      key={key}
+      value={value}
+      href={key}
+      isActive={false}
+      onClick={() => {
+        setMobileDropdownOpen(false)
+        setExternalDropdownOpen(false)
+      }}
     />
   ))
 
@@ -82,10 +102,10 @@ export default function Header() {
 
       <nav className="flex items-center ml-auto">
         <div className="flex md:hidden">
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+          <DropdownMenu open={mobileDropdownOpen} onOpenChange={setMobileDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <Button variant="default" className="h-10 px-4 cursor-pointer">
-                {NAVIGATION_ITEMS[currentPath] || <HiMenu size={20} />}
+                {ALL_NAVIGATION[currentPath] || <HiMenu size={20} />}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent 
@@ -96,14 +116,41 @@ export default function Header() {
               <DropdownMenuLabel>Pages</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup className="flex flex-col">
-                {navigationLinks}
+                {internalLinks}
               </DropdownMenuGroup>
+              {externalLinks.length > 0 && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className="flex flex-col">
+                    {externalLinks}
+                  </DropdownMenuGroup>
+                </>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
 
         <div className="hidden md:flex gap-2">
-          {navigationLinks}
+          {internalLinks}
+          {externalLinks.length > 0 && (
+            <DropdownMenu open={externalDropdownOpen} onOpenChange={setExternalDropdownOpen}>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-sm sm:text-base cursor-pointer"
+                >
+                  More
+                  <ChevronDown size={16} className="ml-1" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" sideOffset={8}>
+                <DropdownMenuGroup className="flex flex-col">
+                  {externalLinks}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </nav>
 

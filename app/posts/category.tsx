@@ -31,7 +31,7 @@ export default function Category({ category, setCategory }: CategoryProps) {
     <div className="mx-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="default" className="w-13 h-9 rounded-sm text-left text-md font-semibold">
+          <Button variant="default" className="min-w-fit px-3 h-9 rounded-sm text-left text-md font-semibold whitespace-nowrap">
             {category}
           </Button>
         </DropdownMenuTrigger>

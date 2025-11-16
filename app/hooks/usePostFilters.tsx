@@ -7,9 +7,9 @@ import { useSearchParams } from "next/navigation";
 export type SortSetting = ["date" | "views", "desc" | "asc"];
 
 const LANGUAGE_CONFIG = {
-  [LangEnum.all]: { next: LangEnum.tr, flag: "🇹🇷" },
-  [LangEnum.tr]: { next: LangEnum.en, flag: "🇬🇧" },
-  [LangEnum.en]: { next: LangEnum.all, flag: "🇹🇷🇬🇧" },
+  [LangEnum.all]: { next: LangEnum.tr, flag: "🇹🇷🇬🇧" },
+  [LangEnum.tr]: { next: LangEnum.en, flag: "🇹🇷" },
+  [LangEnum.en]: { next: LangEnum.all, flag: "🇬🇧" },
 } as const;
 
 /**
@@ -38,31 +38,26 @@ export function usePostFilters(posts: Post[]) {
 
   const currentFlag = LANGUAGE_CONFIG[lang].flag;
 
-  // Create Fuse instance for search
-  const fuse = useMemo(
-    () =>
-      new Fuse(posts, {
-        keys: ["title", "category"],
-        threshold: 0.4,
-        includeScore: true,
-        minMatchCharLength: 2,
-      }),
-    [posts]
-  );
-
   // Apply all filters in the correct order
   const filteredAndSortedPosts = useMemo(() => {
     const [sortKey, sortDirection] = sort;
     
-    // 1. First apply search filter
+    // 1. First apply language filter
     let filtered = posts;
-    if (searchInput.trim() !== "") {
-      filtered = fuse.search(searchInput.trim()).map((result) => result.item);
-    }
-    
-    // 2. Then apply language filter
     if (lang !== LangEnum.all) {
       filtered = filtered.filter((post) => post.language === lang);
+    }
+    
+    // 2. Then apply search filter (search within language-filtered posts)
+    if (searchInput.trim() !== "") {
+      // Create a new Fuse instance with the already language-filtered posts
+      const languageFilteredFuse = new Fuse(filtered, {
+        keys: ["title", "category"],
+        threshold: 0.4,
+        includeScore: true,
+        minMatchCharLength: 2,
+      });
+      filtered = languageFilteredFuse.search(searchInput.trim()).map((result) => result.item);
     }
     
     // 3. Then apply category filter
@@ -76,7 +71,7 @@ export function usePostFilters(posts: Post[]) {
       const dateB = new Date(b.date).getTime();
       return sortDirection === "desc" ? dateB - dateA : dateA - dateB;
     });
-  }, [posts, sort, lang, category, searchInput, fuse]);
+  }, [posts, sort, lang, category, searchInput]);
 
   return {
     sort,
