@@ -159,11 +159,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className="no-scrollbar min-h-screen vsc-initialized">
-        <div className="bg-gradient-to-b from-neutral-100 dark:from-neutral-950 to-transparent w-full h-32 fixed top-0 left-0 right-0 z-10 pointer-events-none" />
+        <div className="bg-gradient-to-b from-neutral-100/30 dark:from-neutral-950/30 to-transparent w-full h-32 fixed top-0 left-0 right-0 z-10 pointer-events-none" />
         <Header />
         <main className="sm:mt-4 mt-2 grow">{children}</main>
         <Footer />
-        <div className="bg-gradient-to-t from-neutral-100 dark:from-neutral-950 to-transparent w-full h-32 fixed bottom-0 left-0 right-0 z-10 pointer-events-none" />
+        <div className="bg-gradient-to-t from-neutral-100/30 dark:from-neutral-950/30 to-transparent w-full h-32 fixed bottom-0 left-0 right-0 z-10 pointer-events-none" />
       </body>
     </html>
   )
