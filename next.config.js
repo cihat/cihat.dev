@@ -212,10 +212,7 @@ const thirdParty = [
 ]
 
 const domains = [
-  'cdn.vercel-insights.com',
-  'vercel.live',
-  'va.vercel-scripts.com',
-  'vitals.vercel-insights.com',
+  'static.cloudflareinsights.com',
   ...thirdParty
 ]
 // https://nextjs.org/docs/advanced-features/security-headers
