@@ -65,10 +65,15 @@ class Unsplash {
     const result = await this.getData(url);
     
     // If result is an array (when count > 1), pick random one
-    if (Array.isArray(result) && result.length > 0) {
-      return result[Math.floor(Math.random() * result.length)];
+    if (Array.isArray(result)) {
+      if (result.length > 0) {
+        return result[Math.floor(Math.random() * result.length)];
+      }
+      // If array is empty, return dummy photo
+      return dummyPhoto;
     }
     
+    // If result is a single photo, return it
     return result;
   }
 }
