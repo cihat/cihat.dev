@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 
 export default function ProfileSection() {
   const [photo, setPhoto] = useState<IRandomPhoto | null>(null);
+  const [imageKey, setImageKey] = useState(Date.now());
 
   useEffect(() => {
     (async () => {
       const photo = await unsplash.getRandomPhoto() as IRandomPhoto;
       setPhoto(photo);
+      setImageKey(Date.now());
     })();
   }, []);
 
@@ -79,6 +81,7 @@ export default function ProfileSection() {
       {photo && (
         <figure className="mt-12">
           <Image
+            key={imageKey}
             loading="lazy"
             placeholder="blur"
             quality={100}
@@ -87,7 +90,7 @@ export default function ProfileSection() {
             height={photo?.height}
             className="rounded-lg w-full"
             alt={photo?.alt_description || `Random photo by ${photo?.user?.first_name} ${photo?.user?.last_name} from Unsplash`}
-            src={photo?.urls?.regular}
+            src={`${photo?.urls?.regular}?t=${imageKey}`}
             style={{ width: '100%', height: 'auto' }}
           />
           <figcaption className="mt-2 text-xs text-center text-gray-500 dark:text-gray-400">

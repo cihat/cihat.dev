@@ -96,7 +96,10 @@ export default function BookmarkLayout() {
   };
 
   const handleDateRangeChange = (range) => {
-    setDateRange(range);
+    setDateRange({
+      from: range.from ?? null,
+      to: range.to ?? null
+    });
 
     if (range.from && range.to) {
       const startDate = startOfWeek(range.from);
@@ -276,7 +279,10 @@ export default function BookmarkLayout() {
                   <div className="sm:border-r border-b sm:border-b-0">
                     <CalendarComponent
                       mode="range"
-                      selected={dateRange}
+                      selected={{
+                        from: dateRange.from ?? undefined,
+                        to: dateRange.to ?? undefined
+                      }}
                       onSelect={handleDateRangeChangeWithSync}
                       initialFocus
                     />

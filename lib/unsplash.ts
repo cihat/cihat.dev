@@ -12,6 +12,7 @@ class Unsplash {
     try {
       const res = await fetch(url, {
         method: "GET",
+        cache: 'no-store',
       })
 
       if (!res.ok) {
@@ -34,7 +35,8 @@ class Unsplash {
       return dummyPhoto
     }
 
-    const url = `${this.base_url}/photos/random/${this.client_id}&query=${this.uiUxKeywords}`;
+    const timestamp = Date.now();
+    const url = `${this.base_url}/photos/random/${this.client_id}&query=${this.uiUxKeywords}&t=${timestamp}`;
     return await this.getData(url)
   }
 }
