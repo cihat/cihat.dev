@@ -18,7 +18,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import useIsMobile from "@/hooks/useIsMobile"
 
 // Navigation menu items - moved outside component to prevent recreation
 const NAVIGATION_ITEMS = {
@@ -44,16 +43,16 @@ const MenuItem = memo(({ value, href, isActive, onClick }: MenuItemProps) => {
     <NextLink
       target={isExternal ? "_blank" : "_self"}
       href={href}
-      className="mr-2 cursor-pointer"
+      className="mr-0 sm:mr-2 cursor-pointer"
       onClick={onClick}
       title={`${value} - ${isExternal ? 'Opens in new tab' : 'Navigate to'} ${value} page`}
     >
       <Button
         variant={isActive ? "default" : "ghost"}
         size="sm"
-        className="w-full justify-start cursor-pointer"
+        className="w-full justify-start cursor-pointer text-sm sm:text-base min-h-[44px] sm:min-h-auto"
       >
-        {isExternal && <ExternalLinkIcon size={18} className="mr-1" />}
+        {isExternal && <ExternalLinkIcon size={18} className="mr-1 flex-shrink-0" />}
         {value}
       </Button>
     </NextLink>
@@ -62,39 +61,7 @@ const MenuItem = memo(({ value, href, isActive, onClick }: MenuItemProps) => {
 
 MenuItem.displayName = 'MenuItem'
 
-// Memoized dropdown component to prevent re-renders
-interface NavigationDropdownProps {
-  menuItems: { [key: string]: string };
-  currentPath: string;
-  children: React.ReactNode;
-}
-
-const NavigationDropdown = memo(({ menuItems, currentPath, children }: NavigationDropdownProps) => {
-  const [open, setOpen] = useState(false)
-  const currentLabel = menuItems[currentPath] || <HiMenu size={20} />
-
-  return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="default" className="text-md font-semibold h-9 p-2">
-          {currentLabel}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 mr-4" align="start" side="bottom">
-        <DropdownMenuLabel>Pages</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup className="flex flex-col">
-          {children}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-})
-
-NavigationDropdown.displayName = 'NavigationDropdown'
-
 export default function Header() {
-  const isMobile = useIsMobile()
   const pathname = usePathname()
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
@@ -106,10 +73,8 @@ export default function Header() {
 
   // Close dropdown when a menu item is clicked
   const handleMenuItemClick = useCallback(() => {
-    if (isMobile) {
-      setDropdownOpen(false)
-    }
-  }, [isMobile])
+    setDropdownOpen(false)
+  }, [])
 
   // Generate menu items - memoized to prevent recreation on every render
   const navigationLinks = useMemo(() => {
@@ -126,47 +91,54 @@ export default function Header() {
 
   // Memoize the mobile and desktop navigation to prevent re-renders
   const mobileNavigation = useMemo(() => (
-    <NavigationDropdown
-      menuItems={NAVIGATION_ITEMS}
-      currentPath={currentPath}
-    >
-      {navigationLinks}
-    </NavigationDropdown>
-  ), [currentPath, navigationLinks])
+    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="default" className="text-sm sm:text-md font-semibold h-9 sm:h-10 px-3 sm:px-4 min-w-[44px] sm:min-w-auto">
+          {NAVIGATION_ITEMS[currentPath] || <HiMenu size={20} />}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent 
+        className="w-[calc(100vw-2rem)] max-w-56 mr-2 sm:mr-4" 
+        align="end" 
+        side="bottom"
+        sideOffset={8}
+      >
+        <DropdownMenuLabel>Pages</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup className="flex flex-col">
+          {navigationLinks}
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ), [currentPath, navigationLinks, dropdownOpen])
 
   const desktopNavigation = useMemo(() => (
-    <div className="flex left-animation">
+    <div className="flex left-animation gap-1 sm:gap-2">
       {navigationLinks}
     </div>
   ), [navigationLinks])
 
   return (
     <Container
-      className="flex justify-between px-0 select-none items-center p-4 pb-2 sm:pb-0 relative z-40"
+      className="flex justify-between select-none items-center px-3 sm:px-4 py-3 sm:py-4 pb-2 sm:pb-0 relative z-40 gap-2 sm:gap-4"
       as="header"
     >
       <Logo />
 
-      <nav className="flex-col gap-3 sm:!flex sm:flex-row items-center sm:justify-center relative ml-auto mr-4">
-        {isMobile ? (
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button variant="default" className="text-md font-semibold h-9 p-2">
-                {NAVIGATION_ITEMS[currentPath] || <HiMenu size={20} />}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 mr-4" align="start" side="bottom">
-              <DropdownMenuLabel>Pages</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup className="flex flex-col">
-                {navigationLinks}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : desktopNavigation}
+      <nav className="flex items-center justify-center relative ml-auto">
+        {/* Mobile navigation - visible on screens smaller than md (768px) */}
+        <div className="flex md:hidden">
+          {mobileNavigation}
+        </div>
+        {/* Desktop navigation - visible on md (768px) and larger screens */}
+        <div className="hidden md:flex">
+          {desktopNavigation}
+        </div>
       </nav>
 
-      <ThemeToggle />
+      <div className="flex-shrink-0">
+        <ThemeToggle />
+      </div>
     </Container>
   )
 }
