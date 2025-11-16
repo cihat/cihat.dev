@@ -126,3 +126,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Enhanced link styles for post content */
+@layer components {
+  .post-link-external {
+    @apply relative;
+  }
+
+  .post-link-external:hover {
+    @apply border-gray-500 dark:border-gray-400;
+  }
+
+  .post-link-domain {
+    @apply font-mono;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .post-link-external:hover .post-link-domain {
+    @apply opacity-100;
+  }
+
+  /* Smooth transitions for link elements */
+  .post-link-external svg {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .post-link-external:hover svg {
+    @apply opacity-100;
+    transform: translate(1px, -1px);
+  }
+
+  /* Internal anchor links */
+  .post-link-internal {
+    @apply transition-colors;
+  }
+
+  .post-link-internal:hover {
+    @apply text-gray-800 dark:text-gray-200;
+  }
+}

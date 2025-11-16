@@ -25,6 +25,7 @@ import { CodeSnippet } from "./app/(post)/components/code-snippet";
 import { Box } from "./app/(post)/components/box";
 import { Spotify } from "./app/(post)/components/spotify";
 import { Maps } from "./app/(post)/components/maps";
+import { Video } from "./app/(post)/components/video";
 import CAPTheoremAnalysis from "./components/system-design/cap-teorem";
 
 export function useMDXComponents(components: {
@@ -61,6 +62,7 @@ export function useMDXComponents(components: {
     Box,
     Spotify,
     Maps,
+    Video,
     CAPTheoremAnalysis,
   };
 }
