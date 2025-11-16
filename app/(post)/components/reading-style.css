@@ -2,66 +2,130 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1.5rem;
   margin: 5rem 0;
-  background-color: var(--foreground);
+  padding: 2rem;
+  background-color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.5s ease-in-out;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.reading__container span {
-  margin-right: 1.5rem;
+.reading__text {
   font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--primary-foreground);
+  font-weight: 600;
+  color: var(--foreground);
+  animation: textPulse 2s ease-in-out infinite;
+  transition: color 0.3s ease;
+}
+
+.reading__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .dot-flashing {
-  position: relative;
-  z-index: -1;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: var(--primary-foreground);
-  color: var(--primary-foreground);
-  animation: dot-flashing 1s infinite linear alternate;
-  animation-delay: 0.5s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.dot-flashing::before,
-.dot-flashing::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: 0;
-}
-
-.dot-flashing::before {
-  left: -15px;
+.dot-flashing .dot {
   width: 10px;
   height: 10px;
-  border-radius: 5px;
-  background-color: var(--primary-foreground);
-  color: var(--primary-foreground);
-  animation: dot-flashing 1s infinite alternate;
+  border-radius: 50%;
+  background-color: var(--muted-foreground);
+  opacity: 0.5;
+  animation: dotBounce 1.4s ease-in-out infinite;
+  transform-origin: center;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.dot-flashing .dot:nth-child(1) {
   animation-delay: 0s;
 }
 
-.dot-flashing::after {
-  left: 15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: var(--primary-foreground);
-  color: var(--primary-foreground);
-  animation: dot-flashing 1s infinite alternate;
-  animation-delay: 1s;
+.dot-flashing .dot:nth-child(2) {
+  animation-delay: 0.2s;
 }
 
-@keyframes dot-flashing {
-  0% {
-    background-color: var(--primary-foreground);
-  }
+.dot-flashing .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
-  50%,
-  100% {
-    background-color: var(--button-bg)
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes dotBounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Dark mode styles */
+.dark .reading__container {
+  background-color: var(--muted);
+  border-color: var(--border);
+}
+
+.dark .reading__text {
+  color: var(--foreground);
+}
+
+.dark .dot-flashing .dot {
+  background-color: var(--muted-foreground);
+  opacity: 0.6;
+}
+
+/* Light mode styles */
+:root:not(.dark) .reading__container {
+  background-color: var(--muted);
+  border-color: var(--border);
+}
+
+:root:not(.dark) .reading__text {
+  color: var(--foreground);
+}
+
+:root:not(.dark) .dot-flashing .dot {
+  background-color: var(--muted-foreground);
+  opacity: 0.5;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .reading__container,
+  .reading__text,
+  .dot-flashing .dot {
+    animation: none;
+  }
+  
+  .dot-flashing .dot {
+    opacity: 0.6;
   }
 }
