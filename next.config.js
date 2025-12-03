@@ -31,9 +31,10 @@ const nextConfig = {
       'react-syntax-highlighter', // Optimize syntax highlighter
     ],
     // Reduce client-side router cache to prevent stale content
+    // Note: Next.js 16 requires minimum 30 for static staleTimes
     staleTimes: {
       dynamic: 0,
-      static: 0,
+      static: 30,
     },
     // Memory optimizations
     memoryBasedWorkersCount: true,

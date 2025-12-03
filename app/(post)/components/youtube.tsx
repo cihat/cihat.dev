@@ -13,11 +13,21 @@ function YouTubePlaceholder() {
   );
 }
 
-export function YouTube(props: any) {
+export function YouTube({ videoId, start, className, ...props }: any) {
+  const opts = {
+    width: "100%",
+    ...(start && {
+      playerVars: {
+        start: start,
+      },
+    }),
+    ...props.opts,
+  };
+
   return (
-    <div className="block my-5 overflow-scroll">
+    <div className={`block my-5 overflow-scroll ${className || ""}`}>
       <Suspense fallback={<YouTubePlaceholder />}>
-        <YT {...props} opts={{ width: "100%", ...props.opts }} />
+        <YT videoId={videoId} opts={opts} {...props} />
       </Suspense>
     </div>
   );
