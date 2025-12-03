@@ -14,7 +14,7 @@
     "generate-posts-cache": "node scripts/generate-posts-cache.js",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "prep-deploy": "pnpm run generate-posts-cache",
-    "deploy": "pnpm run prep-deploy && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy": "pnpm run prep-deploy && opennextjs-cloudflare build && wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "knip": "knip"
   },
@@ -70,7 +70,7 @@
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.14",
     "typescript": "5.8.2",
-    "wrangler": "4.40.3"
+    "wrangler": "4.52.1"
   },
   "pnpm": {
     "peerDependencyRules": {

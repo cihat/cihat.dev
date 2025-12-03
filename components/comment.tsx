@@ -8,10 +8,11 @@ const Comment = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    const currentRef = ref.current;
+    if (!currentRef) return;
 
     // Önceki utterances içeriğini temizle
-    ref.current.innerHTML = "";
+    currentRef.innerHTML = "";
 
     const script = document.createElement("script");
     script.src = "https://utteranc.es/client.js";
@@ -24,12 +25,12 @@ const Comment = () => {
     // Bu, GitHub OAuth callback'inin doğru URL'e yönlendirilmesini sağlar
     script.setAttribute("url", window.location.href);
 
-    ref.current.appendChild(script);
+    currentRef.appendChild(script);
 
     return () => {
       // Cleanup: script ve utterances iframe'ini kaldır
-      if (ref.current) {
-        ref.current.innerHTML = "";
+      if (currentRef) {
+        currentRef.innerHTML = "";
       }
       // Utterances tarafından oluşturulan iframe'i de kaldır
       const utterancesFrame = document.querySelector('iframe[src*="utteranc.es"]');
