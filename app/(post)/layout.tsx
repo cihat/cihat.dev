@@ -63,6 +63,9 @@ export async function generateMetadata() {
     return {
       title: `${post.title} | ${META_DATA.name}`,
       description: post.description,
+      alternates: {
+        canonical: post.link,
+      },
       openGraph: {
         title: post.title,
         description: post.description,

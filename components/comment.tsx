@@ -14,6 +14,11 @@ const Comment = () => {
     // Önceki utterances içeriğini temizle
     currentRef.innerHTML = "";
 
+    // OAuth redirect için mevcut sayfanın tam URL'ini kullan
+    // pathname kullanarak her zaman doğru sayfanın URL'ini oluştur
+    // Bu, Utterances'in OAuth callback'ten sonra doğru sayfaya yönlendirmesini sağlar
+    const fullUrl = window.location.origin + pathname;
+
     const script = document.createElement("script");
     script.src = "https://utteranc.es/client.js";
     script.setAttribute("repo", "cihat/cihat.dev");
@@ -21,9 +26,9 @@ const Comment = () => {
     script.setAttribute("theme", "preferred-color-scheme");
     script.setAttribute("crossOrigin", "anonymous");
     script.setAttribute("async", "true");
-    // Tam URL'i belirtmek için url attribute'unu ekle
-    // Bu, GitHub OAuth callback'inin doğru URL'e yönlendirilmesini sağlar
-    script.setAttribute("url", window.location.href);
+    // OAuth redirect için tam URL'i belirt (query ve hash olmadan)
+    // Bu, Utterances'in OAuth callback'ten sonra doğru sayfaya yönlendirmesini sağlar
+    script.setAttribute("url", fullUrl);
 
     currentRef.appendChild(script);
 
