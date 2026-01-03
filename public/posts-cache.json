@@ -1,5 +1,21 @@
 [
   {
+    "id": "resim",
+    "path": "resim",
+    "date": "January 3, 2026",
+    "title": "İnternetten Silemediğim O Resim",
+    "minuteToRead": 2,
+    "language": "tr-TR",
+    "category": [
+      "Personal"
+    ],
+    "link": "https://cihat.dev/2026/resim",
+    "description": "İnternetten silemediğim o resim",
+    "issueNumber": 17,
+    "views": 0,
+    "viewsFormatted": "0"
+  },
+  {
     "id": "boulder",
     "path": "boulder",
     "date": "November 16, 2025",
