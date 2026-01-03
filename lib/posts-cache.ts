@@ -4,6 +4,22 @@ import type { Post } from "@/types";
 
 export const postsCache: Post[] = [
   {
+    "id": "kacis",
+    "path": "kacis",
+    "date": "January 4, 2026",
+    "title": "Kaçış",
+    "minuteToRead": 1,
+    "language": "tr-TR",
+    "category": [
+      "Personal"
+    ],
+    "link": "https://cihat.dev/2026/kacis",
+    "description": "Kaçış hakkında",
+    "issueNumber": 18,
+    "views": 0,
+    "viewsFormatted": "0"
+  },
+  {
     "id": "resim",
     "path": "resim",
     "date": "January 3, 2026",
