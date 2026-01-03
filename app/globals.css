@@ -123,19 +123,11 @@
   }
 
   html {
-    /* Prevent elastic/bounce scrolling on mobile */
-    overscroll-behavior: none;
-    overscroll-behavior-y: none;
   }
 
   body {
     @apply bg-background text-foreground;
-    /* Prevent elastic/bounce scrolling on mobile */
-    overscroll-behavior: none;
-    overscroll-behavior-y: none;
     -webkit-overflow-scrolling: touch;
-    /* Prevent pull-to-refresh on mobile */
-    touch-action: pan-y;
   }
 }
 
