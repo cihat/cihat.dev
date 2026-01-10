@@ -10,10 +10,12 @@ export function Posts({ posts }: { posts: Post[] }) {
     category, 
     flag,
     searchInput,
+    showPersonal,
     toggleSort, 
     setCategory, 
     toggleLanguage,
     setSearchInput,
+    setShowPersonal,
     filteredAndSortedPosts 
   } = usePostFilters(posts);
 
@@ -24,10 +26,13 @@ export function Posts({ posts }: { posts: Post[] }) {
         category={category}
         flag={flag}
         searchInput={searchInput}
+        showPersonal={showPersonal}
+        posts={posts}
         onSortToggle={toggleSort}
         onCategoryChange={setCategory}
         onLanguageToggle={toggleLanguage}
         onSearchChange={setSearchInput}
+        onShowPersonalChange={setShowPersonal}
       />
       
       <PostList posts={filteredAndSortedPosts} />

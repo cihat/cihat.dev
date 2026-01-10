@@ -350,11 +350,18 @@ export const getPosts = (): Post[] => {
   // If fs is not available (Cloudflare Workers runtime), try to use bundled cache
   if (postsCache && Array.isArray(postsCache) && postsCache.length > 0) {
     console.log(`✅ Loaded ${postsCache.length} posts from bundled cache`);
-    return postsCache.map(post => ({
+    const posts = postsCache.map(post => ({
       ...post,
       views: 0,
       viewsFormatted: '0'
     }));
+    
+    // Sort by date (newest first) to match fs-based sorting
+    return posts.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
   }
 
   // If no cache available, return empty array - page should be pre-rendered at build time

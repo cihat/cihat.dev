@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Container from "@/components/ui/container";
-import Pagination from "@/components/pagination";
+import RelatedPosts from "@/components/related-posts";
 import Comment from "@/components/comment";
 import ReadingProgressIndicator from "@/components/reading-progress-indicator";
 import { BackButton } from "@/components/ui/back-button";
@@ -30,7 +30,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
         <BackButton />
         {children}
         <Comment />
-        <Pagination />
+        <RelatedPosts />
       </Container>
     </>
   );

@@ -6,6 +6,19 @@ import Link from "next/link";
 import Container from "./ui/container";
 import type { Post, Pagination } from "@/types";
 
+/**
+ * Sorts posts by their created date (newest first)
+ * This matches the default sort order on the home page
+ */
+function sortPostsByCreatedDate(posts: Post[]): Post[] {
+  // Sort all posts by date (newest first) - this is the created date
+  return [...posts].sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA; // newest first (descending)
+  });
+}
+
 export default function Pagination() {
   const [pagination, setPagination] = useState<Pagination>({ prev: null, next: null });
   const path = usePathname();
@@ -20,8 +33,12 @@ export default function Pagination() {
       }
       const posts: Post[] = await response.json();
       
-      // Extract year and slug from pathname (e.g., /2023/initial-blog-post)
-      const pathMatch = path.match(/^\/(\d{4})\/([^\/]+)/);
+      // Sort posts by created date (newest first) - matches home page default sort
+      const sortedPosts = sortPostsByCreatedDate(posts);
+      
+      // Extract year and slug from pathname (e.g., /2023/initial-blog-post or /2025/system-design/acid-properties)
+      // Use (.+) to capture nested paths correctly
+      const pathMatch = path.match(/^\/(\d{4})\/(.+)/);
       
       if (!pathMatch) {
         setPagination({ prev: null, next: null });
@@ -29,10 +46,13 @@ export default function Pagination() {
       }
       
       const [, year, slug] = pathMatch;
+      // Remove trailing slash if present
+      const normalizedSlug = slug.replace(/\/$/, '');
       
-      // Find current post by matching both year and slug for more accuracy
-      const currentBlogIndex = posts.findIndex((post) => {
-        return post.path === slug && post.link.includes(`/${year}/`);
+      // Find current post by matching both year and path for more accuracy
+      // Handle nested paths correctly (e.g., system-design/acid-properties)
+      const currentBlogIndex = sortedPosts.findIndex((post) => {
+        return (post.path === normalizedSlug || post.path === slug) && post.link.includes(`/${year}/`);
       });
       
       if (currentBlogIndex === -1) {
@@ -43,15 +63,20 @@ export default function Pagination() {
       let prevBlog;
       let nextBlog;
 
+      // Posts are sorted by created date (newest first)
+      // Previous = newer post (index - 1, because newer posts come first)
+      // Next = older post (index + 1, because older posts come later)
       if (currentBlogIndex === 0) {
+        // First post (newest) - no previous
         prevBlog = null;
-        nextBlog = posts[currentBlogIndex + 1];
-      } else if (currentBlogIndex === posts.length - 1) {
-        prevBlog = posts[currentBlogIndex - 1];
+        nextBlog = sortedPosts[currentBlogIndex + 1];
+      } else if (currentBlogIndex === sortedPosts.length - 1) {
+        // Last post (oldest) - no next
+        prevBlog = sortedPosts[currentBlogIndex - 1];
         nextBlog = null;
       } else {
-        prevBlog = posts[currentBlogIndex - 1];
-        nextBlog = posts[currentBlogIndex + 1];
+        prevBlog = sortedPosts[currentBlogIndex - 1];
+        nextBlog = sortedPosts[currentBlogIndex + 1];
       }
 
       setPagination({ prev: prevBlog, next: nextBlog });

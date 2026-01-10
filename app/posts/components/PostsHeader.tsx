@@ -12,10 +12,13 @@ interface PostsHeaderProps {
   category: CategoryEnum;
   flag: string;
   searchInput: string;
+  showPersonal: boolean;
+  posts: any[]; // Post[] type, but using any to avoid circular import
   onSortToggle: () => void;
   onCategoryChange: (category: CategoryEnum) => void;
   onLanguageToggle: () => void;
   onSearchChange: (value: string) => void;
+  onShowPersonalChange: (value: boolean) => void;
 }
 
 export function PostsHeader({
@@ -23,10 +26,13 @@ export function PostsHeader({
   category,
   flag,
   searchInput,
+  showPersonal,
+  posts,
   onSortToggle,
   onCategoryChange,
   onLanguageToggle,
   onSearchChange,
+  onShowPersonalChange,
 }: PostsHeaderProps) {
   return (
     <header className="flex items-center text-sm sticky top-0 p-1 rounded-md bg-white dark:bg-black">
@@ -50,7 +56,19 @@ export function PostsHeader({
         />
       </div>
       
-      <Category category={category} setCategory={onCategoryChange} />
+      <Category category={category} setCategory={onCategoryChange} posts={posts} />
+      
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => onShowPersonalChange(!showPersonal)}
+        className={`cursor-pointer flex items-center justify-center h-9 text-md font-semibold px-3 mr-2 hover:bg-transparent hover:text-current dark:hover:bg-input/30 dark:hover:text-current ${
+          showPersonal ? 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground' : ''
+        }`}
+        title="Show Personal posts"
+      >
+        Personal
+      </Button>
       
       <Button
         variant="outline"

@@ -27,6 +27,7 @@ export function usePostFilters(posts: Post[]) {
     (searchParams.get("category") as CategoryEnum) || CategoryEnum.all
   );
   const [searchInput, setSearchInput] = useState("");
+  const [showPersonal, setShowPersonal] = useState<boolean>(false);
 
   const toggleSort = useCallback(() => {
     setSort((current) => ["date", current[0] !== "date" || current[1] === "asc" ? "desc" : "asc"]);
@@ -68,13 +69,21 @@ export function usePostFilters(posts: Post[]) {
       });
     }
     
-    // 4. Finally sort
+    // 4. Apply Personal filter (exclude Personal posts if showPersonal is false)
+    if (!showPersonal) {
+      filtered = filtered.filter((post) => {
+        const postCategories = Array.isArray(post.category) ? post.category : [post.category];
+        return !postCategories.some((cat) => cat.toLowerCase() === 'personal');
+      });
+    }
+    
+    // 5. Finally sort
     return [...filtered].sort((a, b) => {
       const dateA = new Date(a.date).getTime();
       const dateB = new Date(b.date).getTime();
       return sortDirection === "desc" ? dateB - dateA : dateA - dateB;
     });
-  }, [posts, sort, lang, category, searchInput]);
+  }, [posts, sort, lang, category, searchInput, showPersonal]);
 
   return {
     sort,
@@ -82,9 +91,11 @@ export function usePostFilters(posts: Post[]) {
     category,
     flag: currentFlag,
     searchInput,
+    showPersonal,
     setLang,
     setCategory,
     setSearchInput,
+    setShowPersonal,
     toggleSort,
     toggleLanguage,
     filteredAndSortedPosts,
