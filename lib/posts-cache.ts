@@ -11,7 +11,7 @@ export const postsCache: Post[] = [
     "minuteToRead": 1,
     "language": "tr",
     "category": [
-      "Personal"
+      "Drama"
     ],
     "link": "https://cihat.dev/2026/keremin-dramasi",
     "description": "Kerem",
