@@ -1,5 +1,6 @@
-const LITERAL_API_URL = "https://literal.club/graphql/";
-const LITERAL_HANDLE = "cihat";
+// GraphQL API is on api.literal.club; literal.club/graphql/ returns 404 (site route)
+const LITERAL_API_URL = "https://api.literal.club/graphql/";
+const LITERAL_HANDLE = process.env.LITERAL_HANDLE ?? "cihat";
 
 // GraphQL fragments
 const BOOK_PARTS = `
@@ -48,7 +49,7 @@ const PROFILE_PARTS = `
 const GET_PROFILE_BY_HANDLE = `
   ${PROFILE_PARTS}
   query getProfileParts($handle: String!) {
-    profile(where: { handle: $handle }) {
+    profileByHandle(handle: $handle) {
       ...ProfileParts
     }
   }
@@ -141,7 +142,8 @@ export default class Literal {
   private readonly isInitialized: boolean;
 
   constructor() {
-    this.token = process.env.LITERAL_API_TOKEN;
+    const raw = process.env.LITERAL_API_TOKEN;
+    this.token = typeof raw === "string" ? raw.trim() || undefined : undefined;
     this.isInitialized = true;
   }
 
@@ -159,15 +161,14 @@ export default class Literal {
         headers["Authorization"] = `Bearer ${this.token}`;
       }
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const response = await fetch(LITERAL_API_URL, {
         method: "POST",
-        headers,
-        body: JSON.stringify({
-          query,
-          variables,
-        }),
-        signal: AbortSignal.timeout(15000), // 15 second timeout
-      });
+        headers: { ...headers, Accept: "application/json" },
+        body: JSON.stringify({ query, variables }),
+        signal: controller.signal,
+      }).finally(() => clearTimeout(timeoutId));
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -198,12 +199,12 @@ export default class Literal {
    * Get profile information by handle
    */
   async getProfileByHandle(handle: string = LITERAL_HANDLE): Promise<LiteralProfile | null> {
-    const result = await this.graphqlRequest<{ profile: LiteralProfile }>(
+    const result = await this.graphqlRequest<{ profileByHandle: LiteralProfile }>(
       GET_PROFILE_BY_HANDLE,
       { handle }
     );
 
-    return result?.profile || null;
+    return result?.profileByHandle ?? null;
   }
 
   /**
@@ -263,5 +264,35 @@ export default class Literal {
       wantsToRead,
     };
   }
-}
 
+  /**
+   * Get all books: if token is set, use myReadingStates (your library); else use public profile by handle.
+   */
+  async getAllBooks(handle?: string): Promise<{
+    reading: LiteralBook[];
+    finished: LiteralBook[];
+    wantsToRead: LiteralBook[];
+  } | null> {
+    const h = handle ?? LITERAL_HANDLE;
+
+    if (this.token) {
+      const states = await this.getMyReadingStates();
+      const reading: LiteralBook[] = [];
+      const finished: LiteralBook[] = [];
+      const wantsToRead: LiteralBook[] = [];
+      for (const state of states) {
+        if (!state.book) continue;
+        const status = (state.status ?? "").toUpperCase().replace(/-/g, "_");
+        if (status === "IS_READING") reading.push(state.book);
+        else if (status === "FINISHED") finished.push(state.book);
+        else if (status === "WANTS_TO_READ") wantsToRead.push(state.book);
+      }
+      const hasAny = reading.length > 0 || finished.length > 0 || wantsToRead.length > 0;
+      if (hasAny) return { reading, finished, wantsToRead };
+    }
+
+    const profile = await this.getProfileByHandle(h);
+    if (!profile?.id) return null;
+    return this.getAllBooksForProfile(profile.id);
+  }
+}

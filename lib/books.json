@@ -1,16 +1,6 @@
 {
   "books": [
     {
-      "title": "How to Think Like a Roman Emperor",
-      "alt": "How to Think Like a Roman Emperor: The Stoic Philosophy of Marcus Aurelius",
-      "currentPage": 45,
-      "page": 304,
-      "bookCover": "https://m.media-amazon.com/images/I/7173Hedc4ZL._SL1500_.jpg",
-      "link": "https://www.amazon.com/How-Think-Like-Roman-Emperor/dp/1250196620",
-      "subtitle": "The Stoic Philosophy of Marcus Aurelius",
-      "author": "Donald Robertson"
-    },
-    {
       "title": "Gündelik Şeylerin Tasarımı",
       "alt": "Gündelik Şeylerin Tasarımı",
       "currentPage": 30,

@@ -1,11 +1,18 @@
 import { NextResponse } from 'next/server'
 import Literal from '@/lib/literal'
-import booksData from '@/lib/books.json'
+
+// Always fetch fresh data from Literal (no long-lived cache)
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+const emptyResponse = { reading: [] as any[], finished: [] as any[], wantsToRead: [] as any[] }
+
+const CACHE_HEADERS = { 'Cache-Control': 'private, max-age=0, no-store, must-revalidate' }
 
 // Transform Literal book to the format expected by the frontend
 function transformLiteralBook(literalBook: any, readingStatus: string) {
   const pageCount = literalBook.pageCount || 0
-  
+
   // Calculate currentPage based on reading status
   let currentPage = 0
   if (readingStatus === 'FINISHED' && pageCount > 0) {
@@ -15,7 +22,7 @@ function transformLiteralBook(literalBook: any, readingStatus: string) {
     currentPage = Math.floor(pageCount * 0.5)
   }
   // WANTS_TO_READ stays at 0
-  
+
   return {
     title: literalBook.title,
     alt: literalBook.title,
@@ -29,51 +36,54 @@ function transformLiteralBook(literalBook: any, readingStatus: string) {
   }
 }
 
-// Fallback to local books data
-function getLocalBooks() {
-  const books = booksData.books
-  
-  const getProgress = (currentPage: number, totalPages: number) => 
-    Number((currentPage / totalPages) * 100).toFixed(0)
-  
-  const reading = books.filter(book => {
-    const progress = Number(getProgress(book.currentPage, book.page))
-    return progress > 0 && progress < 100
-  })
-  
-  const finished = books.filter(book => {
-    const progress = Number(getProgress(book.currentPage, book.page))
-    return progress === 100
-  })
-  
-  const wantsToRead = books.filter(book => {
-    return book.currentPage === 0
-  })
-
-  return { reading, finished, wantsToRead }
-}
-
 export async function GET(request: Request) {
+  const url = new URL(request.url)
+  const debug = url.searchParams.get('debug') === '1'
+
   try {
     const literal = new Literal()
-    
-    // Try to get profile first
-    const profile = await literal.getProfileByHandle('cihat')
-    
-    if (!profile || !profile.id) {
-      console.warn('⚠️  Could not fetch Literal profile, falling back to local books')
-      const localBooks = getLocalBooks()
-      return NextResponse.json(localBooks, {
-        headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+    const handle = (process.env.LITERAL_HANDLE ?? 'cihat').trim()
+    const tokenSet = !!process.env.LITERAL_API_TOKEN?.trim()
+
+    if (debug) {
+      const profile = await literal.getProfileByHandle(handle)
+      const states = tokenSet ? await literal.getMyReadingStates() : []
+      const books = await literal.getAllBooks(handle)
+      return NextResponse.json({
+        debug: {
+          tokenSet,
+          handle,
+          profileFound: !!profile,
+          profileId: profile?.id ?? null,
+          profileHandle: profile?.handle ?? null,
+          myReadingStatesCount: states.length,
+          booksSource: books ? 'literal' : 'none',
+          readingCount: books?.reading?.length ?? 0,
+          finishedCount: books?.finished?.length ?? 0,
+          wantsToReadCount: books?.wantsToRead?.length ?? 0,
         },
-      })
+        reading: [],
+        finished: [],
+        wantsToRead: [],
+      }, { headers: CACHE_HEADERS })
     }
 
-    // Fetch books from Literal API
-    const { reading, finished, wantsToRead } = await literal.getAllBooksForProfile(profile.id)
+    // Token varsa myReadingStates (kendi kütüphanen), yoksa public profil (handle) kullanılır
+    const books = await literal.getAllBooks(handle)
 
-    // Transform Literal books to expected format with reading status
+    if (!books) {
+      console.warn(
+        '⚠️  Literal: profil bulunamadı veya veri yok. Handle:',
+        handle,
+        'Token:',
+        tokenSet ? 'set' : 'missing',
+        '— .env LITERAL_HANDLE ve LITERAL_API_TOKEN kontrol et. /api/books?debug=1 ile test et.'
+      )
+      return NextResponse.json(emptyResponse, { headers: CACHE_HEADERS })
+    }
+
+    const { reading, finished, wantsToRead } = books
+
     const transformedReading = reading.map(book => transformLiteralBook(book, 'IS_READING'))
     const transformedFinished = finished.map(book => transformLiteralBook(book, 'FINISHED'))
     const transformedWantsToRead = wantsToRead.map(book => transformLiteralBook(book, 'WANTS_TO_READ'))
@@ -82,28 +92,17 @@ export async function GET(request: Request) {
       reading: transformedReading,
       finished: transformedFinished,
       wantsToRead: transformedWantsToRead
-    }, {
-      headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
-      },
-    })
+    }, { headers: CACHE_HEADERS })
   } catch (error) {
     console.error('Error in books API:', error)
-    
-    // Fallback to local books on error
-    try {
-      const localBooks = getLocalBooks()
-      return NextResponse.json(localBooks, {
-        headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
-        },
-      })
-    } catch (fallbackError) {
-      console.error('Error in fallback:', fallbackError)
-      return NextResponse.json(
-        { error: 'Failed to fetch books' },
-        { status: 500 }
-      )
+    if (debug) {
+      return NextResponse.json({
+        debug: { error: error instanceof Error ? error.message : String(error) },
+        reading: [],
+        finished: [],
+        wantsToRead: [],
+      }, { headers: CACHE_HEADERS })
     }
+    return NextResponse.json(emptyResponse, { headers: CACHE_HEADERS })
   }
 }

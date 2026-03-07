@@ -25,7 +25,7 @@ const generateRandomProgress = (page: number): { currentPage: number; page: numb
   const minProgress = 0.1 // 10%
   const maxProgress = 0.9 // 90%
   const randomProgress = Math.random() * (maxProgress - minProgress) + minProgress
-  
+
   if (!page || page === 0) {
     // If no page count, assume average book has 300 pages
     const assumedPages = 300
@@ -34,7 +34,7 @@ const generateRandomProgress = (page: number): { currentPage: number; page: numb
       page: assumedPages
     }
   }
-  
+
   return {
     currentPage: Math.floor(page * randomProgress),
     page: page
@@ -50,12 +50,15 @@ export default function ReadingClient() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await fetch('/api/books')
+        const response = await fetch('/api/books', {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' },
+        })
         if (!response.ok) {
           throw new Error('Failed to fetch books')
         }
         const data = await response.json()
-        
+
         // Generate random progress for currently reading books
         const readingBooks = (data.reading || []).map((book: BookType) => {
           const { currentPage, page } = generateRandomProgress(book.page)
@@ -65,7 +68,7 @@ export default function ReadingClient() {
             page, // Update page in case it was 0
           }
         })
-        
+
         // Set books from API response
         setInProgressBooks(readingBooks)
         setCompletedBooks(data.finished || [])
@@ -127,14 +130,13 @@ function BooksGrid({ books, title, isCurrentlyReading = false }: { books: BookTy
         {books.map((book: BookType) => {
           const progress = getProgress(book.currentPage, book.page)
           const hasCover = book?.bookCover && book.bookCover.trim() !== ''
-          const showTitle = !hasCover // Show title if no cover image
-          
+
           return (
-            <a 
-              key={book.title} 
-              target="_blank" 
+            <a
+              key={book.title}
+              target="_blank"
               rel="noopener noreferrer"
-              href={book.link} 
+              href={book.link}
               className="col-span-1 flex flex-col justify-end !cursor-pointer group transition-transform hover:scale-105"
               title={`${book.title}${progress > 0 ? ` - ${progress}% completed` : ''}`}
             >
@@ -156,30 +158,28 @@ function BooksGrid({ books, title, isCurrentlyReading = false }: { books: BookTy
                   }}
                 />
               </div>
-              {showTitle && (
-                <p className="mt-2 text-xs text-muted-foreground line-clamp-2 text-center leading-tight">
-                  {book.title}
-                </p>
-              )}
+              <p className="mt-2 text-xs text-muted-foreground line-clamp-2 text-center leading-tight">
+                {book.title}
+              </p>
               {isCurrentlyReading && (
                 <div className="mt-2">
-                  <ProgressBar 
-                    completed={progress} 
-                    bgColor="#00ce8b" 
-                    borderRadius="3px" 
-                    height="8px" 
-                    isLabelVisible={false} 
+                  <ProgressBar
+                    completed={progress}
+                    bgColor="#00ce8b"
+                    borderRadius="3px"
+                    height="8px"
+                    isLabelVisible={false}
                   />
                 </div>
               )}
               {!isCurrentlyReading && progress > 0 && (
                 <div className="mt-2">
-                  <ProgressBar 
-                    completed={progress} 
-                    bgColor="#00ce8b" 
-                    borderRadius="3px" 
-                    height="8px" 
-                    isLabelVisible={false} 
+                  <ProgressBar
+                    completed={progress}
+                    bgColor="#00ce8b"
+                    borderRadius="3px"
+                    height="8px"
+                    isLabelVisible={false}
                   />
                 </div>
               )}
@@ -189,5 +189,4 @@ function BooksGrid({ books, title, isCurrentlyReading = false }: { books: BookTy
       </section>
     </div>
   )
-} 
-
+}
