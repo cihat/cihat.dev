@@ -50,10 +50,7 @@ export default function ReadingClient() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await fetch('/api/books', {
-          cache: 'no-store',
-          headers: { 'Cache-Control': 'no-cache' },
-        })
+        const response = await fetch('/api/books')
         if (!response.ok) {
           throw new Error('Failed to fetch books')
         }

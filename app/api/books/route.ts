@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server'
 import Literal from '@/lib/literal'
 
-// Always fetch fresh data from Literal (no long-lived cache)
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// Cache books response 5 min, revalidate in background up to 10 min
+export const revalidate = 300
 
 const emptyResponse = { reading: [] as any[], finished: [] as any[], wantsToRead: [] as any[] }
 
-const CACHE_HEADERS = { 'Cache-Control': 'private, max-age=0, no-store, must-revalidate' }
+const CACHE_HEADERS = {
+  'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600, max-age=300',
+}
 
 // Transform Literal book to the format expected by the frontend
 function transformLiteralBook(literalBook: any, readingStatus: string) {
