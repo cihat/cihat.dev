@@ -4,5 +4,6 @@
   },
   "cSpell.enabledFileTypes": {
     "mdx": false
-  }
+  },
+  "editor.wordWrap": "on"
 }
