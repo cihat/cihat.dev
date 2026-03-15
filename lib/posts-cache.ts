@@ -83,7 +83,8 @@ export const postsCache: Post[] = [
     "description": "About Vibe Coding",
     "issueNumber": 16,
     "views": 0,
-    "viewsFormatted": "0"
+    "viewsFormatted": "0",
+    "inProgress": true
   },
   {
     "id": "system-design",

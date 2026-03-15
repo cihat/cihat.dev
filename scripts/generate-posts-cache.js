@@ -135,6 +135,15 @@ function parseMetadata(fileContents) {
     const match = metadataContent.match(dateRegex);
     return match ? match[1] : undefined;
   };
+
+  // Helper function to extract boolean values (inProgress: true)
+  const extractBoolean = (key) => {
+    const trueRegex = new RegExp(`\\b${key}:\\s*true\\b`, 'i');
+    const falseRegex = new RegExp(`\\b${key}:\\s*false\\b`, 'i');
+    if (trueRegex.test(metadataContent)) return true;
+    if (falseRegex.test(metadataContent)) return false;
+    return undefined;
+  };
   
   // Extract all fields from metadata
   metadata.title = extractString('title');
@@ -147,6 +156,7 @@ function parseMetadata(fileContents) {
   metadata.link = extractString('link');
   metadata.id = extractString('id');
   metadata.path = extractString('path');
+  metadata.inProgress = extractBoolean('inProgress');
   
   // Also check openGraph.description as fallback for description
   if (!metadata.description) {
@@ -203,6 +213,7 @@ function getPosts() {
       const link = metadata.link;
       const id = metadata.id;
       const postPath = metadata.path;
+      const inProgress = metadata.inProgress === true;
       
       // Fallback: if date is not in metadata, use year from path
       if (!date) {
@@ -236,7 +247,8 @@ function getPosts() {
         description: description,
         issueNumber: finalIssueNumber,
         views: 0,
-        viewsFormatted: '0'
+        viewsFormatted: '0',
+        ...(inProgress && { inProgress: true }),
       };
 
       posts.push(post);
