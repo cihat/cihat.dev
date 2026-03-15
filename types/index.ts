@@ -30,6 +30,8 @@ export type Post = {
   description: string;
   link: string;
   issueNumber: number;
+  /** Yazı "devam edecek" gibi yarım kalan yazılar için; true ise liste varsayılan gizlenir */
+  inProgress?: boolean;
 }
 
 export type Pagination = {
@@ -38,7 +40,7 @@ export type Pagination = {
 }
 
 export enum CategoryEnum {
-  all = "All",
+  all = "All posts",
   learning = "Learning",
   philosophy = "Philosophy",
   productivity = "Productivity",

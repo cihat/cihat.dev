@@ -47,10 +47,11 @@ export default function RelatedPosts() {
         ? currentPost.category.map(c => c.toLowerCase())
         : [currentPost.category.toLowerCase()];
       
-      // Filter related posts:
+      // Filter related posts (same rules as posts list):
       // 1. Same category (any match if array)
-      // 2. Not Personal category
-      // 3. Not current post
+      // 2. Not Personal category (gizli liste)
+      // 3. Not inProgress / yarım kalan (gizli liste)
+      // 4. Not current post
       const related = posts
         .filter((post) => {
           // Exclude current post
@@ -58,13 +59,16 @@ export default function RelatedPosts() {
             return false;
           }
           
-          // Get post categories
+          // Exclude Personal — listede varsayılan gizli
           const postCategories = Array.isArray(post.category)
             ? post.category.map(c => c.toLowerCase())
             : [post.category.toLowerCase()];
-          
-          // Exclude Personal category
           if (postCategories.some(c => c === 'personal')) {
+            return false;
+          }
+          
+          // Exclude yarım kalan (inProgress) — listede varsayılan gizli
+          if (post.inProgress) {
             return false;
           }
           

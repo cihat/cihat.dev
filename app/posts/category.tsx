@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuCheckboxItem,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -17,9 +18,21 @@ interface CategoryProps {
   category: CategoryEnum;
   setCategory: (category: CategoryEnum) => void;
   posts: Post[];
+  showPersonal: boolean;
+  showInProgress: boolean;
+  onShowPersonalChange: (value: boolean) => void;
+  onShowInProgressChange: (value: boolean) => void;
 }
 
-export default function Category({ category, setCategory, posts }: CategoryProps) {
+export default function Category({
+  category,
+  setCategory,
+  posts,
+  showPersonal,
+  showInProgress,
+  onShowPersonalChange,
+  onShowInProgressChange,
+}: CategoryProps) {
   const router = useRouter();
 
   // Extract unique categories from posts
@@ -62,23 +75,49 @@ export default function Category({ category, setCategory, posts }: CategoryProps
   const handleCategory = (category: CategoryEnum) => {
     setCategory(category);
     router.push(`/?category=${category}`)
-  }
+  };
 
+  // When all filters are default (All posts + no Personal/In progress), show short "All" on the button
+  const isAllDefault = category === CategoryEnum.all && !showPersonal && !showInProgress;
+  const buttonLabel = isAllDefault ? "All" : category;
 
   return (
     <div className="mx-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="default" className="min-w-fit px-3 h-9 rounded-sm text-left text-md font-semibold whitespace-nowrap">
-            {category}
+            {buttonLabel}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>Categories</DropdownMenuLabel>
+          <DropdownMenuLabel>Visibility</DropdownMenuLabel>
+          <DropdownMenuCheckboxItem
+            checked={showPersonal}
+            onCheckedChange={onShowPersonalChange}
+            onSelect={(e) => e.preventDefault()}
+          >
+            Personal
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={showInProgress}
+            onCheckedChange={onShowInProgressChange}
+            onSelect={(e) => e.preventDefault()}
+          >
+            In progress
+          </DropdownMenuCheckboxItem>
           <DropdownMenuSeparator />
+          <DropdownMenuLabel>Categories</DropdownMenuLabel>
           <DropdownMenuGroup>
             {availableCategories.map((c) => (
-              <DropdownMenuItem key={c} onClick={() => handleCategory(c as CategoryEnum)}>{c}</DropdownMenuItem>
+              <DropdownMenuItem
+                key={c}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  handleCategory(c as CategoryEnum);
+                }}
+              >
+                {c}
+              </DropdownMenuItem>
             ))}
           </DropdownMenuGroup>
         </DropdownMenuContent>

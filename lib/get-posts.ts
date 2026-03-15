@@ -120,12 +120,13 @@ function parseMetadata(fileContents: string): Record<string, any> {
   const metadataContent = fileContents.substring(startPos + 1, endPos);
   
   // Helper function to extract string values (handles both single and double quotes)
+  // Supports apostrophes inside double-quoted strings (e.g. "Kerem'in") and vice versa
   const extractString = (key: string): string | undefined => {
-    // Match: key: "value" or key: 'value'
-    // Use word boundary to avoid partial matches
-    const regex = new RegExp(`\\b${key}:\\s*["']([^"']+)["']`, 'i');
-    const match = metadataContent.match(regex);
-    return match ? match[1] : undefined;
+    // Double-quoted: key: "value" — value can contain '
+    const doubleQuoted = new RegExp(`\\b${key}:\\s*"((?:[^"\\\\]|\\\\.)*)"`, 'i');
+    const singleQuoted = new RegExp(`\\b${key}:\\s*'((?:[^'\\\\]|\\\\.)*)'`, 'i');
+    const match = metadataContent.match(doubleQuoted) ?? metadataContent.match(singleQuoted);
+    return match ? match[1].replace(/\\(.)/g, '$1') : undefined;
   };
   
   // Helper function to extract array values (handles string arrays)
@@ -156,12 +157,14 @@ function parseMetadata(fileContents: string): Record<string, any> {
     if (bracketCount !== 0) return undefined;
     
     const arrayContent = metadataContent.substring(startPos, endPos);
-    // Extract all string values from the array
-    const stringMatches = arrayContent.matchAll(/["']([^"']+)["']/g);
+    // Extract all string values (allow ' inside "..." and " inside '...')
+    const doubleQuoted = /"((?:[^"\\]|\\.)*)"/g;
+    const singleQuoted = /'((?:[^'\\]|\\.)*)'/g;
     const values: string[] = [];
-    for (const match of stringMatches) {
-      values.push(match[1]);
-    }
+    let m: RegExpExecArray | null;
+    while ((m = doubleQuoted.exec(arrayContent)) !== null) values.push(m[1].replace(/\\(.)/g, '$1'));
+    while ((m = singleQuoted.exec(arrayContent)) !== null) values.push(m[1].replace(/\\(.)/g, '$1'));
+    values.sort((a, b) => arrayContent.indexOf(a) - arrayContent.indexOf(b)); // preserve order
     
     return values.length > 0 ? values : undefined;
   };
@@ -171,6 +174,15 @@ function parseMetadata(fileContents: string): Record<string, any> {
     const regex = new RegExp(`\\b${key}:\\s*(\\d+)`, 'i');
     const match = metadataContent.match(regex);
     return match ? parseInt(match[1], 10) : undefined;
+  };
+
+  // Helper function to extract boolean values (inProgress: true)
+  const extractBoolean = (key: string): boolean | undefined => {
+    const trueRegex = new RegExp(`\\b${key}:\\s*true\\b`, 'i');
+    const falseRegex = new RegExp(`\\b${key}:\\s*false\\b`, 'i');
+    if (trueRegex.test(metadataContent)) return true;
+    if (falseRegex.test(metadataContent)) return false;
+    return undefined;
   };
   
   // Helper function to extract date values (can be string or date format)
@@ -193,6 +205,7 @@ function parseMetadata(fileContents: string): Record<string, any> {
   metadata.link = extractString('link');
   metadata.id = extractString('id');
   metadata.path = extractString('path');
+  metadata.inProgress = extractBoolean('inProgress');
   
   // Also check openGraph.description as fallback for description
   if (!metadata.description) {
@@ -215,9 +228,9 @@ function parseMetadata(fileContents: string): Record<string, any> {
           }
         }
         const openGraphContent = metadataContent.substring(openGraphBraceStart + 1, openGraphEndPos);
-        const openGraphDesc = openGraphContent.match(/description:\s*["']([^"']+)["']/);
+        const openGraphDesc = openGraphContent.match(/description:\s*"((?:[^"\\]|\\.)*)"/) ?? openGraphContent.match(/description:\s*'((?:[^'\\]|\\.)*)'/);
         if (openGraphDesc) {
-          metadata.description = openGraphDesc[1];
+          metadata.description = openGraphDesc[1].replace(/\\(.)/g, '$1');
         }
       }
     }
@@ -292,6 +305,7 @@ export const getPosts = (): Post[] => {
           const link = metadata.link;
           const id = metadata.id;
           const postPath = metadata.path;
+          const inProgress = metadata.inProgress === true;
           
           // Fallback: if date is not in metadata, use year from path
           if (!date) {
@@ -326,7 +340,8 @@ export const getPosts = (): Post[] => {
             description: description,
             issueNumber: finalIssueNumber,
             views: 0,
-            viewsFormatted: '0'
+            viewsFormatted: '0',
+            ...(inProgress && { inProgress: true }),
           };
 
           posts.push(post);
