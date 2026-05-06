@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
+import type { ComponentProps } from "react";
 import YT from "react-youtube";
 
 function YouTubePlaceholder() {
@@ -13,7 +14,19 @@ function YouTubePlaceholder() {
   );
 }
 
-export function YouTube({ videoId, start, className, ...props }: any) {
+type YouTubeProps = ComponentProps<typeof YT> & {
+  /** Article sütunundan taşıp daha geniş (viewport’a yakın) gösterir */
+  wide?: boolean;
+};
+
+export function YouTube({
+  videoId,
+  start,
+  className,
+  wide = false,
+  opts: optsProp,
+  ...rest
+}: YouTubeProps) {
   const opts = {
     width: "100%",
     ...(start && {
@@ -21,13 +34,17 @@ export function YouTube({ videoId, start, className, ...props }: any) {
         start: start,
       },
     }),
-    ...props.opts,
+    ...optsProp,
   };
 
+  const wrapperClass = wide
+    ? `block my-5 relative left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),64rem)] max-w-none ${className ?? ""}`
+    : `block my-5 overflow-scroll ${className ?? ""}`;
+
   return (
-    <div className={`block my-5 overflow-scroll ${className || ""}`}>
+    <div className={wrapperClass}>
       <Suspense fallback={<YouTubePlaceholder />}>
-        <YT videoId={videoId} opts={opts} {...props} />
+        <YT videoId={videoId} opts={opts} {...rest} />
       </Suspense>
     </div>
   );
