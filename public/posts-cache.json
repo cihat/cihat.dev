@@ -523,5 +523,19 @@
     "issueNumber": 5,
     "views": 0,
     "viewsFormatted": "0"
+  },
+  {
+    "id": "kul-ahmetin-ceketi-hakkinda",
+    "path": "kul-ahmetin-ceketi-hakkinda",
+    "date": "07",
+    "title": "Kul Ahmet",
+    "minuteToRead": 5,
+    "language": "tr-TR",
+    "category": "Personal",
+    "link": "https://cihat.dev/2026/kul-ahmetin-ceketi-hakkinda",
+    "description": "Kul Ahmet",
+    "issueNumber": 0,
+    "views": 0,
+    "viewsFormatted": "0"
   }
 ]
