@@ -81,11 +81,12 @@ function parseMetadata(fileContents) {
   // Extract the metadata object content (without the outer braces)
   const metadataContent = fileContents.substring(startPos + 1, endPos);
   
-  // Helper function to extract string values
+  // Helper function to extract string values (apostrophes inside double-quoted strings)
   const extractString = (key) => {
-    const regex = new RegExp(`\\b${key}:\\s*["']([^"']+)["']`, 'i');
-    const match = metadataContent.match(regex);
-    return match ? match[1] : undefined;
+    const doubleQuoted = new RegExp(`\\b${key}:\\s*"((?:[^"\\\\]|\\\\.)*)"`, 'i');
+    const singleQuoted = new RegExp(`\\b${key}:\\s*'((?:[^'\\\\]|\\\\.)*)'`, 'i');
+    const match = metadataContent.match(doubleQuoted) ?? metadataContent.match(singleQuoted);
+    return match ? match[1].replace(/\\(.)/g, '$1') : undefined;
   };
   
   // Helper function to extract array values
@@ -113,11 +114,13 @@ function parseMetadata(fileContents) {
     if (bracketCount !== 0) return undefined;
     
     const arrayContent = metadataContent.substring(startPos, endPos);
-    const stringMatches = arrayContent.matchAll(/["']([^"']+)["']/g);
+    const doubleQuoted = /"((?:[^"\\]|\\.)*)"/g;
+    const singleQuoted = /'((?:[^'\\]|\\.)*)'/g;
     const values = [];
-    for (const match of stringMatches) {
-      values.push(match[1]);
-    }
+    let m;
+    while ((m = doubleQuoted.exec(arrayContent)) !== null) values.push(m[1].replace(/\\(.)/g, '$1'));
+    while ((m = singleQuoted.exec(arrayContent)) !== null) values.push(m[1].replace(/\\(.)/g, '$1'));
+    values.sort((a, b) => arrayContent.indexOf(a) - arrayContent.indexOf(b));
     
     return values.length > 0 ? values : undefined;
   };
@@ -129,12 +132,7 @@ function parseMetadata(fileContents) {
     return match ? parseInt(match[1], 10) : undefined;
   };
   
-  // Helper function to extract date values
-  const extractDate = () => {
-    const dateRegex = /\bdate:\s*["']?([A-Za-z]+\s+\d+,\s+\d{4}|[\d-]+)["']?/i;
-    const match = metadataContent.match(dateRegex);
-    return match ? match[1] : undefined;
-  };
+  const extractDate = () => extractString('date');
 
   // Helper function to extract boolean values (inProgress: true)
   const extractBoolean = (key) => {

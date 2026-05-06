@@ -185,13 +185,7 @@ function parseMetadata(fileContents: string): Record<string, any> {
     return undefined;
   };
   
-  // Helper function to extract date values (can be string or date format)
-  const extractDate = (): string | undefined => {
-    // Match: date: "Month Day, Year" or date: "YYYY-MM-DD"
-    const dateRegex = /\bdate:\s*["']?([A-Za-z]+\s+\d+,\s+\d{4}|[\d-]+)["']?/i;
-    const match = metadataContent.match(dateRegex);
-    return match ? match[1] : undefined;
-  };
+  const extractDate = (): string | undefined => extractString('date');
   
   // Extract all fields from metadata
   metadata.title = extractString('title');

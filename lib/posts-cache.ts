@@ -4,10 +4,26 @@ import type { Post } from "@/types";
 
 export const postsCache: Post[] = [
   {
+    "id": "kul-ahmetin-ceketi-hakkinda",
+    "path": "kul-ahmetin-ceketi-hakkinda",
+    "date": "May 7, 2026",
+    "title": "Kul Ahmet'in Ceketi Hakkinda",
+    "minuteToRead": 3,
+    "language": "tr-TR",
+    "category": [
+      "Personal"
+    ],
+    "link": "https://cihat.dev/2026/kul-ahmetin-ceketi-hakkinda",
+    "description": "Kul Ahmet'in ceketi hakkında",
+    "issueNumber": 20,
+    "views": 0,
+    "viewsFormatted": "0"
+  },
+  {
     "id": "keremin-dramasi",
     "path": "keremin-dramasi",
     "date": "March 7, 2026",
-    "title": "Kerem",
+    "title": "Kerem'in Draması",
     "minuteToRead": 1,
     "language": "tr",
     "category": [
@@ -15,7 +31,7 @@ export const postsCache: Post[] = [
       "Personal"
     ],
     "link": "https://cihat.dev/2026/keremin-dramasi",
-    "description": "Tüm Kerem",
+    "description": "Tüm Kerem'lere ithafen.",
     "issueNumber": 19,
     "views": 0,
     "viewsFormatted": "0"
@@ -525,20 +541,6 @@ export const postsCache: Post[] = [
     "link": "https://cihat.dev/2021/kariyerimde-mentorlugun-onemi",
     "description": "Kariyerimde mentorluk önemli bir yere sahip. Bu yazıda mentorluk kavramını ve kariyerimdeki önemini anlatıyorum.",
     "issueNumber": 5,
-    "views": 0,
-    "viewsFormatted": "0"
-  },
-  {
-    "id": "kul-ahmetin-ceketi-hakkinda",
-    "path": "kul-ahmetin-ceketi-hakkinda",
-    "date": "07",
-    "title": "Kul Ahmet",
-    "minuteToRead": 5,
-    "language": "tr-TR",
-    "category": "Personal",
-    "link": "https://cihat.dev/2026/kul-ahmetin-ceketi-hakkinda",
-    "description": "Kul Ahmet",
-    "issueNumber": 0,
     "views": 0,
     "viewsFormatted": "0"
   }
