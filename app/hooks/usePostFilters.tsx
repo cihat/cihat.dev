@@ -33,17 +33,17 @@ export function usePostFilters(posts: Post[]) {
     return fromUrl as CategoryEnum;
   });
   const [searchInput, setSearchInput] = useState("");
-  const [showPersonalState, setShowPersonalState] = useState<boolean>(false);
-  const [showInProgressState, setShowInProgressState] = useState<boolean>(false);
+  const [showPersonalState, setShowPersonalState] = useState<boolean>(true);
+  const [showInProgressState, setShowInProgressState] = useState<boolean>(true);
 
   // Restore visibility from localStorage on mount (and when returning to posts e.g. from Writing tab)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const personal = window.localStorage.getItem(STORAGE_KEY_PERSONAL);
-    const inProgress = window.localStorage.getItem(STORAGE_KEY_IN_PROGRESS);
-    setShowPersonalState(personal === "1");
-    setShowInProgressState(inProgress === "1");
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
+  //   const personal = window.localStorage.getItem(STORAGE_KEY_PERSONAL);
+  //   const inProgress = window.localStorage.getItem(STORAGE_KEY_IN_PROGRESS);
+  //   setShowPersonalState(personal === "1");
+  //   setShowInProgressState(inProgress === "1");
+  // }, []);
 
   // Sync category from URL on back/forward
   useEffect(() => {
