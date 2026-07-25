@@ -4,6 +4,23 @@ import type { Post } from "@/types";
 
 export const postsCache: Post[] = [
   {
+    "id": "alcakliklar-ustune",
+    "path": "alcakliklar-ustune",
+    "date": "Jul 25, 2026",
+    "title": "Alçaklıklar Üstüne",
+    "minuteToRead": 8,
+    "language": "tr-TR",
+    "category": [
+      "Essay",
+      "Philosophy"
+    ],
+    "link": "https://cihat.dev/2026/alcakliklar-ustune",
+    "description": "İkiyüzlülük, persona, otorite arzusu, samimiyet ve ihanet üzerine kişisel bir deneme.",
+    "issueNumber": 20,
+    "views": 0,
+    "viewsFormatted": "0"
+  },
+  {
     "id": "bir-siir-yazmali",
     "path": "bir-siir-yazmali",
     "date": "May 7, 2026",
