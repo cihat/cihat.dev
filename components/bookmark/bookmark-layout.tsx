@@ -23,7 +23,7 @@ const DatePeriodConfig = {
 };
 
 export default function BookmarkLayout() {
-  const initialTab = BookmarkType.Technical;
+  const initialTab = BookmarkType.DesignArtMusic;
   const initialTimeRange = {
     type: DatePeriodType.LAST_ONE_WEEK,
     dateStartOfWeek: startOfWeek(subWeeks(new Date(), 1)),
@@ -118,7 +118,8 @@ export default function BookmarkLayout() {
     <Container className="left-animation text-sm overflow-hidden w-full">
       <div className="flex flex-col space-y-3 w-full mb-4">
         <Tabs
-          defaultValue={BookmarkType.Technical}
+          defaultValue={BookmarkType.DesignArtMusic}
+          value={activeTab}
           onValueChange={handleTabChange}
           className="w-full flex flex-col justify-center items-center"
         >

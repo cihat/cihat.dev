@@ -55,7 +55,7 @@ export default class Raindrop {
     page = 0,
     sort = "-created",
     search = "",
-    collectionId = BookmarkType.Technical
+    collectionId = BookmarkType.DesignArtMusic
   }: {
     perPage?: number;
     page?: number;
