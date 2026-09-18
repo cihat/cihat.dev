@@ -4,6 +4,20 @@ import type { Post } from "@/types";
 
 export const postsCache: Post[] = [
   {
+    "id": "gerceklik-uzerine",
+    "path": "gerceklik-uzerine",
+    "date": "2026-09-19",
+    "title": "Gerçeklik Üzerine",
+    "minuteToRead": 10,
+    "language": "tr",
+    "category": "Personal",
+    "link": "https://cihat.dev/gerceklik-uzerine",
+    "description": "Gerçeklik, otorite, insanın düşkünlüğü ve erkeklik enerjisi üzerine kişisel bir felsefi düşünce.",
+    "issueNumber": 0,
+    "views": 0,
+    "viewsFormatted": "0"
+  },
+  {
     "id": "alcakliklar-ustune",
     "path": "alcakliklar-ustune",
     "date": "Jul 25, 2026",
